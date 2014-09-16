@@ -32,6 +32,9 @@ class Player(Character):
             Player.images[Player.INDEX_LEFT] = self.loadImage("businessman_left.png")
         if Player.images[Player.INDEX_RIGHT] == None:
             Player.images[Player.INDEX_RIGHT] = self.loadImage("businessman_right.png")
+        if Player.hitSound == None:
+            pygame.mixer.init()
+            Player.hitSound = pygame.mixer.Sound(Player.SOUND_PATH)
 
     def loadImage(self, partialPath):
         return pygame.image.load(os.path.join(Player.PATH_START, partialPath)).convert_alpha()
@@ -70,9 +73,6 @@ class Player(Character):
             self.playSound()
 
     def playSound(self):
-        if Player.hitSound == None:
-            pygame.mixer.init()
-            Player.hitSound = pygame.mixer.Sound(Player.SOUND_PATH)
         Player.hitSound.play()
 
 def testPlayer():
