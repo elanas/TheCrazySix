@@ -3,6 +3,7 @@ import pygame
 class Character (pygame.sprite.Sprite):
 
     def __init__(self, w, h, x, y):
+        pygame.sprite.Sprite.__init__(self)
         self.w = w
         self.h = h
         self.x = x
@@ -13,9 +14,5 @@ class Character (pygame.sprite.Sprite):
 
     # to be used in extending classes
     def move(self, xDelta, yDelta):
-        self.x += xDelta
-        self.y += yDelta
-
-
-
-    
+        self.rect.x += xDelta
+        self.rect.y += yDelta    
