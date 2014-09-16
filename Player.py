@@ -4,11 +4,13 @@ import os
 
 class Player(Character):
     PATH_START = "images"
+    SOUND_PATH = os.path.join("sounds", "hitSound.wav")
     INDEX_DOWN = 0
     INDEX_UP = 1
     INDEX_LEFT = 2
     INDEX_RIGHT = 3
     images = [None, None, None, None]
+    hitSound = None
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -68,7 +70,10 @@ class Player(Character):
             self.playSound()
 
     def playSound(self):
-        pass
+        if Player.hitSound == None:
+            pygame.mixer.init()
+            Player.hitSound = pygame.mixer.Sound(Player.SOUND_PATH)
+        Player.hitSound.play()
 
 def testPlayer():
     (width, height) = (700, 500)
