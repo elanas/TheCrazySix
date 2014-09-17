@@ -33,7 +33,6 @@ class Player(Character):
         if Player.images[Player.INDEX_RIGHT] == None:
             Player.images[Player.INDEX_RIGHT] = self.loadImage("businessman_right.png")
         if Player.hitSound == None:
-            pygame.mixer.init()
             Player.hitSound = pygame.mixer.Sound(Player.SOUND_PATH)
 
     def loadImage(self, partialPath):
@@ -76,6 +75,7 @@ class Player(Character):
         Player.hitSound.play()
 
 def testPlayer():
+    pygame.init()
     (width, height) = (700, 500)
     screen = pygame.display.set_mode((width, height))
     running = True
