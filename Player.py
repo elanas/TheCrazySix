@@ -89,6 +89,8 @@ class Player(Character):
     def playSound(self):
         Player.hitSound.play()
 
+##
+## REMOVE THIS BEFORE SUBMITTING
 def testPlayer():
     pygame.init()
     (width, height) = (700, 500)
@@ -116,3 +118,5 @@ def testPlayer():
 
 if __name__ == "__main__":
     testPlayer()
+##
+## END OF CODE TO REMOVE
