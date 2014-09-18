@@ -1,6 +1,10 @@
-import pygame
-from Character import Character
+# Load Libraries
 import os
+import pygame
+
+from Character import Character
+
+pygame.init()
 
 class Player(Character):
     PATH_START = "images"
