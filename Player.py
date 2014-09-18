@@ -76,30 +76,30 @@ class Player(Character):
     def playSound(self):
         Player.hitSound.play()
 
-def testPlayer():
-    pygame.init()
-    (width, height) = (700, 500)
-    screen = pygame.display.set_mode((width, height))
-    running = True
-    sprites = pygame.sprite.Group()
-    p = Player(width, height, width / 2, height / 2)
-    sprites.add(p)
-    last_key = None
-    while running:
-        # handle pygame events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN:
-                last_key = event.key
-            elif event.type == pygame.KEYUP:
-                last_key = None
-        if not last_key == None:
-            p.keyPressed(last_key)
-        sprites.update()
-        screen.fill((0, 0, 0))
-        sprites.draw(screen)
-        pygame.display.flip()    
+    def testPlayer():
+        pygame.init()
+        (width, height) = (700, 500)
+        screen = pygame.display.set_mode((width, height))
+        running = True
+        sprites = pygame.sprite.Group()
+        p = Player(width, height, width / 2, height / 2)
+        sprites.add(p)
+        last_key = None
+        while running:
+            # handle pygame events
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    running = False
+                if event.type == pygame.KEYDOWN:
+                    last_key = event.key
+                elif event.type == pygame.KEYUP:
+                    last_key = None
+            if not last_key == None:
+                p.keyPressed(last_key)
+            sprites.update()
+            screen.fill((0, 0, 0))
+            sprites.draw(screen)
+            pygame.display.flip()    
 
 if __name__ == "__main__":
     testPlayer()
