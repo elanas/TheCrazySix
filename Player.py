@@ -8,8 +8,8 @@ class Player(Character):
     PATH_START = "images"
     SOUND_PATH = os.path.join("sounds", "hitSound.wav")
     INDEX_DOWN = 0
-    INDEX_UP = 1
-    INDEX_LEFT = 2
+    INDEX_LEFT = 1
+    INDEX_UP = 2
     INDEX_RIGHT = 3
     images = [None, None, None, None]
     hitSound = None
@@ -21,6 +21,7 @@ class Player(Character):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+        self.direction = Player.INDEX_DOWN
 
     def update(self):
         pass
@@ -43,16 +44,28 @@ class Player(Character):
     def keyPressed(self, keyCode):
         if keyCode == pygame.K_UP:
             self.image = Player.images[Player.INDEX_UP]
+            self.direction = Player.INDEX_UP
             self.move(0, -1)
         elif keyCode == pygame.K_DOWN:
             self.image = Player.images[Player.INDEX_DOWN]
+            self.direction = Player.INDEX_DOWN
             self.move(0, 1)
         elif keyCode == pygame.K_LEFT:
             self.image = Player.images[Player.INDEX_LEFT]
+            self.direction = Player.INDEX_LEFT
             self.move(-1, 0)
         elif keyCode == pygame.K_RIGHT:
             self.image = Player.images[Player.INDEX_RIGHT]
+            self.direction = Player.INDEX_RIGHT
             self.move(1, 0)
+
+    def getDirection(self):
+        return self.direction
+
+    def getOppositeDirection(self):
+        # this only works if the indicies are defined such that the opposite
+        # directions are off by 2 (every other)
+        return (self.direction + 2) % 4
     
     def move(self, xDelta, yDelta):
         super(Player, self).move(xDelta, yDelta)
@@ -76,30 +89,30 @@ class Player(Character):
     def playSound(self):
         Player.hitSound.play()
 
-    def testPlayer():
-        pygame.init()
-        (width, height) = (700, 500)
-        screen = pygame.display.set_mode((width, height))
-        running = True
-        sprites = pygame.sprite.Group()
-        p = Player(width, height, width / 2, height / 2)
-        sprites.add(p)
-        last_key = None
-        while running:
-            # handle pygame events
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                if event.type == pygame.KEYDOWN:
-                    last_key = event.key
-                elif event.type == pygame.KEYUP:
-                    last_key = None
-            if not last_key == None:
-                p.keyPressed(last_key)
-            sprites.update()
-            screen.fill((0, 0, 0))
-            sprites.draw(screen)
-            pygame.display.flip()    
+def testPlayer():
+    pygame.init()
+    (width, height) = (700, 500)
+    screen = pygame.display.set_mode((width, height))
+    running = True
+    sprites = pygame.sprite.Group()
+    p = Player(width, height, width / 2, height / 2)
+    sprites.add(p)
+    last_key = None
+    while running:
+        # handle pygame events
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False
+            if event.type == pygame.KEYDOWN:
+                last_key = event.key
+            elif event.type == pygame.KEYUP:
+                last_key = None
+        if not last_key == None:
+            p.keyPressed(last_key)
+        sprites.update()
+        screen.fill((0, 0, 0))
+        sprites.draw(screen)
+        pygame.display.flip()    
 
 if __name__ == "__main__":
     testPlayer()
