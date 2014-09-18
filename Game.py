@@ -27,4 +27,23 @@ screen = pygame.display.set_mode(size)
 
 # pygame.time.set_timer(pygame.USEREVENT, int(1000 / frames_per_second))
 
+while True:
+    event = pygame.event.wait()
+
+    if event.type == pygame.QUIT:
+        break
+
+    if event.type == pygame.USEREVENT:
+        screen.fill(pygame.Color("white"))
+        # frame = (frame + 1) % len(frames)
+        #image = frames[frame]
+
+        bounds = image.get_rect()
+        bounds.center = pygame.mouse.get_pos()
+
+        screen.blit(background, [0, 0])
+        screen.blit(image, bounds)
+
+        pygame.display.flip()
+
 pygame.quit()
