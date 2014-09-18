@@ -10,6 +10,21 @@ BACKGROUND_IMAGE_NAME = "test.png"
 background = pygame.image.load(BACKGROUND_IMAGE_NAME)
 size = background.get_size()
 screen = pygame.display.set_mode(size)
-frames_per_second = 24
+# frames_per_second = 24
+
+# DIVIDE SPRITESHEET
+#rows = 4
+#cols = 4
+#height = spriteSheet.get_height() / rows
+# width = spriteSheet.get_width() / cols
+# frames = []
+
+# for row in range(rows):
+#     for col in range(cols):
+#         clip = pygame.Rect(col * width, row * height, width, height)
+#         frame = spriteSheet.subsurface(clip)
+#         frames.append(frame)
+
+# pygame.time.set_timer(pygame.USEREVENT, int(1000 / frames_per_second))
 
 pygame.quit()
