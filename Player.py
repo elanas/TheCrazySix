@@ -41,6 +41,7 @@ class Player(Character):
     def loadImage(self, partialPath):
         return pygame.image.load(os.path.join(Player.PATH_START, partialPath)).convert_alpha()
 
+    # Returns True if the sprite moves, False otherwise
     def keyPressed(self, keyCode):
         if keyCode == pygame.K_UP:
             self.image = Player.images[Player.INDEX_UP]
@@ -58,6 +59,9 @@ class Player(Character):
             self.image = Player.images[Player.INDEX_RIGHT]
             self.direction = Player.INDEX_RIGHT
             self.move(1, 0)
+        else:
+            return False
+        return True
 
     def getDirection(self):
         return self.direction
