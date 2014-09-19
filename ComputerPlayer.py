@@ -41,24 +41,6 @@ class ComputerPlayer(Character):
     def loadImage(self, partialPath):
         return pygame.image.load(os.path.join(ComputerPlayer.PATH_START, partialPath)).convert_alpha()
 
-    # def keyPressed(self, keyCode):
-    #     if keyCode == pygame.K_UP:
-    #         self.image = ComputerPlayer.images[ComputerPlayer.INDEX_UP]
-    #         self.direction = ComputerPlayer.INDEX_UP
-    #         self.move(0, -1)
-    #     elif keyCode == pygame.K_DOWN:
-    #         self.image = ComputerPlayer.images[ComputerPlayer.INDEX_DOWN]
-    #         self.direction = ComputerPlayer.INDEX_DOWN
-    #         self.move(0, 1)
-    #     elif keyCode == pygame.K_LEFT:
-    #         self.image = ComputerPlayer.images[ComputerPlayer.INDEX_LEFT]
-    #         self.direction = ComputerPlayer.INDEX_LEFT
-    #         self.move(-1, 0)
-    #     elif keyCode == pygame.K_RIGHT:
-    #         self.image = ComputerPlayer.images[ComputerPlayer.INDEX_RIGHT]
-    #         self.direction = ComputerPlayer.INDEX_RIGHT
-    #         self.move(1, 0)
-
     def getDirection(self):
         return self.direction
 
@@ -116,12 +98,9 @@ def testComputerPlayer():
     for x in range(13):
         sprites.add(ComputerPlayer(width, height))
 
-    # for x in range(13):
-        # sprites.add(ComputerPlayer(width, height,width/2,height/2)
-
-    # p = ComputerPlayer(width, height, width / 2, height / 2)
-    # sprites.add(p)
-
+    # Ideally, each computer object should have a unique timer
+    # for changing direction or other movements
+    # Alternative: Randomizing timer interval per object
     pygame.time.set_timer(pygame.USEREVENT + 1, 2000)
 
     while running:
