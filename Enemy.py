@@ -5,7 +5,7 @@ import random
 
 from Character import Character
 
-class ComputerPlayer(Character):
+class Enemy(Character):
     PATH_START = "images"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
@@ -17,9 +17,9 @@ class ComputerPlayer(Character):
         ranX = random.randint(0, w)
         ranY = random.randint(0, h)
 
-        super(ComputerPlayer, self).__init__(w, h, ranX, ranY)
+        super(Enemy, self).__init__(w, h, ranX, ranY)
         self.loadResources()
-        self.image = ComputerPlayer.images[ComputerPlayer.INDEX_DOWN]
+        self.image = Enemy.images[Enemy.INDEX_DOWN]
         self.rect = self.image.get_rect()
         self.rect.x = ranX
         self.rect.y = ranY
@@ -29,17 +29,17 @@ class ComputerPlayer(Character):
         pass
 
     def loadResources(self):
-        if ComputerPlayer.images[ComputerPlayer.INDEX_UP] == None:
-            ComputerPlayer.images[ComputerPlayer.INDEX_UP] = self.loadImage("goblin_up.png")
-        if ComputerPlayer.images[ComputerPlayer.INDEX_DOWN] == None:
-            ComputerPlayer.images[ComputerPlayer.INDEX_DOWN] = self.loadImage("goblin_down.png")
-        if ComputerPlayer.images[ComputerPlayer.INDEX_LEFT] == None:
-            ComputerPlayer.images[ComputerPlayer.INDEX_LEFT] = self.loadImage("goblin_left.png")
-        if ComputerPlayer.images[ComputerPlayer.INDEX_RIGHT] == None:
-            ComputerPlayer.images[ComputerPlayer.INDEX_RIGHT] = self.loadImage("goblin_right.png")
+        if Enemy.images[Enemy.INDEX_UP] == None:
+            Enemy.images[Enemy.INDEX_UP] = self.loadImage("goblin_up.png")
+        if Enemy.images[Enemy.INDEX_DOWN] == None:
+            Enemy.images[Enemy.INDEX_DOWN] = self.loadImage("goblin_down.png")
+        if Enemy.images[Enemy.INDEX_LEFT] == None:
+            Enemy.images[Enemy.INDEX_LEFT] = self.loadImage("goblin_left.png")
+        if Enemy.images[Enemy.INDEX_RIGHT] == None:
+            Enemy.images[Enemy.INDEX_RIGHT] = self.loadImage("goblin_right.png")
 
     def loadImage(self, partialPath):
-        return pygame.image.load(os.path.join(ComputerPlayer.PATH_START, partialPath)).convert_alpha()
+        return pygame.image.load(os.path.join(Enemy.PATH_START, partialPath)).convert_alpha()
 
     def getDirection(self):
         return self.direction
@@ -50,45 +50,45 @@ class ComputerPlayer(Character):
         return (self.direction + 2) % 4
     
     def move(self, xDelta, yDelta):
-        super(ComputerPlayer, self).move(xDelta, yDelta)
+        super(Enemy, self).move(xDelta, yDelta)
         self.checkCollisions()
 
     def moveRandom(self):
 
-        if self.direction == ComputerPlayer.INDEX_UP:
-            self.image = ComputerPlayer.images[ComputerPlayer.INDEX_UP]
-            self.direction = ComputerPlayer.INDEX_UP
+        if self.direction == Enemy.INDEX_UP:
+            self.image = Enemy.images[Enemy.INDEX_UP]
+            self.direction = Enemy.INDEX_UP
             self.move(0, -1)
-        elif self.direction == ComputerPlayer.INDEX_DOWN:
-            self.image = ComputerPlayer.images[ComputerPlayer.INDEX_DOWN]
-            self.direction = ComputerPlayer.INDEX_DOWN
+        elif self.direction == Enemy.INDEX_DOWN:
+            self.image = Enemy.images[Enemy.INDEX_DOWN]
+            self.direction = Enemy.INDEX_DOWN
             self.move(0, 1)
-        elif self.direction == ComputerPlayer.INDEX_LEFT:
-            self.image = ComputerPlayer.images[ComputerPlayer.INDEX_LEFT]
-            self.direction = ComputerPlayer.INDEX_LEFT
+        elif self.direction == Enemy.INDEX_LEFT:
+            self.image = Enemy.images[Enemy.INDEX_LEFT]
+            self.direction = Enemy.INDEX_LEFT
             self.move(-1, 0)
-        elif self.direction == ComputerPlayer.INDEX_RIGHT:
-            self.image = ComputerPlayer.images[ComputerPlayer.INDEX_RIGHT]
-            self.direction = ComputerPlayer.INDEX_RIGHT
+        elif self.direction == Enemy.INDEX_RIGHT:
+            self.image = Enemy.images[Enemy.INDEX_RIGHT]
+            self.direction = Enemy.INDEX_RIGHT
             self.move(1, 0)
 
     def checkCollisions(self):
         if self.rect.left < 0:
             self.rect.left = 0
-            self.direction = ComputerPlayer.INDEX_RIGHT
+            self.direction = Enemy.INDEX_RIGHT
         elif self.rect.right > self.w:
             self.rect.right = self.w
-            self.direction = ComputerPlayer.INDEX_LEFT
+            self.direction = Enemy.INDEX_LEFT
         if self.rect.top < 0:
             self.rect.top = 0
-            self.direction = ComputerPlayer.INDEX_DOWN
+            self.direction = Enemy.INDEX_DOWN
         elif self.rect.bottom > self.h:
             self.rect.bottom = self.h
-            self.direction = ComputerPlayer.INDEX_UP
+            self.direction = Enemy.INDEX_UP
 
 ##
 ## REMOVE THIS BEFORE SUBMITTING
-def testComputerPlayer():
+def testEnemy():
     pygame.init()
     (width, height) = (700, 500)
     screen = pygame.display.set_mode((width, height))
@@ -96,7 +96,7 @@ def testComputerPlayer():
     sprites = pygame.sprite.Group()
 
     for x in range(13):
-        sprites.add(ComputerPlayer(width, height))
+        sprites.add(Enemy(width, height))
 
     # Ideally, each computer object should have a unique timer
     # for changing direction or other movements
@@ -120,6 +120,6 @@ def testComputerPlayer():
         pygame.display.flip()    
 
 if __name__ == "__main__":
-    testComputerPlayer()
+    testEnemy()
 ##
 ## END OF CODE TO REMOVE
