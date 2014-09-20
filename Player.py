@@ -5,6 +5,7 @@ import pygame
 from Character import Character
 
 class Player(Character):
+    MOVE_FACTOR = 5
     PATH_START = "images"
     SOUND_PATH = os.path.join("sounds", "hitSound.wav")
     INDEX_DOWN = 0
@@ -46,19 +47,19 @@ class Player(Character):
         if keyCode == pygame.K_UP:
             self.image = Player.images[Player.INDEX_UP]
             self.direction = Player.INDEX_UP
-            self.move(0, -1)
+            self.move(0, -Player.MOVE_FACTOR)
         elif keyCode == pygame.K_DOWN:
             self.image = Player.images[Player.INDEX_DOWN]
             self.direction = Player.INDEX_DOWN
-            self.move(0, 1)
+            self.move(0, Player.MOVE_FACTOR)
         elif keyCode == pygame.K_LEFT:
             self.image = Player.images[Player.INDEX_LEFT]
             self.direction = Player.INDEX_LEFT
-            self.move(-1, 0)
+            self.move(-Player.MOVE_FACTOR, 0)
         elif keyCode == pygame.K_RIGHT:
             self.image = Player.images[Player.INDEX_RIGHT]
             self.direction = Player.INDEX_RIGHT
-            self.move(1, 0)
+            self.move(Player.MOVE_FACTOR, 0)
         else:
             return False
         return True
