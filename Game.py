@@ -33,6 +33,8 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
+            elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+                running = False
             elif event.type == pygame.USEREVENT + 1:
                 for p in enemySprites:
                     p.direction = random.randint(0,3)
