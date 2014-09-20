@@ -4,6 +4,7 @@ import pygame
 
 from Character import Character
 
+
 class Player(Character):
     MOVE_FACTOR = 5
     PATH_START = "images"
@@ -28,19 +29,24 @@ class Player(Character):
         pass
 
     def loadResources(self):
-        if Player.images[Player.INDEX_UP] == None:
-            Player.images[Player.INDEX_UP] = self.loadImage("businessman_up.png")
-        if Player.images[Player.INDEX_DOWN] == None:
-            Player.images[Player.INDEX_DOWN] = self.loadImage("businessman_down.png")
-        if Player.images[Player.INDEX_LEFT] == None:
-            Player.images[Player.INDEX_LEFT] = self.loadImage("businessman_left.png")
-        if Player.images[Player.INDEX_RIGHT] == None:
-            Player.images[Player.INDEX_RIGHT] = self.loadImage("businessman_right.png")
-        if Player.hitSound == None:
+        if Player.images[Player.INDEX_UP] is None:
+            Player.images[Player.INDEX_UP] = self.loadImage(
+                "businessman_up.png")
+        if Player.images[Player.INDEX_DOWN] is None:
+            Player.images[Player.INDEX_DOWN] = self.loadImage(
+                "businessman_down.png")
+        if Player.images[Player.INDEX_LEFT] is None:
+            Player.images[Player.INDEX_LEFT] = self.loadImage(
+                "businessman_left.png")
+        if Player.images[Player.INDEX_RIGHT] is None:
+            Player.images[Player.INDEX_RIGHT] = self.loadImage(
+                "businessman_right.png")
+        if Player.hitSound is None:
             Player.hitSound = pygame.mixer.Sound(Player.SOUND_PATH)
 
     def loadImage(self, partialPath):
-        return pygame.image.load(os.path.join(Player.PATH_START, partialPath)).convert_alpha()
+        return pygame.image.load(os.path.join(
+            Player.PATH_START, partialPath)).convert_alpha()
 
     # Returns True if the sprite moves, False otherwise
     def keyPressed(self, keyCode):
@@ -71,7 +77,7 @@ class Player(Character):
         # this only works if the indicies are defined such that the opposite
         # directions are off by 2 (every other)
         return (self.direction + 2) % 4
-    
+
     def move(self, xDelta, yDelta):
         super(Player, self).move(xDelta, yDelta)
         self.checkCollisions()
@@ -94,8 +100,9 @@ class Player(Character):
     def playSound(self):
         Player.hitSound.play()
 
-##
-## REMOVE THIS BEFORE SUBMITTING
+
+#
+# REMOVE THIS BEFORE SUBMITTING
 def testPlayer():
     pygame.init()
     (width, height) = (700, 500)
@@ -114,14 +121,14 @@ def testPlayer():
                 last_key = event.key
             elif event.type == pygame.KEYUP:
                 last_key = None
-        if not last_key == None:
+        if last_key is not None:
             p.keyPressed(last_key)
         sprites.update()
         screen.fill((0, 0, 0))
         sprites.draw(screen)
-        pygame.display.flip()    
+        pygame.display.flip()
 
 if __name__ == "__main__":
     testPlayer()
-##
-## END OF CODE TO REMOVE
+#
+# END OF CODE TO REMOVE

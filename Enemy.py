@@ -5,6 +5,7 @@ import random
 
 from Character import Character
 
+
 class Enemy(Character):
     PATH_START = "images"
     INDEX_DOWN = 0
@@ -29,17 +30,19 @@ class Enemy(Character):
         pass
 
     def loadResources(self):
-        if Enemy.images[Enemy.INDEX_UP] == None:
+        if Enemy.images[Enemy.INDEX_UP] is None:
             Enemy.images[Enemy.INDEX_UP] = self.loadImage("goblin_up.png")
-        if Enemy.images[Enemy.INDEX_DOWN] == None:
+        if Enemy.images[Enemy.INDEX_DOWN] is None:
             Enemy.images[Enemy.INDEX_DOWN] = self.loadImage("goblin_down.png")
-        if Enemy.images[Enemy.INDEX_LEFT] == None:
+        if Enemy.images[Enemy.INDEX_LEFT] is None:
             Enemy.images[Enemy.INDEX_LEFT] = self.loadImage("goblin_left.png")
-        if Enemy.images[Enemy.INDEX_RIGHT] == None:
-            Enemy.images[Enemy.INDEX_RIGHT] = self.loadImage("goblin_right.png")
+        if Enemy.images[Enemy.INDEX_RIGHT] is None:
+            Enemy.images[Enemy.INDEX_RIGHT] = self.loadImage(
+                "goblin_right.png")
 
     def loadImage(self, partialPath):
-        return pygame.image.load(os.path.join(Enemy.PATH_START, partialPath)).convert_alpha()
+        return pygame.image.load(os.path.join(
+            Enemy.PATH_START, partialPath)).convert_alpha()
 
     def getDirection(self):
         return self.direction
@@ -48,7 +51,7 @@ class Enemy(Character):
         # this only works if the indicies are defined such that the opposite
         # directions are off by 2 (every other)
         return (self.direction + 2) % 4
-    
+
     def move(self, xDelta, yDelta):
         super(Enemy, self).move(xDelta, yDelta)
         self.checkCollisions()
@@ -86,8 +89,9 @@ class Enemy(Character):
             self.rect.bottom = self.h
             self.direction = Enemy.INDEX_UP
 
-##
-## REMOVE THIS BEFORE SUBMITTING
+
+#
+# REMOVE THIS BEFORE SUBMITTING
 def testEnemy():
     pygame.init()
     (width, height) = (700, 500)
@@ -110,16 +114,16 @@ def testEnemy():
                 running = False
             if event.type == pygame.USEREVENT + 1:
                 for p in sprites:
-                    p.direction = random.randint(0,3)
-                
+                    p.direction = random.randint(0, 3)
+
         for p in sprites:
             p.moveRandom()
         sprites.update()
         screen.fill((0, 0, 0))
         sprites.draw(screen)
-        pygame.display.flip()    
+        pygame.display.flip()
 
 if __name__ == "__main__":
     testEnemy()
-##
-## END OF CODE TO REMOVE
+#
+# END OF CODE TO REMOVE

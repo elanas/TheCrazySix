@@ -5,6 +5,7 @@ import random
 from Player import Player
 from Enemy import Enemy
 
+
 def main():
     pygame.init()
     (width, height) = (700, 500)
@@ -13,12 +14,10 @@ def main():
     enemySprites = pygame.sprite.Group()
     playerSprites = pygame.sprite.Group()
 
-
     for x in range(13):
         enemySprites.add(Enemy(width, height))
 
     playerSprites.add(Player(width, height, width / 2, height / 2))
-
 
     # Ideally, each computer object should have a unique timer
     # for changing direction or other movements
@@ -37,11 +36,11 @@ def main():
                 running = False
             elif event.type == pygame.USEREVENT + 1:
                 for p in enemySprites:
-                    p.direction = random.randint(0,3)
+                    p.direction = random.randint(0, 3)
             elif event.type == pygame.USEREVENT + 2:
                 for p in enemySprites:
                     p.moveRandom()
-                if not last_key == None:
+                if last_key is not None:
                     for p in playerSprites:
                         p.keyPressed(last_key)
             elif event.type == pygame.KEYDOWN:
@@ -54,8 +53,7 @@ def main():
         screen.fill((0, 0, 0))
         enemySprites.draw(screen)
         playerSprites.draw(screen)
-        pygame.display.flip()     
-
+        pygame.display.flip()
 
 if __name__ == '__main__':
     main()
