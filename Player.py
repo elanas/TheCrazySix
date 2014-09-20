@@ -7,7 +7,7 @@ from Character import Character
 class Player(Character):
     MOVE_FACTOR = 5
     PATH_START = "images"
-    SOUND_PATH = os.path.join("sounds", "hitSound.wav")
+    SOUND_PATH = os.path.join("sounds", "hitSound.ogg")
     INDEX_DOWN = 0
     INDEX_LEFT = 1
     INDEX_UP = 2
