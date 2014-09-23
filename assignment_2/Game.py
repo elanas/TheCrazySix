@@ -142,6 +142,7 @@ def loadGame():
         Globals.SCREEN.fill((0, 0, 0))
         enemySprites.draw(Globals.SCREEN)
         playerSprites.draw(Globals.SCREEN)
+        
         pygame.display.flip()
 
 def main():
