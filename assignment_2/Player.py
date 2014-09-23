@@ -15,14 +15,14 @@ class Player(Character):
     INDEX_UP = 2
     INDEX_RIGHT = 3
     still_images = [None, None, None, None]
-    moving_images = [None, None, None, None]
+    walking_images = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
         self.loadResources()
-        self.image = Player.images[Player.INDEX_DOWN]
+        self.image = Player.still_images[Player.INDEX_DOWN]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
@@ -32,14 +32,23 @@ class Player(Character):
         pass
 
     def loadResources(self):
-        if Player.images[Player.INDEX_UP] is None:
-            Player.images[Player.INDEX_UP] = loader.load_spritesheet_alpha("main_still_up.png")
-        if Player.images[Player.INDEX_DOWN] is None:
-           Player.images[Player.INDEX_DOWN] = loader.load_spritesheet_alpha("main_still_down.png")
-        if Player.images[Player.INDEX_LEFT] is None:
-           Player.images[Player.INDEX_LEFT] = loader.load_spritesheet_alpha("main_still_left.png")
-        if Player.images[Player.INDEX_RIGHT] is None:
-            Player.images[Player.INDEX_RIGHT] = loader.load_spritesheet_alpha("main_still_right.png")
+        if Player.still_images[Player.INDEX_UP] is None:
+           Player.still_images[Player.INDEX_UP] = loader.load_spritesheet_alpha("main_still_up.png")
+        if Player.still_images[Player.INDEX_DOWN] is None:
+           Player.still_images[Player.INDEX_DOWN] = loader.load_spritesheet_alpha("main_still_down.png")
+        if Player.still_images[Player.INDEX_LEFT] is None:
+           Player.still_images[Player.INDEX_LEFT] = loader.load_spritesheet_alpha("main_still_left.png")
+        if Player.still_images[Player.INDEX_RIGHT] is None:
+           Player.still_images[Player.INDEX_RIGHT] = loader.load_spritesheet_alpha("main_still_right.png")
+
+        if Player.walking_images[Player.INDEX_UP] is None:
+           Player.walking_images[Player.INDEX_UP] = loader.load_spritesheet_alpha("main_walking_up.png")
+        if Player.walking_images[Player.INDEX_DOWN] is None:
+           Player.walking_images[Player.INDEX_DOWN] = loader.load_spritesheet_alpha("main_walking_down.png")
+        if Player.walking_images[Player.INDEX_LEFT] is None:
+           Player.walking_images[Player.INDEX_LEFT] = loader.load_spritesheet_alpha("main_walking_left.png")
+        if Player.walking_images[Player.INDEX_RIGHT] is None:
+           Player.walking_images[Player.INDEX_RIGHT] = loader.load_spritesheet_alpha("main_walking_right.png")
         if Player.hitSound is None:
             Player.hitSound = loader.load_sound(Player.SOUND_PATH)
 
