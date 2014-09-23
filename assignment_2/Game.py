@@ -65,15 +65,10 @@ def loadGame():
 
         enemySprites.update()
         playerSprites.update()
-<<<<<<< HEAD
-        screen.fill((255, 255, 255))
-        enemySprites.draw(screen)
-        playerSprites.draw(screen)
-=======
         Globals.SCREEN.fill((0, 0, 0))
         enemySprites.draw(Globals.SCREEN)
         playerSprites.draw(Globals.SCREEN)
->>>>>>> FETCH_HEAD
+        
         pygame.display.flip()
 
 def main():
