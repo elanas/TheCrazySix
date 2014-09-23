@@ -4,14 +4,7 @@ import random
 
 from Player import Player
 from Enemy import Enemy
-
-class Globals(object):
-    RUNNING = True
-    SCREEN = None
-    WIDTH = None
-    HEIGHT = None
-    FONT = None
-    STATE = None
+from Globals import Globals
 
 class GameState(object):
     def __init__(self):
@@ -23,11 +16,15 @@ class GameState(object):
     def event(self, event):
         pass
 
-
-def main():
+def initialize():
     pygame.init()
-    (width, height) = (700, 500)
-    screen = pygame.display.set_mode((width, height))
+    Globals.WIDTH = 700
+    Globals.HEIGHT = 500
+    Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
+    # Globals.STATE = Title()
+
+def loadGame():
+    (width, height) = (Globals.WIDTH, Globals.HEIGHT)
     running = True
     enemySprites = pygame.sprite.Group()
     playerSprites = pygame.sprite.Group()
@@ -68,10 +65,61 @@ def main():
 
         enemySprites.update()
         playerSprites.update()
-        screen.fill((0, 0, 0))
-        enemySprites.draw(screen)
-        playerSprites.draw(screen)
+        Globals.SCREEN.fill((0, 0, 0))
+        enemySprites.draw(Globals.SCREEN)
+        playerSprites.draw(Globals.SCREEN)
         pygame.display.flip()
+
+def main():
+    initialize()
+    loadGame()
+    # pygame.init()
+    # (width, height) = (700, 500)
+    # screen = pygame.display.set_mode((width, height))
+    # running = True
+    # enemySprites = pygame.sprite.Group()
+    # playerSprites = pygame.sprite.Group()
+
+    # for x in range(13):
+    #     enemySprites.add(Enemy(width, height))
+
+    # playerSprites.add(Player(width, height, width / 2, height / 2))
+
+    # # Ideally, each computer object should have a unique timer
+    # # for changing direction or other movements
+    # # Alternative: Randomizing timer interval per object
+    # pygame.time.set_timer(pygame.USEREVENT + 1, 2000)
+    # pygame.time.set_timer(pygame.USEREVENT + 2, 20)
+
+    # last_key = None
+
+    # while running:
+    #     # handle pygame events
+    #     for event in pygame.event.get():
+    #         if event.type == pygame.QUIT:
+    #             running = False
+    #         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
+    #             running = False
+    #         elif event.type == pygame.USEREVENT + 1:
+    #             for p in enemySprites:
+    #                 p.direction = random.randint(0, 3)
+    #         elif event.type == pygame.USEREVENT + 2:
+    #             for p in enemySprites:
+    #                 p.moveRandom()
+    #             if last_key is not None:
+    #                 for p in playerSprites:
+    #                     p.keyPressed(last_key)
+    #         elif event.type == pygame.KEYDOWN:
+    #             last_key = event.key
+    #         elif event.type == pygame.KEYUP:
+    #             last_key = None
+
+    #     enemySprites.update()
+    #     playerSprites.update()
+    #     screen.fill((0, 0, 0))
+    #     enemySprites.draw(screen)
+    #     playerSprites.draw(screen)
+    #     pygame.display.flip()
 
 if __name__ == '__main__':
     main()
