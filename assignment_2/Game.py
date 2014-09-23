@@ -17,42 +17,42 @@ class GameState(object):
     def event(self, event):
         pass
 
-# class Title(GameState):
-#     FADEINTIME = 5.0
-#     FADEOUTTIME = 0.2
-#     def __init__(self):
-#         GameState.__init__(self)
-#         self.color = pygame.color.Color("red")
-#         # self.time = 0.0
-#         # self.sound = PX.Sound("thx.wav")
-#         # self.sound.play()
-#         Globals.SCREEN.fill(pygame.color.Color("red"))
-#     def render(self):
-#         pass
-#         # surf = Globals.FONT.render("Title Screen", True, self.color)
-#         # width, height = surf.get_size()
-#         # Globals.SCREEN.blit(surf, (Globals.WIDTH/2 - width/2, Globals.HEIGHT/2 - height/2))
-#     def update(self, time):
-#         pass
-#         # self.time += time
-#         # if self.time < Title.FADEINTIME:
-#         #     ratio = self.time / Title.FADEINTIME
-#         #     value = int(ratio * 255)
-#         #     self.color = pygame.color.Color(value, value, value)
-#     def event(self, event):
-#         pass
-#         # if event.type == PG.KEYDOWN and event.key == PG.K_ESCAPE:
-#         #     Globals.RUNNING = False
-#         # elif event.type == PG.KEYDOWN and event.key == PG.K_SPACE:
-#         #     self.sound.fadeout(int(Title.FADEOUTTIME*1000))
-#         #     Globals.STATE = Menu()
+class Title(GameState):
+    FADEINTIME = 5.0
+    FADEOUTTIME = 0.2
+    def __init__(self):
+        GameState.__init__(self)
+        self.color = pygame.color.Color("red")
+        # self.time = 0.0
+        # self.sound = PX.Sound("thx.wav")
+        # self.sound.play()
+        Globals.SCREEN.fill(pygame.color.Color("red"))
+    def render(self):
+        pass
+        # surf = Globals.FONT.render("Title Screen", True, self.color)
+        # width, height = surf.get_size()
+        # Globals.SCREEN.blit(surf, (Globals.WIDTH/2 - width/2, Globals.HEIGHT/2 - height/2))
+    def update(self, time):
+        pass
+        # self.time += time
+        # if self.time < Title.FADEINTIME:
+        #     ratio = self.time / Title.FADEINTIME
+        #     value = int(ratio * 255)
+        #     self.color = pygame.color.Color(value, value, value)
+    def event(self, event):
+        pass
+        # if event.type == PG.KEYDOWN and event.key == PG.K_ESCAPE:
+        #     Globals.RUNNING = False
+        # elif event.type == PG.KEYDOWN and event.key == PG.K_SPACE:
+        #     self.sound.fadeout(int(Title.FADEOUTTIME*1000))
+        #     Globals.STATE = Menu()
 
 def initialize():
     pygame.init()
     Globals.WIDTH = 700
     Globals.HEIGHT = 500
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    # Globals.STATE = Title()
+    Globals.STATE = Title()
 
 def loadGame():
     (width, height) = (Globals.WIDTH, Globals.HEIGHT)
@@ -104,7 +104,7 @@ def loadGame():
 
 def main():
     initialize()
-    loadGame()
+    # loadGame()
 
 
 if __name__ == '__main__':
