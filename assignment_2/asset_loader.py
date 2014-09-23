@@ -54,14 +54,14 @@ class AssetLoader():
 
     def load_spritesheet_alpha(self, img_path, num_rows, num_cols):
         images = []
-        sheet = self.load_image(img_path)
+        sheet = self.load_image_alpha(img_path)
         img_height = sheet.get_height() / num_rows
         img_width = sheet.get_width() / num_cols
         for curr_row in range(num_rows):
             start_y = img_height * curr_row
             for curr_col in range(num_cols):
                 start_x = img_width * curr_col
-                surf = pygame.Surface((img_height, img_width)).convert()
+                surf = pygame.Surface((img_height, img_width)).convert_alpha()
                 surf.blit(sheet, (0, 0), (start_x, start_y, img_width, img_height))
                 images.append(surf)
         return images

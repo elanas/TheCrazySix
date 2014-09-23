@@ -68,7 +68,7 @@ def main():
 
         enemySprites.update()
         playerSprites.update()
-        screen.fill((0, 0, 0))
+        screen.fill((255, 255, 255))
         enemySprites.draw(screen)
         playerSprites.draw(screen)
         pygame.display.flip()
