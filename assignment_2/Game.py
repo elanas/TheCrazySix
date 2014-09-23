@@ -16,6 +16,80 @@ class GameState(object):
     def event(self, event):
         pass
 
+class Title(GameState):
+    def __init__(self):
+        GameState.__init__(self)
+        self.color = PC.Color("black")
+        self.time = 0.0
+        Globals.SCREEN.fill(PC.Color("black"))
+    def render(self):
+        font = PF.Font(None, 64)
+        surf = font.render("Unnamed Game!", True, WHITE)
+        width, height = surf.get_size()
+        screen.blit(surf, (Globals.WIDTH / 2 - width / 2, Globals.HEIGHT / 2 - height / 2 + 64))
+
+        PDI.flip()
+ 
+    def update(self, time):
+        self.time += time
+    def event(self, event):
+        if event.type == PG.KEYDOWN and event.key == PG.K_ESCAPE:
+            Globals.RUNNING = False
+        elif event.type == PG.KEYDOWN and event.key == PG.K_SPACE:
+            Globals.STATE = Menu()
+
+class Menu(GameState):
+    def __init__(self):
+        GameState.__init__(self)
+        self.color = PC.Color("black")
+        Globals.SCREEN.fill(PC.Color("black"))
+        selection = 0
+    
+    def render(self):
+        font = PF.Font(None, 64)
+        surf = font.render("MENU", True, WHITE)
+        width, height = surf.get_size()
+        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 + 164))
+
+
+        surf = font.render("Start Game", True, WHITE)
+        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 + 64))
+
+        surf = font.render("adjust visual brightness", True, WHITE)
+        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 36))
+
+        surf = font.render("adjust visual brightness", True, WHITE)
+        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 136))
+
+        surf = font.render("display high-scores", True, WHITE)
+        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 236))
+
+        surf = font.render("quit", True, WHITE)
+        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 336))
+        PDI.flip()
+
+    def update(self, time):
+        self.time += time
+
+    def event(self, event):
+        if event.type == PG.QUIT:
+            SYS.exit()
+        elif event.type == PG.KEYDOWN and event.key == PG.K_UP:
+            if selection != 0:
+            	selection -= 1
+        elif event.type == PG.KEYDOWN and event.key == PG.K_DOWN:
+            if selection != 4:
+            	selection += 1
+        elif event.type == PG.KEYDOWN and event.key == PG.K_ESCAPE:
+            SYS.exit()
+        elif event.type == PG.KEYDOWN and event.key == PG.K_SPACE:
+            if selection == 0:
+            	Globals.STATE = Game()
+            if selection == 3:
+                Globals.STATE = Score()
+            if selection == 4:
+            	SYS.exit()
+
 def initialize():
     pygame.init()
     Globals.WIDTH = 700
