@@ -1,61 +1,15 @@
 # IMPORT THE PYGAME
 import pygame
 import random
-import pygame.color
 
 from Player import Player
 from Enemy import Enemy
-from Globals import Globals
 
-class GameState(object):
-    def __init__(self):
-        pass
-    def render(self):
-        pass
-    def update(self, time):
-        pass
-    def event(self, event):
-        pass
 
-# class Title(GameState):
-#     FADEINTIME = 5.0
-#     FADEOUTTIME = 0.2
-#     def __init__(self):
-#         GameState.__init__(self)
-#         self.color = pygame.color.Color("red")
-#         # self.time = 0.0
-#         # self.sound = PX.Sound("thx.wav")
-#         # self.sound.play()
-#         Globals.SCREEN.fill(pygame.color.Color("red"))
-#     def render(self):
-#         pass
-#         # surf = Globals.FONT.render("Title Screen", True, self.color)
-#         # width, height = surf.get_size()
-#         # Globals.SCREEN.blit(surf, (Globals.WIDTH/2 - width/2, Globals.HEIGHT/2 - height/2))
-#     def update(self, time):
-#         pass
-#         # self.time += time
-#         # if self.time < Title.FADEINTIME:
-#         #     ratio = self.time / Title.FADEINTIME
-#         #     value = int(ratio * 255)
-#         #     self.color = pygame.color.Color(value, value, value)
-#     def event(self, event):
-#         pass
-#         # if event.type == PG.KEYDOWN and event.key == PG.K_ESCAPE:
-#         #     Globals.RUNNING = False
-#         # elif event.type == PG.KEYDOWN and event.key == PG.K_SPACE:
-#         #     self.sound.fadeout(int(Title.FADEOUTTIME*1000))
-#         #     Globals.STATE = Menu()
-
-def initialize():
+def main():
     pygame.init()
-    Globals.WIDTH = 700
-    Globals.HEIGHT = 500
-    Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    # Globals.STATE = Title()
-
-def loadGame():
-    (width, height) = (Globals.WIDTH, Globals.HEIGHT)
+    (width, height) = (700, 500)
+    screen = pygame.display.set_mode((width, height))
     running = True
     enemySprites = pygame.sprite.Group()
     playerSprites = pygame.sprite.Group()
@@ -96,16 +50,10 @@ def loadGame():
 
         enemySprites.update()
         playerSprites.update()
-        Globals.SCREEN.fill((0, 0, 0))
-        enemySprites.draw(Globals.SCREEN)
-        playerSprites.draw(Globals.SCREEN)
-        
+        screen.fill((255, 255, 255))
+        enemySprites.draw(screen)
+        playerSprites.draw(screen)
         pygame.display.flip()
-
-def main():
-    initialize()
-    loadGame()
-
 
 if __name__ == '__main__':
     main()
