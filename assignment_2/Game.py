@@ -73,31 +73,38 @@ class Menu(GameState):
     def __init__(self):
         GameState.__init__(self)
         self.color = pygame.color.Color("black")
+        self.time = 0
         Globals.SCREEN.fill(pygame.color.Color("black"))
         selection = 0
     
     def render(self):
         font = pygame.font.Font(None, 64)
-        surf = font.render("MENU", True, WHITE)
+        surf = font.render("MENU", True, pygame.color.Color("red"))
         width, height = surf.get_size()
-        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 + 164))
+        Globals.SCREEN.blit(surf, (Globals.WIDTH / 2 - width / 2, 
+            Globals.HEIGHT / 2 - height / 2 + 164))
 
 
-        surf = font.render("Start Game", True, WHITE)
-        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 + 64))
+        surf = font.render("Start Game", True, pygame.color.Color("red"))
+        Globals.SCREEN.blit(surf, (Globals.WIDTH / 2 - width / 2, 
+            Globals.HEIGHT / 2 - height / 2 + 64))
 
-        surf = font.render("adjust visual brightness", True, WHITE)
-        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 36))
+        surf = font.render("adjust visual brightness", True, pygame.color.Color("red"))
+        Globals.SCREEN.blit(surf, (Globals.WIDTH / 2 - width / 2, 
+            Globals.HEIGHT / 2 - height / 2 - 36))
 
-        surf = font.render("adjust visual brightness", True, WHITE)
-        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 136))
+        surf = font.render("adjust visual brightness", True, pygame.color.Color("red"))
+        Globals.SCREEN.blit(surf, (Globals.WIDTH / 2 - width / 2, 
+            Globals.HEIGHT / 2 - height / 2 - 136))
 
-        surf = font.render("display high-scores", True, WHITE)
-        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 236))
+        surf = font.render("display high-scores", True, pygame.color.Color("red"))
+        Globals.SCREEN.blit(surf, (Globals.WIDTH / 2 - width / 2, 
+            Globals.HEIGHT / 2 - height / 2 - 236))
 
-        surf = font.render("quit", True, WHITE)
-        screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 336))
-        pygae.display.flip()
+        surf = font.render("quit", True, pygame.color.Color("red"))
+        Globals.SCREEN.blit(surf, (Globals.WIDTH / 2 - width / 2, 
+            Globals.HEIGHT / 2 - height / 2 - 336))
+        pygame.display.flip()
 
     def update(self, time):
         self.time += time
