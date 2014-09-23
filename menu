@@ -1,0 +1,63 @@
+import sys as SYS
+import glob as G
+import pygame as PG
+import pygame.mixer as PM
+import pygame.display as PDI
+import pygame.event as PE
+import pygame.font as PF
+
+BLACK = (0, 0, 0)
+WHITE = (255, 255, 255)
+
+PG.init()
+screen = PDI.set_mode((1024, 768))
+
+WIDTH = screen.get_width()
+HEIGHT = screen.get_height()
+
+
+screen.fill(BLACK)
+
+font = PF.Font(None, 64)
+surf = font.render("MENU", True, WHITE)
+width, height = surf.get_size()
+screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 + 164))
+
+
+surf = font.render("Start Game", True, WHITE)
+screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 + 64))
+
+surf = font.render("adjust visual brightness", True, WHITE)
+screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 36))
+
+surf = font.render("adjust visual brightness", True, WHITE)
+screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 136))
+
+surf = font.render("display high-scores", True, WHITE)
+screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 236))
+
+surf = font.render("quit", True, WHITE)
+screen.blit(surf, (WIDTH / 2 - width / 2, HEIGHT / 2 - height / 2 - 336))
+PDI.flip()
+
+selection = 0
+
+while True:
+    for event in PE.get():
+        if event.type == PG.QUIT:
+            SYS.exit()
+        elif event.type == PG.KEYDOWN and event.key == PG.K_UP:
+            if selection != 0:
+            	selection -= 1     
+        elif event.type == PG.KEYDOWN and event.key == PG.K_DOWN:
+            if selection != 4:
+            	selection += 1               	
+        elif event.type == PG.KEYDOWN and event.key == PG.K_ESCAPE:
+            SYS.exit()
+        elif event.type == PG.KEYDOWN and event.key == PG.K_SPACE:
+            if selection == 0:
+            	selection -= 1
+            if selection == 3:
+                state = "score"
+            if selection == 4:
+            	SYS.exit() 	   
