@@ -5,6 +5,24 @@ import random
 from Player import Player
 from Enemy import Enemy
 
+class Globals(object):
+    RUNNING = True
+    SCREEN = None
+    WIDTH = None
+    HEIGHT = None
+    FONT = None
+    STATE = None
+
+class GameState(object):
+    def __init__(self):
+        pass
+    def render(self):
+        pass
+    def update(self, time):
+        pass
+    def event(self, event):
+        pass
+
 
 def main():
     pygame.init()
