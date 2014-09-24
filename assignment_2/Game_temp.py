@@ -43,9 +43,11 @@ def main():
                 if last_key is not None:
                     for p in playerSprites:
                         p.keyPressed(last_key)
-            elif event.type == pygame.KEYDOWN:
+            elif event.type == pygame.KEYDOWN and last_key is None:
                 last_key = event.key
-            elif event.type == pygame.KEYUP:
+            elif event.type == pygame.KEYUP and event.key == last_key:
+                for p in playerSprites:
+                    p.keyReleased(event.key)
                 last_key = None
 
         enemySprites.update()

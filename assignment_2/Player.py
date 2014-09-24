@@ -7,7 +7,7 @@ from asset_loader import AssetLoader
 
 
 class Player(Character):
-    MOVE_FACTOR = 5
+    MOVE_FACTOR = 3
     SOUND_PATH = "hitSound.ogg"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
@@ -17,6 +17,8 @@ class Player(Character):
     walking_images = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
+    NUM_UPDATES_STILL = 400
+    NUM_UPDATES_WALK = 200
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -28,11 +30,25 @@ class Player(Character):
         self.direction = Player.INDEX_DOWN
         self.is_moving = False
         self.cycle = -1
+        self.num_updates = Player.NUM_UPDATES_STILL
 
     def update(self):
-        if not self.is_moving:
-            self.cycle = (self.cycle + 1) % (len(Player.still_images[self.direction]) - 1)
-            self.image = self.still_images[self.direction][self.cycle]
+        self.num_updates -= 1
+        if self.num_updates <= 0:
+            if not self.is_moving:
+                self.cycle = (self.cycle + 1) % (len(Player.still_images[self.direction]))
+                self.image = Player.still_images[self.direction][self.cycle]
+                old_rect = self.rect
+                self.rect = self.image.get_rect()
+                self.rect.center = old_rect.center
+                self.num_updates = Player.NUM_UPDATES_STILL
+            else:
+                self.cycle = (self.cycle + 1) % (len(Player.walking_images[self.direction]))
+                self.image = Player.walking_images[self.direction][self.cycle]
+                old_rect = self.rect
+                self.rect = self.image.get_rect()
+                self.rect.center = old_rect.center
+                self.num_updates = Player.NUM_UPDATES_WALK
 
     def loadResources(self):
         if Player.still_images[Player.INDEX_UP] is None:
@@ -43,39 +59,70 @@ class Player(Character):
            Player.still_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("main_still_left.png", 2, 1)
         if Player.still_images[Player.INDEX_RIGHT] is None:
            Player.still_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("main_still_right.png", 2, 1)
-
         if Player.walking_images[Player.INDEX_UP] is None:
-           Player.walking_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha("main_walking_up.png", 12, 1).reverse()
+           Player.walking_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha("main_walking_up.png", 8, 1)
+           Player.walking_images[Player.INDEX_UP].reverse()
         if Player.walking_images[Player.INDEX_DOWN] is None:
-           Player.walking_images[Player.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("main_walking_down.png", 12, 1)
+           Player.walking_images[Player.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("main_walking_down.png", 8, 1)
         if Player.walking_images[Player.INDEX_LEFT] is None:
-           Player.walking_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("main_walking_left.png", 1, 12).reverse()
+           Player.walking_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("main_walking_left.png", 1, 8)
+           Player.walking_images[Player.INDEX_LEFT].reverse()
         if Player.walking_images[Player.INDEX_RIGHT] is None:
-           Player.walking_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("main_walking_right.png", 1, 12)
+           Player.walking_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("main_walking_right.png", 1, 8)
         if Player.hitSound is None:
            Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
 
     # Returns True if the sprite moves, False otherwise
     def keyPressed(self, keyCode):
-        # if keyCode == pygame.K_UP:
-        #     self.image = Player.images[Player.INDEX_UP]
-        #     self.direction = Player.INDEX_UP
-        #     self.move(0, -Player.MOVE_FACTOR)
-        # elif keyCode == pygame.K_DOWN:
-        #     self.image = Player.images[Player.INDEX_DOWN]
-        #     self.direction = Player.INDEX_DOWN
-        #     self.move(0, Player.MOVE_FACTOR)
-        # elif keyCode == pygame.K_LEFT:
-        #     self.image = Player.images[Player.INDEX_LEFT]
-        #     self.direction = Player.INDEX_LEFT
-        #     self.move(-Player.MOVE_FACTOR, 0)
-        # elif keyCode == pygame.K_RIGHT:
-        #     self.image = Player.images[Player.INDEX_RIGHT]
-        #     self.direction = Player.INDEX_RIGHT
-        #     self.move(Player.MOVE_FACTOR, 0)
-        # else:
-        #     return False
+        if keyCode == pygame.K_UP:
+            self.direction = Player.INDEX_UP
+            self.move(0, -Player.MOVE_FACTOR)
+            if not self.is_moving:
+                self.num_updates = 0
+            self.is_moving = True
+            self.update()
+        elif keyCode == pygame.K_DOWN:
+            self.direction = Player.INDEX_DOWN
+            self.move(0, Player.MOVE_FACTOR)
+            if not self.is_moving:
+                self.num_updates = 0
+            self.is_moving = True
+            self.update()
+        elif keyCode == pygame.K_LEFT:
+            self.direction = Player.INDEX_LEFT
+            self.move(-Player.MOVE_FACTOR, 0)
+            if not self.is_moving:
+                self.num_updates = 0
+            self.is_moving = True
+            self.update()
+        elif keyCode == pygame.K_RIGHT:
+            self.direction = Player.INDEX_RIGHT
+            self.move(Player.MOVE_FACTOR, 0)
+            if not self.is_moving:
+                self.num_updates = 0
+            self.is_moving = True
+            self.update()
+        else:
+            return False
         return True
+
+    def keyReleased(self, keyCode):
+        if keyCode == pygame.K_UP:
+            self.is_moving = False
+            self.num_updates = 0
+            self.update()
+        elif keyCode == pygame.K_DOWN:
+            self.is_moving = False
+            self.num_updates = 0
+            self.update()
+        elif keyCode == pygame.K_LEFT:
+            self.is_moving = False
+            self.num_updates = 0
+            self.update()
+        elif keyCode == pygame.K_RIGHT:
+            self.is_moving = False
+            self.num_updates = 0
+            self.update()
 
     def getDirection(self):
         return self.direction
