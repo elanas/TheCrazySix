@@ -6,6 +6,7 @@ class AssetLoader():
     pygame.init()  # safe to call multiple times
     loaded_images = dict()
     loaded_sounds = dict()
+    color_key = (255, 0, 255)
 
     def __init__(self, image_path_start="", sound_path_start=""):
         self.image_path_start = image_path_start
@@ -61,7 +62,7 @@ class AssetLoader():
             start_y = img_height * curr_row
             for curr_col in range(num_cols):
                 start_x = img_width * curr_col
-                surf = pygame.Surface((img_height, img_width)).convert_alpha()
+                surf = pygame.Surface((img_width, img_height), pygame.SRCALPHA, 32).convert_alpha()
                 surf.blit(sheet, (0, 0), (start_x, start_y, img_width, img_height))
                 images.append(surf)
         return images
