@@ -21,11 +21,11 @@ class Enemy(Character):
 
         super(Enemy, self).__init__(w, h, ranX, ranY)
         self.loadResources()
-        self.image = Enemy.images[Enemy.INDEX_DOWN][0]
+        self.direction = random.randint(0, 3)
+        self.image = Enemy.images[self.direction][0]
         self.rect = self.image.get_rect()
         self.rect.x = ranX
         self.rect.y = ranY
-        self.direction = random.randint(0, 3)
         self.cycle = -1
         self.num_updates = Enemy.NUM_UPDATES_WALK
 
@@ -59,21 +59,25 @@ class Enemy(Character):
             self.direction = Enemy.INDEX_UP
             self.move(0, -1)
             self.cycle = 0
+            self.num_updates = 0
             self.update()
         elif self.direction == Enemy.INDEX_DOWN:
             self.direction = Enemy.INDEX_DOWN
             self.move(0, 1)
             self.cycle = 0
+            self.num_updates = 0
             self.update()
         elif self.direction == Enemy.INDEX_LEFT:
             self.direction = Enemy.INDEX_LEFT
             self.move(-1, 0)
             self.cycle = 0
+            self.num_updates = 0
             self.update()
         elif self.direction == Enemy.INDEX_RIGHT:
             self.direction = Enemy.INDEX_RIGHT
             self.move(1, 0)
             self.cycle = 0
+            self.num_updates = 0
             self.update()
 
     def checkCollisions(self):
