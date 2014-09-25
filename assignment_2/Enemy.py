@@ -49,18 +49,6 @@ class Enemy(Character):
         if Enemy.images[Enemy.INDEX_RIGHT] is None:
             Enemy.images[Enemy.INDEX_RIGHT] = Enemy.loader.load_spritesheet_alpha("zombie_walking_right.png", 3, 1)
 
-    def loadImage(self, partialPath):
-        return pygame.image.load(os.path.join(
-            Enemy.PATH_START, partialPath)).convert_alpha()
-
-    def getDirection(self):
-        return self.direction
-
-    def getOppositeDirection(self):
-        # this only works if the indicies are defined such that the opposite
-        # directions are off by 2 (every other)
-        return (self.direction + 2) % 4
-
     def move(self, xDelta, yDelta):
         super(Enemy, self).move(xDelta, yDelta)
         self.checkCollisions()
@@ -68,21 +56,25 @@ class Enemy(Character):
     def moveRandom(self):
 
         if self.direction == Enemy.INDEX_UP:
-            self.image = Enemy.images[Enemy.INDEX_UP]
             self.direction = Enemy.INDEX_UP
             self.move(0, -1)
+            self.cycle = 0
+            self.update()
         elif self.direction == Enemy.INDEX_DOWN:
-            self.image = Enemy.images[Enemy.INDEX_DOWN]
             self.direction = Enemy.INDEX_DOWN
             self.move(0, 1)
+            self.cycle = 0
+            self.update()
         elif self.direction == Enemy.INDEX_LEFT:
-            self.image = Enemy.images[Enemy.INDEX_LEFT]
             self.direction = Enemy.INDEX_LEFT
             self.move(-1, 0)
+            self.cycle = 0
+            self.update()
         elif self.direction == Enemy.INDEX_RIGHT:
-            self.image = Enemy.images[Enemy.INDEX_RIGHT]
             self.direction = Enemy.INDEX_RIGHT
             self.move(1, 0)
+            self.cycle = 0
+            self.update()
 
     def checkCollisions(self):
         if self.rect.left < 0:
