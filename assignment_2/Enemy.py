@@ -34,13 +34,13 @@ class Enemy(Character):
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
-            Enemy.images[Enemy.INDEX_UP] = Player.loader.load_spritesheet_alpha("zombie_walking_up.png", 1, 2)
+            Enemy.images[Enemy.INDEX_UP] = Player.loader.load_spritesheet_alpha("zombie_walking_up.png", 3, 1)
         if Enemy.images[Enemy.INDEX_DOWN] is None:
-            Enemy.images[Enemy.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("zombie_walking_down.png", 1, 2)
+            Enemy.images[Enemy.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("zombie_walking_down.png", 3, 1)
         if Enemy.images[Enemy.INDEX_LEFT] is None:
-            Enemy.images[Enemy.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("zombie_walking_left.png", 2, 1)
+            Enemy.images[Enemy.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("zombie_walking_left.png", 3, 1)
         if Enemy.images[Enemy.INDEX_RIGHT] is None:
-            Enemy.images[Enemy.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("zombie_walking_right.png", 2, 1)
+            Enemy.images[Enemy.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("zombie_walking_right.png", 3, 1)
 
     def loadImage(self, partialPath):
         return pygame.image.load(os.path.join(
