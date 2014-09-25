@@ -36,7 +36,8 @@ def main():
                 running = False
             elif event.type == pygame.USEREVENT + 1:
                 for p in enemySprites:
-                    p.direction = random.randint(0, 3)
+                    p.setDirection(random.randint(0, 3))
+                    # p.direction = random.randint(0, 3)
             elif event.type == pygame.USEREVENT + 2:
                 for p in enemySprites:
                     p.moveRandom()

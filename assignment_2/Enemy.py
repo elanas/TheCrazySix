@@ -13,7 +13,7 @@ class Enemy(Character):
     INDEX_RIGHT = 3
     images = [None, None, None, None]
     loader = AssetLoader("images")
-    NUM_UPDATES_WALK = 700
+    NUM_UPDATES_WALK = 500
 
     def __init__(self, w, h):
         ranX = random.randint(0, w)
@@ -54,30 +54,35 @@ class Enemy(Character):
         self.checkCollisions()
 
     def moveRandom(self):
-
         if self.direction == Enemy.INDEX_UP:
             self.direction = Enemy.INDEX_UP
             self.move(0, -1)
-            self.cycle = 0
-            self.num_updates = 0
-            self.update()
+            # self.cycle = 0
+            # self.num_updates = 0
+            # self.update()
         elif self.direction == Enemy.INDEX_DOWN:
             self.direction = Enemy.INDEX_DOWN
             self.move(0, 1)
-            self.cycle = 0
-            self.num_updates = 0
-            self.update()
+            # self.cycle = 0
+            # self.num_updates = 0
+            # self.update()
         elif self.direction == Enemy.INDEX_LEFT:
             self.direction = Enemy.INDEX_LEFT
             self.move(-1, 0)
-            self.cycle = 0
-            self.num_updates = 0
-            self.update()
+            # self.cycle = 0
+            # self.num_updates = 0
+            # self.update()
         elif self.direction == Enemy.INDEX_RIGHT:
             self.direction = Enemy.INDEX_RIGHT
             self.move(1, 0)
-            self.cycle = 0
+            # self.cycle = 0
+            # self.num_updates = 0
+            # self.update()
+
+    def setDirection(self, direction):
+        if not self.direction == direction:
             self.num_updates = 0
+            self.direction = direction
             self.update()
 
     def checkCollisions(self):
