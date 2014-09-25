@@ -4,15 +4,16 @@ import pygame
 import random
 
 from Character import Character
-
+from asset_loader import AssetLoader
 
 class Enemy(Character):
-    PATH_START = "images"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
     INDEX_UP = 2
     INDEX_RIGHT = 3
     images = [None, None, None, None]
+    loader = AssetLoader("images")
+    NUM_UPDATES_WALK = 200
 
     def __init__(self, w, h):
         ranX = random.randint(0, w)
@@ -20,25 +21,26 @@ class Enemy(Character):
 
         super(Enemy, self).__init__(w, h, ranX, ranY)
         self.loadResources()
-        self.image = Enemy.images[Enemy.INDEX_DOWN]
+        self.image = Enemy.images[Enemy.INDEX_DOWN][0]
         self.rect = self.image.get_rect()
         self.rect.x = ranX
         self.rect.y = ranY
         self.direction = random.randint(0, 3)
+        self.cycle = -1
+        self.num_updates = Player.NUM_UPDATES_WALK
 
     def update(self):
         pass
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
-            Enemy.images[Enemy.INDEX_UP] = self.loadImage("goblin_up.png")
+            Enemy.images[Enemy.INDEX_UP] = Player.loader.load_spritesheet_alpha("main_still_up.png", 1, 2)
         if Enemy.images[Enemy.INDEX_DOWN] is None:
-            Enemy.images[Enemy.INDEX_DOWN] = self.loadImage("goblin_down.png")
+            Enemy.images[Enemy.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("main_still_down.png", 1, 2)
         if Enemy.images[Enemy.INDEX_LEFT] is None:
-            Enemy.images[Enemy.INDEX_LEFT] = self.loadImage("goblin_left.png")
+            Enemy.images[Enemy.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("main_still_left.png", 2, 1)
         if Enemy.images[Enemy.INDEX_RIGHT] is None:
-            Enemy.images[Enemy.INDEX_RIGHT] = self.loadImage(
-                "goblin_right.png")
+            Enemy.images[Enemy.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("main_still_right.png", 2, 1)
 
     def loadImage(self, partialPath):
         return pygame.image.load(os.path.join(
