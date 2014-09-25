@@ -52,13 +52,13 @@ class Player(Character):
 
     def loadResources(self):
         if Player.still_images[Player.INDEX_UP] is None:
-           Player.still_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha("main_still_up.png", 1, 2)
+           Player.still_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha("zombie_walking_up.png", 1, 2)
         if Player.still_images[Player.INDEX_DOWN] is None:
-           Player.still_images[Player.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("main_still_down.png", 1, 2)
+           Player.still_images[Player.INDEX_DOWN] = Player.loader.load_spritesheet_alpha("zombie_walking_down.png", 1, 2)
         if Player.still_images[Player.INDEX_LEFT] is None:
-           Player.still_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("main_still_left.png", 2, 1)
+           Player.still_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha("zombie_walking_left.png", 2, 1)
         if Player.still_images[Player.INDEX_RIGHT] is None:
-           Player.still_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("main_still_right.png", 2, 1)
+           Player.still_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha("zombie_walking_right.png", 2, 1)
         if Player.walking_images[Player.INDEX_UP] is None:
            Player.walking_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha("main_walking_up.png", 8, 1)
            Player.walking_images[Player.INDEX_UP].reverse()
