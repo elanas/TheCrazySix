@@ -17,7 +17,7 @@ class Player(Character):
     walking_images = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
-    NUM_UPDATES_STILL = 400
+    NUM_UPDATES_STILL = 700
     NUM_UPDATES_WALK = 200
 
     def __init__(self, w, h, x, y):
