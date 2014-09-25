@@ -27,10 +27,17 @@ class Enemy(Character):
         self.rect.y = ranY
         self.direction = random.randint(0, 3)
         self.cycle = -1
-        self.num_updates = Player.NUM_UPDATES_WALK
+        self.num_updates = Enemy.NUM_UPDATES_WALK
 
     def update(self):
-        pass
+        self.num_updates -= 1
+        if self.num_updates <= 0:
+            self.cycle = (self.cycle + 1) % (len(Enemy.images[self.direction]))
+            self.image = Enemy.images[self.direction][self.cycle]
+            old_rect = self.rect
+            self.rect = self.image.get_rect()
+            self.rect.center = old_rect.center
+            self.num_updates = Enemy.NUM_UPDATES_WALK
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
