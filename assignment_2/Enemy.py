@@ -41,9 +41,9 @@ class Enemy(Character):
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
-            Enemy.images[Enemy.INDEX_UP] = Enemy.loader.load_spritesheet_alpha("zombie_walking_up.png", 3, 1)
+            Enemy.images[Enemy.INDEX_UP] = Enemy.loader.load_spritesheet_alpha("zombie_walking_up.png", 1, 3)
         if Enemy.images[Enemy.INDEX_DOWN] is None:
-            Enemy.images[Enemy.INDEX_DOWN] = Enemy.loader.load_spritesheet_alpha("zombie_walking_down.png", 3, 1)
+            Enemy.images[Enemy.INDEX_DOWN] = Enemy.loader.load_spritesheet_alpha("zombie_walking_down.png", 1, 3)
         if Enemy.images[Enemy.INDEX_LEFT] is None:
             Enemy.images[Enemy.INDEX_LEFT] = Enemy.loader.load_spritesheet_alpha("zombie_walking_left.png", 3, 1)
         if Enemy.images[Enemy.INDEX_RIGHT] is None:
