@@ -13,7 +13,7 @@ class Enemy(Character):
     INDEX_RIGHT = 3
     images = [None, None, None, None]
     loader = AssetLoader("images")
-    NUM_UPDATES_WALK = 200
+    NUM_UPDATES_WALK = 700
 
     def __init__(self, w, h):
         ranX = random.randint(0, w)
