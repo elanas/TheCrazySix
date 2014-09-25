@@ -88,16 +88,16 @@ class Enemy(Character):
     def checkCollisions(self):
         if self.rect.left < 0:
             self.rect.left = 0
-            self.direction = Enemy.INDEX_RIGHT
+            self.setDirection(Enemy.INDEX_RIGHT)
         elif self.rect.right > self.w:
             self.rect.right = self.w
-            self.direction = Enemy.INDEX_LEFT
+            self.setDirection(Enemy.INDEX_LEFT)
         if self.rect.top < 0:
             self.rect.top = 0
-            self.direction = Enemy.INDEX_DOWN
+            self.setDirection(Enemy.INDEX_DOWN)
         elif self.rect.bottom > self.h:
             self.rect.bottom = self.h
-            self.direction = Enemy.INDEX_UP
+            self.setDirection(Enemy.INDEX_UP)
 
 
 #
