@@ -75,7 +75,7 @@ class Menu(GameState):
         self.color = pygame.color.Color("black")
         self.time = 0
         Globals.SCREEN.fill(pygame.color.Color("black"))
-        selection = 0
+        self.selection = 0
     
     def render(self):
         font = pygame.font.Font(None, 64)
@@ -113,19 +113,19 @@ class Menu(GameState):
         if event.type == pygame.QUIT:
             SYS.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-            if selection != 0:
-            	selection -= 1
+            if self.selection != 0:
+            	self.selection -= 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-            if selection != 4:
-            	selection += 1
+            if self.selection != 4:
+            	self.selection += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             SYS.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            if selection == 0:
+            if self.selection == 0:
             	Globals.STATE = Game()
-            if selection == 3:
+            if self.selection == 3:
                 Globals.STATE = Score()
-            if selection == 4:
+            if self.selection == 4:
             	SYS.exit()
 
 def initialize():
