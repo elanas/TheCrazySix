@@ -113,20 +113,12 @@ class Menu(GameState):
             sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             if self.selection == 0:
-<<<<<<< HEAD
-            	Globals.STATE = Game()
-            if self.selection == 3:
-                Globals.STATE = Score()
-            if self.selection == 4:
-            	SYS.exit()
-=======
             	Globals.STATE = MainGame()
             if self.selection == 3:
                 # Globals.STATE = Score()
                 pass
             if self.selection == 4:
             	sys.exit()
->>>>>>> FETCH_HEAD
 
 def initialize():
     pygame.init()
