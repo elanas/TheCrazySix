@@ -1,13 +1,14 @@
 # Load Libraries
 import os
 import pygame
+import math
 
 from Character import Character
 from asset_loader import AssetLoader
 
 
 class Player(Character):
-    MOVE_FACTOR = 3
+    MOVE_VELOCITY = 2
     SOUND_PATH = "hitSound.ogg"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
@@ -17,8 +18,8 @@ class Player(Character):
     walking_images = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
-    NUM_UPDATES_STILL = 700
-    NUM_UPDATES_WALK = 200
+    WALK_ANIM_TIME = .02
+    STILL_ANIM_TIME = .5
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -30,25 +31,28 @@ class Player(Character):
         self.direction = Player.INDEX_DOWN
         self.is_moving = False
         self.cycle = -1
-        self.num_updates = Player.NUM_UPDATES_STILL
+        self.time_elapsed = 0
+        self.anim_time = Player.STILL_ANIM_TIME
 
-    def update(self):
-        self.num_updates -= 1
-        if self.num_updates <= 0:
+    def update(self, time):
+        self.time_elapsed += time
+        if self.time_elapsed >= self.anim_time:
             if not self.is_moving:
                 self.cycle = (self.cycle + 1) % (len(Player.still_images[self.direction]))
                 self.image = Player.still_images[self.direction][self.cycle]
                 old_rect = self.rect
                 self.rect = self.image.get_rect()
                 self.rect.center = old_rect.center
-                self.num_updates = Player.NUM_UPDATES_STILL
             else:
                 self.cycle = (self.cycle + 1) % (len(Player.walking_images[self.direction]))
                 self.image = Player.walking_images[self.direction][self.cycle]
                 old_rect = self.rect
                 self.rect = self.image.get_rect()
                 self.rect.center = old_rect.center
-                self.num_updates = Player.NUM_UPDATES_WALK
+            self.time_elapsed = 0
+
+        if self.is_moving:
+            self.move(time)
 
     def loadResources(self):
         if Player.still_images[Player.INDEX_UP] is None:
@@ -72,57 +76,49 @@ class Player(Character):
         if Player.hitSound is None:
            Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
 
-    # Returns True if the sprite moves, False otherwise
     def keyPressed(self, keyCode):
         if keyCode == pygame.K_UP:
             self.direction = Player.INDEX_UP
-            self.move(0, -Player.MOVE_FACTOR)
             if not self.is_moving:
-                self.num_updates = 0
+                self.anim_time = Player.WALK_ANIM_TIME
+                self.time_elapsed = Player.WALK_ANIM_TIME
             self.is_moving = True
-            self.update()
         elif keyCode == pygame.K_DOWN:
             self.direction = Player.INDEX_DOWN
-            self.move(0, Player.MOVE_FACTOR)
             if not self.is_moving:
-                self.num_updates = 0
+                self.anim_time = Player.WALK_ANIM_TIME
+                self.time_elapsed = Player.WALK_ANIM_TIME
             self.is_moving = True
-            self.update()
         elif keyCode == pygame.K_LEFT:
             self.direction = Player.INDEX_LEFT
-            self.move(-Player.MOVE_FACTOR, 0)
             if not self.is_moving:
-                self.num_updates = 0
+                self.anim_time = Player.WALK_ANIM_TIME
+                self.time_elapsed = Player.WALK_ANIM_TIME
             self.is_moving = True
-            self.update()
         elif keyCode == pygame.K_RIGHT:
             self.direction = Player.INDEX_RIGHT
-            self.move(Player.MOVE_FACTOR, 0)
             if not self.is_moving:
-                self.num_updates = 0
+                self.anim_time = Player.WALK_ANIM_TIME
+                self.time_elapsed = Player.WALK_ANIM_TIME
             self.is_moving = True
-            self.update()
-        else:
-            return False
-        return True
 
     def keyReleased(self, keyCode):
-        if keyCode == pygame.K_UP:
+        if keyCode == pygame.K_UP and self.direction == Player.INDEX_UP:
             self.is_moving = False
-            self.num_updates = 0
-            self.update()
-        elif keyCode == pygame.K_DOWN:
+            self.anim_time = Player.STILL_ANIM_TIME
+            self.time_elapsed = Player.STILL_ANIM_TIME
+        elif keyCode == pygame.K_DOWN and self.direction == Player.INDEX_DOWN:
             self.is_moving = False
-            self.num_updates = 0
-            self.update()
-        elif keyCode == pygame.K_LEFT:
+            self.anim_time = Player.STILL_ANIM_TIME
+            self.time_elapsed = Player.STILL_ANIM_TIME
+        elif keyCode == pygame.K_LEFT and self.direction == Player.INDEX_LEFT:
             self.is_moving = False
-            self.num_updates = 0
-            self.update()
-        elif keyCode == pygame.K_RIGHT:
+            self.anim_time = Player.STILL_ANIM_TIME
+            self.time_elapsed = Player.STILL_ANIM_TIME
+        elif keyCode == pygame.K_RIGHT and self.direction == Player.INDEX_RIGHT:
             self.is_moving = False
-            self.num_updates = 0
-            self.update()
+            self.anim_time = Player.STILL_ANIM_TIME
+            self.time_elapsed = Player.STILL_ANIM_TIME
 
     def getDirection(self):
         return self.direction
@@ -132,8 +128,26 @@ class Player(Character):
         # directions are off by 2 (every other)
         return (self.direction + 2) % 4
 
-    def move(self, xDelta, yDelta):
-        super(Player, self).move(xDelta, yDelta)
+    def getMoveNormalized(self):
+        if not self.is_moving:
+            return 0, 0
+        elif self.direction == Player.INDEX_UP:
+            return 0, -1
+        elif self.direction == Player.INDEX_DOWN:
+            return 0, 1
+        elif self.direction == Player.INDEX_LEFT:
+            return -1, 0
+        elif self.direction == Player.INDEX_RIGHT:
+            return 1, 0
+
+    def move(self, time):
+        norm_delta = self.getMoveNormalized()
+        dist_delta = [math.ceil(abs(x) * time * Player.MOVE_VELOCITY) for x in norm_delta]
+        if norm_delta[0] < 0:
+            dist_delta[0] *= -1
+        if norm_delta[1] < 0:
+            dist_delta[1] *= -1
+        super(Player, self).move(dist_delta[0], dist_delta[1])
         self.checkCollisions()
 
     def checkCollisions(self):
@@ -153,36 +167,3 @@ class Player(Character):
 
     def playSound(self):
         Player.hitSound.play()
-
-
-#
-# REMOVE THIS BEFORE SUBMITTING
-def testPlayer():
-    pygame.init()
-    (width, height) = (700, 500)
-    screen = pygame.display.set_mode((width, height))
-    running = True
-    sprites = pygame.sprite.Group()
-    p = Player(width, height, width / 2, height / 2)
-    sprites.add(p)
-    last_key = None
-    while running:
-        # handle pygame events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.KEYDOWN:
-                last_key = event.key
-            elif event.type == pygame.KEYUP:
-                last_key = None
-        if last_key is not None:
-            p.keyPressed(last_key)
-        sprites.update()
-        screen.fill((0, 0, 0))
-        sprites.draw(screen)
-        pygame.display.flip()
-
-if __name__ == "__main__":
-    testPlayer()
-#
-# END OF CODE TO REMOVE

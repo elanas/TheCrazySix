@@ -4,19 +4,10 @@ import random
 import pygame.color
 import pygame.font
 
-from Player import Player
-from Enemy import Enemy
+from GameState import GameState
 from Globals import Globals
-
-class GameState(object):
-    def __init__(self):
-        pass
-    def render(self):
-        pass
-    def update(self, time):
-        pass
-    def event(self, event):
-        pass
+from MainGame import MainGame
+import sys
 
 class Title(GameState):
     # FADEINTIME = 5.0
@@ -75,7 +66,7 @@ class Menu(GameState):
         self.color = pygame.color.Color("black")
         self.time = 0
         Globals.SCREEN.fill(pygame.color.Color("black"))
-        selection = 0
+        self.selection = 0
     
     def render(self):
         font = pygame.font.Font(None, 64)
@@ -111,29 +102,31 @@ class Menu(GameState):
 
     def event(self, event):
         if event.type == pygame.QUIT:
-            SYS.exit()
+            sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-            if selection != 0:
-            	selection -= 1
+            if self.selection != 0:
+            	self.selection -= 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-            if selection != 4:
-            	selection += 1
+            if self.selection != 4:
+            	self.selection += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            SYS.exit()
+            sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-            if selection == 0:
-            	Globals.STATE = Game()
-            if selection == 3:
-                Globals.STATE = Score()
-            if selection == 4:
-            	SYS.exit()
+            if self.selection == 0:
+            	Globals.STATE = MainGame()
+            if self.selection == 3:
+                # Globals.STATE = Score()
+                pass
+            if self.selection == 4:
+            	sys.exit()
 
 def initialize():
     pygame.init()
     Globals.WIDTH = 700
     Globals.HEIGHT = 500
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.STATE = Title()
+    # Globals.STATE = Title()
+    Globals.STATE = MainGame()
 
 def loadGame():
     pass
