@@ -4,19 +4,10 @@ import random
 import pygame.color
 import pygame.font
 
-from Player import Player
-from Enemy import Enemy
+from GameState import GameState
 from Globals import Globals
-
-class GameState(object):
-    def __init__(self):
-        pass
-    def render(self):
-        pass
-    def update(self, time):
-        pass
-    def event(self, event):
-        pass
+from MainGame import MainGame
+import sys
 
 class Title(GameState):
     # FADEINTIME = 5.0
@@ -111,7 +102,7 @@ class Menu(GameState):
 
     def event(self, event):
         if event.type == pygame.QUIT:
-            SYS.exit()
+            sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
             if self.selection != 0:
             	self.selection -= 1
@@ -119,21 +110,31 @@ class Menu(GameState):
             if self.selection != 4:
             	self.selection += 1
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            SYS.exit()
+            sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             if self.selection == 0:
+<<<<<<< HEAD
             	Globals.STATE = Game()
             if self.selection == 3:
                 Globals.STATE = Score()
             if self.selection == 4:
             	SYS.exit()
+=======
+            	Globals.STATE = MainGame()
+            if self.selection == 3:
+                # Globals.STATE = Score()
+                pass
+            if self.selection == 4:
+            	sys.exit()
+>>>>>>> FETCH_HEAD
 
 def initialize():
     pygame.init()
     Globals.WIDTH = 700
     Globals.HEIGHT = 500
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.STATE = Title()
+    # Globals.STATE = Title()
+    Globals.STATE = MainGame()
 
 def loadGame():
     pass

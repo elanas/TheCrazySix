@@ -1,19 +1,21 @@
 # Load Libraries
 import os
 import pygame
+import math
 import random
 
 from Character import Character
 from asset_loader import AssetLoader
 
 class Enemy(Character):
+    MOVE_VELOCITY = .0001
     INDEX_DOWN = 0
     INDEX_LEFT = 1
     INDEX_UP = 2
     INDEX_RIGHT = 3
     images = [None, None, None, None]
     loader = AssetLoader("images")
-    NUM_UPDATES_WALK = 500
+    WALK_ANIM_TIME = .5
 
     def __init__(self, w, h):
         ranX = random.randint(0, w)
@@ -27,17 +29,26 @@ class Enemy(Character):
         self.rect.x = ranX
         self.rect.y = ranY
         self.cycle = -1
-        self.num_updates = Enemy.NUM_UPDATES_WALK
+        self.time_to_change_direction = 2000
+        self.time_elapsed_anim = 0
+        self.time_elapsed_direction = 0
 
-    def update(self):
-        self.num_updates -= 1
-        if self.num_updates <= 0:
+    def update(self, time):
+        self.time_elapsed_anim += time
+        self.time_elapsed_direction += time
+        if False and self.time_elapsed_direction >= self.time_to_change_direction:
+            self.direction = random.randint(0, 3)
+            self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
+            self.cycle = -1
+            self.time_elapsed_direction = 0
+        if self.time_elapsed_anim >= Enemy.WALK_ANIM_TIME:
             self.cycle = (self.cycle + 1) % (len(Enemy.images[self.direction]))
             self.image = Enemy.images[self.direction][self.cycle]
             old_rect = self.rect
             self.rect = self.image.get_rect()
             self.rect.center = old_rect.center
-            self.num_updates = Enemy.NUM_UPDATES_WALK
+            self.time_elapsed_anim = 0
+        # self.moveRandom(time)
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
@@ -53,37 +64,29 @@ class Enemy(Character):
         super(Enemy, self).move(xDelta, yDelta)
         self.checkCollisions()
 
-    def moveRandom(self):
+    def moveRandom(self, time):
+        norm_delta = self.getMoveNormalized()
+        dist_delta = [math.ceil(abs(x) * time * Enemy.MOVE_VELOCITY) for x in norm_delta]
+        if norm_delta[0] < 0:
+            dist_delta[0] *= -1
+        if norm_delta[1] < 0:
+            dist_delta[1] *= -1
+        self.move(dist_delta[0], dist_delta[1])
+
+    def getMoveNormalized(self):
         if self.direction == Enemy.INDEX_UP:
-            self.direction = Enemy.INDEX_UP
-            self.move(0, -1)
-            # self.cycle = 0
-            # self.num_updates = 0
-            # self.update()
+            return 0, -1
         elif self.direction == Enemy.INDEX_DOWN:
-            self.direction = Enemy.INDEX_DOWN
-            self.move(0, 1)
-            # self.cycle = 0
-            # self.num_updates = 0
-            # self.update()
+            return 0, 1
         elif self.direction == Enemy.INDEX_LEFT:
-            self.direction = Enemy.INDEX_LEFT
-            self.move(-1, 0)
-            # self.cycle = 0
-            # self.num_updates = 0
-            # self.update()
+            return -1, 0
         elif self.direction == Enemy.INDEX_RIGHT:
-            self.direction = Enemy.INDEX_RIGHT
-            self.move(1, 0)
-            # self.cycle = 0
-            # self.num_updates = 0
-            # self.update()
+            return 1, 0
 
     def setDirection(self, direction):
         if not self.direction == direction:
-            self.num_updates = 0
             self.direction = direction
-            self.update()
+            self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
 
     def checkCollisions(self):
         if self.rect.left < 0:
@@ -98,42 +101,3 @@ class Enemy(Character):
         elif self.rect.bottom > self.h:
             self.rect.bottom = self.h
             self.setDirection(Enemy.INDEX_UP)
-
-
-#
-# REMOVE THIS BEFORE SUBMITTING
-def testEnemy():
-    pygame.init()
-    (width, height) = (700, 500)
-    screen = pygame.display.set_mode((width, height))
-    running = True
-    sprites = pygame.sprite.Group()
-
-    for x in range(13):
-        sprites.add(Enemy(width, height))
-
-    # Ideally, each computer object should have a unique timer
-    # for changing direction or other movements
-    # Alternative: Randomizing timer interval per object
-    pygame.time.set_timer(pygame.USEREVENT + 1, 2000)
-
-    while running:
-        # handle pygame events
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                running = False
-            if event.type == pygame.USEREVENT + 1:
-                for p in sprites:
-                    p.direction = random.randint(0, 3)
-
-        for p in sprites:
-            p.moveRandom()
-        sprites.update()
-        screen.fill((0, 0, 0))
-        sprites.draw(screen)
-        pygame.display.flip()
-
-if __name__ == "__main__":
-    testEnemy()
-#
-# END OF CODE TO REMOVE
