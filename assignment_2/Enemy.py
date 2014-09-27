@@ -48,7 +48,7 @@ class Enemy(Character):
             self.rect = self.image.get_rect()
             self.rect.center = old_rect.center
             self.time_elapsed_anim = 0
-        # self.moveRandom(time)
+        self.moveRandom(time)
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
