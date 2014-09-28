@@ -3,7 +3,9 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from Enemy import Enemy
-from Game import Title
+
+# from Menu import Menu
+
 
 
 class MainGame(GameState):
@@ -29,12 +31,16 @@ class MainGame(GameState):
     def event(self, event):
         print "hello"
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            # Globals.STATE = Highscore()
+            Globals.STATE = Highscore()
+            pass
         elif event.type == pygame.KEYDOWN:
             for p in self.playerSprites:
                 p.keyPressed(event.key)
         elif event.type == pygame.KEYUP:
             for p in self.playerSprites:
                 p.keyReleased(event.key)
+
+from Highscore import Highscore
+
 
 
