@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 from GameState import GameState
 from Globals import Globals
