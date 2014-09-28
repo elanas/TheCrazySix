@@ -2,7 +2,6 @@ import pygame
 
 from GameState import GameState
 from Globals import Globals
-from Menu import Menu
 
 class Highscore(GameState):
     # FADEINTIME = 5.0
@@ -28,3 +27,4 @@ class Highscore(GameState):
             Globals.STATE = Menu()
         # elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
         #     Globals.STATE = Menu()
+from Menu import Menu
