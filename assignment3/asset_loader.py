@@ -2,7 +2,6 @@
 from os import path
 import pygame
 
-
 class AssetLoader():
     pygame.init()  # safe to call multiple times
     loaded_images = dict()
