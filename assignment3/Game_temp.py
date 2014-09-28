@@ -5,7 +5,6 @@ import random
 from Player import Player
 from Enemy import Enemy
 
-
 def main():
     pygame.init()
     (width, height) = (700, 500)
@@ -60,7 +59,6 @@ def main():
 
 if __name__ == '__main__':
     main()
-
 
 # pygame.init()
 
