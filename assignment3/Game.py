@@ -12,7 +12,6 @@ import sys
 
 MIN_UPDATE_INTERVAL = .05
 
-
 # class Highscore(GameState):
 # FADEINTIME = 5.0
 # FADEOUTTIME = 0.2
@@ -39,8 +38,6 @@ MIN_UPDATE_INTERVAL = .05
 # elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
 # Globals.STATE = Menu()
 
-
-# >>>>>>> 548dd95d1f22a2e6b04292e74af33a7ebbd2d324
 def initialize():
     pygame.init()
     Globals.WIDTH = 700
