@@ -29,7 +29,6 @@ class MainGame(GameState):
         self.enemySprites.update(time)
 
     def event(self, event):
-        print "hello"
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.STATE = Highscore()
             pass

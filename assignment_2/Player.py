@@ -8,7 +8,7 @@ from asset_loader import AssetLoader
 
 
 class Player(Character):
-    MOVE_VELOCITY = 2
+    MOVE_VELOCITY = 200
     SOUND_PATH = "hitSound.ogg"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
@@ -18,7 +18,7 @@ class Player(Character):
     walking_images = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
-    WALK_ANIM_TIME = .02
+    WALK_ANIM_TIME = .055
     STILL_ANIM_TIME = .5
 
     def __init__(self, w, h, x, y):
@@ -142,11 +142,7 @@ class Player(Character):
 
     def move(self, time):
         norm_delta = self.getMoveNormalized()
-        dist_delta = [math.ceil(abs(x) * time * Player.MOVE_VELOCITY) for x in norm_delta]
-        if norm_delta[0] < 0:
-            dist_delta[0] *= -1
-        if norm_delta[1] < 0:
-            dist_delta[1] *= -1
+        dist_delta = [x * time * Player.MOVE_VELOCITY for x in norm_delta]
         super(Player, self).move(dist_delta[0], dist_delta[1])
         self.checkCollisions()
 

@@ -8,14 +8,14 @@ from Character import Character
 from asset_loader import AssetLoader
 
 class Enemy(Character):
-    MOVE_VELOCITY = .0001
+    MOVE_VELOCITY = 75
     INDEX_DOWN = 0
     INDEX_LEFT = 1
     INDEX_UP = 2
     INDEX_RIGHT = 3
     images = [None, None, None, None]
     loader = AssetLoader("images")
-    WALK_ANIM_TIME = .5
+    WALK_ANIM_TIME = .25
 
     def __init__(self, w, h):
         ranX = random.randint(0, w)
@@ -29,14 +29,14 @@ class Enemy(Character):
         self.rect.x = ranX
         self.rect.y = ranY
         self.cycle = -1
-        self.time_to_change_direction = 2000
+        self.time_to_change_direction = (random.random() * 1.5) + .5
         self.time_elapsed_anim = 0
         self.time_elapsed_direction = 0
 
     def update(self, time):
         self.time_elapsed_anim += time
         self.time_elapsed_direction += time
-        if False and self.time_elapsed_direction >= self.time_to_change_direction:
+        if self.time_elapsed_direction >= self.time_to_change_direction:
             self.direction = random.randint(0, 3)
             self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
             self.cycle = -1
@@ -66,11 +66,7 @@ class Enemy(Character):
 
     def moveRandom(self, time):
         norm_delta = self.getMoveNormalized()
-        dist_delta = [math.ceil(abs(x) * time * Enemy.MOVE_VELOCITY) for x in norm_delta]
-        if norm_delta[0] < 0:
-            dist_delta[0] *= -1
-        if norm_delta[1] < 0:
-            dist_delta[1] *= -1
+        dist_delta = [x * time * Enemy.MOVE_VELOCITY for x in norm_delta]
         self.move(dist_delta[0], dist_delta[1])
 
     def getMoveNormalized(self):
