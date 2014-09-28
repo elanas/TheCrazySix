@@ -5,7 +5,6 @@ from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
 
-
 class Highscore(GameState):
     # FADEINTIME = 5.0
     # FADEOUTTIME = 0.2
