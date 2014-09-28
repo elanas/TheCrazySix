@@ -15,8 +15,9 @@ class Menu(GameState):
         self.selection = 0
     
     def render(self):
-        font = pygame.font.Font(None, 64)
-        TITLE_PADDING = 80
+        font = pygame.font.SysFont("hannotatesc", 64)
+        # font.
+        TITLE_PADDING = 50
         VERT_SPACING = 75
 
         START = "Start Game"
@@ -24,8 +25,6 @@ class Menu(GameState):
         BRIGHTNESS = "Brightness"
         SCORE = "Highscores"
         QUIT = "Quit"
-
-
 
         RED = pygame.color.Color("red")
         WHITE = pygame.color.Color("white")
@@ -48,44 +47,24 @@ class Menu(GameState):
             QUIT_SELECT = WHITE
 
 
-        # title_surf = font.render(GAME_TITLE, True, pygame.color.Color("white"))
-        # title_rect = title_surf.get_rect()
-        # title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        # title_rect.centery = Globals.SCREEN.get_rect().centery
-        # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
-        # Globals.SCREEN.blit(title_surf, title_rect)
-
-
         title_surf = font.render(START, True, GAME_SELECT)
         title_rect = title_surf.get_rect()
-        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx - 20
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
 
         op1 = font.render(BRIGHTNESS, True, BRIGHT_SELECT)
-        # title_rect = op1.get_rect()
-        # title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        # title_rect.centery = Globals.SCREEN.get_rect().centery
-        # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op1, title_rect)
 
 
         op2 = font.render(VOLUME, True, AUDIO_SELECT)
-        # title_rect = op2.get_rect()
-        # title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        # title_rect.centery = Globals.SCREEN.get_rect().centery
-        # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op2, title_rect)
 
 
         op3 = font.render(SCORE, True, SCORE_SELECT)
-        # title_rect = op3.get_rect()
-        # title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        # title_rect.centery = Globals.SCREEN.get_rect().centery
-        # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op3, title_rect)
 
