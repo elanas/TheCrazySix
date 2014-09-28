@@ -7,7 +7,6 @@ import random
 from Character import Character
 from asset_loader import AssetLoader
 
-
 class Enemy(Character):
     MOVE_VELOCITY = 75
     INDEX_DOWN = 0
