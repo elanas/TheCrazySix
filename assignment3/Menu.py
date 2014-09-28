@@ -8,7 +8,6 @@ from BorderPlayer import BorderPlayer
 
 
 class Menu(GameState):
-
     def __init__(self):
         GameState.__init__(self)
         self.color = pygame.color.Color("black")
@@ -16,13 +15,17 @@ class Menu(GameState):
         self.selection = 0
         self.playerSprites = pygame.sprite.Group()
         self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, 0, 0, Player.INDEX_DOWN))
+            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+                         0, 0, Player.INDEX_DOWN))
         self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, 0, Player.INDEX_LEFT))
+            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+                         Globals.WIDTH, 0, Player.INDEX_LEFT))
         self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, 0, Globals.HEIGHT, Player.INDEX_RIGHT))
+            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+                         0, Globals.HEIGHT, Player.INDEX_RIGHT))
         self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
+            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+                         Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
@@ -46,15 +49,15 @@ class Menu(GameState):
         SCORE_SELECT = COLOR
         QUIT_SELECT = COLOR
 
-        if(self.selection is 0):
+        if (self.selection is 0):
             GAME_SELECT = SELECT_COLOR
-        elif(self.selection is 1):
+        elif (self.selection is 1):
             BRIGHT_SELECT = SELECT_COLOR
-        elif(self.selection is 2):
+        elif (self.selection is 2):
             AUDIO_SELECT = SELECT_COLOR
-        elif(self.selection is 3):
+        elif (self.selection is 3):
             SCORE_SELECT = SELECT_COLOR
-        elif(self.selection is 4):
+        elif (self.selection is 4):
             QUIT_SELECT = SELECT_COLOR
 
         title_surf = font.render(START, True, GAME_SELECT)
@@ -114,6 +117,7 @@ class Menu(GameState):
 
     def updateSelection(self):
         pygame.display.flip()
+
 
 from MainGame import MainGame
 from Highscore import Highscore

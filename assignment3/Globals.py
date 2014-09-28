@@ -2,6 +2,7 @@
 import pygame
 import random
 
+
 class Globals(object):
     RUNNING = True
     SCREEN = None

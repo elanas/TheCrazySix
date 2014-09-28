@@ -1,6 +1,6 @@
-
 from os import path
 import pygame
+
 
 class AssetLoader():
     pygame.init()  # safe to call multiple times
@@ -62,9 +62,9 @@ class AssetLoader():
             start_y = img_height * curr_row
             for curr_col in range(num_cols):
                 start_x = img_width * curr_col
-                surf = pygame.Surface(
-                    (img_width, img_height), pygame.SRCALPHA, 32).convert_alpha()
-                surf.blit(
-                    sheet, (0, 0), (start_x, start_y, img_width, img_height))
+                surf = pygame.Surface((img_width, img_height),
+                                      pygame.SRCALPHA, 32).convert_alpha()
+                surf.blit(sheet, (0, 0),
+                          (start_x, start_y, img_width, img_height))
                 images.append(surf)
         return images

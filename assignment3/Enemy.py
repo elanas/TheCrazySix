@@ -7,6 +7,7 @@ import random
 from Character import Character
 from asset_loader import AssetLoader
 
+
 class Enemy(Character):
     MOVE_VELOCITY = 75
     INDEX_DOWN = 0
@@ -52,17 +53,21 @@ class Enemy(Character):
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
-            Enemy.images[Enemy.INDEX_UP] = Enemy.loader.load_spritesheet_alpha(
-                "zombie_walking_up.png", 1, 3)
+            Enemy.images[Enemy.INDEX_UP] = \
+                Enemy.loader.load_spritesheet_alpha(
+                    "zombie_walking_up.png", 1, 3)
         if Enemy.images[Enemy.INDEX_DOWN] is None:
-            Enemy.images[Enemy.INDEX_DOWN] = Enemy.loader.load_spritesheet_alpha(
-                "zombie_walking_down.png", 1, 3)
+            Enemy.images[Enemy.INDEX_DOWN] = \
+                Enemy.loader.load_spritesheet_alpha(
+                    "zombie_walking_down.png", 1, 3)
         if Enemy.images[Enemy.INDEX_LEFT] is None:
-            Enemy.images[Enemy.INDEX_LEFT] = Enemy.loader.load_spritesheet_alpha(
-                "zombie_walking_left.png", 3, 1)
+            Enemy.images[Enemy.INDEX_LEFT] = \
+                Enemy.loader.load_spritesheet_alpha(
+                    "zombie_walking_left.png", 3, 1)
         if Enemy.images[Enemy.INDEX_RIGHT] is None:
-            Enemy.images[Enemy.INDEX_RIGHT] = Enemy.loader.load_spritesheet_alpha(
-                "zombie_walking_right.png", 3, 1)
+            Enemy.images[Enemy.INDEX_RIGHT] = \
+                Enemy.loader.load_spritesheet_alpha(
+                    "zombie_walking_right.png", 3, 1)
 
     def move(self, xDelta, yDelta):
         super(Enemy, self).move(xDelta, yDelta)

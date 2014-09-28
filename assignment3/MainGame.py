@@ -4,6 +4,7 @@ from Globals import Globals
 from Player import Player
 from Enemy import Enemy
 
+
 class MainGame(GameState):
     NUM_ENEMY = 13
 
@@ -12,8 +13,8 @@ class MainGame(GameState):
         self.playerSprites = pygame.sprite.Group()
         for x in range(MainGame.NUM_ENEMY):
             self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
-        self.playerSprites.add(
-            Player(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH / 2, Globals.HEIGHT / 2))
+        self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
+                                      Globals.WIDTH / 2, Globals.HEIGHT / 2))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)

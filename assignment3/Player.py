@@ -38,15 +38,15 @@ class Player(Character):
         self.time_elapsed += time
         if self.time_elapsed >= self.anim_time:
             if not self.is_moving:
-                self.cycle = (self.cycle + 1) % (
-                    len(Player.still_images[self.direction]))
+                self.cycle = (self.cycle + 1) % \
+                             (len(Player.still_images[self.direction]))
                 self.image = Player.still_images[self.direction][self.cycle]
                 old_rect = self.rect
                 self.rect = self.image.get_rect()
                 self.rect.center = old_rect.center
             else:
-                self.cycle = (self.cycle + 1) % (
-                    len(Player.walking_images[self.direction]))
+                self.cycle = (self.cycle + 1) % \
+                             (len(Player.walking_images[self.direction]))
                 self.image = Player.walking_images[self.direction][self.cycle]
                 old_rect = self.rect
                 self.rect = self.image.get_rect()
@@ -58,31 +58,38 @@ class Player(Character):
 
     def loadResources(self):
         if Player.still_images[Player.INDEX_UP] is None:
-            Player.still_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha(
-                "main_still_up.png", 1, 2)
+            Player.still_images[Player.INDEX_UP] = \
+                Player.loader.load_spritesheet_alpha("main_still_up.png", 1, 2)
         if Player.still_images[Player.INDEX_DOWN] is None:
-            Player.still_images[Player.INDEX_DOWN] = Player.loader.load_spritesheet_alpha(
-                "main_still_down.png", 1, 2)
+            Player.still_images[Player.INDEX_DOWN] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_still_down.png", 1, 2)
         if Player.still_images[Player.INDEX_LEFT] is None:
-            Player.still_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha(
-                "main_still_left.png", 2, 1)
+            Player.still_images[Player.INDEX_LEFT] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_still_left.png", 2, 1)
         if Player.still_images[Player.INDEX_RIGHT] is None:
-            Player.still_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha(
-                "main_still_right.png", 2, 1)
+            Player.still_images[Player.INDEX_RIGHT] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_still_right.png", 2, 1)
         if Player.walking_images[Player.INDEX_UP] is None:
-            Player.walking_images[Player.INDEX_UP] = Player.loader.load_spritesheet_alpha(
-                "main_walking_up.png", 8, 1)
+            Player.walking_images[Player.INDEX_UP] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_walking_up.png", 8, 1)
             Player.walking_images[Player.INDEX_UP].reverse()
         if Player.walking_images[Player.INDEX_DOWN] is None:
-            Player.walking_images[Player.INDEX_DOWN] = Player.loader.load_spritesheet_alpha(
-                "main_walking_down.png", 8, 1)
+            Player.walking_images[Player.INDEX_DOWN] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_walking_down.png", 8, 1)
         if Player.walking_images[Player.INDEX_LEFT] is None:
-            Player.walking_images[Player.INDEX_LEFT] = Player.loader.load_spritesheet_alpha(
-                "main_walking_left.png", 1, 8)
+            Player.walking_images[Player.INDEX_LEFT] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_walking_left.png", 1, 8)
             Player.walking_images[Player.INDEX_LEFT].reverse()
         if Player.walking_images[Player.INDEX_RIGHT] is None:
-            Player.walking_images[Player.INDEX_RIGHT] = Player.loader.load_spritesheet_alpha(
-                "main_walking_right.png", 1, 8)
+            Player.walking_images[Player.INDEX_RIGHT] = \
+                Player.loader.load_spritesheet_alpha(
+                    "main_walking_right.png", 1, 8)
         if Player.hitSound is None:
             Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
 
@@ -125,7 +132,8 @@ class Player(Character):
             self.is_moving = False
             self.anim_time = Player.STILL_ANIM_TIME
             self.time_elapsed = Player.STILL_ANIM_TIME
-        elif keyCode == pygame.K_RIGHT and self.direction == Player.INDEX_RIGHT:
+        elif keyCode == pygame.K_RIGHT \
+                and self.direction == Player.INDEX_RIGHT:
             self.is_moving = False
             self.anim_time = Player.STILL_ANIM_TIME
             self.time_elapsed = Player.STILL_ANIM_TIME

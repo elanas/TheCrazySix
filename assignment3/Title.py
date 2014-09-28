@@ -12,21 +12,21 @@ TITLE_PADDING = 100
 
 
 class Title(GameState):
-    # FADEINTIME = 5.0
-    # FADEOUTTIME = 0.2
-
     def __init__(self):
         GameState.__init__(self)
         self.time = 0.0
         self.playerSprites = pygame.sprite.Group()
+        self.playerSprites.add(BorderPlayer(
+            Globals.WIDTH, Globals.HEIGHT, 0, 0, Player.INDEX_DOWN))
+        self.playerSprites.add(BorderPlayer(
+            Globals.WIDTH, Globals.HEIGHT,
+            Globals.WIDTH, 0, Player.INDEX_LEFT))
         self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, 0, 0, Player.INDEX_DOWN))
+            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+                         0, Globals.HEIGHT, Player.INDEX_RIGHT))
         self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, 0, Player.INDEX_LEFT))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, 0, Globals.HEIGHT, Player.INDEX_RIGHT))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
+            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+                         Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)

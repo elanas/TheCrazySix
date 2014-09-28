@@ -5,23 +5,25 @@ from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
 
+
 class Highscore(GameState):
-    # FADEINTIME = 5.0
-    # FADEOUTTIME = 0.2
 
     def __init__(self):
         GameState.__init__(self)
         self.color = pygame.color.Color("black")
         self.time = 0.0
         self.playerSprites = pygame.sprite.Group()
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, 0, 0, Player.INDEX_DOWN))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, 0, Player.INDEX_LEFT))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, 0, Globals.HEIGHT, Player.INDEX_RIGHT))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
+        self.playerSprites.add(BorderPlayer(
+            Globals.WIDTH, Globals.HEIGHT, 0, 0, Player.INDEX_DOWN))
+        self.playerSprites.add(BorderPlayer(
+            Globals.WIDTH, Globals.HEIGHT,
+            Globals.WIDTH, 0, Player.INDEX_LEFT))
+        self.playerSprites.add(BorderPlayer(
+            Globals.WIDTH, Globals.HEIGHT, 0,
+            Globals.HEIGHT, Player.INDEX_RIGHT))
+        self.playerSprites.add(BorderPlayer(
+            Globals.WIDTH, Globals.HEIGHT,
+            Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
@@ -68,6 +70,5 @@ class Highscore(GameState):
     def event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.STATE = Menu()
-        # elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
-        #     Globals.STATE = Menu()
+
 from Menu import Menu
