@@ -9,3 +9,4 @@ class Globals(object):
     HEIGHT = None
     FONT = None
     STATE = None
+    BACKGROUND_COLOR = (165, 242, 212)

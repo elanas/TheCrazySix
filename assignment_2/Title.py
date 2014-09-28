@@ -6,10 +6,9 @@ from Menu import Menu
 from BorderPlayer import BorderPlayer
 from Player import Player
 
-GAME_TITLE = "Unnamed Game"
+GAME_TITLE = "~The Crazy Six~"
 TITLE_COLOR = pygame.color.Color("black")
 TITLE_PADDING = 100
-BACKGROUND_COLOR = (255, 255, 255)
 
 class Title(GameState):
     # FADEINTIME = 5.0
@@ -24,7 +23,7 @@ class Title(GameState):
         self.playerSprites.add(BorderPlayer(Globals.WIDTH, Globals.HEIGHT, Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
     
     def render(self):
-    	Globals.SCREEN.fill(BACKGROUND_COLOR)
+    	Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         font = pygame.font.Font(None, 64)
         title_surf = font.render(GAME_TITLE, True, TITLE_COLOR)
         title_rect = title_surf.get_rect()
@@ -40,6 +39,7 @@ class Title(GameState):
     def update(self, time):
         self.time += time
         self.playerSprites.update(time)
+        
     def event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.RUNNING = False
