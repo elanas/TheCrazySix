@@ -3,8 +3,6 @@ import sys
 
 from GameState import GameState
 from Globals import Globals
-from MainGame import MainGame
-from Highscore import Highscore
 from Player import Player
 from BorderPlayer import BorderPlayer
 
@@ -114,3 +112,7 @@ class Menu(GameState):
             	sys.exit()
     def updateSelection(self):
         pygame.display.flip()
+
+from MainGame import MainGame
+from Highscore import Highscore
+
