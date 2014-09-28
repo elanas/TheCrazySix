@@ -4,7 +4,6 @@ from Globals import Globals
 from Player import Player
 from Enemy import Enemy
 
-
 class MainGame(GameState):
     NUM_ENEMY = 13
 
