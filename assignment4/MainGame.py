@@ -24,6 +24,8 @@ class MainGame(GameState):
     def update(self, time):
         self.playerSprites.update(time)
         self.enemySprites.update(time)
+        for p in self.playerSprites:
+            pygame.sprite.spritecollide(p, self.enemySprites, True)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
