@@ -203,3 +203,24 @@ class Player(Character):
 
     def playSound(self):
         Player.hitSound.play()
+
+    def checkWallCollision(self, wall_group):
+        for wall_sprite in spritecollide(self, wall_group, False):
+            wall_rect = wall_sprite.get_rect()
+            if self.direction == Player.INDEX_UP:
+                self.rect.top = wall_rect.bottom + 1
+            elif self.direction == Player.INDEX_DOWN:
+                self.rect.bottom = wall.rect.top - 1
+            elif self.direction == Player.INDEX_LEFT:
+                self.rect.left = wall.rect.right + 1
+            elif self.direction == Player.INDEX_RIGHT:
+                self.rect.right = wall.rect.left - 1
+            # if self.rect.right > wall_rect.left and self.rect.left < wall_rect.right:
+            #     self.rect.right = wall_rect.left - 1
+            # elif self.rect.left < wall_rect.right and self.rect.right > wall_rect.left:
+            #     self.rect.left = wall_rect.right + 1
+
+            # if self.rect.top < wall_rect.bottom and self.rect.bottom > wall_rect.top:
+            #     self.rect.top = wall_rect.bottom + 1
+            # elif self.rect.bottom > wall_rect.top and self.rect.top < wall_rect.bottom:
+            #     self.rect.bottom = wall_rect.top - 1
