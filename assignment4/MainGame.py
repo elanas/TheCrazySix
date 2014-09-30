@@ -3,6 +3,7 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from Enemy import Enemy
+from Wall import Wall
 
 
 class MainGame(GameState):
@@ -11,15 +12,20 @@ class MainGame(GameState):
     def __init__(self):
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
+        self.wallSprites = pygame.sprite.Group()
         for x in range(MainGame.NUM_ENEMY):
             self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
         self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
                                       Globals.WIDTH / 2, Globals.HEIGHT / 2))
+        # creates walls where we want them...
+        self.wallSprites.add(Wall(200, 20, 100, 300))
+
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         self.enemySprites.draw(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+        self.wallSprites.draw(Globals.SCREEN)
 
     def update(self, time):
         self.playerSprites.update(time)
