@@ -21,7 +21,8 @@ class Wall(Border):
 
         # self.image = Player.still_images[Player.INDEX_DOWN][0]
         # self.rect = self.image.get_rect()
-        self.rect = pygame.draw.rect(self.image, (0, 0, 255), (x, y, w, h))
+        pygame.draw.rect(self.image, (0, 0, 255), (x, y, w, h))
+        self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
 

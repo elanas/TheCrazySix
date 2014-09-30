@@ -17,15 +17,14 @@ class MainGame(GameState):
         for x in range(MainGame.NUM_ENEMY):
             self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
         self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
-                                      Globals.WIDTH / 2, Globals.HEIGHT / 2))
+                                      100, 100))
         # creates walls where we want them...
-        
         self.wallSprites.add(Wall(self.WALL_WIDTH, Globals.HEIGHT/2, Globals.WIDTH/2, 0))
-        #will be height of the player
+        # #will be height of the player
 
         self.wallSprites.add(Wall(150, self.WALL_WIDTH, Globals.HEIGHT/2 + self.WALL_WIDTH, 
-            Globals.HEIGHT/2 + 50))
-        self.wallSprites.add(Wall(Globals.WIDTH/2 - 150, self.WALL_WIDTH, 0, (Globals.HEIGHT/2 + 50) + self.WALL_WIDTH ))
+            Globals.HEIGHT/2 + 70))
+        self.wallSprites.add(Wall(Globals.WIDTH/2 - 150, self.WALL_WIDTH, 0, (Globals.HEIGHT/2 + 70) + self.WALL_WIDTH ))
 
 
 
@@ -38,6 +37,8 @@ class MainGame(GameState):
     def update(self, time):
         self.playerSprites.update(time)
         self.enemySprites.update(time)
+        for p in self.playerSprites:
+            p.checkWallCollision(self.wallSprites)
         # for p in self.playerSprites:
         #     pygame.sprite.spritecollide(p, self.enemySprites, True)
 
