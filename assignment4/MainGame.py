@@ -8,6 +8,7 @@ from Wall import Wall
 
 class MainGame(GameState):
     NUM_ENEMY = 13
+    WALL_WIDTH = 50
 
     def __init__(self):
         self.enemySprites = pygame.sprite.Group()
@@ -18,7 +19,14 @@ class MainGame(GameState):
         self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
                                       Globals.WIDTH / 2, Globals.HEIGHT / 2))
         # creates walls where we want them...
-        self.wallSprites.add(Wall(200, 20, 100, 300))
+        
+        self.wallSprites.add(Wall(self.WALL_WIDTH, Globals.HEIGHT/2, Globals.WIDTH/2, 0))
+        #will be height of the player
+
+        self.wallSprites.add(Wall(150, self.WALL_WIDTH, Globals.HEIGHT/2 + self.WALL_WIDTH, 
+            Globals.HEIGHT/2 + 50))
+        self.wallSprites.add(Wall(Globals.WIDTH/2 - 150, self.WALL_WIDTH, 0, (Globals.HEIGHT/2 + 50) + self.WALL_WIDTH ))
+
 
 
     def render(self):
