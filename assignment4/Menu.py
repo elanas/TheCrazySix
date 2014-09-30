@@ -6,6 +6,7 @@ from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
 
+MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
 class Menu(GameState):
     def __init__(self):
@@ -29,7 +30,7 @@ class Menu(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        Globals.SCREEN.blit(Globals.MENU_BACKGROUND, [0, 0])
+        Globals.SCREEN.blit(MENU_BACKGROUND, [0, 0])
         font = pygame.font.SysFont("hannotatesc", 64)
         # font.
         TITLE_PADDING = 75
