@@ -29,6 +29,7 @@ class Menu(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+        Globals.SCREEN.blit(Globals.MENU_BACKGROUND, [0, 0])
         font = pygame.font.SysFont("hannotatesc", 64)
         # font.
         TITLE_PADDING = 75

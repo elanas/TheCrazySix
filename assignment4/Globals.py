@@ -11,3 +11,5 @@ class Globals(object):
     FONT = None
     STATE = None
     BACKGROUND_COLOR = (165, 242, 212)
+    MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
+    INITIAL_BACKGROUND = pygame.image.load("images/menu_background.png")

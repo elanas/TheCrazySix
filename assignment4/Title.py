@@ -30,6 +30,7 @@ class Title(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+        Globals.SCREEN.blit(Globals.INITIAL_BACKGROUND, [0, 0])
         font = pygame.font.Font(None, 64)
         title_surf = font.render(GAME_TITLE, True, TITLE_COLOR)
         title_rect = title_surf.get_rect()
