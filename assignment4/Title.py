@@ -9,7 +9,7 @@ from Player import Player
 GAME_TITLE = "~The Crazy Six~"
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 100
-BACKGROUND_IMG = pygame.image.load("images/menu_background.png")
+BACKGROUND_IMG = pygame.image.load("images/titlepage_image.jpg")
 
 
 
