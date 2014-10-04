@@ -12,7 +12,7 @@ class TileManager(object):
         self.tile_sprite_sheet = tile_sprite_sheet
         self.tileDefinitions = dict()
         self.tileMap = list()
-        self.defaultTile = None
+        # self.defaultTile = None
         self.readTileDefinitions()
         self.readTileMap()
 
@@ -30,8 +30,8 @@ class TileManager(object):
             solid = not int(solidStr) == 0
             curr_tile = TileType(symbol, tile_id, solid,
                                  self.tile_sprite_sheet)
-            if self.defaultTile is None:
-                self.defaultTile = curr_tile
+            # if self.defaultTile is None:
+            #     self.defaultTile = curr_tile
             self.tileDefinitions[symbol] = curr_tile
         if len(self.tileDefinitions) == 0:
             raise Exception("The tile definition file cannot be empty.")
@@ -43,13 +43,9 @@ class TileManager(object):
             self.tileMap.append(list())
             for i in range(0, len(row)):
                 if row[i] == ' ':
-                    self.tileMap[rowNum].append(self.defaultTile)
+                    self.tileMap[rowNum].append(None)
                 else:
                     self.tileMap[rowNum].append(self.getTile(row[i]))
-            if not rowNum == 0 and not \
-                    len(self.tileMap[rowNum]) == len(self.tileMap[rowNum - 1]):
-                raise Exception(
-                    "The tile map provided does not have uniform line length.")
             rowNum += 1
 
     def getTileMap(self):

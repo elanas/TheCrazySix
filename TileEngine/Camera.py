@@ -3,12 +3,21 @@ from Globals import Globals
 
 
 class Camera(object):
+	BOTTOM_PADDING = 30
 
 	def __init__(self, tileEngine, container):
 		self.tileEngine = tileEngine
 		self.container = container
 		self.viewpoint = container.copy()
+		self.initView()
 
+	def initView(self):
+		tileHeight = self.tileEngine.tile_rect.height
+		tileWidth = self.tileEngine.tile_rect.width
+		numRows = self.tileEngine.getNumRows()
+		self.viewpoint.bottom = tileHeight * numRows + Camera.BOTTOM_PADDING
+		self.viewpoint.centerx =  (tileWidth * self.tileEngine.getMaxCols()) / 2 - self.viewpoint.x
+		# self.viewpoint.x = (self.viewpoint.x + self.viewpoint.width - tileWidth * (self.tileEngine.getMaxCols() / 2)) / 2
 
 	def render(self, screen):
 		curr_y = self.viewpoint.top
