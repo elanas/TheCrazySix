@@ -1,3 +1,3 @@
-- 0 0
-+ 1 0
-* 2 1
+- wool_colored_white.png 0
++ wool_colored_gray.png 0
+* wool_colored_white.png 1

@@ -12,8 +12,9 @@ class Camera(object):
 		self.initView()
 
 	def initView(self):
-		tileHeight = self.tileEngine.tile_rect.height
-		tileWidth = self.tileEngine.tile_rect.width
+		tileRect = self.tileEngine.get_tile_rect()
+		tileHeight = tileRect.height
+		tileWidth = tileRect.width
 		numRows = self.tileEngine.getNumRows()
 		self.viewpoint.bottom = tileHeight * numRows + Camera.BOTTOM_PADDING
 		self.viewpoint.centerx =  (tileWidth * self.tileEngine.getMaxCols()) / 2 - self.viewpoint.x

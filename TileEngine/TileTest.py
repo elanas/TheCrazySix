@@ -8,7 +8,7 @@ class TileTest(GameState):
     FACTOR = 10
 
     def __init__(self):
-        self.tileEngine = TileEngine("test_def.txt", "test_map.txt", "tiles.png", 1, 3, 0.5)
+        self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
         self.camera = Camera(self.tileEngine, pygame.Rect(0, 0, Globals.WIDTH, Globals.HEIGHT))
         self.keyCode = None
 

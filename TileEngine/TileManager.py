@@ -1,18 +1,19 @@
 from TileType import TileType
+from os import path
+from asset_loader import AssetLoader
 
 
 class TileManager(object):
     TILE_ID_INDEX = 0
     SOLID_INDEX = 1
 
-    def __init__(self, definitionPath, mapPath, tile_sprite_sheet):
+    def __init__(self, definitionPath, mapPath):
+        self.loader = AssetLoader(path.join("images", "tiles"))
         self.tileDefinitions = list()
         self.definitionPath = definitionPath
         self.mapPath = mapPath
-        self.tile_sprite_sheet = tile_sprite_sheet
         self.tileDefinitions = dict()
         self.tileMap = list()
-        # self.defaultTile = None
         self.readTileDefinitions()
         self.readTileMap()
 
@@ -25,13 +26,9 @@ class TileManager(object):
             if not len(fields) == 3:
                 raise Exception(
                     "The tile engine definition file is incorrectly formed")
-            symbol, tile_id_str, solidStr = fields
-            tile_id = int(tile_id_str)
+            symbol, img_path, solidStr = fields
             solid = not int(solidStr) == 0
-            curr_tile = TileType(symbol, tile_id, solid,
-                                 self.tile_sprite_sheet)
-            # if self.defaultTile is None:
-            #     self.defaultTile = curr_tile
+            curr_tile = TileType(self.loader, symbol, img_path, solid)
             self.tileDefinitions[symbol] = curr_tile
         if len(self.tileDefinitions) == 0:
             raise Exception("The tile definition file cannot be empty.")
@@ -50,6 +47,9 @@ class TileManager(object):
 
     def getTileMap(self):
         return self.tileMap
+
+    def getTileRect(self):
+        return self.tileDefinitions.itervalues().next().image.get_rect()
 
     def getTile(self, symbol):
         try:
