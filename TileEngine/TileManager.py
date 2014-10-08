@@ -30,7 +30,6 @@ class TileManager(object):
             if len(fields) == 3:
                 fields.append(None)
             symbol, img_path, solidStr, specialField = fields
-            print specialField
             solid = not int(solidStr) == 0
             curr_tile = TileType(self.loader, symbol, img_path, solid, specialField)
             self.tileDefinitions[symbol] = curr_tile
