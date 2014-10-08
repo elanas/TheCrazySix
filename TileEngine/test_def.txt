@@ -1,3 +1,5 @@
 - wool_colored_white.png 0
 + wool_colored_gray.png 0
-* wool_colored_white.png 1
+# the special attribute ("stair") is optional
+# oh and look, a comment!
+* wool_colored_white.png 1 stair
