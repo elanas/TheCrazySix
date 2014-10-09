@@ -10,10 +10,11 @@ class TileEngine(object):
         self.num_cols = num_cols
         self.num_rows = num_rows
         self.tileManager = TileManager(definitionPath, mapPath)
+        self.tileRect = self.tileManager.getTileRect()
         self.tileMap = self.tileManager.getTileMap()
 
     def get_tile_rect(self):
-        return self.tileManager.getTileRect()
+        return self.tileRect
 
     def getNumRows(self):
         return len(self.tileMap)
@@ -27,31 +28,38 @@ class TileEngine(object):
     def getMaxCols(self):
         return max([len(row) for row in self.tileMap])
 
+    def getBottomCenterX(self):
+        last_row = self.tileMap[-1]
+        print len(last_row) / 2 * self.tileRect.width
+        return len(last_row) / 2 * self.tileRect.width
+
     def get_tile_image(self, x_coords, y_coords):
         num_rows = len(self.tileMap)
-        tile_rect = self.get_tile_rect()
+        tile_rect = self.get_tile_rect().copy()
         row_num = int(y_coords / tile_rect.height)
         col_num = int(x_coords / tile_rect.width)
-        image = None
         tile = None
-        if row_num < 0 or row_num >= num_rows or col_num < 0 or col_num >= len(self.tileMap[row_num]):
-            tile = None
-        else:
+        image = None
+        if self.is_coord_valid(row_num, col_num):
             tile = self.tileMap[row_num][col_num]
-        if tile is None:
-            image = pygame.Surface((tile_rect.width, tile_rect.height)).convert()
-            image.fill(TileEngine.EMPTY_COLOR)
-        else:
+        if tile is not None:
             image = tile.image
-        area = image.get_rect().copy()
+
         remainder_y = y_coords % tile_rect.height
         remainder_x = x_coords % tile_rect.width
-        if not remainder_y == 0:
-            area.y += remainder_y
-            area.height -= remainder_y
-        if not remainder_x == 0:
-            area.x += remainder_x
-            area.width -= remainder_x
-        if not remainder_x == 0 or not remainder_y == 0:
-            image = image.subsurface(area)
-        return image
+        if remainder_y > 0:
+            tile_rect.y += remainder_y
+            tile_rect.height -= remainder_y
+        if remainder_x > 0:
+            tile_rect.x += remainder_x
+            tile_rect.width -= remainder_x
+        if not remainder_y == 0 or not remainder_x == 0:
+            if image is not None:
+                image = image.subsurface(tile_rect)
+        tile_rect.x = x_coords
+        tile_rect.y = y_coords
+        return image, tile_rect
+
+
+    def is_coord_valid(self, row_num, col_num):
+        return 0 <= row_num and row_num < len(self.tileMap) and 0 <= col_num and col_num < len(self.tileMap[row_num])
