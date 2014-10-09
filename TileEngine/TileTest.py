@@ -28,6 +28,19 @@ class TileTest(GameState):
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
-            self.keyCode = event.key
+            if event.key == pygame.K_ESCAPE:
+                Globals.RUNNING = False
+            elif event.key == pygame.K_r or event.key == pygame.K_F5:
+                self.reloadCamera()
+            else:
+                self.keyCode = event.key
         elif event.type == pygame.KEYUP and event.key == self.keyCode:
             self.keyCode = None
+
+    def reloadCamera(self):
+        try:
+            self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
+            self.camera.tileEngine = self.tileEngine
+            print "Reloaded Tile Engine"
+        except Exception as e:
+            print "Reload failed: ", e
