@@ -4,39 +4,70 @@ from TileEngine import TileEngine
 from Camera import Camera
 import pygame
 
+
 class TileTest(GameState):
     FACTOR = 10
+    INDEX_DOWN = 0
+    INDEX_UP = 1
+    INDEX_LEFT = 2
+    INDEX_RIGHT = 3
 
     def __init__(self):
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
-        self.camera = Camera(self.tileEngine, pygame.Rect(0, 0, Globals.WIDTH, Globals.HEIGHT))
+        self.camera = Camera(self.tileEngine, pygame.Rect(
+            0, 0, Globals.WIDTH, Globals.HEIGHT))
         self.keyCode = None
-        self.testPoint = (Globals.WIDTH / 2, int(Globals.HEIGHT - self.camera.tileEngine.get_tile_rect().height * 3.5))
-        self.object_radius = self.camera.tileEngine.get_tile_rect().height * 2
+        self.testPoint = [Globals.WIDTH / 2, int(Globals.HEIGHT -
+                          self.camera.tileEngine.get_tile_rect().height * 3.5)]
+        self.object_radius = \
+            self.camera.tileEngine.get_tile_rect().height * 1.5
+        self.direction = -1
 
     def render(self):
         self.camera.render(Globals.SCREEN)
-        self.drawSolid()
+        self.checkCollisions()
         self.drawSpecial()
-        pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 5)
+        pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 6)
 
-    def drawSolid(self):
-        solid_tiles = self.camera.getSolidObjects(self.testPoint, self.object_radius)
-        for tile in solid_tiles:
-            pass
+    def checkCollisions(self):
+        solid_tiles = \
+            self.camera.get_solid_tiles(self.testPoint, self.object_radius)
+        solid_rects = [pair.rect for pair in solid_tiles]
+        curr_rect = \
+            pygame.Rect(self.testPoint[0] - 3, self.testPoint[1] - 3, 6, 6)
+        for i in curr_rect.collidelistall(solid_rects):
+            wall_rect = solid_rects[i]
+            if self.direction == TileTest.INDEX_UP:
+                curr_rect.top = wall_rect.bottom
+            elif self.direction == TileTest.INDEX_DOWN:
+                curr_rect.bottom = wall_rect.top
+            elif self.direction == TileTest.INDEX_LEFT:
+                curr_rect.left = wall_rect.right
+            elif self.direction == TileTest.INDEX_RIGHT:
+                curr_rect.right = wall_rect.left
+
+        self.testPoint[1] = curr_rect.top + 3
+        self.testPoint[0] = curr_rect.left + 3
 
     def drawSpecial(self):
-        pass
+        special_tiles = \
+            self.camera.get_special_tiles(self.testPoint, self.object_radius)
+        for tile in special_tiles:
+            pygame.draw.rect(Globals.SCREEN, (0, 251, 255), tile.rect)
 
     def update(self, time):
         if self.keyCode is not None:
             if self.keyCode == pygame.K_UP:
+                self.direction = TileTest.INDEX_UP
                 self.camera.move(0, -TileTest.FACTOR)
             elif self.keyCode == pygame.K_DOWN:
+                self.direction = TileTest.INDEX_DOWN
                 self.camera.move(0, TileTest.FACTOR)
             elif self.keyCode == pygame.K_LEFT:
+                self.direction = TileTest.INDEX_LEFT
                 self.camera.move(-TileTest.FACTOR, 0)
             elif self.keyCode == pygame.K_RIGHT:
+                self.direction = TileTest.INDEX_RIGHT
                 self.camera.move(TileTest.FACTOR, 0)
 
     def event(self, event):

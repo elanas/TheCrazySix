@@ -60,12 +60,14 @@ class TileEngine(object):
         tile, tile_rect = self.get_tile(x_coords, y_coords, False)
         full_tile_rect = self.get_tile_rect()
         image = tile.image
-        if image is not None and (tile_rect.width != full_tile_rect.width or tile_rect.height != full_tile_rect.height):
+        if image is not None and \
+            (tile_rect.width != full_tile_rect.width or
+                tile_rect.height != full_tile_rect.height):
             image = image.subsurface(tile_rect)
         tile_rect.x = x_coords
         tile_rect.y = y_coords
         return image, tile_rect
 
-
     def is_coord_valid(self, row_num, col_num):
-        return 0 <= row_num and row_num < len(self.tileMap) and 0 <= col_num and col_num < len(self.tileMap[row_num])
+        return 0 <= row_num and row_num < len(self.tileMap) and \
+            0 <= col_num and col_num < len(self.tileMap[row_num])

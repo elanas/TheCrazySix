@@ -21,7 +21,8 @@ class TileManager(object):
     def readTileDefinitions(self):
         lines = [line.strip() for line in open(self.definitionPath)]
         for definition in lines:
-            if len(definition) == 0 or definition[0] == TileManager.COMMENT_CHAR:
+            if len(definition) == 0 or \
+                    definition[0] == TileManager.COMMENT_CHAR:
                 continue
             fields = definition.split()
             if not len(fields) == 3 and not len(fields) == 4:
@@ -31,7 +32,8 @@ class TileManager(object):
                 fields.append(None)
             symbol, img_path, solidStr, specialField = fields
             solid = not int(solidStr) == 0
-            curr_tile = TileType(self.loader, symbol, img_path, solid, specialField)
+            curr_tile = \
+                TileType(self.loader, symbol, img_path, solid, specialField)
             self.tileDefinitions[symbol] = curr_tile
         if len(self.tileDefinitions) == 0:
             raise Exception("The tile definition file cannot be empty.")

@@ -18,7 +18,13 @@ class TileType(object):
     def load_image(self, loader, img_path):
         self.image = loader.load_image(img_path)
 
+    @property
     def is_empty(self):
         return self is TileType.EMPTY_TILE
+
+    @property
+    def is_special(self):
+        return self.special_attr is not None and \
+            self.special_attr != TileType.EMPTY_ATTR
 
 TileType.EMPTY_TILE = TileType(None, None, None, True, TileType.EMPTY_ATTR)
