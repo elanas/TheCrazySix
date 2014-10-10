@@ -6,6 +6,7 @@ from asset_loader import AssetLoader
 class TileManager(object):
     TILE_ID_INDEX = 0
     SOLID_INDEX = 1
+    COMMENT_CHAR = '#'
 
     def __init__(self, definitionPath, mapPath):
         self.loader = AssetLoader(path.join("images", "tiles"))
@@ -20,15 +21,19 @@ class TileManager(object):
     def readTileDefinitions(self):
         lines = [line.strip() for line in open(self.definitionPath)]
         for definition in lines:
-            if len(definition) == 0:
+            if len(definition) == 0 or \
+                    definition[0] == TileManager.COMMENT_CHAR:
                 continue
             fields = definition.split()
-            if not len(fields) == 3:
+            if not len(fields) == 3 and not len(fields) == 4:
                 raise Exception(
                     "The tile engine definition file is incorrectly formed")
-            symbol, img_path, solidStr = fields
+            if len(fields) == 3:
+                fields.append(None)
+            symbol, img_path, solidStr, specialField = fields
             solid = not int(solidStr) == 0
-            curr_tile = TileType(self.loader, symbol, img_path, solid)
+            curr_tile = \
+                TileType(self.loader, symbol, img_path, solid, specialField)
             self.tileDefinitions[symbol] = curr_tile
         if len(self.tileDefinitions) == 0:
             raise Exception("The tile definition file cannot be empty.")
