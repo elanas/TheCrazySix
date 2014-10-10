@@ -11,9 +11,22 @@ class TileTest(GameState):
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
         self.camera = Camera(self.tileEngine, pygame.Rect(0, 0, Globals.WIDTH, Globals.HEIGHT))
         self.keyCode = None
+        self.testPoint = (Globals.WIDTH / 2, int(Globals.HEIGHT - self.camera.tileEngine.get_tile_rect().height * 3.5))
+        self.object_radius = self.camera.tileEngine.get_tile_rect().height * 2
 
     def render(self):
         self.camera.render(Globals.SCREEN)
+        self.drawSolid()
+        self.drawSpecial()
+        pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 5)
+
+    def drawSolid(self):
+        solid_tiles = self.camera.getSolidObjects(self.testPoint, self.object_radius)
+        for tile in solid_tiles:
+            pass
+
+    def drawSpecial(self):
+        pass
 
     def update(self, time):
         if self.keyCode is not None:

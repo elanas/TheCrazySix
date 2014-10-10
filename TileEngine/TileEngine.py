@@ -1,10 +1,10 @@
 import pygame
 from TileManager import TileManager
+from TileType import TileType
 from asset_loader import AssetLoader
 
 
 class TileEngine(object):
-    EMPTY_COLOR = (0, 0, 0)
 
     def __init__(self, definitionPath, mapPath, num_rows, num_cols):
         self.num_cols = num_cols
@@ -33,18 +33,16 @@ class TileEngine(object):
         print len(last_row) / 2 * self.tileRect.width
         return len(last_row) / 2 * self.tileRect.width
 
-    def get_tile_image(self, x_coords, y_coords):
+    def get_tile(self, x_coords, y_coords, set_pos=True):
         num_rows = len(self.tileMap)
         tile_rect = self.get_tile_rect().copy()
         row_num = int(y_coords / tile_rect.height)
         col_num = int(x_coords / tile_rect.width)
         tile = None
-        image = None
         if self.is_coord_valid(row_num, col_num):
             tile = self.tileMap[row_num][col_num]
-        if tile is not None:
-            image = tile.image
-
+        if tile is None:
+            tile = TileType.EMPTY_TILE
         remainder_y = y_coords % tile_rect.height
         remainder_x = x_coords % tile_rect.width
         if remainder_y > 0:
@@ -53,9 +51,17 @@ class TileEngine(object):
         if remainder_x > 0:
             tile_rect.x += remainder_x
             tile_rect.width -= remainder_x
-        if not remainder_y == 0 or not remainder_x == 0:
-            if image is not None:
-                image = image.subsurface(tile_rect)
+        if set_pos:
+            tile_rect.x = x_coords
+            tile_rect.y = y_coords
+        return tile, tile_rect
+
+    def get_tile_image(self, x_coords, y_coords):
+        tile, tile_rect = self.get_tile(x_coords, y_coords, False)
+        full_tile_rect = self.get_tile_rect()
+        image = tile.image
+        if image is not None and (tile_rect.width != full_tile_rect.width or tile_rect.height != full_tile_rect.height):
+            image = image.subsurface(tile_rect)
         tile_rect.x = x_coords
         tile_rect.y = y_coords
         return image, tile_rect

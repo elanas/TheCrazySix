@@ -1,10 +1,12 @@
 import pygame
 from Globals import Globals
+from collections import namedtuple
 
 
 class Camera(object):
     BOTTOM_PADDING = 0
     EMPTY_COLOR = (0, 0, 0)
+    TileRectPair = namedtuple('TileRectPair', 'tile rect')
 
     def __init__(self, tileEngine, container):
         self.tileEngine = tileEngine
@@ -43,7 +45,21 @@ class Camera(object):
         self.viewpoint.y += yDelta
 
     def getSolidObjects(self, center, radius):
-        pass
+        solid_tiles = list()
+        curr_y = center[1] - radius
+        max_x = center[0] + radius
+        max_y = center[1] + radius
+        while curr_y < max_y:
+            curr_x = center[0] - radius
+            trans_y = curr_y + self.viewpoint.top
+            while curr_x < max_x:
+                trans_x = curr_x + self.viewpoint.left
+                curr_tile, curr_rect = self.tileEngine.get_tile(trans_x, trans_y)
+                if curr_tile.is_solid:
+                    solid_tiles.append(Camera.TileRectPair(tile=curr_tile, rect=curr_rect))
+                curr_x += curr_rect.width
+            curr_y += curr_rect.height
+        return solid_tiles
 
     def getSpecialObjects(self, center, radius):
         pass
