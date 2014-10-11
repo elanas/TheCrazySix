@@ -115,6 +115,7 @@ class TileTest(GameState):
                 else:
                     self.camera.move(TileTest.FACTOR, 0)
         self.playerSprites.update(time)
+        self.has_collided = False
         # self.enemySprites.update(time)
 
     def event(self, event):
