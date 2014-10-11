@@ -1,6 +1,8 @@
-- wool_colored_white.png 0
-+ wool_colored_gray.png 0
-# the special attribute ("stair") is optional
-# oh and look, a comment!
-* wool_colored_silver.png 1
-/ wool_colored_silver.png 0 stair
+- floor_grey_damaged2.png 0
++ floor_grey_damaged1.png 0
+* floor_grey.png 0
+! box.png 1
+~ bag.png 1
+& floor_grey_chair.png 0
+/ stair_left.png 0
+\ stair_right.png 0
