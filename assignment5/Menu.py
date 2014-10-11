@@ -5,6 +5,7 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
+from TileTest import TileTest
 
 MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
@@ -110,7 +111,8 @@ class Menu(GameState):
             sys.exit()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             if self.selection == 0:
-                Globals.STATE = MainGame()
+                # Globals.STATE = MainGame()
+                Globals.STATE = TileTest()
             if self.selection == 3:
                 Globals.STATE = Highscore()
                 pass

@@ -6,7 +6,7 @@ import pygame.font
 
 from GameState import GameState
 from Globals import Globals
-from MainGame import MainGame
+# from MainGame import MainGame
 from Title import Title
 import sys
 

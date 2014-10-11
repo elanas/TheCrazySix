@@ -4,6 +4,11 @@ from TileEngine import TileEngine
 from Camera import Camera
 import pygame
 
+from Player import Player
+from Enemy import Enemy
+# from Menu import Menu
+
+
 
 class TileTest(GameState):
     FACTOR = 10
@@ -11,6 +16,9 @@ class TileTest(GameState):
     INDEX_UP = 1
     INDEX_LEFT = 2
     INDEX_RIGHT = 3
+
+    NUM_ENEMY = 13
+    WALL_WIDTH = 50
 
     def __init__(self):
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
@@ -23,28 +31,47 @@ class TileTest(GameState):
             self.camera.tileEngine.get_tile_rect().height * 1.5
         self.direction = -1
 
+        self.enemySprites = pygame.sprite.Group()
+        self.playerSprites = pygame.sprite.Group()
+        
+        # for x in range(MainGame.NUM_ENEMY):
+        #     self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
+        self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
+                                      self.testPoint[0], self.testPoint[1]))
+
     def render(self):
         self.camera.render(Globals.SCREEN)
         self.checkCollisions()
         self.drawSpecial()
-        pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 6)
+        # pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 6)
+
+        # Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+        # self.enemySprites.draw(Globals.SCREEN)
+        self.playerSprites.draw(Globals.SCREEN)
+        # self.wallSprites.draw(Globals.SCREEN)
 
     def checkCollisions(self):
         solid_tiles = \
             self.camera.get_solid_tiles(self.testPoint, self.object_radius)
         solid_rects = [pair.rect for pair in solid_tiles]
-        curr_rect = \
-            pygame.Rect(self.testPoint[0] - 3, self.testPoint[1] - 3, 6, 6)
-        for i in curr_rect.collidelistall(solid_rects):
-            wall_rect = solid_rects[i]
-            if self.direction == TileTest.INDEX_UP:
-                curr_rect.top = wall_rect.bottom
-            elif self.direction == TileTest.INDEX_DOWN:
-                curr_rect.bottom = wall_rect.top
-            elif self.direction == TileTest.INDEX_LEFT:
-                curr_rect.left = wall_rect.right
-            elif self.direction == TileTest.INDEX_RIGHT:
-                curr_rect.right = wall_rect.left
+        # # curr_rect = \
+        # #     pygame.Rect(self.testPoint[0] - 3, self.testPoint[1] - 3, 6, 6)
+        # curr_rect = self.playerSprites.get
+        # for i in curr_rect.collidelistall(solid_rects):
+
+        for p in self.playerSprites:
+            curr_rect = p.rect
+            for i in curr_rect.collidelistall(solid_rects):
+
+                wall_rect = solid_rects[i]
+                if self.direction == TileTest.INDEX_UP:
+                    curr_rect.top = wall_rect.bottom
+                elif self.direction == TileTest.INDEX_DOWN:
+                    curr_rect.bottom = wall_rect.top
+                elif self.direction == TileTest.INDEX_LEFT:
+                    curr_rect.left = wall_rect.right
+                elif self.direction == TileTest.INDEX_RIGHT:
+                    curr_rect.right = wall_rect.left
 
         self.testPoint[1] = curr_rect.top + 3
         self.testPoint[0] = curr_rect.left + 3
@@ -69,6 +96,8 @@ class TileTest(GameState):
             elif self.keyCode == pygame.K_RIGHT:
                 self.direction = TileTest.INDEX_RIGHT
                 self.camera.move(TileTest.FACTOR, 0)
+        self.playerSprites.update(time)
+        # self.enemySprites.update(time)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -81,6 +110,14 @@ class TileTest(GameState):
         elif event.type == pygame.KEYUP and event.key == self.keyCode:
             self.keyCode = None
 
+
+        if event.type == pygame.KEYDOWN:
+            for p in self.playerSprites:
+                p.keyPressed(event.key)
+        if event.type == pygame.KEYUP:
+            for p in self.playerSprites:
+                p.keyReleased(event.key)
+
     def reloadCamera(self):
         try:
             self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
@@ -88,3 +125,5 @@ class TileTest(GameState):
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
+
+
