@@ -30,7 +30,7 @@ class TileTest(GameState):
         self.object_radius = \
             self.camera.tileEngine.get_tile_rect().height * 1.5
         self.direction = -1
-
+        self.has_collided = False
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
         
@@ -66,12 +66,18 @@ class TileTest(GameState):
                 wall_rect = solid_rects[i]
                 if self.direction == TileTest.INDEX_UP:
                     curr_rect.top = wall_rect.bottom
+                    self.has_collided = True
                 elif self.direction == TileTest.INDEX_DOWN:
                     curr_rect.bottom = wall_rect.top
+                    self.has_collided = True
                 elif self.direction == TileTest.INDEX_LEFT:
                     curr_rect.left = wall_rect.right
+                    self.has_collided = True
                 elif self.direction == TileTest.INDEX_RIGHT:
                     curr_rect.right = wall_rect.left
+                    self.has_collided = True
+                else:
+                    self.has_collided = False
 
         self.testPoint[1] = curr_rect.top + 3
         self.testPoint[0] = curr_rect.left + 3
@@ -86,16 +92,28 @@ class TileTest(GameState):
         if self.keyCode is not None:
             if self.keyCode == pygame.K_UP:
                 self.direction = TileTest.INDEX_UP
-                self.camera.move(0, -TileTest.FACTOR)
+                if self.has_collided:
+                    self.camera.move(0, 0)
+                else:
+                    self.camera.move(0, -TileTest.FACTOR)
             elif self.keyCode == pygame.K_DOWN:
                 self.direction = TileTest.INDEX_DOWN
-                self.camera.move(0, TileTest.FACTOR)
+                if self.has_collided:
+                    self.camera.move(0, 0)
+                else:
+                    self.camera.move(0, TileTest.FACTOR)
             elif self.keyCode == pygame.K_LEFT:
                 self.direction = TileTest.INDEX_LEFT
-                self.camera.move(-TileTest.FACTOR, 0)
+                if self.has_collided:
+                    self.camera.move(0, 0)
+                else:
+                    self.camera.move(-TileTest.FACTOR, 0)
             elif self.keyCode == pygame.K_RIGHT:
                 self.direction = TileTest.INDEX_RIGHT
-                self.camera.move(TileTest.FACTOR, 0)
+                if self.has_collided:
+                    self.camera.move(0, 0)
+                else:
+                    self.camera.move(TileTest.FACTOR, 0)
         self.playerSprites.update(time)
         # self.enemySprites.update(time)
 
