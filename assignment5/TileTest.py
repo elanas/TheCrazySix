@@ -3,6 +3,8 @@ from GameState import GameState
 from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
+# from Highscore import Highscore
+# importing Highscore isn't working for me
 import pygame
 
 from Player import Player
@@ -87,7 +89,8 @@ class TileTest(GameState):
         for p in self.playerSprites:
             num_stairs = len(p.rect.collidelistall(stair_rects))
             if num_stairs > 0:
-                # put new code here
+                # fix the import and this should be done
+                # Globals.STATE = Highscore()
                 pass
 
     def update(self, time):
