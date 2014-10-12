@@ -63,7 +63,8 @@ class Player(Character):
 
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
-            self.velocity = min(self.velocity + Player.ACCELERATION * time, Player.MOVE_VELOCITY)
+            self.velocity = min(self.velocity + Player.ACCELERATION
+                                * time, Player.MOVE_VELOCITY)
             if self.velocity == Player.MOVE_VELOCITY:
                 self.anim_time = Player.WALK_ANIM_TIME
                 self.time_elapsed = Player.WALK_ANIM_TIME
@@ -205,7 +206,8 @@ class Player(Character):
         Player.hitSound.play()
 
     def checkWallCollision(self, wall_group):
-        for wall_sprite in pygame.sprite.spritecollide(self, wall_group, False):
+        for wall_sprite in \
+                pygame.sprite.spritecollide(self, wall_group, False):
             wall_rect = wall_sprite.rect
             if self.direction == Player.INDEX_UP:
                 self.rect.top = wall_rect.bottom

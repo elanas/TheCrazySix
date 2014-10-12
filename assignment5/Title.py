@@ -12,7 +12,6 @@ TITLE_PADDING = 100
 BACKGROUND_IMG = pygame.image.load("images/titlepage_image.jpg")
 
 
-
 class Title(GameState):
     def __init__(self):
         GameState.__init__(self)

@@ -5,7 +5,7 @@ class TileType(object):
     EMPTY_ATTR = "empty"
     STAIR_ATTR = "stair"
 
-    EMPTY_TILE = "a"    
+    EMPTY_TILE = "a"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr):
         self.symbol = symbol

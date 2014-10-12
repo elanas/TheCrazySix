@@ -12,7 +12,6 @@ from Enemy import Enemy
 # from Menu import Menu
 
 
-
 class TileTest(GameState):
     FACTOR = 10
     INDEX_DOWN = 0
@@ -36,7 +35,7 @@ class TileTest(GameState):
         self.has_collided = False
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
-        
+
         # for x in range(MainGame.NUM_ENEMY):
         #     self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
         self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
@@ -84,8 +83,11 @@ class TileTest(GameState):
         self.testPoint[1] = curr_rect.top + 3
         self.testPoint[0] = curr_rect.left + 3
 
-        special_tiles = self.camera.get_special_tiles(self.testPoint, self.object_radius)
-        stair_rects = [pair.rect for pair in special_tiles if pair.tile.special_attr == TileType.STAIR_ATTR]
+        special_tiles = \
+            self.camera.get_special_tiles(self.testPoint,
+                                          self.object_radius)
+        stair_rects = [pair.rect for pair in special_tiles
+                       if pair.tile.special_attr == TileType.STAIR_ATTR]
         for p in self.playerSprites:
             num_stairs = len(p.rect.collidelistall(stair_rects))
             if num_stairs > 0:
@@ -134,7 +136,6 @@ class TileTest(GameState):
         elif event.type == pygame.KEYUP and event.key == self.keyCode:
             self.keyCode = None
 
-
         if event.type == pygame.KEYDOWN:
             for p in self.playerSprites:
                 p.keyPressed(event.key)
@@ -149,5 +150,3 @@ class TileTest(GameState):
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
-
-

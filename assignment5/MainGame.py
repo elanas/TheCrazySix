@@ -19,13 +19,15 @@ class MainGame(GameState):
         self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
                                       100, 100))
         # # creates walls where we want them...
-        # self.wallSprites.add(Wall(self.WALL_WIDTH, Globals.HEIGHT/2, Globals.WIDTH/2, 0))
+        # self.wallSprites.add(Wall(self.WALL_WIDTH,
+        #     Globals.HEIGHT/2, Globals.WIDTH/2, 0))
         # # #will be height of the player
 
-        # self.wallSprites.add(Wall(150, self.WALL_WIDTH, Globals.HEIGHT/2 + self.WALL_WIDTH, 
+        # self.wallSprites.add(Wall(150, self.WALL_WIDTH,
+        #     Globals.HEIGHT/2 + self.WALL_WIDTH,
         #     Globals.HEIGHT/2 + 70))
-        # self.wallSprites.add(Wall(Globals.WIDTH/2 - 150, self.WALL_WIDTH, 0, (Globals.HEIGHT/2 + 70) + self.WALL_WIDTH ))
-
+        # self.wallSprites.add(Wall(Globals.WIDTH/2 - 150,
+        #     self.WALL_WIDTH, 0, (Globals.HEIGHT/2 + 70) + self.WALL_WIDTH ))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)

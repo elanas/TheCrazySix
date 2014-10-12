@@ -9,6 +9,7 @@ from TileTest import TileTest
 
 MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
+
 class Menu(GameState):
     def __init__(self):
         GameState.__init__(self)
