@@ -1,6 +1,8 @@
 # ignore files with .pyc
 *.pyc
 Thumbs.db
+
+# macintosh computer
 .DS_Store
 
 .idea
