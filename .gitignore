@@ -1,4 +1,6 @@
+# ignore files with .pyc
 *.pyc
 Thumbs.db
 .DS_Store
+
 .idea
