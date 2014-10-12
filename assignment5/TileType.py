@@ -25,8 +25,7 @@ class TileType(object):
     @property
     def is_special(self):
         return self.special_attr is not None and \
-            self.special_attr != TileType.EMPTY_ATTR and \
-            self.special_attr != TileType.STAIR_ATTR
+            self.special_attr != TileType.EMPTY_ATTR
 
     # @property
     # def is_stair(self):
