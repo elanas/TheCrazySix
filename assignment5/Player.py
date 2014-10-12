@@ -1,4 +1,3 @@
-# Load Libraries
 import os
 import pygame
 import math
