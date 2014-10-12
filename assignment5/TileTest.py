@@ -86,7 +86,6 @@ class TileTest(GameState):
         special_tiles = \
             self.camera.get_special_tiles(self.testPoint, self.object_radius)
         for tile in special_tiles:
-            print tile.is_special
             pygame.draw.rect(Globals.SCREEN, (0, 251, 255), tile.rect)
 
     def update(self, time):
