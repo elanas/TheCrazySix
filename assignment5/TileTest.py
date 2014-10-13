@@ -15,7 +15,7 @@ from Enemy import Enemy
 
 
 class TileTest(GameState):
-    FACTOR = 20
+    FACTOR = 35
     INDEX_DOWN = 0
     INDEX_UP = 1
     INDEX_LEFT = 2
