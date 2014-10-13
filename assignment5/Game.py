@@ -12,10 +12,9 @@ import sys
 
 MIN_UPDATE_INTERVAL = .05
 
-
 def initialize():
     pygame.init()
-    Globals.WIDTH = 500
+    Globals.WIDTH = 550
     Globals.HEIGHT = 400
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
     Globals.STATE = Title()
