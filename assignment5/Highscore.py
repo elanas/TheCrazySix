@@ -4,6 +4,7 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
+from Menu import Menu
 
 
 class Highscore(GameState):

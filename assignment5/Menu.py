@@ -5,7 +5,6 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
-from TileTest import TileTest
 
 MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
@@ -126,3 +125,5 @@ class Menu(GameState):
 
 from MainGame import MainGame
 from Highscore import Highscore
+from TileTest import TileTest
+

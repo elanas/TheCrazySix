@@ -6,8 +6,9 @@ from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
 
-from Highscore import Highscore
+# from Highscore import Highscore
 # importing Highscore isn't working for me
+from WinGame import WinGame
 
 from Player import Player
 from Enemy import Enemy
@@ -93,7 +94,7 @@ class TileTest(GameState):
             num_stairs = len(p.rect.collidelistall(stair_rects))
             if num_stairs > 0:
                 # fix the import and this should be done
-                Globals.STATE = Highscore()
+                Globals.STATE = WinGame()
                 pass
 
     def update(self, time):
