@@ -71,4 +71,3 @@ class Highscore(GameState):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.STATE = Menu()
 
-from Menu import Menu

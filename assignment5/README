@@ -1,0 +1,44 @@
+Bumjin Kim (bkim63@jhu.edu)
+Hansong Li
+Michael Stewart
+Elana Stroud
+Sarika Halarnakar
+
+We are using image assets from http://opengameart.org/content/lpc-goblin,
+ http://opengameart.org/content/businessman,
+ http://veni-mortem.deviantart.com/art/FREE-Top-Down-Zombie-Pack-320755210
+http://pxp-graphics.blogspot.com/p/topdown-sprites.html
+The licenses for these image assets are Creative Commons.
+
+HOW TO RUN GAME
+===============
+
+1. python Game.py to start the game!
+
+WHAT ARE THESE FILES
+====================
+
+Game.py imports GameState, Globals, MainGame, Title packages.
+Game.py initializes the program. asset_loader.py loads images.
+
+Enemy.py and Player.py are both subclasses of Character.py. 
+Game.py is required for starting the game. sounds directory 
+has all the required sound files and images folder 
+also has all the images for the game.
+
+Globals.py contains all the global variables and Title.py 
+and Menu.py contains classes like menu and title for the program.
+
+Highscore.py displays the high score and contains Highscore class.
+
+Border.py defines border object in the gameplay.
+
+Camera.py defines camera object that displays character in top-down angle.
+
+Wall.py has wall object that character cannot go through.
+
+TileType object defines types of tiles in the gameplay.
+
+Image folder has all the images that are needed for the game.
+
+Sound folder has all the sound resources needed as well for the game.

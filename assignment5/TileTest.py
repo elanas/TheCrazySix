@@ -1,15 +1,16 @@
+import pygame
+
 from Globals import Globals
 from GameState import GameState
 from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
-# from Highscore import Highscore
+
+from Highscore import Highscore
 # importing Highscore isn't working for me
-import pygame
 
 from Player import Player
 from Enemy import Enemy
-# from Menu import Menu
 
 
 class TileTest(GameState):
@@ -92,7 +93,7 @@ class TileTest(GameState):
             num_stairs = len(p.rect.collidelistall(stair_rects))
             if num_stairs > 0:
                 # fix the import and this should be done
-                # Globals.STATE = Highscore()
+                Globals.STATE = Highscore()
                 pass
 
     def update(self, time):
@@ -150,3 +151,5 @@ class TileTest(GameState):
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
+
+

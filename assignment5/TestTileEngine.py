@@ -1,3 +1,4 @@
+# IMPORT THE PYGAME
 import pygame
 
 from GameState import GameState
