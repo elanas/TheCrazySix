@@ -1,3 +1,4 @@
+Update fuzzy graphics for Player/Enemy - *HANSONG*
 Add enemies to Game
     - should be very easy given that it's code that the Player already has being done to it
     - they already are animated (note this in README)
