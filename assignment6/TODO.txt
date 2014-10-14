@@ -8,6 +8,7 @@ Intermediate GameState to get Player's name - *MICHAEL*
     - this will either be saved in Globals or sent along to the Player
 Player changes
     - check for enemy collisions and take damage (use health bar)
+        * calls function in HealthBar to decrease health
     - maybe fix outrunning camera and/or speed? not super important
     - maybe fix stair collision (happens too suddenly atm) - not super important
         * scale player's rect before checking for collision to make it more accurate visually
@@ -21,6 +22,7 @@ Player changes
         * makes changing the way it's drawn much easier
         - handles drawing score in top (center? right?) of screen
     - Handle collisions with new special tiles - *MICHAEL*
+        - call function in Score class to increase health
 End Game States - *HANSONG*
     - Die Screen
     - Win Screen
