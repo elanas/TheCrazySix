@@ -23,7 +23,7 @@ class NameInput(GameState):
     ERROR_COLOR = pygame.color.Color("red")
     ERROR_BACKSPACE = "You can't delete nothing!"
     ERROR_TOO_LONG = "Your name is too long!"
-    ERROR_TOO_SHORT = "Your name is too short!"
+    ERROR_TOO_SHORT = "Your name is too short to continue!"
 
     def __init__(self):
         if Globals.PLAYER_NAME is None:
@@ -59,17 +59,16 @@ class NameInput(GameState):
             error_rect.bottom = Globals.HEIGHT - NameInput.ERROR_PADDING
             Globals.SCREEN.blit(error_surf, error_rect)
 
-        if len(Globals.PLAYER_NAME) == 0:
-            return
-        input_surf = self.input_font.render(Globals.PLAYER_NAME, True,
-                                            NameInput.INPUT_COLOR)
-        input_rect = input_surf.get_rect()
-        input_rect.centerx = Globals.WIDTH / 2
-        input_rect.centery = Globals.HEIGHT / 2
-        input_bg_rect = input_rect.inflate(NameInput.INPUT_SURF_PADDING,
-                                           NameInput.INPUT_SURF_PADDING)
-        Globals.SCREEN.fill((255, 255, 255), input_bg_rect)
-        Globals.SCREEN.blit(input_surf, input_rect)
+        if len(Globals.PLAYER_NAME) > 0:
+            input_surf = self.input_font.render(Globals.PLAYER_NAME, True,
+                                                NameInput.INPUT_COLOR)
+            input_rect = input_surf.get_rect()
+            input_rect.centerx = Globals.WIDTH / 2
+            input_rect.centery = Globals.HEIGHT / 2
+            input_bg_rect = input_rect.inflate(NameInput.INPUT_SURF_PADDING,
+                                               NameInput.INPUT_SURF_PADDING)
+            Globals.SCREEN.fill((255, 255, 255), input_bg_rect)
+            Globals.SCREEN.blit(input_surf, input_rect)
 
     def handle_entry(self, typed_char):
         if len(Globals.PLAYER_NAME) == NameInput.MAX_LENGTH:
