@@ -91,11 +91,11 @@ class NameInput(GameState):
             Globals.STATE = TileTest()
 
     def event(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.RUNNING = False
-        elif event.type == pygame.KEYDOWN:
+        if event.type == pygame.KEYDOWN:
             self.error_message = None
-            if self.is_valid(event.key):
+            if event.key == pygame.K_ESCAPE:
+                Globals.RUNNING = False
+            elif self.is_valid(event.key):
                 self.handle_entry(self.parse_key(event.key))
             elif event.key == pygame.K_BACKSPACE:
                 self.handle_backspace()
