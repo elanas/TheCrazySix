@@ -3,7 +3,7 @@ Add enemies to Game
     - should be very easy given that it's code that the Player already has being done to it
     - they already are animated (note this in README)
     - Can handle map collisions (walls/objects) in the same way the Player does
-Intermediate GameState to get Player's name - *MICHAEL*
+Intermediate GameState to get Player's name - *MICHAEL* - DONE
     - likely will use keyboard input for now (later has to support gamepad, but not yet)
     - this will either be saved in Globals or sent along to the Player
 Player changes
