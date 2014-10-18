@@ -11,3 +11,6 @@ class Globals(object):
     FONT = None
     STATE = None
     BACKGROUND_COLOR = (165, 242, 212)
+    PLAYER_NAME = None
+    # PLAYER_HEALTH = HealthBar/HealthManager?
+    # PLAYER_SCORE = ScoreBar/ScoreManager?
