@@ -53,6 +53,7 @@ class TileTest(GameState):
         self.camera.render(Globals.SCREEN)
         self.enemySprites.draw(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+        self.health.render(Globals.SCREEN)
 
     def update(self, time):
         self.player.update(time, self.camera, self.enemySprites)
