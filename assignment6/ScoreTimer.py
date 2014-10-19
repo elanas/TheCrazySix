@@ -6,13 +6,13 @@ class ScoreTimer():
         self.timer = 60
 
         self.total_time = 60
-        self.time_start = pygame.time.get_ticks()
+        # self.time_start = pygame.time.get_ticks()
 
     def render(self, Globals):
         #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         font = pygame.font.SysFont("hannotatesc", 64)
         COLOR = pygame.Color("white")
-        time_string = pygame.time.get_ticks()
+        # time_string = pygame.time.get_ticks()
         time_surf = font.render("Time: ", True, COLOR)
         time_rect = time_surf.get_rect()
         time_rect.topright = Globals.SCREEN.get_rect().topright
