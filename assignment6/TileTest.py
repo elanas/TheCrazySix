@@ -5,7 +5,7 @@ from GameState import GameState
 from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
-from HealthBar import HealthBar
+
 
 # from Highscore import Highscore
 # importing Highscore isn't working for me
@@ -114,3 +114,4 @@ class TileTest(GameState):
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
+from HealthBar import HealthBar
