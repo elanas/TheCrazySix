@@ -15,7 +15,7 @@ class ScoreTimer():
         time_surf = font.render("Timer: " + str(time_string), True, COLOR)
         time_rect = time_surf.get_rect()
         time_rect.topright = Globals.SCREEN.get_rect().topright
-        time_rect.width = Globals.WIDTH/3
+        time_rect.width = Globals.WIDTH/4
         #health_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(time_surf, time_rect)
  
