@@ -57,6 +57,8 @@ class TileTest(GameState):
         self.player.update(time, self.camera, self.enemySprites)
         self.enemySprites.update(time, self.camera)
         self.checkCameraPosition()
+        if pygame.sprite.spritecollideany(self, self.enemySprites, self.player):
+            print "hit"
 
     def checkCameraPosition(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx
