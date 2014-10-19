@@ -13,11 +13,9 @@ class ScoreTimer():
         font = pygame.font.SysFont("hannotatesc", 64)
         COLOR = pygame.Color("white")
         time_string = pygame.time.get_ticks()
-        #if (Globals.PLAYER_HEALTH < self.total_time/4):
-            #COLOR = pygame.Color("red")
-        time_surf = font.render("Time: " + str(time_string), True, COLOR)
+        time_surf = font.render("Time: ", True, COLOR)
         time_rect = time_surf.get_rect()
-        time_rect.topleft = Globals.SCREEN.get_rect().topright
+        time_rect.topright = Globals.SCREEN.get_rect().topright
         time_rect.width = Globals.WIDTH/3
         #health_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(time_surf, time_rect)
