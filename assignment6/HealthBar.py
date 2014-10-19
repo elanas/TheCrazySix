@@ -16,7 +16,7 @@ class HealthBar():
             COLOR = pygame.Color("yellow")
         if (Globals.PLAYER_HEALTH < 25):
             COLOR = pygame.Color("red")
-        health_surf = font.render(health_string, True, COLOR)
+        health_surf = font.render(str(health_string), True, COLOR)
         health_rect = health_surf.get_rect()
         health_rect.topleft = Globals.SCREEN.get_rect().topleft
         health_rect.width = Globals.WIDTH/3
