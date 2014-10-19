@@ -1,5 +1,4 @@
 import pygame
-import Globals
 
 class HealthBar():
 
@@ -24,5 +23,5 @@ class HealthBar():
 
     def update(self):
     	pass
-
+import Globals
 
