@@ -1,11 +1,9 @@
-import pygame
-
 from GameState import GameState
 from Globals import Globals
 import Menu
 
 
-class WinGame(GameState):
+class LoseGame(GameState):
 
     def __init__(self):
         GameState.__init__(self)
@@ -20,14 +18,14 @@ class WinGame(GameState):
 
         COLOR = (7, 147, 240)
 
-        title_surf = font.render("You finished the level.", True, (0, 0, 0))
+        title_surf = font.render("Sorry, You lost!", True, (0, 0, 0))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx - 120
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
 
-        op1 = font.render("Press escape to return to menu.", True, COLOR)
+        op1 = font.render("Press escape to return to Highscore.", True, COLOR)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op1, title_rect)
         pygame.display.flip()
