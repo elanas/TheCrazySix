@@ -71,6 +71,9 @@ class Player(Character):
         if enemy_sprites is not None:
             self.checkEnemyCollisions(enemy_sprites)
 
+        if Globals.PLAYER_HEALTH is 0:
+                Globals.STATE = WinGame()
+
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
             self.velocity = min(self.velocity + Player.ACCELERATION

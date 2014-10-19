@@ -62,6 +62,7 @@ class TileTest(GameState):
         if pygame.sprite.spritecollideany(self.player, self.enemySprites):
             Globals.PLAYER_HEALTH -= .5
 
+
     def checkCameraPosition(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx
         dist_y = self.camera.container.centery - self.player.rect.centery
