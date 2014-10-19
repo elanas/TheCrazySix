@@ -1,3 +1,4 @@
+import pygame
 from GameState import GameState
 from Globals import Globals
 import Menu
