@@ -10,7 +10,6 @@ class HealthBar():
     def render(self, Globals):
         #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         font = pygame.font.SysFont("hannotatesc", 64)
-<<<<<<< HEAD
         COLOR = pygame.color("green")
         health_string = Globals.PLAYER_HEALTH
         if (Globals.PLAYER_HEALTH < 50):
@@ -18,10 +17,6 @@ class HealthBar():
         if (Globals.PLAYER_HEALTH < 25):
             COLOR = pygame.color("red")
         health_surf = font.render(health_string, True, COLOR)
-=======
-        COLOR = (7, 147, 240)
-        health_surf = font.render( str(Globals.PLAYER_HEALTH), True, (255, 255, 255))
->>>>>>> FETCH_HEAD
         health_rect = health_surf.get_rect()
         health_rect.topleft = Globals.SCREEN.get_rect().topleft
         health_rect.width = Globals.WIDTH/3
@@ -33,7 +28,3 @@ class HealthBar():
 
     def update(self):
     	pass
-<<<<<<< HEAD
-
-=======
->>>>>>> FETCH_HEAD
