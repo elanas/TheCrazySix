@@ -3,7 +3,7 @@ import pygame
 class HealthBar():
 
     def __init__(self, Globals):
-        self.color = pygame.color.Color("green")
+        self.color = pygame.color.Color("blue")
         self.Globals = Globals
 
     def render(self):
