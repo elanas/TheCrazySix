@@ -72,9 +72,6 @@ class Player(Character):
         if enemy_sprites is not None:
             self.checkEnemyCollisions(enemy_sprites)
 
-        if Globals.PLAYER_HEALTH <= 0:
-                Globals.STATE = LoseGame()
-
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
             self.velocity = min(self.velocity + Player.ACCELERATION
@@ -210,6 +207,8 @@ class Player(Character):
         num_stairs = len(temp_rect.collidelistall(stair_rects))
         if num_stairs > 0:
             Globals.STATE = WinGame()
+        if Globals.PLAYER_HEALTH <= 0:
+            Globals.STATE = LoseGame()
 
     def checkEnemyCollisions(self, enemy_sprites):
         enemy_rects = [enemy.rect for enemy in enemy_sprites]
