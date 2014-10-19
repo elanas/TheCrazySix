@@ -1,13 +1,5 @@
 from collections import namedtuple
 
-
-#
-# To use:
-#     1) create an instance (ex: a = HighscoreManager())
-#     2) call add on instance if a player has just died/won
-#     3) call and use get_list() and know that you will ALWAYS get a list of
-#        NUM_HIGHSCORES HighscoreEntry objects
-#
 class HighscoreManager:
     NUM_HIGHSCORES = 4
     DEFAULT_FILE_PATH = 'highscores.txt'

@@ -8,7 +8,7 @@ from asset_loader import AssetLoader
 from WinGame import WinGame
 from TileType import TileType
 from Globals import Globals
-
+from HighscoreManager import HighscoreManager
 
 class Player(Character):
     STAIR_OFFSET = 20
@@ -204,12 +204,15 @@ class Player(Character):
         temp_rect = self.rect.inflate(
             -Player.STAIR_OFFSET, -Player.STAIR_OFFSET)
         num_stairs = len(temp_rect.collidelistall(stair_rects))
+        highscoreManager = HighscoreManager()
         if num_stairs > 0:
+            highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             Globals.STATE = WinGame()
 
     def checkEnemyCollisions(self, enemy_sprites):
         enemy_rects = [enemy.rect for enemy in enemy_sprites]
         collided_indices = self.rect.collidelistall(enemy_rects)
+        highscoreManager = HighscoreManager()
         # The code below should keep Player's from walking through Enemies.
         # More work needs to be done to make sure that it looks good when an
         # Enemy initiates the contact.
@@ -226,5 +229,5 @@ class Player(Character):
         #         elif self.direction == Character.INDEX_RIGHT:
         #             self.rect.right = curr_rect.left
         if len(collided_indices) > 0:
-            # take damage?
+            highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             pass

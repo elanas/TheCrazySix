@@ -14,4 +14,4 @@ class Globals(object):
     PLAYER_NAME = None
     PLAYER_HEALTH = 100
     # PLAYER_HEALTH = HealthBar/HealthManager?
-    # PLAYER_SCORE = ScoreBar/ScoreManager?
+    PLAYER_SCORE = 1000 # Change the score

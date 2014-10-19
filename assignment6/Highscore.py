@@ -4,6 +4,7 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
+from HighscoreManager import HighscoreManager
 import Menu
 
 
@@ -41,20 +42,22 @@ class Highscore(GameState):
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
+        highscoreManager = HighscoreManager()
+        highscoreEntry = highscoreManager.get_list()
 
-        op1 = font.render("Mlbvsnba - 521 pts", True, COLOR)
+        op1 = font.render("{} - {}".format(highscoreEntry[0].name, highscoreEntry[0].score), True, COLOR)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op1, title_rect)
 
-        op2 = font.render("Gogoprincess - 448 pts", True, COLOR)
+        op2 = font.render("{} - {}".format(highscoreEntry[1].name, highscoreEntry[1].score), True, COLOR)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op2, title_rect)
 
-        op3 = font.render("Tutu451 - 334 pts", True, COLOR)
+        op3 = font.render("{} - {}".format(highscoreEntry[2].name, highscoreEntry[2].score), True, COLOR)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op3, title_rect)
 
-        op4 = font.render("phf - 3 pts", True, COLOR)
+        op4 = font.render("{} - {}".format(highscoreEntry[3].name, highscoreEntry[3].score), True, COLOR)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op4, title_rect)
 
