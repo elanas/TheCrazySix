@@ -6,6 +6,7 @@ import math
 from Character import Character
 from asset_loader import AssetLoader
 from WinGame import WinGame
+from LoseGame import LoseGame
 from TileType import TileType
 from Globals import Globals
 from HighscoreManager import HighscoreManager
@@ -208,6 +209,8 @@ class Player(Character):
         if num_stairs > 0:
             highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             Globals.STATE = WinGame()
+        if Globals.PLAYER_HEALTH <= 0:
+            Globals.STATE = LoseGame()
 
     def checkEnemyCollisions(self, enemy_sprites):
         enemy_rects = [enemy.rect for enemy in enemy_sprites]

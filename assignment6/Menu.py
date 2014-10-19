@@ -8,6 +8,7 @@ from BorderPlayer import BorderPlayer
 from NameInput import NameInput
 from Highscore import Highscore
 
+
 MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
 

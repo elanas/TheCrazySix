@@ -5,6 +5,8 @@ from GameState import GameState
 from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
+from HealthBar import HealthBar
+from ScoreTimer import ScoreTimer
 
 # from Highscore import Highscore
 # importing Highscore isn't working for me
@@ -37,7 +39,8 @@ class TileTest(GameState):
         self.has_collided = False
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
-
+        self.health = HealthBar()
+        self.score_timer = ScoreTimer()
         for x in range(TileTest.NUM_ENEMY):
             # fix the positions they are added in and everything else
             # should work
@@ -52,14 +55,16 @@ class TileTest(GameState):
         self.camera.render(Globals.SCREEN)
         self.enemySprites.draw(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+        self.health.render(Globals)
+        self.score_timer.render(Globals)
 
     def update(self, time):
         self.player.update(time, self.camera, self.enemySprites)
         self.enemySprites.update(time, self.camera)
         self.checkCameraPosition()
         if pygame.sprite.spritecollideany(self.player, self.enemySprites):
-            Globals.PLAYER_HEALTH -= 1
-            print Globals.PLAYER_HEALTH
+            Globals.PLAYER_HEALTH -= .5
+
 
     def checkCameraPosition(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx

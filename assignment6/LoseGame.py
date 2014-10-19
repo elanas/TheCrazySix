@@ -5,7 +5,7 @@ from Globals import Globals
 import Menu
 
 
-class WinGame(GameState):
+class LoseGame(GameState):
 
     def __init__(self):
         GameState.__init__(self)
@@ -20,7 +20,7 @@ class WinGame(GameState):
 
         COLOR = (7, 147, 240)
 
-        title_surf = font.render("You finished the level.", True, (0, 0, 0))
+        title_surf = font.render("Sorry, You did not finish the level.", True, (0, 0, 0))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx - 120
         title_rect.centery = Globals.SCREEN.get_rect().centery
