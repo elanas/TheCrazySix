@@ -42,7 +42,6 @@ class TileTest(GameState):
             # fix the positions they are added in and everything else
             # should work
             self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
-            pass
         player_x = Globals.WIDTH / 2
         player_y = int(Globals.HEIGHT -
                        self.camera.tileEngine.get_tile_rect().height * 3.5)
