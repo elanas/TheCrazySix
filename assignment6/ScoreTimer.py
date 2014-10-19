@@ -15,7 +15,7 @@ class ScoreTimer():
         # time_string = pygame.time.get_ticks()
         time_surf = font.render("Time: ", True, COLOR)
         time_rect = time_surf.get_rect()
-        time_rect.topright = Globals.SCREEN.get_rect().topright
+        time_rect.midleft = Globals.SCREEN.get_rect().midleft
         time_rect.width = Globals.WIDTH/3
         #health_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(time_surf, time_rect)
