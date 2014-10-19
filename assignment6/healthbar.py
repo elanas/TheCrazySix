@@ -2,8 +2,9 @@ import pygame
 
 class HealthBar():
 
-    def __init__(self):
+    def __init__(self, Globals):
         self.color = pygame.color.Color("green")
+        self.Globals = Globals
 
     def render(self):
         #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
@@ -12,10 +13,10 @@ class HealthBar():
 
         health_surf = font.render("Health", True, (255, 255, 255))
         health_rect = health_surf.get_rect()
-        health_rect.topleft = Globals.SCREEN.get_rect().topleft
-        health_rect.width = Globals.WIDTH/3
+        health_rect.topleft = self.Globals.SCREEN.get_rect().topleft
+        health_rect.width = self.Globals.WIDTH/3
         #health_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
-        Globals.SCREEN.blit(health_surf, health_rect)
+        self.Globals.SCREEN.blit(health_surf, health_rect)
 
  
 
@@ -23,5 +24,4 @@ class HealthBar():
 
     def update(self):
     	pass
-import Globals
 

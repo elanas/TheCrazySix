@@ -5,7 +5,7 @@ from GameState import GameState
 from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
-
+from HealthBar import HealthBar
 
 # from Highscore import Highscore
 # importing Highscore isn't working for me
@@ -38,7 +38,7 @@ class TileTest(GameState):
         self.has_collided = False
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
-        self.health = HealthBar()
+        self.health = HealthBar(Globals)
         for x in range(TileTest.NUM_ENEMY):
             # fix the positions they are added in and everything else
             # should work
@@ -114,4 +114,3 @@ class TileTest(GameState):
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
-from HealthBar import HealthBar
