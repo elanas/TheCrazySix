@@ -6,6 +6,7 @@ import random
 
 from Character import Character
 from asset_loader import AssetLoader
+from Globals import Globals
 
 
 class Enemy(Character):
@@ -34,13 +35,14 @@ class Enemy(Character):
         tile_rect = camera.tileEngine.get_tile_rect()
         max_x = camera.tileEngine.getMaxCols() * tile_rect.width -\
             self.rect.width
+        min_y = -(camera.tileEngine.getNumRows() * tile_rect.height) + Globals.HEIGHT
         max_y = camera.tileEngine.getNumRows() * tile_rect.height -\
             self.rect.height
         keep_looking = True
         radius = max(self.rect.height, self.rect.width) * 2
         while keep_looking:
             self.rect.x = random.randint(0, max_x)
-            self.rect.y = random.randint(0, max_y)
+            self.rect.y = random.randint(min_y, Globals.HEIGHT)
             solid_tiles = camera.get_solid_tiles(self.rect.center, radius)
             solid_rects = [pair.rect for pair in solid_tiles]
             num_collided = len(self.rect.collidelistall(solid_rects))
