@@ -71,7 +71,7 @@ class Player(Character):
         if enemy_sprites is not None:
             self.checkEnemyCollisions(enemy_sprites)
 
-        if Globals.PLAYER_HEALTH is 0:
+        if Globals.PLAYER_HEALTH <= 80:
                 Globals.STATE = WinGame()
 
     def updateVelocity(self, time):
