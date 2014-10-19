@@ -27,7 +27,7 @@ class WinGame(GameState):
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
 
-        op1 = font.render("Press escape to return to menu.", True, COLOR)
+        op1 = font.render("Press escape to see Highscores.", True, COLOR)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op1, title_rect)
         pygame.display.flip()
