@@ -11,8 +11,8 @@ class HealthBar():
         #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         font = pygame.font.SysFont("hannotatesc", 64)
         COLOR = (7, 147, 240)
-
-        health_surf = font.render("Health", True, (255, 255, 255))
+        health_string = "Health:" + Globals.PLAYER_HEALTH
+        health_surf = font.render( health_string, True, (255, 255, 255))
         health_rect = health_surf.get_rect()
         health_rect.topleft = Globals.SCREEN.get_rect().topleft
         health_rect.width = Globals.WIDTH/3
