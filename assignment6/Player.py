@@ -72,7 +72,7 @@ class Player(Character):
             self.checkEnemyCollisions(enemy_sprites)
 
         if Globals.PLAYER_HEALTH <= 0:
-                Globals.STATE = WinGame()
+                Globals.STATE = LoseGame()
 
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
