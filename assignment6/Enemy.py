@@ -18,21 +18,33 @@ class Enemy(Character):
     loader = AssetLoader("images")
     WALK_ANIM_TIME = .25
 
-    def __init__(self, w, h):
-        ranX = random.randint(0, w)
-        ranY = random.randint(0, h)
-
-        super(Enemy, self).__init__(w, h, ranX, ranY)
+    def __init__(self, w, h, camera):
+        super(Enemy, self).__init__(w, h, 0, 0)
         self.loadResources()
         self.direction = random.randint(0, 3)
         self.image = Enemy.images[self.direction][0]
         self.rect = self.image.get_rect()
-        self.rect.x = ranX
-        self.rect.y = ranY
         self.cycle = -1
         self.time_to_change_direction = (random.random() * 1.5) + .5
         self.time_elapsed_anim = 0
         self.time_elapsed_direction = 0
+        self.setInitialPosition(camera)
+
+    def setInitialPosition(self, camera):
+        tile_rect = camera.tileEngine.get_tile_rect()
+        max_x = camera.tileEngine.getMaxCols() * tile_rect.width -\
+            self.rect.width
+        max_y = camera.tileEngine.getNumRows() * tile_rect.height -\
+            self.rect.height
+        keep_looking = True
+        radius = max(self.rect.height, self.rect.width) * 2
+        while keep_looking:
+            self.rect.x = random.randint(0, max_x)
+            self.rect.y = random.randint(0, max_y)
+            solid_tiles = camera.get_solid_tiles(self.rect.center, radius)
+            solid_rects = [pair.rect for pair in solid_tiles]
+            num_collided = len(self.rect.collidelistall(solid_rects))
+            keep_looking = num_collided > 0
 
     def update(self, time, camera=None):
         self.time_elapsed_anim += time

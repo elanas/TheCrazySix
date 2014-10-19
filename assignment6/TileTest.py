@@ -44,7 +44,8 @@ class TileTest(GameState):
         for x in range(TileTest.NUM_ENEMY):
             # fix the positions they are added in and everything else
             # should work
-            self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
+            self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT,
+                                        self.camera))
         player_x = Globals.WIDTH / 2
         player_y = int(Globals.HEIGHT -
                        self.camera.tileEngine.get_tile_rect().height * 3.5)
@@ -64,7 +65,6 @@ class TileTest(GameState):
         self.checkCameraPosition()
         if pygame.sprite.spritecollideany(self.player, self.enemySprites):
             Globals.PLAYER_HEALTH -= .5
-
 
     def checkCameraPosition(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx
