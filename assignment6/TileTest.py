@@ -39,7 +39,9 @@ class TileTest(GameState):
         self.playerSprites = pygame.sprite.Group()
 
         for x in range(TileTest.NUM_ENEMY):
-            # self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
+            # fix the positions they are added in and everything else
+            # should work
+            self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
             pass
         player_x = Globals.WIDTH / 2
         player_y = int(Globals.HEIGHT -
@@ -53,7 +55,7 @@ class TileTest(GameState):
         self.playerSprites.draw(Globals.SCREEN)
 
     def update(self, time):
-        self.player.update(time, self.camera)
+        self.player.update(time, self.camera, self.enemySprites)
         self.enemySprites.update(time, self.camera)
         self.checkCameraPosition()
 
@@ -70,6 +72,8 @@ class TileTest(GameState):
                 diff *= -1
             self.camera.move(diff, 0)
             self.player.rect.centerx -= diff
+            for enemy in self.enemySprites:
+                enemy.rect.centerx -= diff
         if abs(dist_y) > TileTest.MAX_OFFSET_Y:
             diff = abs(dist_y) - TileTest.MAX_OFFSET_Y
             # player is below center
@@ -80,6 +84,8 @@ class TileTest(GameState):
                 diff *= -1
             self.camera.move(0, diff)
             self.player.rect.centery -= diff
+            for enemy in self.enemySprites:
+                enemy.rect.centery -= diff
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

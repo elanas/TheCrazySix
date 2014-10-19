@@ -42,7 +42,7 @@ class Player(Character):
         self.time_elapsed = 0
         self.anim_time = Player.STILL_ANIM_TIME
 
-    def update(self, time, camera=None):
+    def update(self, time, camera=None, enemy_sprites=None):
         self.updateVelocity(time)
         self.time_elapsed += time
         if self.time_elapsed >= self.anim_time:
@@ -68,6 +68,8 @@ class Player(Character):
             self.checkCollisions(camera)
         else:
             self.checkScreenCollisions()
+        if enemy_sprites is not None:
+            self.checkEnemyCollisions(enemy_sprites)
 
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
@@ -204,3 +206,25 @@ class Player(Character):
         num_stairs = len(temp_rect.collidelistall(stair_rects))
         if num_stairs > 0:
             Globals.STATE = WinGame()
+
+    def checkEnemyCollisions(self, enemy_sprites):
+        enemy_rects = [enemy.rect for enemy in enemy_sprites]
+        collided_indices = self.rect.collidelistall(enemy_rects)
+        # The code below should keep Player's from walking through Enemies.
+        # More work needs to be done to make sure that it looks good when an
+        # Enemy initiates the contact.
+        #
+        # if self.velocity > 0:
+        #     for i in collided_indices:
+        #         curr_rect = enemy_rects[i]
+        #         if self.direction == Character.INDEX_UP:
+        #             self.rect.top = curr_rect.bottom
+        #         elif self.direction == Character.INDEX_DOWN:
+        #             self.rect.bottom = curr_rect.top
+        #         elif self.direction == Character.INDEX_LEFT:
+        #             self.rect.left = curr_rect.right
+        #         elif self.direction == Character.INDEX_RIGHT:
+        #             self.rect.right = curr_rect.left
+        if len(collided_indices) > 0:
+            # take damage?
+            pass
