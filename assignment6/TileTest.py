@@ -5,6 +5,7 @@ from GameState import GameState
 from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
+from HealthBar import HealthBar
 
 # from Highscore import Highscore
 # importing Highscore isn't working for me
