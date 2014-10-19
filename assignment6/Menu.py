@@ -3,9 +3,10 @@ import sys
 
 from GameState import GameState
 from Globals import Globals
-from Player import Player
+from Character import Character
 from BorderPlayer import BorderPlayer
 from NameInput import NameInput
+from Highscore import Highscore
 
 MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
@@ -16,19 +17,19 @@ class Menu(GameState):
         self.color = pygame.color.Color("black")
         self.time = 0
         self.selection = 0
-        self.playerSprites = pygame.sprite.Group()
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-                         0, 0, Player.INDEX_DOWN))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-                         Globals.WIDTH, 0, Player.INDEX_LEFT))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-                         0, Globals.HEIGHT, Player.INDEX_RIGHT))
-        self.playerSprites.add(
-            BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-                         Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
+        # self.playerSprites = pygame.sprite.Group()
+        # self.playerSprites.add(
+        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+        #                  0, 0, Character.INDEX_DOWN))
+        # self.playerSprites.add(
+        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+        #                  Globals.WIDTH, 0, Character.INDEX_LEFT))
+        # self.playerSprites.add(
+        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+        #                  0, Globals.HEIGHT, Character.INDEX_RIGHT))
+        # self.playerSprites.add(
+        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
+        #                  Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
@@ -87,15 +88,15 @@ class Menu(GameState):
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op4, title_rect)
 
-        self.playerSprites.draw(Globals.SCREEN)
-        for p in self.playerSprites:
-            p.onDraw()
+        # self.playerSprites.draw(Globals.SCREEN)
+        # for p in self.playerSprites:
+        #     p.onDraw()
 
         pygame.display.flip()
 
     def update(self, time):
         self.time += time
-        self.playerSprites.update(time)
+        # self.playerSprites.update(time)
 
     def event(self, event):
         if event.type == pygame.QUIT:
@@ -122,7 +123,3 @@ class Menu(GameState):
 
     def updateSelection(self):
         pygame.display.flip()
-
-
-from MainGame import MainGame
-from Highscore import Highscore

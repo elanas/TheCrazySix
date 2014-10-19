@@ -4,6 +4,7 @@ from GameState import GameState
 from Globals import Globals
 from Player import Player
 from BorderPlayer import BorderPlayer
+import Menu
 
 
 class Highscore(GameState):
@@ -69,5 +70,4 @@ class Highscore(GameState):
 
     def event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.STATE = Menu()
-
+            Globals.STATE = Menu.Menu()

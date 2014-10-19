@@ -5,9 +5,13 @@ import math
 
 from Character import Character
 from asset_loader import AssetLoader
+from WinGame import WinGame
+from TileType import TileType
+from Globals import Globals
 
 
 class Player(Character):
+    STAIR_OFFSET = 20
     MOVE_VELOCITY = 200
     SECONDS_TO_FULL_SPEED = .5
     ACCELERATION = MOVE_VELOCITY / SECONDS_TO_FULL_SPEED
@@ -38,7 +42,7 @@ class Player(Character):
         self.time_elapsed = 0
         self.anim_time = Player.STILL_ANIM_TIME
 
-    def update(self, time):
+    def update(self, time, camera=None):
         self.updateVelocity(time)
         self.time_elapsed += time
         if self.time_elapsed >= self.anim_time:
@@ -60,6 +64,10 @@ class Player(Character):
 
         if self.velocity > 0:
             self.move(time)
+        if camera is not None:
+            self.checkCollisions(camera)
+        else:
+            self.checkScreenCollisions()
 
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
@@ -181,41 +189,18 @@ class Player(Character):
         norm_delta = self.getMoveNormalized()
         dist_delta = [x * time * self.velocity for x in norm_delta]
         super(Player, self).move(dist_delta[0], dist_delta[1])
-        self.checkCollisions()
-
-    def checkCollisions(self):
-        if self.rect.left < 0:
-            self.rect.left = 0
-            self.velocity = 0
-            self.playSound()
-        elif self.rect.right > self.w:
-            self.rect.right = self.w
-            self.velocity = 0
-            self.playSound()
-
-        if self.rect.top < 0:
-            self.rect.top = 0
-            self.velocity = 0
-            self.playSound()
-        elif self.rect.bottom > self.h:
-            self.rect.bottom = self.h
-            self.velocity = 0
-            self.playSound()
 
     def playSound(self):
         Player.hitSound.play()
 
-    def checkWallCollision(self, wall_group):
-        for wall_sprite in \
-                pygame.sprite.spritecollide(self, wall_group, False):
-            wall_rect = wall_sprite.rect
-            if self.direction == Player.INDEX_UP:
-                self.rect.top = wall_rect.bottom
-            elif self.direction == Player.INDEX_DOWN:
-                self.rect.bottom = wall_rect.top
-            elif self.direction == Player.INDEX_LEFT:
-                self.rect.left = wall_rect.right
-            elif self.direction == Player.INDEX_RIGHT:
-                self.rect.right = wall_rect.left
-            self.velocity = 0
-            # self.is_moving = False
+    def checkCollisions(self, camera):
+        super(Player, self).checkCollisions(camera)
+        radius = max(self.rect.height, self.rect.width) * 2
+        special_tiles = camera.get_special_tiles(self.rect.center, radius)
+        stair_rects = [pair.rect for pair in special_tiles
+                       if pair.tile.special_attr == TileType.STAIR_ATTR]
+        temp_rect = self.rect.inflate(
+            -Player.STAIR_OFFSET, -Player.STAIR_OFFSET)
+        num_stairs = len(temp_rect.collidelistall(stair_rects))
+        if num_stairs > 0:
+            Globals.STATE = WinGame()

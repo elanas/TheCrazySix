@@ -20,7 +20,7 @@ class BorderPlayer(Player):
         elif self.direction == Player.INDEX_RIGHT:
             self.keyPressed(pygame.K_RIGHT)
 
-    def checkCollisions(self):
+    def checkScreenCollisions(self):
         if self.rect.left < 0:
             # self.rect.top = self.rect.left
             self.rect.left = 0

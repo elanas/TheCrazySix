@@ -34,7 +34,7 @@ class Enemy(Character):
         self.time_elapsed_anim = 0
         self.time_elapsed_direction = 0
 
-    def update(self, time):
+    def update(self, time, camera=None):
         self.time_elapsed_anim += time
         self.time_elapsed_direction += time
         if self.time_elapsed_direction >= self.time_to_change_direction:
@@ -50,6 +50,10 @@ class Enemy(Character):
             self.rect.center = old_rect.center
             self.time_elapsed_anim = 0
         self.moveRandom(time)
+        if camera is not None:
+            self.checkCollisions(camera)
+        else:
+            self.checkScreenCollisions()
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
@@ -71,7 +75,6 @@ class Enemy(Character):
 
     def move(self, xDelta, yDelta):
         super(Enemy, self).move(xDelta, yDelta)
-        self.checkCollisions()
 
     def moveRandom(self, time):
         norm_delta = self.getMoveNormalized()
@@ -92,17 +95,3 @@ class Enemy(Character):
         if not self.direction == direction:
             self.direction = direction
             self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
-
-    def checkCollisions(self):
-        if self.rect.left < 0:
-            self.rect.left = 0
-            self.setDirection(Enemy.INDEX_RIGHT)
-        elif self.rect.right > self.w:
-            self.rect.right = self.w
-            self.setDirection(Enemy.INDEX_LEFT)
-        if self.rect.top < 0:
-            self.rect.top = 0
-            self.setDirection(Enemy.INDEX_DOWN)
-        elif self.rect.bottom > self.h:
-            self.rect.bottom = self.h
-            self.setDirection(Enemy.INDEX_UP)

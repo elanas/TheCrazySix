@@ -6,7 +6,7 @@ from TileEngine import TileEngine
 from TileType import TileType
 from Camera import Camera
 
-from Highscore import Highscore
+# from Highscore import Highscore
 # importing Highscore isn't working for me
 
 from Player import Player
@@ -14,6 +14,8 @@ from Enemy import Enemy
 
 
 class TileTest(GameState):
+    MAX_OFFSET_X = 150
+    MAX_OFFSET_Y = 75
     FACTOR = 10
     INDEX_DOWN = 0
     INDEX_UP = 1
@@ -28,8 +30,7 @@ class TileTest(GameState):
         self.camera = Camera(self.tileEngine, pygame.Rect(
             0, 0, Globals.WIDTH, Globals.HEIGHT))
         self.keyCode = None
-        self.testPoint = [Globals.WIDTH / 2, int(Globals.HEIGHT -
-                          self.camera.tileEngine.get_tile_rect().height * 3.5)]
+        self.testPoint = []
         self.object_radius = \
             self.camera.tileEngine.get_tile_rect().height * 1.5
         self.direction = -1
@@ -37,94 +38,48 @@ class TileTest(GameState):
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
 
-        # for x in range(MainGame.NUM_ENEMY):
-        #     self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
-        self.playerSprites.add(Player(Globals.WIDTH, Globals.HEIGHT,
-                                      self.testPoint[0], self.testPoint[1]))
+        for x in range(TileTest.NUM_ENEMY):
+            # self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT))
+            pass
+        player_x = Globals.WIDTH / 2
+        player_y = int(Globals.HEIGHT -
+                       self.camera.tileEngine.get_tile_rect().height * 3.5)
+        self.player = Player(Globals.WIDTH, Globals.HEIGHT, player_x, player_y)
+        self.playerSprites.add(self.player)
 
     def render(self):
         self.camera.render(Globals.SCREEN)
-        self.checkCollisions()
-        # pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 6)
-
-        # Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        # self.enemySprites.draw(Globals.SCREEN)
+        self.enemySprites.draw(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
-        # self.wallSprites.draw(Globals.SCREEN)
-
-    def checkCollisions(self):
-        solid_tiles = \
-            self.camera.get_solid_tiles(self.testPoint, self.object_radius)
-        solid_rects = [pair.rect for pair in solid_tiles]
-        # # curr_rect = \
-        # #     pygame.Rect(self.testPoint[0] - 3, self.testPoint[1] - 3, 6, 6)
-        # curr_rect = self.playerSprites.get
-        # for i in curr_rect.collidelistall(solid_rects):
-
-        for p in self.playerSprites:
-            curr_rect = p.rect
-            for i in curr_rect.collidelistall(solid_rects):
-
-                wall_rect = solid_rects[i]
-                if self.direction == TileTest.INDEX_UP:
-                    curr_rect.top = wall_rect.bottom
-                    self.has_collided = True
-                elif self.direction == TileTest.INDEX_DOWN:
-                    curr_rect.bottom = wall_rect.top
-                    self.has_collided = True
-                elif self.direction == TileTest.INDEX_LEFT:
-                    curr_rect.left = wall_rect.right
-                    self.has_collided = True
-                elif self.direction == TileTest.INDEX_RIGHT:
-                    curr_rect.right = wall_rect.left
-                    self.has_collided = True
-                else:
-                    self.has_collided = False
-
-        self.testPoint[1] = curr_rect.top + 3
-        self.testPoint[0] = curr_rect.left + 3
-
-        special_tiles = \
-            self.camera.get_special_tiles(self.testPoint,
-                                          self.object_radius)
-        stair_rects = [pair.rect for pair in special_tiles
-                       if pair.tile.special_attr == TileType.STAIR_ATTR]
-        for p in self.playerSprites:
-            num_stairs = len(p.rect.collidelistall(stair_rects))
-            if num_stairs > 0:
-                # fix the import and this should be done
-                Globals.STATE = Highscore()
-                pass
 
     def update(self, time):
-        if self.keyCode is not None:
-            if self.keyCode == pygame.K_UP:
-                self.direction = TileTest.INDEX_UP
-                if self.has_collided:
-                    self.camera.move(0, 0)
-                else:
-                    self.camera.move(0, -TileTest.FACTOR)
-            elif self.keyCode == pygame.K_DOWN:
-                self.direction = TileTest.INDEX_DOWN
-                if self.has_collided:
-                    self.camera.move(0, 0)
-                else:
-                    self.camera.move(0, TileTest.FACTOR)
-            elif self.keyCode == pygame.K_LEFT:
-                self.direction = TileTest.INDEX_LEFT
-                if self.has_collided:
-                    self.camera.move(0, 0)
-                else:
-                    self.camera.move(-TileTest.FACTOR, 0)
-            elif self.keyCode == pygame.K_RIGHT:
-                self.direction = TileTest.INDEX_RIGHT
-                if self.has_collided:
-                    self.camera.move(0, 0)
-                else:
-                    self.camera.move(TileTest.FACTOR, 0)
-        self.playerSprites.update(time)
-        self.has_collided = False
-        # self.enemySprites.update(time)
+        self.player.update(time, self.camera)
+        self.enemySprites.update(time, self.camera)
+        self.checkCameraPosition()
+
+    def checkCameraPosition(self):
+        dist_x = self.camera.container.centerx - self.player.rect.centerx
+        dist_y = self.camera.container.centery - self.player.rect.centery
+        if abs(dist_x) > TileTest.MAX_OFFSET_X:
+            diff = abs(dist_x) - TileTest.MAX_OFFSET_X
+            # player is to the right of center
+            if dist_x < 0:
+                pass
+            # player is to the left of center
+            else:
+                diff *= -1
+            self.camera.move(diff, 0)
+            self.player.rect.centerx -= diff
+        if abs(dist_y) > TileTest.MAX_OFFSET_Y:
+            diff = abs(dist_y) - TileTest.MAX_OFFSET_Y
+            # player is below center
+            if dist_y < 0:
+                pass
+            # player is above center
+            else:
+                diff *= -1
+            self.camera.move(0, diff)
+            self.player.rect.centery -= diff
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -151,5 +106,3 @@ class TileTest(GameState):
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
-
-
