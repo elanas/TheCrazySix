@@ -18,7 +18,7 @@ class ScoreTimer():
             COLOR = pygame.Color("red")
         health_surf = font.render("HP: " + str(health_string), True, COLOR)
         health_rect = health_surf.get_rect()
-        health_rect.topleft = Globals.SCREEN.get_rect().topleft
+        health_rect.topleft = Globals.SCREEN.get_rect().topleft + 500
         health_rect.width = Globals.WIDTH/3
         #health_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(health_surf, health_rect)
