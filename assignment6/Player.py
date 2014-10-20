@@ -218,9 +218,10 @@ class Player(Character):
             Globals.STATE = LoseGame()
 
     def checkEnemyCollisions(self, enemy_sprites):
-        enemy_rects = [enemy.rect for enemy in enemy_sprites]
-        collided_indices = self.rect.collidelistall(enemy_rects)
-        highscoreManager = HighscoreManager()
+        pass
+        # enemy_rects = [enemy.rect for enemy in enemy_sprites]
+        # collided_indices = self.rect.collidelistall(enemy_rects)
+
         # The code below should keep Player's from walking through Enemies.
         # More work needs to be done to make sure that it looks good when an
         # Enemy initiates the contact.
@@ -236,6 +237,6 @@ class Player(Character):
         #             self.rect.left = curr_rect.right
         #         elif self.direction == Character.INDEX_RIGHT:
         #             self.rect.right = curr_rect.left
-        if len(collided_indices) > 0:
-            highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
-            pass
+
+        # if len(collided_indices) > 0:
+            # pass
