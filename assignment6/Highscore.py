@@ -23,6 +23,7 @@ class Highscore(GameState):
 
         TITLE_PADDING = 100
         VERT_SPACING = 90
+        TOP_SPACE = 100
 
         COLOR = (7, 147, 240)
 
@@ -36,19 +37,27 @@ class Highscore(GameState):
         Globals.SCREEN.blit(title_surf, title_rect)
 
         op1 = font.render("{} - {}".format(highscoreEntry[0].name, highscoreEntry[0].score), True, COLOR)
-        title_rect.centery += VERT_SPACING
+        title_rect = op1.get_rect()
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centery += TOP_SPACE + VERT_SPACING
         Globals.SCREEN.blit(op1, title_rect)
 
         op2 = font.render("{} - {}".format(highscoreEntry[1].name, highscoreEntry[1].score), True, COLOR)
-        title_rect.centery += VERT_SPACING
+        title_rect = op2.get_rect()
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centery += TOP_SPACE + (2*VERT_SPACING)
         Globals.SCREEN.blit(op2, title_rect)
 
         op3 = font.render("{} - {}".format(highscoreEntry[2].name, highscoreEntry[2].score), True, COLOR)
-        title_rect.centery += VERT_SPACING
+        title_rect = op3.get_rect()        
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centery += TOP_SPACE + (3*VERT_SPACING)
         Globals.SCREEN.blit(op3, title_rect)
 
         op4 = font.render("{} - {}".format(highscoreEntry[3].name, highscoreEntry[3].score), True, COLOR)
-        title_rect.centery += VERT_SPACING
+        title_rect = op4.get_rect()
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centery += TOP_SPACE + (4*VERT_SPACING)
         Globals.SCREEN.blit(op4, title_rect)
 
     def update(self, time):
