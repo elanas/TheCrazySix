@@ -15,16 +15,14 @@ class WinGame(GameState):
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0]) 
-        font = pygame.font.SysFont("hannotatesc", 64)
-
         font = pygame.font.SysFont(None, 80)
-        # font.
+
         TITLE_PADDING = 150
         VERT_SPACING = 75
 
         COLOR = (7, 147, 240)
 
-        score_string = "You finished the level! You scored " + str(Globals.PLAYER_SCORE) + " points." 
+        score_string = "Level Complete" 
         title_surf = font.render(score_string, True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
@@ -33,7 +31,7 @@ class WinGame(GameState):
         Globals.SCREEN.blit(title_surf, title_rect)
 
         score = "Score: " + str(int(Globals.PLAYER_SCORE)) + " pts" 
-        title_surf = font.render(score, True, (0, 0, 0))
+        title_surf = font.render(score, True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery
@@ -41,7 +39,7 @@ class WinGame(GameState):
 
         font = pygame.font.SysFont(None, 30)
         op1 = "Press escape to see Highscores."
-        title_surf = font.render(op1, True, (0, 0, 0))
+        title_surf = font.render(op1, True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery + VERT_SPACING
