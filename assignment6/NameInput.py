@@ -5,20 +5,21 @@ from TileTest import TileTest
 from asset_loader import AssetLoader
 import Menu
 
+BACKGROUND_IMG = pygame.image.load("images/menu_background.png")
 
 class NameInput(GameState):
     MIN_LENGTH = 3
     MAX_LENGTH = 15
     PROMPT_FONT = None
-    PROMPT_COLOR = pygame.color.Color("black")
+    PROMPT_COLOR = pygame.color.Color("white")
     PROMPT_PADDING = 70
     PROMPT_SIZE = 100
     PROMPT = "Please type your name"
     INPUT_FONT = None
     INPUT_SIZE = 60
     INPUT_SURF_PADDING = 20
-    INPUT_COLOR = pygame.color.Color("black")
-    INPUT_BG_COLOR = pygame.color.Color("white")
+    INPUT_COLOR = pygame.color.Color("white")
+    INPUT_BG_COLOR = pygame.color.Color("black")
     ERROR_FONT = None
     ERROR_SIZE = 40
     ERROR_PADDING = 70
@@ -50,7 +51,7 @@ class NameInput(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        # Globals.SCREEN.blit(self.background_image, (0, 0))
+        Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0]) 
         Globals.SCREEN.blit(self.prompt_surf, self.prompt_rect)
 
         if self.error_message is not None:

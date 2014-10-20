@@ -13,5 +13,5 @@ class Globals(object):
     BACKGROUND_COLOR = (165, 242, 212)
     PLAYER_NAME = None
     PLAYER_HEALTH = 100
-    REMAINING_TIME = 60000
-    PLAYER_SCORE = 0 # Change the score
+    REMAINING_TIME = 30000
+    PLAYER_SCORE = 0

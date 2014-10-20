@@ -29,6 +29,9 @@ class TileTest(GameState):
     WALL_WIDTH = 50
 
     def __init__(self):
+        Globals.PLAYER_HEALTH = 100;
+        Globals.PLAYER_SCORE = 0;
+        Globals.REMAINING_TIME = 30000;
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
         self.camera = Camera(self.tileEngine, pygame.Rect(
             0, 0, Globals.WIDTH, Globals.HEIGHT))
