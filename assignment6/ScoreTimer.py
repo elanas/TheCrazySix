@@ -26,7 +26,7 @@ class ScoreTimer():
         Globals.SCREEN.blit(time_surf, time_rect)
  
 
-        pygame.display.flip()
+        # pygame.display.flip()
 
     def update(self):
         pass

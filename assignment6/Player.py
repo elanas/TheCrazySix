@@ -219,8 +219,8 @@ class Player(Character):
 
     def checkEnemyCollisions(self, enemy_sprites):
         pass
-        # enemy_rects = [enemy.rect for enemy in enemy_sprites]
-        # collided_indices = self.rect.collidelistall(enemy_rects)
+        enemy_rects = [enemy.rect for enemy in enemy_sprites]
+        collided_indices = self.rect.collidelistall(enemy_rects)
 
         # The code below should keep Player's from walking through Enemies.
         # More work needs to be done to make sure that it looks good when an

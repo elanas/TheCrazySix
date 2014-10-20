@@ -112,7 +112,7 @@ class Menu(GameState):
                 self.updateSelection()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             sys.exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
+        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
             if self.selection == 0:
                 # Globals.STATE = MainGame()
                 Globals.STATE = NameInput()
