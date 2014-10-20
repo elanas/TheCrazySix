@@ -19,7 +19,6 @@ class NameInput(GameState):
     INPUT_SIZE = 60
     INPUT_SURF_PADDING = 20
     INPUT_COLOR = pygame.color.Color("white")
-    INPUT_BG_COLOR = pygame.color.Color("black")
     ERROR_FONT = None
     ERROR_SIZE = 40
     ERROR_PADDING = 70
@@ -67,9 +66,6 @@ class NameInput(GameState):
             input_rect = input_surf.get_rect()
             input_rect.centerx = Globals.WIDTH / 2
             input_rect.centery = Globals.HEIGHT / 2
-            input_bg_rect = input_rect.inflate(NameInput.INPUT_SURF_PADDING,
-                                               NameInput.INPUT_SURF_PADDING)
-            Globals.SCREEN.fill(NameInput.INPUT_BG_COLOR, input_bg_rect)
             Globals.SCREEN.blit(input_surf, input_rect)
 
     def handle_entry(self, typed_char):
