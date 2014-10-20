@@ -207,9 +207,12 @@ class Player(Character):
         num_stairs = len(temp_rect.collidelistall(stair_rects))
         highscoreManager = HighscoreManager()
         if num_stairs > 0:
+            Globals.PLAYER_SCORE = Globals.REMAINING_TIME
             highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             Globals.STATE = WinGame()
         if Globals.PLAYER_HEALTH <= 0:
+            Globals.STATE = LoseGame()
+        if Globals.REMAINING_TIME <= 0:
             Globals.STATE = LoseGame()
 
     def checkEnemyCollisions(self, enemy_sprites):
