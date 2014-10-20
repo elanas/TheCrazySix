@@ -14,25 +14,44 @@ class WinGame(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+<<<<<<< HEAD
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0]) 
         font = pygame.font.SysFont("hannotatesc", 64)
+=======
+        font = pygame.font.SysFont(None, 80)
+>>>>>>> FETCH_HEAD
         # font.
-        TITLE_PADDING = 75
+        TITLE_PADDING = 150
         VERT_SPACING = 75
 
         COLOR = (7, 147, 240)
+<<<<<<< HEAD
         score_string = "You finished the level! You scored " + str(Globals.PLAYER_SCORE) + " points." 
         title_surf = font.render(score_string, True, (255, 255, 255))
+=======
+        score_string = "Level Complete"
+        title_surf = font.render(score_string, True, (0, 0, 0))
+>>>>>>> FETCH_HEAD
         title_rect = title_surf.get_rect()
-        title_rect.centerx = Globals.SCREEN.get_rect().centerx - 120
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
 
-        op1 = font.render("Press escape to see Highscores.", True, COLOR)
-        title_rect.centery += VERT_SPACING
-        Globals.SCREEN.blit(op1, title_rect)
-        pygame.display.flip()
+        score = "Score: " + str(int(Globals.PLAYER_SCORE)) + " pts" 
+        title_surf = font.render(score, True, (0, 0, 0))
+        title_rect = title_surf.get_rect()
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centery = Globals.SCREEN.get_rect().centery
+        Globals.SCREEN.blit(title_surf, title_rect)
+
+        font = pygame.font.SysFont(None, 30)
+        op1 = "Press escape to see Highscores."
+        title_surf = font.render(op1, True, (0, 0, 0))
+        title_rect = title_surf.get_rect()
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centery = Globals.SCREEN.get_rect().centery + VERT_SPACING
+        Globals.SCREEN.blit(title_surf, title_rect)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
