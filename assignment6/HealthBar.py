@@ -20,11 +20,7 @@ class HealthBar():
         health_rect = health_surf.get_rect()
         health_rect.topleft = Globals.SCREEN.get_rect().topleft
         health_rect.width = Globals.WIDTH/3
-        #health_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(health_surf, health_rect)
- 
-
-       # pygame.display.flip()
 
     def update(self):
     	pass

@@ -7,6 +7,8 @@ from BorderPlayer import BorderPlayer
 from HighscoreManager import HighscoreManager
 import Menu
 
+BACKGROUND_IMG = pygame.image.load("images/titlepage_image.jpg")
+
 
 class Highscore(GameState):
 
@@ -29,6 +31,7 @@ class Highscore(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+        Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0]) 
         font = pygame.font.SysFont("hannotatesc", 64)
         # font.
         TITLE_PADDING = 75
