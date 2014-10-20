@@ -23,7 +23,7 @@ class HighscoreManager:
                     parts = line.split(HighscoreManager.PAIR_SEPARATOR)
                     try:
                         new_highscore = HighscoreManager.HighscoreEntry(
-                            name=parts[0], score=int(parts[1]))
+                            name=parts[0], score=float(parts[1]))
                     except Exception:
                         raise Exception(HighscoreManager.PARSE_ERROR)
                     self.highscore_list.append(new_highscore)
