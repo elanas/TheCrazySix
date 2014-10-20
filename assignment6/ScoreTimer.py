@@ -6,10 +6,8 @@ class ScoreTimer():
         self.total_time = 30000
         self.font = pygame.font.SysFont("hannotatesc", 64)
         self.offset = pygame.time.get_ticks()
-        # print Globals.SCREEN
 
     def render(self, Globals):
-        #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         COLOR = pygame.Color("white")
         time_string = pygame.time.get_ticks() - self.offset
         Globals.REMAINING_TIME = self.total_time - time_string
@@ -21,8 +19,5 @@ class ScoreTimer():
         time_rect.width = Globals.WIDTH/4
         Globals.SCREEN.blit(time_surf, time_rect)
  
-
-        # pygame.display.flip()
-
     def update(self):
         pass
