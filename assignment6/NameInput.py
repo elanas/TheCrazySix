@@ -33,7 +33,6 @@ class NameInput(GameState):
             Globals.PLAYER_NAME = ""
         self.error_message = None
         self.loader = AssetLoader('images')
-        # self.background_image = self.loader.load_image("titlepage_image.jpg")
         self.setup_text()
 
     def setup_text(self):
@@ -51,7 +50,7 @@ class NameInput(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0]) 
+        Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
         Globals.SCREEN.blit(self.prompt_surf, self.prompt_rect)
 
         if self.error_message is not None:
