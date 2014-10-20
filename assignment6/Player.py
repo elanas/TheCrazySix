@@ -28,9 +28,11 @@ class Player(Character):
     WALK_ANIM_TIME = .05
     ACCEL_ANIM_TIME = .2
     STILL_ANIM_TIME = .5
+    in_collision = False
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
+        self.empty = pygame.Surface((1, 1)).convert()
         self.loadResources()
         self.image = Player.still_images[Player.INDEX_DOWN][0]
         self.rect = self.image.get_rect()
@@ -71,6 +73,8 @@ class Player(Character):
             self.checkScreenCollisions()
         if enemy_sprites is not None:
             self.checkEnemyCollisions(enemy_sprites)
+        if self.in_collision and self.cycle % 2 is not 0:
+            self.image = self.empty
 
     def updateVelocity(self, time):
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
@@ -238,5 +242,7 @@ class Player(Character):
         #         elif self.direction == Character.INDEX_RIGHT:
         #             self.rect.right = curr_rect.left
 
-        # if len(collided_indices) > 0:
-            # pass
+        if len(collided_indices) > 0:
+            self.in_collision = True
+        else:
+            self.in_collision = False
