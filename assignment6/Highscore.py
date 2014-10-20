@@ -15,7 +15,7 @@ class Highscore(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        font = pygame.font.SysFont("hannotatesc", 64)
+        font = pygame.font.SysFont(None, 64)
 
         TITLE_PADDING = 100
         VERT_SPACING = 90

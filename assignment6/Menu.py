@@ -19,26 +19,13 @@ class Menu(GameState):
         self.color = pygame.color.Color("black")
         self.time = 0
         self.selection = 0
-        # self.playerSprites = pygame.sprite.Group()
-        # self.playerSprites.add(
-        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-        #                  0, 0, Character.INDEX_DOWN))
-        # self.playerSprites.add(
-        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-        #                  Globals.WIDTH, 0, Character.INDEX_LEFT))
-        # self.playerSprites.add(
-        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-        #                  0, Globals.HEIGHT, Character.INDEX_RIGHT))
-        # self.playerSprites.add(
-        #     BorderPlayer(Globals.WIDTH, Globals.HEIGHT,
-        #                  Globals.WIDTH, Globals.HEIGHT, Player.INDEX_UP))
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(MENU_BACKGROUND, [0, 0])
-        font = pygame.font.SysFont("hannotatesc", 64)
-        # font.
-        TITLE_PADDING = 75
+        font = pygame.font.SysFont(None, 64)
+
+        TITLE_PADDING = 130
         VERT_SPACING = 75
 
         START = "Start Game"
@@ -69,7 +56,7 @@ class Menu(GameState):
 
         title_surf = font.render(START, True, GAME_SELECT)
         title_rect = title_surf.get_rect()
-        title_rect.centerx = Globals.SCREEN.get_rect().centerx - 20
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
