@@ -212,7 +212,7 @@ class Player(Character):
             Globals.STATE = WinGame()
         if Globals.PLAYER_HEALTH <= 0:
             Globals.STATE = LoseGame()
-        if Globals.REMAINING_TIME <= 0:
+        if Globals.REMAINING_TIME <= 00000:
             Globals.STATE = LoseGame()
 
     def checkEnemyCollisions(self, enemy_sprites):
