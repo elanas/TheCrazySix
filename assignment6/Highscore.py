@@ -25,7 +25,7 @@ class Highscore(GameState):
 
         COLOR = (7, 147, 240)
 
-        title_surf = font.render("Highscores", True, (0, 0, 0))
+        title_surf = font.render("Highscores", True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery
