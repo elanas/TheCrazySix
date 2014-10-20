@@ -9,7 +9,7 @@ class HealthBar():
 
     def render(self, Globals):
         #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        font = pygame.font.SysFont("hannotatesc", 64)
+        font = pygame.font.SysFont(None, 64)
         COLOR = pygame.Color("green")
         health_string = Globals.PLAYER_HEALTH
         if (Globals.PLAYER_HEALTH < 50):

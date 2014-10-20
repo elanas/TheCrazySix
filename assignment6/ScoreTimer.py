@@ -4,7 +4,7 @@ class ScoreTimer():
 
     def __init__(self):
         self.total_time = 60000
-        self.font = pygame.font.SysFont("hannotatesc", 64)
+        self.font = pygame.font.SysFont(None, 64)
         self.offset = pygame.time.get_ticks()
         # print Globals.SCREEN
 
