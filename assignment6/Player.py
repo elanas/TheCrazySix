@@ -208,6 +208,8 @@ class Player(Character):
         highscoreManager = HighscoreManager()
         if num_stairs > 0:
             Globals.PLAYER_SCORE = Globals.REMAINING_TIME
+            if Globals.PLAYER_HEALTH >= 95:
+                Globals.PLAYER_SCORE += Globals.PLAYER_HEALTH
             highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             Globals.STATE = WinGame()
         if Globals.PLAYER_HEALTH <= 0:
