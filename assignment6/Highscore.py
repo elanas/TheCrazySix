@@ -14,6 +14,7 @@ class Highscore(GameState):
         GameState.__init__(self)
         self.color = pygame.color.Color("black")
         self.time = 0.0
+        self.highscoreManager = HighscoreManager()
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
@@ -25,14 +26,14 @@ class Highscore(GameState):
 
         COLOR = (7, 147, 240)
 
+        highscoreEntry = self.highscoreManager.get_list()
+
         title_surf = font.render("Highscores", True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
-        highscoreManager = HighscoreManager()
-        highscoreEntry = highscoreManager.get_list()
 
         op1 = font.render("{} - {}".format(highscoreEntry[0].name, highscoreEntry[0].score), True, COLOR)
         title_rect.centery += VERT_SPACING
