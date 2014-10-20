@@ -4,6 +4,7 @@ from GameState import GameState
 from Globals import Globals
 import Menu
 
+BACKGROUND_IMG = pygame.image.load("images/menu_background.png")
 
 class WinGame(GameState):
 
@@ -13,6 +14,7 @@ class WinGame(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+        Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0]) 
         font = pygame.font.SysFont("hannotatesc", 64)
         # font.
         TITLE_PADDING = 75
@@ -20,7 +22,7 @@ class WinGame(GameState):
 
         COLOR = (7, 147, 240)
         score_string = "You finished the level! You scored " + str(Globals.PLAYER_SCORE) + " points." 
-        title_surf = font.render(score_string, True, (0, 0, 0))
+        title_surf = font.render(score_string, True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx - 120
         title_rect.centery = Globals.SCREEN.get_rect().centery
