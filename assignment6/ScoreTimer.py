@@ -13,13 +13,9 @@ class ScoreTimer():
         COLOR = pygame.Color("white")
         time_string = pygame.time.get_ticks() - self.offset
         Globals.REMAINING_TIME = self.total_time - time_string
-        # if Globals.REMAINING_TIME < self.total_time/4:
-        #     COLOR = pygame.Color("red")
-        # if Globals.REMAINING_TIME <= 0:
-        #      Globals.REMAINING_TIME = 00
-        # if Globals.REMAINING_TIME < 10000:
-        #     Globals.REMAINING_TIME = 0 + Globals.REMAINING_TIME
         time_surf = self.font.render(str(Globals.REMAINING_TIME)[:2], True, COLOR)
+        if Globals.REMAINING_TIME < self.total_time/4:
+            COLOR = pygame.Color("red")
         time_rect = time_surf.get_rect()
         time_rect.topright = Globals.SCREEN.get_rect().topright
         time_rect.width = Globals.WIDTH/4

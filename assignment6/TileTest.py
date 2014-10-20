@@ -7,6 +7,7 @@ from TileType import TileType
 from Camera import Camera
 from HealthBar import HealthBar
 from ScoreTimer import ScoreTimer
+import Menu
 
 # from Highscore import Highscore
 # importing Highscore isn't working for me
@@ -97,7 +98,7 @@ class TileTest(GameState):
     def event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
-                Globals.RUNNING = False
+                Globals.STATE = Menu.Menu()
             elif event.key == pygame.K_r or event.key == pygame.K_F5:
                 self.reloadCamera()
             else:
