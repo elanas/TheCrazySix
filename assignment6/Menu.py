@@ -14,6 +14,8 @@ MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
 
 class Menu(GameState):
+    CIRCLE_COLOR = (28, 198, 255)
+    CIRCLE_PADDING = 30
     def __init__(self):
         GameState.__init__(self)
         self.color = pygame.color.Color("black")
@@ -35,7 +37,7 @@ class Menu(GameState):
         QUIT = "Quit"
 
         COLOR = (7, 147, 240)
-        SELECT_COLOR = (11, 81, 128)
+        SELECT_COLOR = Menu.CIRCLE_COLOR
 
         GAME_SELECT = COLOR
         BRIGHT_SELECT = COLOR
@@ -61,27 +63,41 @@ class Menu(GameState):
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
 
+        if self.selection is 0:
+            self.draw_circle(title_rect)
         op1 = font.render(BRIGHTNESS, True, BRIGHT_SELECT)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op1, title_rect)
 
+        if self.selection is 1:
+            self.draw_circle(title_rect)
         op2 = font.render(VOLUME, True, AUDIO_SELECT)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op2, title_rect)
 
+        if self.selection is 2:
+            self.draw_circle(title_rect)
         op3 = font.render(SCORE, True, SCORE_SELECT)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op3, title_rect)
 
+        if self.selection is 3:
+            self.draw_circle(title_rect)
         op4 = font.render(QUIT, True, QUIT_SELECT)
         title_rect.centery += VERT_SPACING
         Globals.SCREEN.blit(op4, title_rect)
 
+        if self.selection is 4:
+            self.draw_circle(title_rect)
         # self.playerSprites.draw(Globals.SCREEN)
         # for p in self.playerSprites:
         #     p.onDraw()
 
         pygame.display.flip()
+
+    def draw_circle(self, title_rect):
+        pos = (title_rect.left - Menu.CIRCLE_PADDING, title_rect.centery)
+        pygame.draw.circle(Globals.SCREEN, Menu.CIRCLE_COLOR, pos, 10)
 
     def update(self, time):
         self.time += time
