@@ -19,7 +19,7 @@ class WinGame(GameState):
         VERT_SPACING = 75
 
         COLOR = (7, 147, 240)
-        score_string = "You finished the level! /nYou scored " + str(Globals.PLAYER_SCORE) + " points." 
+        score_string = "You finished the level! \nYou scored " + str(Globals.PLAYER_SCORE) + " points." 
         title_surf = font.render(score_string, True, (0, 0, 0))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx - 120
