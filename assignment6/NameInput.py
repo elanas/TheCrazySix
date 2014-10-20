@@ -3,6 +3,7 @@ from Globals import Globals
 from GameState import GameState
 from TileTest import TileTest
 from asset_loader import AssetLoader
+import Menu
 
 
 class NameInput(GameState):
@@ -94,7 +95,7 @@ class NameInput(GameState):
         if event.type == pygame.KEYDOWN:
             self.error_message = None
             if event.key == pygame.K_ESCAPE:
-                Globals.RUNNING = False
+                Globals.STATE = Menu.Menu()
             elif self.is_valid(event.key):
                 self.handle_entry(self.parse_key(event.key))
             elif event.key == pygame.K_BACKSPACE:

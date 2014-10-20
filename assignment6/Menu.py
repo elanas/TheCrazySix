@@ -7,6 +7,7 @@ from Character import Character
 from BorderPlayer import BorderPlayer
 from NameInput import NameInput
 from Highscore import Highscore
+import Title
 
 
 MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
@@ -111,7 +112,7 @@ class Menu(GameState):
                 self.selection += 1
                 self.updateSelection()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            sys.exit()
+            Globals.STATE = Title.Title()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_SPACE:
             if self.selection == 0:
                 # Globals.STATE = MainGame()
