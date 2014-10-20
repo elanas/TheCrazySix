@@ -24,7 +24,7 @@ class HealthBar():
         Globals.SCREEN.blit(health_surf, health_rect)
  
 
-        pygame.display.flip()
+       # pygame.display.flip()
 
     def update(self):
     	pass
