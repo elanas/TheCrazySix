@@ -12,7 +12,7 @@ class ScoreTimer():
         font = pygame.font.SysFont("hannotatesc", 64)
         COLOR = pygame.Color("green")
         time_string = pygame.time.get_ticks()
-        time_surf = font.render(str(self.total_time - time_string), True, COLOR)
+        time_surf = font.render(str(self.total_time - time_string)[:2], True, COLOR)
         time_rect = time_surf.get_rect()
         time_rect.topright = Globals.SCREEN.get_rect().topright
         time_rect.width = Globals.WIDTH/4
