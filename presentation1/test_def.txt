@@ -7,3 +7,16 @@
 / stair_left.png 0 stair
 \ stair_right.png 0 stair
 $ coin.png 0 coin
+7 wall_up_left_1.png 1
+[ wall_up_left.png 1
+8 wall_up.png 1
+9 wall_up_right_1.png 1
+] wall_up_right.png 1
+4 wall_left.png 1
+6 wall_right.png 1
+1 wall_down_left_1.png 1
+; wall_down_left.png 1
+2 wall_down.png 1
+3 wall_down_right_1.png 1
+' wall_down_right.png 1
+
