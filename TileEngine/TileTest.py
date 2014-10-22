@@ -14,7 +14,7 @@ class TileTest(GameState):
     INDEX_UP = 1
     INDEX_LEFT = 2
     INDEX_RIGHT = 3
-    MINI_FACT = .1
+    MINI_FACT = .13
 
     def __init__(self):
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
@@ -34,13 +34,17 @@ class TileTest(GameState):
     def render(self):
         self.camera.render(Globals.SCREEN)
         self.checkCollisions()
-        self.drawSpecial()
+        # self.drawSpecial()
         pygame.draw.circle(Globals.SCREEN, (255, 0, 0), self.testPoint, 6)
         mini_surf = pygame.Surface((self.max_width, self.max_height)).convert()
-        mini_surf.set_colorkey(Camera.EMPTY_COLOR)
+        # mini_surf.set_colorkey(Camera.EMPTY_COLOR)
+        # mini_surf.set_alpha(200)
         self.mini_camera.render(mini_surf)
         scaled = pygame.transform.scale(mini_surf, (int(self.max_width * TileTest.MINI_FACT), int(self.max_height * TileTest.MINI_FACT)))
-        Globals.SCREEN.blit(scaled, (2, 2))
+        s_rect = scaled.get_rect()
+        s_rect.bottom = Globals.HEIGHT - 10
+        s_rect.right = Globals.WIDTH - 10
+        Globals.SCREEN.blit(scaled, s_rect)
 
     def checkCollisions(self):
         solid_tiles = \
@@ -127,6 +131,7 @@ class TileTest(GameState):
         try:
             self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
             self.camera.tileEngine = self.tileEngine
+            self.mini_camera.TileEngine = self.tileEngine
             print "Reloaded Tile Engine"
         except Exception as e:
             print "Reload failed: ", e
