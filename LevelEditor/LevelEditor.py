@@ -35,11 +35,17 @@ class LevelEditor(GameState):
         self.highlight_surf = pygame.Surface(self.tile_rect.size).convert()
         self.highlight_surf.fill(LevelEditor.HIGHLIGHT_COLOR)
         self.highlight_surf.set_alpha(LevelEditor.HIGHLIGHT_ALPHA)
+        self.temp_surf = pygame.font.Font(None, 32).render("Tiles:", False, (255, 255, 255))
+        self.temp_rect = self.temp_surf.get_rect()
+        self.temp_rect.centerx = self.camera_dest.right + (Globals.WIDTH - self.camera_dest.right) / 2
+        self.temp_rect.top = self.camera_dest.top + 20
 
     def render(self):
         self.clear_camera_surf()
         self.camera.render(Globals.SCREEN, False)
         self.handle_mouse()
+
+        Globals.SCREEN.blit(self.temp_surf, self.temp_rect)
     
     def clear_camera_surf(self):
         num_horiz = int(self.camera_dest.width / self.base_rect.width)
