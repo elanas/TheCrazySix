@@ -6,16 +6,16 @@ from TileType import TileType
 from Camera import Camera
 from DefinitionBrowser import DefinitionBrowser
 from asset_loader import AssetLoader
-from collections import namedtuple
+from Action import Action
 from os.path import join
 
 class LevelEditor(GameState):
-    Action = namedtuple('Action', 'type row col old_tile new_tile')
-    DELETE_TYPE = "delete"
     RIGHT_PADDING_FACTOR = 4
     PADDING = 20
     HIGHLIGHT_COLOR = (255, 0, 255)
     HIGHLIGHT_ALPHA = 100
+    HIGHLIGHT_BORDER = pygame.color.Color("red")
+    SELECTION_ALPHA = 255
     QUICK_TIMEOUT = 1
     MESSAGE_TIMEOUT = 2
     INFO_TIMEOUT = 6
@@ -24,6 +24,9 @@ class LevelEditor(GameState):
     DEFAULT_MESSAGE_COLOR = pygame.color.Color("white")
     ERROR_MESSAGE_COLOR = pygame.color.Color("red")
     MESSAGE_BACKGROUND = pygame.color.Color("black")
+    TITLE_FONT = pygame.font.Font(None, 40)
+    TITLE = "Tiles:"
+    TITLE_COLOR = pygame.color.Color("white")
 
     def __init__(self, definition_path, map_path):
         self.actions = list()
@@ -47,13 +50,14 @@ class LevelEditor(GameState):
         self.shift_factor = self.tile_rect.width
         self.init_camera()
         self.init_highlight()
-
-        self.temp_surf = pygame.font.Font(None, 40).render("Tiles:", False, (255, 255, 255))
-        self.temp_rect = self.temp_surf.get_rect()
-        self.temp_rect.centerx = self.camera_dest.right + (Globals.WIDTH - self.camera_dest.right) / 2
-        self.temp_rect.top = self.camera_dest.top + 20
-
+        self.init_title()
         self.init_browser()
+
+    def init_title(self):
+        self.title_surf = LevelEditor.TITLE_FONT.render(LevelEditor.TITLE, False, LevelEditor.TITLE_COLOR)
+        self.title_rect = self.title_surf.get_rect()
+        self.title_rect.centerx = self.camera_dest.right + (Globals.WIDTH - self.camera_dest.right) / 2
+        self.title_rect.top = self.camera_dest.top + 20
 
     def init_camera(self):
         self.camera_dest = pygame.Rect(LevelEditor.PADDING, LevelEditor.PADDING, Globals.WIDTH - self.right_padding - LevelEditor.PADDING, Globals.HEIGHT - LevelEditor.PADDING)
@@ -66,16 +70,22 @@ class LevelEditor(GameState):
             self.camera_dest.width -= extra_x
         self.camera_dest.centery = Globals.HEIGHT / 2
 
-    def init_highlight(self):
+    def init_highlight(self, source=None, alpha=HIGHLIGHT_ALPHA, border=False):
         self.highlight_surf = pygame.Surface(self.tile_rect.size).convert()
-        self.highlight_surf.fill(LevelEditor.HIGHLIGHT_COLOR)
-        self.highlight_surf.set_alpha(LevelEditor.HIGHLIGHT_ALPHA)
-
+        if source is None:
+            self.highlight_surf.fill(LevelEditor.HIGHLIGHT_COLOR)
+            self.highlight_surf.set_alpha(alpha)
+        else:
+            self.highlight_surf.blit(source, (0, 0))
+            self.highlight_surf.set_alpha(alpha)
+        if border:
+            pygame.draw.rect(self.highlight_surf,
+                             LevelEditor.HIGHLIGHT_BORDER, self.tile_rect, 1)
     def init_browser(self):
         width = (Globals.WIDTH - self.camera_dest.right) - 20
-        height = Globals.HEIGHT - self.temp_rect.bottom - 20
-        c = pygame.Rect(0, self.temp_rect.bottom + 20, width, height)
-        c.centerx = self.temp_rect.centerx
+        height = Globals.HEIGHT - self.title_rect.bottom - 20
+        c = pygame.Rect(0, self.title_rect.bottom + 20, width, height)
+        c.centerx = self.title_rect.centerx
         if self.browser is not None:
             pygame.draw.rect(Globals.SCREEN, (0, 0, 0), self.browser.container)
         self.browser = DefinitionBrowser(self.tile_engine, c)
@@ -87,7 +97,7 @@ class LevelEditor(GameState):
         if self.message_surf is not None:
             Globals.SCREEN.blit(self.message_surf, self.message_rect)
 
-        Globals.SCREEN.blit(self.temp_surf, self.temp_rect)
+        Globals.SCREEN.blit(self.title_surf, self.title_rect)
         self.browser.render(Globals.SCREEN)
 
     def update(self, time):
@@ -110,7 +120,6 @@ class LevelEditor(GameState):
     def set_message(self, content, timeout=MESSAGE_TIMEOUT, color=DEFAULT_MESSAGE_COLOR):
         temp_surf = LevelEditor.MESSAGE_FONT.render(content, True, color)
         self.message_rect = temp_surf.get_rect()
-        # self.message_rect.centery = Globals.HEIGHT / 2
         self.message_rect.bottom = self.camera_dest.bottom
         self.message_rect.centerx = self.camera_dest.centerx
         self.message_rect.inflate_ip(LevelEditor.MESSAGE_PADDING * 2, LevelEditor.MESSAGE_PADDING * 2)
@@ -130,33 +139,103 @@ class LevelEditor(GameState):
             Globals.SCREEN.blit(self.highlight_surf, rect)
 
     def handle_mouse_click(self):
-        coord = pygame.mouse.get_pos()
+        coord = list(pygame.mouse.get_pos())
         if self.camera_dest.collidepoint(coord):
-            x = coord[0] + self.camera.viewpoint.left - self.camera_dest.left
-            y = coord[1] + self.camera.viewpoint.top - self.camera_dest.top
-            col = int(x / self.tile_rect.width)
-            row = int(y / self.tile_rect.height)
+            coord[0] += self.camera.viewpoint.left - self.camera_dest.left
+            coord[1] += self.camera.viewpoint.top - self.camera_dest.top
+            col = int(coord[0] / self.tile_rect.width)
+            row = int(coord[1] / self.tile_rect.height)
             if self.info_mode:
                 self.show_tile_info(row, col)
             elif self.delete_mode:
                 self.delete_tile(row, col)
+            else:
+                self.handle_tile_set(row, col)
         elif self.browser.container.collidepoint(coord):
-            self.set_message("The tile picker is not implemented yet", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            coord[0] -= self.browser.container.left
+            coord[1] -= self.browser.container.top
+            if self.info_mode:
+                self.browser.handle_info_click(coord, self)
+            else:
+                self.handle_browser_click(coord)
+
+    def handle_tile_set(self, row, col):
+        tile = self.browser.get_selected_tile()
+        if tile is None:
+            return
+        if self.tile_engine.is_coord_valid(row, col):
+            if self.tile_engine.tileMap[row][col] is not tile:
+                old_tile = self.tile_engine.tileMap[row][col]
+                self.tile_engine.tileMap[row][col] = tile
+                a = Action(type=Action.SET_TYPE, row=row,
+                                       col=col, old_tile=old_tile,
+                                       new_tile=tile)
+                self.actions.append(a)
+        else:
+            new_row, new_col = self.make_room(row, col)
+            self.handle_tile_set(new_row, new_col)
+
+    def make_room(self, row, col):
+        row_delta, col_delta = 0, 0
+        tile_map = self.tile_engine.tileMap
+        # add to front of map
+        for i in range (row, 0):
+            tile_map.insert(0, list())
+            self.camera.viewpoint.y += self.tile_rect.height
+            row_delta += 1
+        # add to end of map
+        for i in range(len(tile_map), row + 1):
+            tile_map.append(list())
+        new_row = 0
+        if row > 0:
+            new_row = row
+        # add to beginning of ALL map rows
+        if col < 0:
+            for row_num in range(0, len(tile_map)):
+                curr_row = tile_map[row_num]
+                for j in range(0, -col):
+                    curr_row.insert(0, None)
+            for j in range(0, -col):
+                self.camera.viewpoint.x += self.tile_rect.width
+                col_delta += 1
+        # add to end of map row
+        for i in range(len(tile_map[new_row]), col + 1):
+            tile_map[row].append(None)
+        new_col = 0
+        if col > 0:
+            new_col = col
+        self.offset_actions(row_delta, col_delta)
+        return new_row, new_col
+
+    def offset_actions(self, row_delta, col_delta):
+        if row_delta == 0 and col_delta == 0:
+            return
+        for a in self.actions:
+            a.row += row_delta
+            a.col += col_delta
+
+    def handle_browser_click(self, coord):
+        self.browser.handle_mouse_click(coord)
+        tile = self.browser.get_selected_tile()
+        if tile is not None:
+            if self.info_mode:
+                self.toggle_info_mode()
+            elif self.delete_mode:
+                self.toggle_delete_mode()
+            self.init_highlight(tile.image, alpha=LevelEditor.SELECTION_ALPHA,border=True)
 
     def delete_tile(self, row, col):
         if self.tile_engine.is_coord_valid(row, col) and \
                 self.tile_engine.tileMap[row][col] is not None:
             old_tile = self.tile_engine.tileMap[row][col]
-            a = LevelEditor.Action(type=LevelEditor.DELETE_TYPE, row=row,
-                                   col=col, old_tile=old_tile, new_tile=None)
+            a = Action(type=Action.DELETE_TYPE, row=row,
+                                   col=col, old_tile=old_tile)
             self.actions.append(a)
             self.tile_engine.tileMap[row][col] = None
 
-    def show_tile_info(self, row, col):
+    def show_tile_info(self, row=-1, col=-1, tile=None):
         if self.tile_engine.is_coord_valid(row, col):
             tile = self.tile_engine.tileMap[row][col]
-        else:
-            tile = None
         if tile is None:
             self.set_message("empty tile", timeout=LevelEditor.QUICK_TIMEOUT)
         else:
@@ -169,6 +248,8 @@ class LevelEditor(GameState):
         if suppress:
             self.info_mode = False
             return
+        self.browser.clear_selection()
+        self.init_highlight()
         self.toggle_delete_mode(True)
         self.info_mode = not self.info_mode
         if self.info_mode:
@@ -182,6 +263,8 @@ class LevelEditor(GameState):
         if suppress:
             self.delete_mode = False
             return
+        self.browser.clear_selection()
+        self.init_highlight()
         self.toggle_info_mode(True)
         self.delete_mode = not self.delete_mode
         if self.delete_mode:
@@ -224,9 +307,14 @@ class LevelEditor(GameState):
             self.set_message("There is nothing left to undo", color=LevelEditor.ERROR_MESSAGE_COLOR)
             return
         action = self.actions.pop()
-        if action.type == LevelEditor.DELETE_TYPE:
+        if action.type == Action.DELETE_TYPE:
             self.tile_engine.tileMap[action.row][action.col] = action.old_tile
             self.set_message("delete undone", timeout=LevelEditor.QUICK_TIMEOUT)
+        elif action.type == Action.SET_TYPE:
+            self.tile_engine.tileMap[action.row][action.col] = action.old_tile
+            self.set_message("tile set undone", timeout=LevelEditor.QUICK_TIMEOUT)
+        else:
+            self.set_message("Undo failed", color=LevelEditor.ERROR_MESSAGE_COLOR)
 
     def revert_and_reload(self):
         try:

@@ -10,7 +10,7 @@ class DefinitionBrowser:
         self.tile_rect = self.tile_engine.get_tile_rect()
         self.padding = int((self.container.width - DefinitionBrowser.NUM_COLS \
                             * self.tile_rect.width) / (DefinitionBrowser.NUM_COLS + 1))
-        self.definitions = self.tile_engine.tileManager.tileDefinitions.copy()
+        self.definitions = self.tile_engine.tileManager.tileDefinitions.values()
         width = self.padding * (DefinitionBrowser.NUM_COLS + 1) + self.tile_rect.width * DefinitionBrowser.NUM_COLS
         num_vert = ceil(len(self.definitions) / DefinitionBrowser.NUM_COLS)
         height = num_vert * (self.padding + self.tile_rect.height) + self.padding
@@ -20,16 +20,15 @@ class DefinitionBrowser:
         self.area.width -= self.area.left
         self.area.height -= self.area.top
         self.area.topleft = (0, 0)
-        self.selection = (-1, -1)
+        self.selection = [-1, -1]
 
     def render(self, screen):
         row = 0
         col = 0
-        for key in self.definitions:
+        for tile in self.definitions:
             if col == DefinitionBrowser.NUM_COLS:
                 row += 1
                 col = 0
-            tile = self.definitions[key]
             pos = self.get_coords(row, col)
             self.surface.blit(tile.image, pos)
             r = self.tile_rect.copy()
@@ -47,3 +46,45 @@ class DefinitionBrowser:
         y = self.padding + row * (self.padding + self.tile_rect.height)
         x = self.padding + col * (self.padding + self.tile_rect.width)
         return (x, y)
+
+    def handle_mouse_click(self, pos):
+        row, col = (0, 0)
+        for tile in self.definitions:
+            if col == DefinitionBrowser.NUM_COLS:
+                row += 1
+                col = 0
+            coords = self.get_coords(row, col)
+            r = pygame.Rect(coords, self.tile_rect.size)
+            if r.collidepoint(pos):
+                self.selection = [row, col]
+                break
+            col += 1
+
+    def handle_info_click(self, pos, level_editor):
+        row, col = (0, 0)
+        for tile in self.definitions:
+            if col == DefinitionBrowser.NUM_COLS:
+                row += 1
+                col = 0
+            coords = self.get_coords(row, col)
+            r = pygame.Rect(coords, self.tile_rect.size)
+            if r.collidepoint(pos):
+                old_selection = self.selection
+                self.selection = [row, col]
+                tile = self.get_selected_tile()
+                self.selection = old_selection
+                level_editor.show_tile_info(tile=tile)
+                break
+            col += 1
+
+    def get_selected_tile(self):
+        if self.selection[0] == -1 or self.selection[1] == -1:
+            return None
+        else:
+            row = self.selection[0]
+            col = self.selection[1]
+            return self.definitions[row * int(DefinitionBrowser.NUM_COLS) + col]
+
+    def clear_selection(self):
+        self.selection[0] = -1
+        self.selection[1] = -1
