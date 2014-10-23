@@ -21,10 +21,10 @@ class TileType(object):
     def __str__(self):
         if self is TileType.EMPTY_TILE:
             return "empty tile"
-        special = ""
-        if self.is_special:
-            special = " --- attr: %s" % self.special_attr
-        return "symbol: %s --- solid: %s --- img: %s%s" % (self.symbol, str(self.is_solid), self.image_path, special)
+        attr = "none"
+        if self.special_attr is not None:
+            attr = self.special_attr
+        return "solid: %s --- attr: %s --- img: %s" % (str(self.is_solid), attr, self.image_path)
 
     @property
     def is_empty(self):
