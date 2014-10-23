@@ -14,8 +14,7 @@ def create_map_file(file_path):
 
 def initialize():
     if len(sys.argv) < 3:
-        print "Invalid arguments"
-        print "The level editor should be run as follows:"
+        print "The level editor should be run as:"
         print "\t python main.py [definition file path] [map file path]"
         sys.exit(1)
     def_file = sys.argv[1]
