@@ -26,7 +26,7 @@ def initialize():
     pygame.init()
     pygame.display.set_caption('The Crazy Six - Level Editor')
     Globals.WIDTH = 1200
-    Globals.HEIGHT = 800
+    Globals.HEIGHT = 750
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
     Globals.STATE = LevelEditor(def_file, map_file)
 
