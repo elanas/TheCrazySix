@@ -12,6 +12,7 @@ from Globals import Globals
 from HighscoreManager import HighscoreManager
 
 class Player(Character):
+    COIN_FACTOR = 10000
     STAIR_OFFSET = 20
     MOVE_VELOCITY = 200
     SECONDS_TO_FULL_SPEED = .5
@@ -30,7 +31,7 @@ class Player(Character):
     STILL_ANIM_TIME = .5
     in_collision = False
 
-    def __init__(self, w, h, x, y):
+    def __init__(self, w, h, x, y, score_timer):
         super(Player, self).__init__(w, h, x, y)
         self.empty = pygame.Surface((1, 1)).convert()
         self.loadResources()
@@ -44,6 +45,7 @@ class Player(Character):
         self.cycle = -1
         self.time_elapsed = 0
         self.anim_time = Player.STILL_ANIM_TIME
+        self.score_timer = score_timer
 
     def update(self, time, camera=None, enemy_sprites=None):
         self.updateVelocity(time)
@@ -214,12 +216,28 @@ class Player(Character):
             Globals.PLAYER_SCORE = Globals.REMAINING_TIME
             if Globals.PLAYER_HEALTH >= 95:
                 Globals.PLAYER_SCORE += Globals.PLAYER_HEALTH
+            Globals.PLAYER_SCORE /= 100
             highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             Globals.STATE = WinGame()
         if Globals.PLAYER_HEALTH <= 0:
             Globals.STATE = LoseGame()
         if Globals.REMAINING_TIME <= 00000:
             Globals.STATE = LoseGame()
+        self.checkCoinCollisions(camera)
+
+    def checkCoinCollisions(self, camera):
+        radius = max(self.rect.height, self.rect.width) * 2
+        special_tiles = camera.get_special_tiles(self.rect.center, radius)
+        coin_pairs = [pair for pair in special_tiles
+                       if pair.tile.special_attr == TileType.COIN_ATTR]
+        for coin_pair in coin_pairs:
+            if self.rect.colliderect(coin_pair.rect):
+                row, col = camera.tileEngine.get_tile_pos(coin_pair.coords[0],
+                                                          coin_pair.coords[1])
+                base = camera.tileEngine.get_tile_from_attr(TileType.BASE_ATTR)
+                camera.tileEngine.tileMap[row][col] = base
+                Globals.REMAINING_TIME += Player.COIN_FACTOR
+                self.score_timer.total_time += Player.COIN_FACTOR
 
     def checkEnemyCollisions(self, enemy_sprites):
         pass

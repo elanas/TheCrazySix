@@ -6,7 +6,7 @@ from collections import namedtuple
 class Camera(object):
     BOTTOM_PADDING = 0
     EMPTY_COLOR = (0, 0, 0)
-    TileRectPair = namedtuple('TileRectPair', 'tile rect')
+    TileRectPair = namedtuple('TileRectPair', 'tile rect coords')
 
     def __init__(self, tileEngine, container):
         self.tileEngine = tileEngine
@@ -74,7 +74,7 @@ class Camera(object):
                 if curr_rect.right > max_x:
                     curr_rect.width -= curr_rect.right - max_x
                 tiles.append(
-                    Camera.TileRectPair(tile=curr_tile, rect=curr_rect))
+                    Camera.TileRectPair(tile=curr_tile, rect=curr_rect, coords=(trans_x, trans_y)))
                 curr_x += curr_rect.width
             curr_y += curr_rect.height
         return tiles

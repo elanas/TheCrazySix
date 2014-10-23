@@ -10,7 +10,7 @@ class TileManager(object):
 
     def __init__(self, definitionPath, mapPath):
         self.loader = AssetLoader(path.join("images", "tiles"))
-        self.tileDefinitions = list()
+        # self.tileDefinitions = list()
         self.definitionPath = definitionPath
         self.mapPath = mapPath
         self.tileDefinitions = dict()

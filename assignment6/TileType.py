@@ -4,7 +4,8 @@ from asset_loader import AssetLoader
 class TileType(object):
     EMPTY_ATTR = "empty"
     STAIR_ATTR = "stair"
-
+    COIN_ATTR = "coin"
+    BASE_ATTR = "base"
     EMPTY_TILE = "a"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr):

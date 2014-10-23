@@ -29,7 +29,7 @@ class TileTest(GameState):
     WALL_WIDTH = 50
 
     def __init__(self):
-        Globals.PLAYER_HEALTH = 100;
+        Globals.PLAYER_HEALTH = 100;`
         Globals.PLAYER_SCORE = 0;
         Globals.REMAINING_TIME = 30000;
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
@@ -53,7 +53,7 @@ class TileTest(GameState):
         player_x = Globals.WIDTH / 2
         player_y = int(Globals.HEIGHT -
                        self.camera.tileEngine.get_tile_rect().height * 3.5)
-        self.player = Player(Globals.WIDTH, Globals.HEIGHT, player_x, player_y)
+        self.player = Player(Globals.WIDTH, Globals.HEIGHT, player_x, player_y, self.score_timer)
         self.playerSprites.add(self.player)
 
     def render(self):

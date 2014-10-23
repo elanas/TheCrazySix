@@ -33,6 +33,20 @@ class TileEngine(object):
         print len(last_row) / 2 * self.tileRect.width
         return len(last_row) / 2 * self.tileRect.width
 
+    def get_tile_from_attr(self, special_attr):
+        definitions = self.tileManager.tileDefinitions
+        for symbol in definitions:
+            tile = definitions[symbol]
+            if tile.special_attr == special_attr:
+                return tile
+        return None
+
+    def get_tile_pos(self, x_coords, y_coords):
+        tile_rect = self.get_tile_rect()
+        row_num = int(y_coords / tile_rect.height)
+        col_num = int(x_coords / tile_rect.width)
+        return row_num, col_num
+
     def get_tile(self, x_coords, y_coords, set_pos=True):
         num_rows = len(self.tileMap)
         tile_rect = self.get_tile_rect().copy()
