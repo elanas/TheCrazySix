@@ -1,15 +1,35 @@
 import pygame
 from Globals import Globals
 from LevelEditor import LevelEditor
+import sys
+import os
 
 MIN_UPDATE_INTERVAL = .05
 
+def create_map_file(file_path):
+    if not os.path.isfile(file_path):
+        print 'Creating empty map at "' + file_path + '"'
+    handle = open(file_path, 'a')
+    handle.close()
+
 def initialize():
+    if len(sys.argv) < 3:
+        print "Invalid arguments"
+        print "The level editor should be run as follows:"
+        print "\t python main.py [definition file path] [map file path]"
+        sys.exit(1)
+    def_file = sys.argv[1]
+    map_file = sys.argv[2]
+    if not os.path.isfile(def_file):
+        print '"' + def_file + '" is not a valid file path.'
+        sys.exit(1200)
+    create_map_file(map_file)
     pygame.init()
-    Globals.WIDTH = 1000
-    Globals.HEIGHT = 600
+    pygame.display.set_caption('The Crazy Six - Level Editor')
+    Globals.WIDTH = 1200
+    Globals.HEIGHT = 800
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.STATE = LevelEditor("test_def.txt", "test_map.txt")
+    Globals.STATE = LevelEditor(def_file, map_file)
 
 def loop():
     time_elapsed = 0

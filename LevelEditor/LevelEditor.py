@@ -9,7 +9,6 @@ from os.path import join
 
 class LevelEditor(GameState):
     PADDING = 20
-    RIGHT_PADDING = 120
     HIGHLIGHT_COLOR = (255, 0, 255)
     HIGHLIGHT_ALPHA = 100
 
@@ -21,8 +20,9 @@ class LevelEditor(GameState):
         self.map_path = map_path
         self.tile_engine = TileEngine(self.definition_path, self.map_path)
         self.tile_rect = self.tile_engine.get_tile_rect()
+        self.right_padding = self.tile_rect.width * 4
         self.shift_factor = self.tile_rect.width
-        self.camera_dest = pygame.Rect(LevelEditor.PADDING, 0, Globals.WIDTH - LevelEditor.RIGHT_PADDING - LevelEditor.PADDING, Globals.HEIGHT)# - LevelEditor.PADDING * 2)
+        self.camera_dest = pygame.Rect(LevelEditor.PADDING, LevelEditor.PADDING, Globals.WIDTH - self.right_padding - LevelEditor.PADDING, Globals.HEIGHT - LevelEditor.PADDING)
         self.camera = Camera(self.tile_engine, self.camera_dest)
         extra_y = self.camera_dest.height % self.tile_rect.height
         extra_x = self.camera_dest.width % self.tile_rect.width
@@ -35,7 +35,7 @@ class LevelEditor(GameState):
         self.highlight_surf = pygame.Surface(self.tile_rect.size).convert()
         self.highlight_surf.fill(LevelEditor.HIGHLIGHT_COLOR)
         self.highlight_surf.set_alpha(LevelEditor.HIGHLIGHT_ALPHA)
-        self.temp_surf = pygame.font.Font(None, 32).render("Tiles:", False, (255, 255, 255))
+        self.temp_surf = pygame.font.Font(None, 40).render("Tiles:", False, (255, 255, 255))
         self.temp_rect = self.temp_surf.get_rect()
         self.temp_rect.centerx = self.camera_dest.right + (Globals.WIDTH - self.camera_dest.right) / 2
         self.temp_rect.top = self.camera_dest.top + 20
@@ -58,13 +58,13 @@ class LevelEditor(GameState):
 
     def update(self, time):
         if self.key_code is not None:
-            if self.key_code == pygame.K_UP:
+            if self.key_code == pygame.K_UP or self.key_code == pygame.K_w:
                 self.camera.move(0, -self.shift_factor)
-            elif self.key_code == pygame.K_DOWN:
+            elif self.key_code == pygame.K_DOWN or self.key_code == pygame.K_s:
                 self.camera.move(0, self.shift_factor)
-            elif self.key_code == pygame.K_LEFT:
+            elif self.key_code == pygame.K_LEFT or self.key_code == pygame.K_a:
                 self.camera.move(-self.shift_factor, 0)
-            elif self.key_code == pygame.K_RIGHT:
+            elif self.key_code == pygame.K_RIGHT or self.key_code == pygame.K_d:
                 self.camera.move(self.shift_factor, 0)
 
     def handle_mouse(self):
