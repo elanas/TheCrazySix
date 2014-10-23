@@ -253,10 +253,10 @@ class LevelEditor(GameState):
         self.toggle_delete_mode(True)
         self.info_mode = not self.info_mode
         if self.info_mode:
-            self.set_message("Begin info mode")
+            self.set_message("begin info mode")
             pygame.mouse.set_cursor(*pygame.cursors.diamond)
         else:
-            self.set_message("End info mode")
+            self.set_message("end info mode")
             self.set_default_cursor()
 
     def toggle_delete_mode(self, suppress=False):
@@ -268,10 +268,10 @@ class LevelEditor(GameState):
         self.toggle_info_mode(True)
         self.delete_mode = not self.delete_mode
         if self.delete_mode:
-            self.set_message("Begin delete mode")
+            self.set_message("begin delete mode")
             pygame.mouse.set_cursor(*pygame.cursors.broken_x)
         else:
-            self.set_message("End delete mode")
+            self.set_message("end delete mode")
             self.set_default_cursor()
 
     def event(self, event):
@@ -281,7 +281,7 @@ class LevelEditor(GameState):
             elif event.key == pygame.K_BACKSPACE:
                 self.toggle_delete_mode()
             elif event.key == pygame.K_RETURN:
-                self.set_message("Saving not implemented yet", color=LevelEditor.ERROR_MESSAGE_COLOR)
+                self.handle_save()
             elif event.key == pygame.K_ESCAPE:
                 self.revert_and_reload()
             elif event.key == pygame.K_u:
@@ -304,7 +304,7 @@ class LevelEditor(GameState):
 
     def undo_action(self):
         if len(self.actions) == 0:
-            self.set_message("There is nothing left to undo", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("there is nothing left to undo", color=LevelEditor.ERROR_MESSAGE_COLOR)
             return
         action = self.actions.pop()
         if action.type == Action.DELETE_TYPE:
@@ -321,7 +321,78 @@ class LevelEditor(GameState):
             self.tile_engine = TileEngine(self.definition_path, self.map_path)
             self.camera.tileEngine = self.tile_engine
             self.init_browser()
-            self.set_message("Reverted all changes and reloaded tile engine")
+            self.set_message("reverted all changes and reloaded tile engine")
         except Exception as e:
-            self.set_message("Failed to reload tile engine", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("failed to reload tile engine", color=LevelEditor.ERROR_MESSAGE_COLOR)
             print "Reload failed: ", e
+
+    def handle_save(self):
+        min_x = 0
+        tile_map = self.tile_engine.tileMap
+        min_x = min([self.get_x_start(row) for row in tile_map])
+        min_y = self.get_y_start()
+        max_y = self.get_y_end()
+        try:
+            map_file = open(self.map_path, 'w')
+            if min_y == max_y:
+                return
+            for row_num in range(min_y, max_y):
+                row = tile_map[row_num]
+                for col_num in range(min_x, self.get_length(row)):
+                    col = row[col_num]
+                    if col is None:
+                        col = TileType.EMPTY_TILE
+                    map_file.write(col.symbol)
+                map_file.write('\n')
+            self.set_message("saved successfully")
+        except IOError as e:
+            self.set_message("friled to save the map file", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            print "Failed to save the map file"
+            print e
+        finally:
+            map_file.close()
+
+        # self.set_message("Saving not implemented yet", color=LevelEditor.ERROR_MESSAGE_COLOR)
+
+    def get_x_start(self, row):
+        x_start = 0
+        for col in range(0, len(row)):
+            if row[col] is not None:
+                break
+            x_start += 1
+        return x_start
+
+    def get_length(self, row):
+        length = len(row)
+        for col_num in range(len(row) - 1, -1, -1):
+            if row[col_num] is not None:
+                break
+            length -= 1
+        return length
+
+    def get_y_start(self):
+        y_start = 0
+        for row in self.tile_engine.tileMap:
+            found_tile = False
+            for col in row:
+                if col is not None:
+                    found_tile = True
+                    break
+            if found_tile:
+                break
+            y_start += 1
+        return y_start
+
+    def get_y_end(self):
+        y_end = len(self.tile_engine.tileMap)
+        for row_num in range(len(self.tile_engine.tileMap) - 1, -1, -1):
+            row = self.tile_engine.tileMap[row_num]
+            found_tile = False
+            for col in row:
+                if col is not None:
+                    found_tile = True
+                    break
+            if found_tile:
+                break
+            y_end -= 1
+        return y_end
