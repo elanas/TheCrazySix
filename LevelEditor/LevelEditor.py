@@ -321,6 +321,7 @@ class LevelEditor(GameState):
             self.tile_engine = TileEngine(self.definition_path, self.map_path)
             self.camera.tileEngine = self.tile_engine
             self.init_browser()
+            self.init_highlight()
             self.set_message("reverted all changes and reloaded tile engine")
         except Exception as e:
             self.set_message("failed to reload tile engine", color=LevelEditor.ERROR_MESSAGE_COLOR)
@@ -329,7 +330,10 @@ class LevelEditor(GameState):
     def handle_save(self):
         min_x = 0
         tile_map = self.tile_engine.tileMap
-        min_x = min([self.get_x_start(row) for row in tile_map])
+        if len(tile_map) == 0:
+            self.set_message("cannot save an empty map", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            return
+        min_x = min([self.get_x_start(row) for row in tile_map if len(row) > 0])
         min_y = self.get_y_start()
         max_y = self.get_y_end()
         try:
@@ -346,7 +350,7 @@ class LevelEditor(GameState):
                 map_file.write('\n')
             self.set_message("saved successfully")
         except IOError as e:
-            self.set_message("friled to save the map file", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("failed to save the map file", color=LevelEditor.ERROR_MESSAGE_COLOR)
             print "Failed to save the map file"
             print e
         finally:
