@@ -9,7 +9,7 @@ def initialize():
     Globals.WIDTH = 1000
     Globals.HEIGHT = 600
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.STATE = LevelEditor()
+    Globals.STATE = LevelEditor("test_def.txt", "test_map.txt")
 
 def loop():
     time_elapsed = 0
@@ -32,7 +32,6 @@ def loop():
 def main():
     initialize()
     loop()
-
 
 if __name__ == '__main__':
     main()

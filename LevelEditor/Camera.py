@@ -19,7 +19,7 @@ class Camera(object):
         tileRect = self.tileEngine.get_tile_rect()
         numRows = self.tileEngine.getNumRows()
         # self.viewpoint.top = -17
-        # self.viewpoint.left = 11
+        self.viewpoint.topleft = (0, 0)
         # self.viewpoint.bottom = tileRect.height * numRows + \
             # Camera.BOTTOM_PADDING
         # self.viewpoint.centerx = (tileRect.width *
