@@ -1,0 +1,8 @@
+- floor_grey_damaged2.png 0
++ floor_grey_damaged1.png 0
+* floor_grey.png 0
+! box.png 1
+~ bag.png 1
+& floor_grey_chair.png 0
+/ stair_left.png 0 stair
+\ stair_right.png 0 stair
