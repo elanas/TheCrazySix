@@ -1,7 +1,13 @@
+#Uses:
+This lets you edit a tile map file.
+It will **not** create and/or modify the tile definition file.
+This still needs to be done manually.
+
 #How to run:
 python main.py *[definition file path]* *[map file path]*
   
   **If *[map file path]* does not exist then it will be created**
+
 #Keyboard controls:
 * ***i*** - toggles info mode
   * makes all mouse clicks equivalent to the default right click behavior
