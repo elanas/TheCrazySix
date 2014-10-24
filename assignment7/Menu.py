@@ -14,7 +14,7 @@ MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
 
 
 class Menu(GameState):
-    CIRCLE_COLOR = (28, 198, 255)
+    CIRCLE_COLOR = (247, 219, 59)
     CIRCLE_PADDING = 30
     def __init__(self):
         GameState.__init__(self)
@@ -27,8 +27,9 @@ class Menu(GameState):
         Globals.SCREEN.blit(MENU_BACKGROUND, [0, 0])
         font = pygame.font.SysFont(None, 64)
 
-        TITLE_PADDING = 130
-        VERT_SPACING = 75
+        TITLE_PADDING = 110
+        VERT_SPACING = 65
+        HOR_SPACING = 125
 
         START = "Start Game"
         VOLUME = "Volume Control"
@@ -36,7 +37,7 @@ class Menu(GameState):
         SCORE = "Highscores"
         QUIT = "Quit"
 
-        COLOR = (7, 147, 240)
+        COLOR = (240, 250, 190)
         SELECT_COLOR = Menu.CIRCLE_COLOR
 
         GAME_SELECT = COLOR
@@ -58,7 +59,7 @@ class Menu(GameState):
 
         title_surf = font.render(START, True, GAME_SELECT)
         title_rect = title_surf.get_rect()
-        title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        title_rect.centerx = Globals.SCREEN.get_rect().centerx + HOR_SPACING
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
@@ -89,9 +90,6 @@ class Menu(GameState):
 
         if self.selection is 4:
             self.draw_circle(title_rect)
-        # self.playerSprites.draw(Globals.SCREEN)
-        # for p in self.playerSprites:
-        #     p.onDraw()
 
         pygame.display.flip()
 
