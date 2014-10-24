@@ -5,7 +5,7 @@ from TileTest import TileTest
 from asset_loader import AssetLoader
 import Menu
 
-BACKGROUND_IMG = pygame.image.load("images/menu_background.png")
+BACKGROUND_IMG = pygame.image.load("images/background.png")
 
 class NameInput(GameState):
     MIN_LENGTH = 3

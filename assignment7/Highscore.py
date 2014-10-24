@@ -5,7 +5,7 @@ from Globals import Globals
 from HighscoreManager import HighscoreManager
 import Menu
 
-BACKGROUND_IMG = pygame.image.load("images/menu_background.png")
+BACKGROUND_IMG = pygame.image.load("images/background.png")
 
 
 class Highscore(GameState):

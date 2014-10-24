@@ -10,7 +10,7 @@ from Highscore import Highscore
 import Title
 
 
-MENU_BACKGROUND = pygame.image.load("images/menu_background.png")
+BACKGROUND_IMG = pygame.image.load("images/background.png")
 
 
 class Menu(GameState):
@@ -24,7 +24,7 @@ class Menu(GameState):
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
-        Globals.SCREEN.blit(MENU_BACKGROUND, [0, 0])
+        Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
         font = pygame.font.SysFont(None, 64)
 
         TITLE_PADDING = 110

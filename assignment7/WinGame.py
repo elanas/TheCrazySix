@@ -4,7 +4,7 @@ from GameState import GameState
 from Globals import Globals
 import Menu
 
-BACKGROUND_IMG = pygame.image.load("images/menu_background.png")
+BACKGROUND_IMG = pygame.image.load("images/background.png")
 
 class WinGame(GameState):
 
