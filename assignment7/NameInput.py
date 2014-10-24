@@ -11,7 +11,7 @@ class NameInput(GameState):
     MIN_LENGTH = 3
     MAX_LENGTH = 15
     PROMPT_FONT = None
-    PROMPT_COLOR = pygame.color.Color("white")
+    PROMPT_COLOR = (240, 250, 190)
     PROMPT_PADDING = 70
     PROMPT_SIZE = 100
     PROMPT = "Please type your name"
