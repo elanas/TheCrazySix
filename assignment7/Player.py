@@ -31,7 +31,7 @@ class Player(Character):
     STILL_ANIM_TIME = .5
     in_collision = False
 
-    def __init__(self, w, h, x, y, score_timer):
+    def __init__(self, w, h, x, y, score_timer=None):
         super(Player, self).__init__(w, h, x, y)
         self.empty = pygame.Surface((1, 1)).convert()
         self.loadResources()
@@ -237,7 +237,8 @@ class Player(Character):
                 base = camera.tileEngine.get_tile_from_attr(TileType.BASE_ATTR)
                 camera.tileEngine.tileMap[row][col] = base
                 Globals.REMAINING_TIME += Player.COIN_FACTOR
-                self.score_timer.total_time += Player.COIN_FACTOR
+                if self.score_timer is not None:
+                    self.score_timer.total_time += Player.COIN_FACTOR
 
     def checkEnemyCollisions(self, enemy_sprites):
         pass

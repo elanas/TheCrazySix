@@ -6,9 +6,7 @@ from asset_loader import AssetLoader
 
 class TileEngine(object):
 
-    def __init__(self, definitionPath, mapPath, num_rows, num_cols):
-        self.num_cols = num_cols
-        self.num_rows = num_rows
+    def __init__(self, definitionPath, mapPath, num_rows=0, num_cols=0):
         self.tileManager = TileManager(definitionPath, mapPath)
         self.tileRect = self.tileManager.getTileRect()
         self.tileMap = self.tileManager.getTileMap()

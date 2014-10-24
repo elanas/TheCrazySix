@@ -6,6 +6,8 @@ class TileType(object):
     STAIR_ATTR = "stair"
     COIN_ATTR = "coin"
     BASE_ATTR = "base"
+    START_ATTR = "player_start"
+    SPAWN_ATTR = "enemy_spawn"
     EMPTY_TILE = "a"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr):

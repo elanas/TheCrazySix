@@ -1,6 +1,7 @@
 import pygame
 from Globals import Globals
 from collections import namedtuple
+from TileType import TileType
 
 
 class Camera(object):
@@ -17,10 +18,27 @@ class Camera(object):
     def initView(self):
         tileRect = self.tileEngine.get_tile_rect()
         numRows = self.tileEngine.getNumRows()
-        self.viewpoint.bottom = tileRect.height * numRows + \
-            Camera.BOTTOM_PADDING
-        self.viewpoint.centerx = (tileRect.width *
-                                  self.tileEngine.getMaxCols()) / 2
+        tile_map = self.tileEngine.tileMap
+        start_pos = [-1, -1]
+        for row_num in range(0, len(tile_map)):
+            for col_num in range(0, len(tile_map[row_num])):
+                if tile_map[row_num][col_num] is None:
+                    continue
+                if tile_map[row_num][col_num].special_attr == TileType.START_ATTR:
+                    if start_pos[0] != -1:
+                        raise Exception("There can only be one starting tile in the map")
+                    start_pos[0] = row_num
+                    start_pos[1] = col_num
+        if start_pos[0] != -1:
+            self.viewpoint.centery = tileRect.height * start_pos[0]
+            self.viewpoint.centerx = tileRect.width * start_pos[1]
+            tile_map[start_pos[0]][start_pos[1]] = \
+                self.tileEngine.get_tile_from_attr(TileType.BASE_ATTR)
+        else:
+            self.viewpoint.bottom = tileRect.height * numRows + \
+                Camera.BOTTOM_PADDING
+            self.viewpoint.centerx = (tileRect.width *
+                                      self.tileEngine.getMaxCols()) / 2
 
     def render(self, screen):
         screen.fill(Camera.EMPTY_COLOR, self.container)

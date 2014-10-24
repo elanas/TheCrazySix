@@ -18,7 +18,7 @@ class Enemy(Character):
     loader = AssetLoader("images")
     WALK_ANIM_TIME = .25
 
-    def __init__(self, w, h, camera):
+    def __init__(self, w, h, camera=None, x=None, y=None):
         super(Enemy, self).__init__(w, h, 0, 0)
         self.loadResources()
         self.direction = random.randint(0, 3)
@@ -28,7 +28,10 @@ class Enemy(Character):
         self.time_to_change_direction = (random.random() * 1.5) + .5
         self.time_elapsed_anim = 0
         self.time_elapsed_direction = 0
-        self.setInitialPosition(camera)
+        if camera is not None:
+            self.setInitialPosition(camera)
+        if x is not None and y is not None:
+            self.rect.topleft = (x, y)
 
     def setInitialPosition(self, camera):
         tile_rect = camera.tileEngine.get_tile_rect()
