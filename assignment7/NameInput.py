@@ -19,6 +19,11 @@ class NameInput(GameState):
     INPUT_SIZE = 60
     INPUT_SURF_PADDING = 20
     INPUT_COLOR = pygame.color.Color("white")
+    HINT = "Press Enter to continue"
+    HINT_FONT = None
+    HINT_SIZE = 30
+    HINT_PADDING = 400
+    HINT_COLOR = pygame.color.Color("white")
     ERROR_FONT = None
     ERROR_SIZE = 40
     ERROR_PADDING = 70
@@ -37,20 +42,32 @@ class NameInput(GameState):
     def setup_text(self):
         self.input_font = pygame.font.Font(NameInput.INPUT_FONT,
                                            NameInput.INPUT_SIZE)
+        self.hint_font = pygame.font.Font(NameInput.HINT_FONT,
+                                            NameInput.HINT_SIZE)
         self.error_font = pygame.font.Font(NameInput.ERROR_FONT,
                                            NameInput.ERROR_SIZE)
         self.prompt_font = pygame.font.Font(NameInput.PROMPT_FONT,
                                             NameInput.PROMPT_SIZE)
         self.prompt_surf = self.prompt_font.render(NameInput.PROMPT, True,
                                                    NameInput.PROMPT_COLOR)
+
         self.prompt_rect = self.prompt_surf.get_rect()
         self.prompt_rect.centerx = Globals.WIDTH / 2
         self.prompt_rect.top = NameInput.PROMPT_PADDING
+
+        self.hint_surf = self.hint_font.render(NameInput.HINT, 
+                                    True, NameInput.HINT_COLOR)
+        self.hint_rect = self.hint_surf.get_rect()
+        self.hint_rect.centerx = Globals.WIDTH / 2
+        self.hint_rect.top = NameInput.HINT_PADDING
+
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
         Globals.SCREEN.blit(self.prompt_surf, self.prompt_rect)
+
+        Globals.SCREEN.blit(self.hint_surf, self.hint_rect)
 
         if self.error_message is not None:
             error_surf = self.error_font.render(self.error_message, True,
