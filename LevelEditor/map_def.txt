@@ -21,3 +21,10 @@ $ coin.png 0 coin
 ' wall_down_right.png 1
 < player_start.png 0 player_start
 > enemy_spawn.png 0 enemy_spawn
+z bed_low_right.png 1
+x bed_low_left.png 1
+c bed_up_right.png 1
+v bed_up_left.png 1
+b table_top.png 1
+n table_top_potion.png 1
+m table_bottom.png 1
