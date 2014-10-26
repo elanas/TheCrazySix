@@ -11,6 +11,7 @@ from TileType import TileType
 from Globals import Globals
 from HighscoreManager import HighscoreManager
 
+
 class Player(Character):
     COIN_FACTOR = 10000
     STAIR_OFFSET = 20
@@ -231,8 +232,10 @@ class Player(Character):
     def checkCoinCollisions(self, camera):
         radius = max(self.rect.height, self.rect.width) * 2
         special_tiles = camera.get_special_tiles(self.rect.center, radius)
-        coin_pairs = [pair for pair in special_tiles
-                       if pair.tile.special_attr == TileType.COIN_ATTR]
+        coin_pairs = [
+            pair for pair in special_tiles
+            if pair.tile.special_attr == TileType.COIN_ATTR
+        ]
         for coin_pair in coin_pairs:
             if self.rect.colliderect(coin_pair.rect):
                 row, col = camera.tileEngine.get_tile_pos(coin_pair.coords[0],
