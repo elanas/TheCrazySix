@@ -37,7 +37,9 @@ class Enemy(Character):
         tile_rect = camera.tileEngine.get_tile_rect()
         max_x = camera.tileEngine.getMaxCols() * tile_rect.width -\
             self.rect.width
-        min_y = -(camera.tileEngine.getNumRows() * tile_rect.height) + Globals.HEIGHT
+        min_y = -(
+            camera.tileEngine.getNumRows() * tile_rect.height
+        ) + Globals.HEIGHT
         max_y = camera.tileEngine.getNumRows() * tile_rect.height -\
             self.rect.height
         keep_looking = True
