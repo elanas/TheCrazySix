@@ -47,7 +47,7 @@ class Player(Character):
         self.anim_time = Player.STILL_ANIM_TIME
         self.score_timer = score_timer
 
-    def update(self, time, camera=None, enemy_sprites=None):
+    def update(self, time, camera=None, enemy_sprites=None, level=None):
         self.updateVelocity(time)
         self.time_elapsed += time
         if self.time_elapsed >= self.anim_time:
@@ -70,7 +70,7 @@ class Player(Character):
         if self.velocity > 0:
             self.move(time)
         if camera is not None:
-            self.checkCollisions(camera)
+            self.checkCollisions(camera, level)
         else:
             self.checkScreenCollisions()
         if enemy_sprites is not None:
@@ -202,7 +202,7 @@ class Player(Character):
     def playSound(self):
         Player.hitSound.play()
 
-    def checkCollisions(self, camera):
+    def checkCollisions(self, camera, level=None):
         super(Player, self).checkCollisions(camera)
         radius = max(self.rect.height, self.rect.width) * 2
         special_tiles = camera.get_special_tiles(self.rect.center, radius)
@@ -218,7 +218,10 @@ class Player(Character):
                 Globals.PLAYER_SCORE += Globals.PLAYER_HEALTH
             Globals.PLAYER_SCORE /= 100
             highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
-            Globals.STATE = WinGame()
+            if level is not None:
+                level.handle_stairs()
+            else:
+                Globals.STATE = WinGame()
         if Globals.PLAYER_HEALTH <= 0:
             Globals.STATE = LoseGame()
         if Globals.REMAINING_TIME <= 00000:
