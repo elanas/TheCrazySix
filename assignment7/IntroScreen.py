@@ -32,14 +32,15 @@ class IntroScreen(Level):
     def init_subtitle(self):
         text_surf = IntroScreen.SUBTITLE_FONT.render(
             IntroScreen.SUBTITLE_TEXT, True, IntroScreen.SUBTITLE_COLOR)
-        self.subtitleRect = text_surf.get_rect()
-        self.subtitleRect.centerx = Globals.WIDTH / 2
-        self.subtitleRect.bottom = Globals.HEIGHT - IntroScreen.SUBTITLE_MARGIN
-        self.subtitleRect.inflate_ip(
+        self.subtitle_rect = text_surf.get_rect()
+        self.subtitle_rect.centerx = Globals.WIDTH / 2
+        self.subtitle_rect.bottom = \
+            Globals.HEIGHT - IntroScreen.SUBTITLE_MARGIN
+        self.subtitle_rect.inflate_ip(
             IntroScreen.SUBTITLE_PADDING * 2,
             IntroScreen.SUBTITLE_PADDING * 2
         )
-        self.subtitle_surf = pygame.Surface(self.subtitleRect.size).convert()
+        self.subtitle_surf = pygame.Surface(self.subtitle_rect.size).convert()
         self.subtitle_surf.fill(IntroScreen.SUBTITLE_BACKGROUND)
         self.subtitle_surf.blit(text_surf, (
             IntroScreen.SUBTITLE_PADDING,
@@ -50,7 +51,7 @@ class IntroScreen(Level):
     def render(self):
         super(IntroScreen, self).render()
         if self.played_intro:
-            Globals.SCREEN.blit(self.subtitle_surf, self.subtitleRect)
+            Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
     def update(self, time):
         super(IntroScreen, self).update(time)
