@@ -1,5 +1,6 @@
 import pygame
 
+
 class HealthBar():
 
     def __init__(self):
@@ -8,7 +9,7 @@ class HealthBar():
         # print Globals.SCREEN
 
     def render(self, Globals):
-        #Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
+        # Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         font = pygame.font.SysFont(None, 64)
         COLOR = pygame.Color("green")
         health_string = Globals.PLAYER_HEALTH
@@ -23,4 +24,4 @@ class HealthBar():
         Globals.SCREEN.blit(health_surf, health_rect)
 
     def update(self):
-    	pass
+        pass
