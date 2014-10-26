@@ -21,8 +21,10 @@ class Level(GameState):
         self.keyCode = None
         self.definition_path = definition_path
         self.map_path = map_path
-        self.tile_engine = TileEngine(join(Level.MAP_BASE, definition_path),
-                                     join(Level.MAP_BASE, map_path))
+        self.tile_engine = TileEngine(
+            join(Level.MAP_BASE, definition_path),
+            join(Level.MAP_BASE, map_path)
+        )
         self.camera = Camera(self.tile_engine, pygame.Rect(
             0, 0, Globals.WIDTH, Globals.HEIGHT))
         self.tile_rect = self.tile_engine.get_tile_rect()
@@ -32,14 +34,16 @@ class Level(GameState):
         self.init_enemies()
 
     def handle_stairs(self):
-    	pass
+        pass
 
     def handle_escape(self):
-    	pass
+        pass
 
     def init_player(self):
-        self.player = Player(Globals.WIDTH, Globals.HEIGHT, 
-                             Globals.WIDTH / 2, Globals.HEIGHT / 2)
+        self.player = Player(
+            Globals.WIDTH, Globals.HEIGHT,
+            Globals.WIDTH / 2, Globals.HEIGHT / 2
+        )
         self.playerSprites.add(self.player)
 
     def init_enemies(self):
@@ -49,7 +53,9 @@ class Level(GameState):
             for col_num in range(0, len(tile_map[row_num])):
                 if tile_map[row_num][col_num] is None:
                     continue
-                if tile_map[row_num][col_num].special_attr == TileType.SPAWN_ATTR:
+                if tile_map[
+                    row_num
+                ][col_num].special_attr == TileType.SPAWN_ATTR:
                     tile_map[row_num][col_num] = base_tile
                     self.add_enemy(row_num, col_num)
 
