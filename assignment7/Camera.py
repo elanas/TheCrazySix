@@ -22,14 +22,17 @@ class Camera(object):
         start_pos = [-1, -1]
         for row_num in range(0, len(tile_map)):
             for col_num in range(0, len(tile_map[row_num])):
-                if tile_map[row_num][col_num] is None:
+                if tile_map[
+                    row_num
+                ][col_num] is None:
                     continue
                 if tile_map[
                     row_num
                 ][col_num].special_attr == TileType.START_ATTR:
                     if start_pos[0] != -1:
                         raise Exception(
-                            "There can only be one starting tile in the map")
+                            "There can only be one starting tile in the map"
+                        )
                     start_pos[0] = row_num
                     start_pos[1] = col_num
         if start_pos[0] != -1:
@@ -97,7 +100,8 @@ class Camera(object):
                 tiles.append(
                     Camera.TileRectPair(
                         tile=curr_tile,
-                        rect=curr_rect, coords=(trans_x, trans_y)
+                        rect=curr_rect,
+                        coords=(trans_x, trans_y)
                     ))
                 curr_x += curr_rect.width
             curr_y += curr_rect.height
