@@ -29,9 +29,9 @@ class TileTest(GameState):
     WALL_WIDTH = 50
 
     def __init__(self):
-        Globals.PLAYER_HEALTH = 100;
-        Globals.PLAYER_SCORE = 0;
-        Globals.REMAINING_TIME = 30000;
+        Globals.PLAYER_HEALTH = 100
+        Globals.PLAYER_SCORE = 0
+        Globals.REMAINING_TIME = 30000
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
         self.camera = Camera(self.tileEngine, pygame.Rect(
             0, 0, Globals.WIDTH, Globals.HEIGHT))
@@ -53,7 +53,13 @@ class TileTest(GameState):
         player_x = Globals.WIDTH / 2
         player_y = int(Globals.HEIGHT -
                        self.camera.tileEngine.get_tile_rect().height * 3.5)
-        self.player = Player(Globals.WIDTH, Globals.HEIGHT, player_x, player_y, self.score_timer)
+        self.player = Player(
+            Globals.WIDTH,
+            Globals.HEIGHT,
+            player_x,
+            player_y,
+            self.score_timer
+        )
         self.playerSprites.add(self.player)
 
     def render(self):
@@ -69,7 +75,7 @@ class TileTest(GameState):
         self.checkCameraPosition()
         if pygame.sprite.spritecollideany(self.player, self.enemySprites):
             Globals.PLAYER_HEALTH -= .5
-            
+
     def checkCameraPosition(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx
         dist_y = self.camera.container.centery - self.player.rect.centery
