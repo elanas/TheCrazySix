@@ -7,6 +7,7 @@ import Menu
 
 BACKGROUND_IMG = pygame.image.load("images/background.png")
 
+
 class NameInput(GameState):
     MIN_LENGTH = 3
     MAX_LENGTH = 15
@@ -43,8 +44,10 @@ class NameInput(GameState):
     def setup_text(self):
         self.input_font = pygame.font.Font(NameInput.INPUT_FONT,
                                            NameInput.INPUT_SIZE)
-        self.hint_font = pygame.font.Font(NameInput.HINT_FONT,
-                                            NameInput.HINT_SIZE)
+        self.hint_font = pygame.font.Font(
+            NameInput.HINT_FONT,
+            NameInput.HINT_SIZE
+        )
         self.error_font = pygame.font.Font(NameInput.ERROR_FONT,
                                            NameInput.ERROR_SIZE)
         self.prompt_font = pygame.font.Font(NameInput.PROMPT_FONT,
@@ -56,12 +59,14 @@ class NameInput(GameState):
         self.prompt_rect.centerx = Globals.WIDTH / 2
         self.prompt_rect.top = NameInput.PROMPT_PADDING
 
-        self.hint_surf = self.hint_font.render(NameInput.HINT, 
-                                    True, NameInput.HINT_COLOR)
+        self.hint_surf = self.hint_font.render(
+            NameInput.HINT,
+            True,
+            NameInput.HINT_COLOR
+        )
         self.hint_rect = self.hint_surf.get_rect()
         self.hint_rect.centerx = Globals.WIDTH / 2
         self.hint_rect.top = NameInput.HINT_PADDING
-
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
