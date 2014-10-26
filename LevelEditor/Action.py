@@ -10,4 +10,3 @@ class Action(object):
         self.col = col
         self.old_tile = old_tile
         self.new_tile = new_tile
-

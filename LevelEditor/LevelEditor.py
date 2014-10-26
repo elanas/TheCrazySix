@@ -9,6 +9,7 @@ from asset_loader import AssetLoader
 from Action import Action
 from os.path import join
 
+
 class LevelEditor(GameState):
     RIGHT_PADDING_FACTOR = 4
     PADDING = 20
@@ -46,7 +47,8 @@ class LevelEditor(GameState):
         self.map_path = map_path
         self.tile_engine = TileEngine(self.definition_path, self.map_path)
         self.tile_rect = self.tile_engine.get_tile_rect()
-        self.right_padding = self.tile_rect.width * LevelEditor.RIGHT_PADDING_FACTOR
+        self.right_padding = self.tile_rect.width * \
+            LevelEditor.RIGHT_PADDING_FACTOR
         self.shift_factor = self.tile_rect.width
         self.init_camera()
         self.init_highlight()
@@ -54,13 +56,18 @@ class LevelEditor(GameState):
         self.init_browser()
 
     def init_title(self):
-        self.title_surf = LevelEditor.TITLE_FONT.render(LevelEditor.TITLE, False, LevelEditor.TITLE_COLOR)
+        self.title_surf = LevelEditor.TITLE_FONT.render(
+            LevelEditor.TITLE, False, LevelEditor.TITLE_COLOR)
         self.title_rect = self.title_surf.get_rect()
-        self.title_rect.centerx = self.camera_dest.right + (Globals.WIDTH - self.camera_dest.right) / 2
+        self.title_rect.centerx = self.camera_dest.right + \
+            (Globals.WIDTH - self.camera_dest.right) / 2
         self.title_rect.top = self.camera_dest.top + 20
 
     def init_camera(self):
-        self.camera_dest = pygame.Rect(LevelEditor.PADDING, LevelEditor.PADDING, Globals.WIDTH - self.right_padding - LevelEditor.PADDING, Globals.HEIGHT - LevelEditor.PADDING)
+        self.camera_dest = pygame.Rect(
+            LevelEditor.PADDING, LevelEditor.PADDING, Globals.WIDTH -
+            self.right_padding - LevelEditor.PADDING, Globals.HEIGHT -
+            LevelEditor.PADDING)
         self.camera = Camera(self.tile_engine, self.camera_dest)
         extra_y = self.camera_dest.height % self.tile_rect.height
         extra_x = self.camera_dest.width % self.tile_rect.width
@@ -81,6 +88,7 @@ class LevelEditor(GameState):
         if border:
             pygame.draw.rect(self.highlight_surf,
                              LevelEditor.HIGHLIGHT_BORDER, self.tile_rect, 1)
+
     def init_browser(self):
         width = (Globals.WIDTH - self.camera_dest.right) - 20
         height = Globals.HEIGHT - self.title_rect.bottom - 20
@@ -108,7 +116,8 @@ class LevelEditor(GameState):
                 self.camera.move(0, self.shift_factor)
             elif self.key_code == pygame.K_LEFT or self.key_code == pygame.K_a:
                 self.camera.move(-self.shift_factor, 0)
-            elif self.key_code == pygame.K_RIGHT or self.key_code == pygame.K_d:
+            elif self.key_code == pygame.K_RIGHT or \
+                    self.key_code == pygame.K_d:
                 self.camera.move(self.shift_factor, 0)
         if self.message_surf is not None:
             self.message_time -= time
@@ -117,21 +126,26 @@ class LevelEditor(GameState):
         if self.mouse_down:
             self.handle_mouse_click()
 
-    def set_message(self, content, timeout=MESSAGE_TIMEOUT, color=DEFAULT_MESSAGE_COLOR):
+    def set_message(self, content, timeout=MESSAGE_TIMEOUT,
+                    color=DEFAULT_MESSAGE_COLOR):
         temp_surf = LevelEditor.MESSAGE_FONT.render(content, True, color)
         self.message_rect = temp_surf.get_rect()
         self.message_rect.bottom = self.camera_dest.bottom
         self.message_rect.centerx = self.camera_dest.centerx
-        self.message_rect.inflate_ip(LevelEditor.MESSAGE_PADDING * 2, LevelEditor.MESSAGE_PADDING * 2)
+        self.message_rect.inflate_ip(LevelEditor.MESSAGE_PADDING * 2,
+                                     LevelEditor.MESSAGE_PADDING * 2)
         self.message_surf = pygame.Surface(self.message_rect.size).convert()
         self.message_surf.fill(LevelEditor.MESSAGE_BACKGROUND)
-        self.message_surf.blit(temp_surf, (LevelEditor.MESSAGE_PADDING, LevelEditor.MESSAGE_PADDING))
+        self.message_surf.blit(
+            temp_surf, (LevelEditor.MESSAGE_PADDING,
+                        LevelEditor.MESSAGE_PADDING))
         self.message_time = timeout
 
     def handle_mouse(self):
         pos = pygame.mouse.get_pos()
         if self.camera_dest.collidepoint(pos):
-            temp = (pos[0] - self.camera_dest.left, pos[1] - self.camera_dest.top)
+            temp = (pos[0] - self.camera_dest.left, pos[1] -
+                    self.camera_dest.top)
             rect = self.tile_rect.copy()
             x = pos[0] - temp[0] % self.tile_rect.width
             y = pos[1] - temp[1] % self.tile_rect.height
@@ -167,9 +181,8 @@ class LevelEditor(GameState):
             if self.tile_engine.tileMap[row][col] is not tile:
                 old_tile = self.tile_engine.tileMap[row][col]
                 self.tile_engine.tileMap[row][col] = tile
-                a = Action(type=Action.SET_TYPE, row=row,
-                                       col=col, old_tile=old_tile,
-                                       new_tile=tile)
+                a = Action(type=Action.SET_TYPE, row=row, col=col,
+                           old_tile=old_tile, new_tile=tile)
                 self.actions.append(a)
         else:
             new_row, new_col = self.make_room(row, col)
@@ -179,7 +192,7 @@ class LevelEditor(GameState):
         row_delta, col_delta = 0, 0
         tile_map = self.tile_engine.tileMap
         # add to front of map
-        for i in range (row, 0):
+        for i in range(row, 0):
             tile_map.insert(0, list())
             self.camera.viewpoint.y += self.tile_rect.height
             row_delta += 1
@@ -222,14 +235,15 @@ class LevelEditor(GameState):
                 self.toggle_info_mode()
             elif self.delete_mode:
                 self.toggle_delete_mode()
-            self.init_highlight(tile.image, alpha=LevelEditor.SELECTION_ALPHA,border=True)
+            self.init_highlight(tile.image, alpha=LevelEditor.SELECTION_ALPHA,
+                                border=True)
 
     def delete_tile(self, row, col):
         if self.tile_engine.is_coord_valid(row, col) and \
                 self.tile_engine.tileMap[row][col] is not None:
             old_tile = self.tile_engine.tileMap[row][col]
-            a = Action(type=Action.DELETE_TYPE, row=row,
-                                   col=col, old_tile=old_tile)
+            a = Action(type=Action.DELETE_TYPE, row=row, col=col,
+                       old_tile=old_tile)
             self.actions.append(a)
             self.tile_engine.tileMap[row][col] = None
 
@@ -304,17 +318,21 @@ class LevelEditor(GameState):
 
     def undo_action(self):
         if len(self.actions) == 0:
-            self.set_message("there is nothing left to undo", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("there is nothing left to undo",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
             return
         action = self.actions.pop()
         if action.type == Action.DELETE_TYPE:
             self.tile_engine.tileMap[action.row][action.col] = action.old_tile
-            self.set_message("delete undone", timeout=LevelEditor.QUICK_TIMEOUT)
+            self.set_message("delete undone",
+                             timeout=LevelEditor.QUICK_TIMEOUT)
         elif action.type == Action.SET_TYPE:
             self.tile_engine.tileMap[action.row][action.col] = action.old_tile
-            self.set_message("tile set undone", timeout=LevelEditor.QUICK_TIMEOUT)
+            self.set_message("tile set undone",
+                             timeout=LevelEditor.QUICK_TIMEOUT)
         else:
-            self.set_message("Undo failed", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("Undo failed",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
 
     def revert_and_reload(self):
         try:
@@ -324,16 +342,19 @@ class LevelEditor(GameState):
             self.init_highlight()
             self.set_message("reverted all changes and reloaded tile engine")
         except Exception as e:
-            self.set_message("failed to reload tile engine", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("failed to reload tile engine",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
             print "Reload failed: ", e
 
     def handle_save(self):
         min_x = 0
         tile_map = self.tile_engine.tileMap
         if len(tile_map) == 0:
-            self.set_message("cannot save an empty map", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("cannot save an empty map",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
             return
-        min_x = min([self.get_x_start(row) for row in tile_map if len(row) > 0])
+        min_x = min([self.get_x_start(row) for row in tile_map
+                     if len(row) > 0])
         min_y = self.get_y_start()
         max_y = self.get_y_end()
         try:
@@ -350,13 +371,12 @@ class LevelEditor(GameState):
                 map_file.write('\n')
             self.set_message("saved successfully")
         except IOError as e:
-            self.set_message("failed to save the map file", color=LevelEditor.ERROR_MESSAGE_COLOR)
+            self.set_message("failed to save the map file",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
             print "Failed to save the map file"
             print e
         finally:
             map_file.close()
-
-        # self.set_message("Saving not implemented yet", color=LevelEditor.ERROR_MESSAGE_COLOR)
 
     def get_x_start(self, row):
         x_start = 0

@@ -1,21 +1,25 @@
 import pygame
 from math import ceil
 
+
 class DefinitionBrowser:
     NUM_COLS = 3.0
-    
+
     def __init__(self, tile_engine, container):
         self.tile_engine = tile_engine
         self.container = container
         self.tile_rect = self.tile_engine.get_tile_rect()
-        self.padding = int((self.container.width - DefinitionBrowser.NUM_COLS \
-                            * self.tile_rect.width) / (DefinitionBrowser.NUM_COLS + 1))
-        self.definitions = self.tile_engine.tileManager.tileDefinitions.values()
-        width = self.padding * (DefinitionBrowser.NUM_COLS + 1) + self.tile_rect.width * DefinitionBrowser.NUM_COLS
+        self.padding = int((self.container.width - DefinitionBrowser.NUM_COLS
+                            * self.tile_rect.width) /
+                           (DefinitionBrowser.NUM_COLS + 1))
+        self.definitions = \
+            self.tile_engine.tileManager.tileDefinitions.values()
+        width = self.padding * (DefinitionBrowser.NUM_COLS + 1) + \
+            self.tile_rect.width * DefinitionBrowser.NUM_COLS
         num_vert = ceil(len(self.definitions) / DefinitionBrowser.NUM_COLS)
-        height = num_vert * (self.padding + self.tile_rect.height) + self.padding
+        height = num_vert * (self.padding + self.tile_rect.height) + \
+            self.padding
         self.surface = pygame.Surface((width, height)).convert()
-        # self.surface.fill((255, 255, 255))
         self.area = self.container.copy()
         self.area.width -= self.area.left
         self.area.height -= self.area.top
@@ -83,7 +87,8 @@ class DefinitionBrowser:
         else:
             row = self.selection[0]
             col = self.selection[1]
-            return self.definitions[row * int(DefinitionBrowser.NUM_COLS) + col]
+            return self.definitions[row * int(DefinitionBrowser.NUM_COLS) +
+                                    col]
 
     def clear_selection(self):
         self.selection[0] = -1

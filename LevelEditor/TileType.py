@@ -24,7 +24,8 @@ class TileType(object):
         attr = "none"
         if self.special_attr is not None:
             attr = self.special_attr
-        return "solid: %s --- attr: %s --- img: %s" % (str(self.is_solid), attr, self.image_path)
+        return "solid: %s --- attr: %s --- img: %s" % \
+            (str(self.is_solid), attr, self.image_path)
 
     @property
     def is_special(self):

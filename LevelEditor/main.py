@@ -6,11 +6,13 @@ import os
 
 MIN_UPDATE_INTERVAL = .05
 
+
 def create_map_file(file_path):
     if not os.path.isfile(file_path):
         print 'Creating empty map at "' + file_path + '"'
     handle = open(file_path, 'a')
     handle.close()
+
 
 def initialize():
     if len(sys.argv) < 3:
@@ -30,6 +32,7 @@ def initialize():
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
     Globals.STATE = LevelEditor(def_file, map_file)
 
+
 def loop():
     time_elapsed = 0
     while Globals.RUNNING:
@@ -47,6 +50,7 @@ def loop():
                 Globals.RUNNING = False
             else:
                 Globals.STATE.event(event)
+
 
 def main():
     initialize()
