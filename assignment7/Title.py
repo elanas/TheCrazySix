@@ -72,7 +72,7 @@ class Title(GameState):
             self.title_rect = self.title_surf.get_rect()
             self.title_rect.centerx = Globals.SCREEN.get_rect().centerx
             self.title_rect.centery = Globals.SCREEN.get_rect().centery
-            if self.size >= Title.INIT_SIZE + self.MAX_DELTA or
+            if self.size >= Title.INIT_SIZE + self.MAX_DELTA or \
             self.size <= Title.INIT_SIZE - self.MAX_DELTA:
                 self.delta *= -1
         # self.playerSprites.update(time)
