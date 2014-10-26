@@ -1,5 +1,6 @@
 from collections import namedtuple
 
+
 class HighscoreManager:
     NUM_HIGHSCORES = 4
     DEFAULT_FILE_PATH = 'highscores.txt'
