@@ -1,7 +1,7 @@
 import pygame
 from Globals import Globals
 from GameState import GameState
-from Level import Level
+from IntroScreen import IntroScreen
 from asset_loader import AssetLoader
 import Menu
 
@@ -102,7 +102,7 @@ class NameInput(GameState):
         if len(Globals.PLAYER_NAME) < NameInput.MIN_LENGTH:
             self.error_message = NameInput.ERROR_TOO_SHORT
         else:
-            Globals.STATE = Level("map_def.txt", "intro_screen.txt")
+            Globals.STATE = IntroScreen()
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

@@ -31,6 +31,12 @@ class Level(GameState):
         self.init_player()
         self.init_enemies()
 
+    def handle_stairs(self):
+    	pass
+
+    def handle_escape(self):
+    	pass
+
     def init_player(self):
         self.player = Player(Globals.WIDTH, Globals.HEIGHT, 
                              Globals.WIDTH / 2, Globals.HEIGHT / 2)
@@ -58,7 +64,7 @@ class Level(GameState):
         self.playerSprites.draw(Globals.SCREEN)
 
     def update(self, time):
-        self.player.update(time, self.camera, self.enemySprites)
+        self.player.update(time, self.camera, self.enemySprites, self)
         self.enemySprites.update(time, self.camera)
         self.checkCameraPosition()
 
@@ -67,7 +73,7 @@ class Level(GameState):
             if event.key == pygame.K_r:
                 self.reload_level()
             elif event.key == pygame.K_ESCAPE:
-                Globals.STATE = TileTest()
+                self.handle_escape()
             else:
                 self.keyCode = event.key
                 for p in self.playerSprites:
