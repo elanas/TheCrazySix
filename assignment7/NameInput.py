@@ -33,6 +33,7 @@ class NameInput(GameState):
     ERROR_TOO_SHORT = "Your name is too short to continue!"
 
     def __init__(self):
+        Globals.INTRO_SOUND_PLAYED = False
         if Globals.PLAYER_NAME is None:
             Globals.PLAYER_NAME = ""
         self.error_message = None

@@ -15,3 +15,4 @@ class Globals(object):
     PLAYER_HEALTH = 100
     REMAINING_TIME = 30000
     PLAYER_SCORE = 0
+    INTRO_SOUND_PLAYED = False
