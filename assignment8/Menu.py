@@ -14,8 +14,6 @@ BACKGROUND_IMG = pygame.image.load("images/background.png")
 
 
 class Menu(GameState):
-    # CIRCLE_COLOR = (247, 219, 59)
-    # CIRCLE_COLOR = (175, 255, 143)
     CIRCLE_COLOR = pygame.color.Color("white")
     CIRCLE_PADDING = 30
 
