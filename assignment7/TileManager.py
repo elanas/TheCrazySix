@@ -32,8 +32,6 @@ class TileManager(object):
             specialField = list()
             if len(fields) > 3:
                 specialField = fields[3:]
-            # if symbol is "/" or symbol is "'\'":
-            #     specialField = "stair"
             solid = not int(solidStr) == 0
             curr_tile = \
                 TileType(self.loader, symbol, img_path, solid, specialField)
