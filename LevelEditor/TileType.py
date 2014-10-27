@@ -28,14 +28,18 @@ class TileType(object):
             (str(self.is_solid), attr, self.image_path)
 
     @property
+    def is_empty(self):
+        return self is TileType.EMPTY_TILE
+
+    @property
     def is_special(self):
         return self.special_attr is not None and \
-            self.special_attr != TileType.EMPTY_ATTR
+            not self.is_empty
 
     @property
     def is_stair(self):
         return self.special_attr is not None and \
-            self.special_attr is TileType.STAIR_ATTR
+            TileType.STAIR_ATTR in self.special_attr
 
     @staticmethod
     def create_empty(loader):
@@ -43,4 +47,4 @@ class TileType(object):
             TileType.EMPTY_TILE.image = loader.load_image("transparent.png")
 
 TileType.EMPTY_TILE = TileType(None, TileType.EMPTY_SYMBOL, None, True,
-                               TileType.EMPTY_ATTR)
+                               list(TileType.EMPTY_ATTR))
