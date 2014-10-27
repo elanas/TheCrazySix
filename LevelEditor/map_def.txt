@@ -28,3 +28,4 @@ v bed_up_left.png 1
 b table_top.png 1
 n table_top_potion.png 1
 m table_bottom.png 1
+t turret.png 1 turrent
