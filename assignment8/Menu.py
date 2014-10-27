@@ -14,7 +14,9 @@ BACKGROUND_IMG = pygame.image.load("images/background.png")
 
 
 class Menu(GameState):
-    CIRCLE_COLOR = (247, 219, 59)
+    # CIRCLE_COLOR = (247, 219, 59)
+    # CIRCLE_COLOR = (175, 255, 143)
+    CIRCLE_COLOR = pygame.color.Color("white")
     CIRCLE_PADDING = 30
 
     def __init__(self):
@@ -28,9 +30,9 @@ class Menu(GameState):
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
         font = pygame.font.SysFont(None, 64)
 
-        TITLE_PADDING = 110
+        TITLE_PADDING = 160
         VERT_SPACING = 65
-        HOR_SPACING = 125
+        HOR_SPACING = 0
 
         START = "Start Game"
         VOLUME = "Volume Control"
