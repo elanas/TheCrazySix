@@ -75,7 +75,7 @@ class Player(Character):
         else:
             self.checkScreenCollisions()
         if enemy_sprites is not None:
-            self.checkEnemyCollisions(enemy_sprites)
+            self.checkEnemyCollisions(enemy_sprites, level)
         if self.in_collision and self.cycle % 2 is not 0:
             self.image = self.empty
 
@@ -183,9 +183,6 @@ class Player(Character):
         return (self.direction + 2) % 4
 
     def getMoveNormalized(self):
-        # # if not self.is_moving:
-        # if not self.velocity == 0:
-        #     return 0, 0
         if self.direction == Player.INDEX_UP:
             return 0, -1
         elif self.direction == Player.INDEX_DOWN:
@@ -246,28 +243,12 @@ class Player(Character):
                 if self.score_timer is not None:
                     self.score_timer.total_time += Player.COIN_FACTOR
 
-    def checkEnemyCollisions(self, enemy_sprites):
-        pass
+    def checkEnemyCollisions(self, enemy_sprites, level):
         enemy_rects = [enemy.rect for enemy in enemy_sprites]
         collided_indices = self.rect.collidelistall(enemy_rects)
-
-        # The code below should keep Player's from walking through Enemies.
-        # More work needs to be done to make sure that it looks good when an
-        # Enemy initiates the contact.
-        #
-        # if self.velocity > 0:
-        #     for i in collided_indices:
-        #         curr_rect = enemy_rects[i]
-        #         if self.direction == Character.INDEX_UP:
-        #             self.rect.top = curr_rect.bottom
-        #         elif self.direction == Character.INDEX_DOWN:
-        #             self.rect.bottom = curr_rect.top
-        #         elif self.direction == Character.INDEX_LEFT:
-        #             self.rect.left = curr_rect.right
-        #         elif self.direction == Character.INDEX_RIGHT:
-        #             self.rect.right = curr_rect.left
-
         if len(collided_indices) > 0:
+            if level is not None:
+                level.handle_enemy_collision()
             self.in_collision = True
         else:
             self.in_collision = False

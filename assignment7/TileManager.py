@@ -25,12 +25,13 @@ class TileManager(object):
                     definition[0] == TileManager.COMMENT_CHAR:
                 continue
             fields = definition.split()
-            if not len(fields) == 3 and not len(fields) == 4:
+            if len(fields) < 3:
                 raise Exception(
                     "The tile engine definition file is incorrectly formed")
-            if len(fields) == 3:
-                fields.append(None)
-            symbol, img_path, solidStr, specialField = fields
+            symbol, img_path, solidStr = fields[:3]
+            specialField = list()
+            if len(fields) > 3:
+                specialField = fields[3:]
             # if symbol is "/" or symbol is "'\'":
             #     specialField = "stair"
             solid = not int(solidStr) == 0

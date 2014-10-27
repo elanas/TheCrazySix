@@ -26,9 +26,7 @@ class Camera(object):
                     row_num
                 ][col_num] is None:
                     continue
-                if tile_map[
-                    row_num
-                ][col_num].special_attr == TileType.START_ATTR:
+                if TileType.START_ATTR in tile_map[row_num][col_num].special_attr:
                     if start_pos[0] != -1:
                         raise Exception(
                             "There can only be one starting tile in the map"

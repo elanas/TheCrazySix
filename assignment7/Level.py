@@ -39,6 +39,9 @@ class Level(GameState):
     def handle_escape(self):
         pass
 
+    def handle_enemy_collision(self):
+        pass
+
     def init_player(self):
         self.player = Player(
             Globals.WIDTH, Globals.HEIGHT,
@@ -53,9 +56,8 @@ class Level(GameState):
             for col_num in range(0, len(tile_map[row_num])):
                 if tile_map[row_num][col_num] is None:
                     continue
-                if tile_map[
-                    row_num
-                ][col_num].special_attr == TileType.SPAWN_ATTR:
+                if TileType.SPAWN_ATTR in \
+                        tile_map[row_num][col_num].special_attr:
                     tile_map[row_num][col_num] = base_tile
                     self.add_enemy(row_num, col_num)
 

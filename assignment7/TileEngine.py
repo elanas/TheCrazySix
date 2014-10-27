@@ -35,7 +35,7 @@ class TileEngine(object):
         definitions = self.tileManager.tileDefinitions
         for symbol in definitions:
             tile = definitions[symbol]
-            if tile.special_attr == special_attr:
+            if special_attr in tile.special_attr:
                 return tile
         return None
 
