@@ -29,9 +29,9 @@ class TileManager(object):
                 raise Exception(
                     "The tile engine definition file is incorrectly formed")
             symbol, img_path, solidStr = fields[:3]
-            specialField = list()
+            specialField = set()
             if len(fields) > 3:
-                specialField = fields[3:]
+                specialField = set(fields[3:])
             solid = not int(solidStr) == 0
             curr_tile = \
                 TileType(self.loader, symbol, img_path, solid, specialField)

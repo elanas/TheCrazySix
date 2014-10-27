@@ -42,6 +42,20 @@ class Level(GameState):
     def handle_enemy_collision(self):
         pass
 
+    def handle_special_collision(self, pair):
+        self.replace_special_tile(pair)
+
+    def replace_special_tile(self, pair):
+        if pair.tile.is_replaceable:
+            row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
+                                                      pair.coords[1])
+            base = self.camera.tileEngine.get_tile_from_attr(
+                pair.tile.replace_attr)
+            if base is None:
+                base = self.camera.tileEngine.get_tile_from_attr(
+                    TileType.BASE_ATTR)
+            self.camera.tileEngine.tileMap[row][col] = base
+
     def init_player(self):
         self.player = Player(
             Globals.WIDTH, Globals.HEIGHT,

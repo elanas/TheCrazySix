@@ -224,7 +224,16 @@ class Player(Character):
             Globals.STATE = LoseGame()
         if Globals.REMAINING_TIME <= 00000:
             Globals.STATE = LoseGame()
+        self.checkSpecialCollisions(camera, level)
         self.checkCoinCollisions(camera)
+
+    def checkSpecialCollisions(self, camera, level):
+        radius = max(self.rect.height, self.rect.width) * 2
+        special_tiles = camera.get_special_tiles(self.rect.center, radius)
+        for pair in special_tiles:
+            if self.rect.colliderect(pair.rect):
+                if level is not None:
+                    level.handle_special_collision(pair)
 
     def checkCoinCollisions(self, camera):
         radius = max(self.rect.height, self.rect.width) * 2
