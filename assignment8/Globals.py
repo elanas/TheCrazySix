@@ -1,4 +1,3 @@
-# IMPORT THE PYGAME
 import pygame
 import random
 

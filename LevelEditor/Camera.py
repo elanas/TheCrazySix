@@ -21,9 +21,9 @@ class Camera(object):
         # self.viewpoint.top = -17
         self.viewpoint.topleft = (0, 0)
         # self.viewpoint.bottom = tileRect.height * numRows + \
-            # Camera.BOTTOM_PADDING
+        # Camera.BOTTOM_PADDING
         # self.viewpoint.centerx = (tileRect.width *
-                                  # self.tileEngine.getMaxCols()) / 2
+        # self.tileEngine.getMaxCols()) / 2
 
     def render(self, screen, clear_screen=True):
         if clear_screen:
