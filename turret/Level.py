@@ -30,6 +30,7 @@ class Level(GameState):
         self.tile_rect = self.tile_engine.get_tile_rect()
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
+        self.turrets = list()
         self.init_player()
         self.init_enemies()
 
@@ -72,7 +73,6 @@ class Level(GameState):
                     continue
                 if TileType.SPAWN_ATTR in \
                         tile_map[row_num][col_num].special_attr:
-                    tile_map[row_num][col_num] = base_tile
                     self.add_enemy(row_num, col_num)
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
@@ -87,8 +87,13 @@ class Level(GameState):
         self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y))
 
     def add_turret(self,row_num, col_num, left):
+        row_num += 1
+        if not left:
+            col_num+=1
         y = self.tile_rect.height * row_num - self.camera.viewpoint.top
         x = self.tile_rect.width * col_num - self.camera.viewpoint.left
+        self.turrets.append(Turret(x,y,left))
+
 
     def render(self):
         self.camera.render(Globals.SCREEN)
