@@ -205,7 +205,7 @@ class Player(Character):
         radius = max(self.rect.height, self.rect.width) * 2
         special_tiles = camera.get_special_tiles(self.rect.center, radius)
         stair_rects = [pair.rect for pair in special_tiles
-                       if pair.tile.special_attr == TileType.STAIR_ATTR]
+                       if TileType.STAIR_ATTR in pair.tile.special_attr]
         temp_rect = self.rect.inflate(
             -Player.STAIR_OFFSET, -Player.STAIR_OFFSET)
         num_stairs = len(temp_rect.collidelistall(stair_rects))
