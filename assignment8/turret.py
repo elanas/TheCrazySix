@@ -1,7 +1,7 @@
 import pygame
 
 
-class HealthBar():
+class Turret():
 
     def __init__(self):
         self.color = pygame.color.Color("cyan")
