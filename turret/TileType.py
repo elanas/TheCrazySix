@@ -8,6 +8,8 @@ class TileType(object):
     BASE_ATTR = "base"
     START_ATTR = "player_start"
     SPAWN_ATTR = "enemy_spawn"
+    TURRET_LEFT = "turret_spawn_left"
+    TURRET_RIGHT = "turret_spawn_right"
     REPLACE_POSTFIX = "_replace"
     BASE_POSTFIX = "_base"
     EMPTY_TILE = "a"

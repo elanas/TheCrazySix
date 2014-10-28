@@ -8,7 +8,7 @@ from Player import Player
 from Enemy import Enemy
 from os.path import join
 import pygame
-from TileTest import TileTest
+from Turret import Turret
 
 
 class Level(GameState):
@@ -74,11 +74,23 @@ class Level(GameState):
                         tile_map[row_num][col_num].special_attr:
                     tile_map[row_num][col_num] = base_tile
                     self.add_enemy(row_num, col_num)
+                elif TileType.TURRET_LEFT in \
+                        tile_map[row_num][col_num].special_attr:
+                    tile_map[row_num][col_num] = base_tile
+                    self.add_turret(row_num, col_num, True)
+                elif TileType.TURRET_RIGHT in \
+                        tile_map[row_num][col_num].special_attr:
+                    tile_map[row_num][col_num] = base_tile
+                    self.add_turret(row_num, col_num, False)
 
     def add_enemy(self, row_num, col_num):
         y = self.tile_rect.height * row_num - self.camera.viewpoint.top
         x = self.tile_rect.width * col_num - self.camera.viewpoint.left
         self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y))
+
+    def add_turret(self,row_num, col_num, left):
+        y = self.tile_rect.height * row_num - self.camera.viewpoint.top
+        x = self.tile_rect.width * col_num - self.camera.viewpoint.left
 
     def render(self):
         self.camera.render(Globals.SCREEN)
