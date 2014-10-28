@@ -28,5 +28,11 @@ v bed_up_left.png 1
 b table_top.png 1
 n table_top_potion.png 1
 m table_bottom.png 1
-l turret_left.png 1 turret_spawn_left
-k turret_right.png 1 turret_spawn_right
+k turret_right_topleft.png 1
+7 turret_right_topright.png 1 turret_spawn_right
+& turret_right_bottomright.png 1
+^ turret_right_bottomleft.png 1
+l turret_left_topleft.png 1 turret_spawn_left
+j turret_left_topright.png 1
+@ turret_left_bottomright.png 1
+% turret_left_bottomleft.png 1
