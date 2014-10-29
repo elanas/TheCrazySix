@@ -4,6 +4,7 @@ from GameState import GameState
 from IntroScreen import IntroScreen
 from asset_loader import AssetLoader
 import Menu
+import HowToPlay
 
 BACKGROUND_IMG = pygame.image.load("images/background.png")
 
@@ -108,7 +109,7 @@ class NameInput(GameState):
         if len(Globals.PLAYER_NAME) < NameInput.MIN_LENGTH:
             self.error_message = NameInput.ERROR_TOO_SHORT
         else:
-            Globals.STATE = IntroScreen()
+            Globals.STATE = HowToPlay.HowToPlay()
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
