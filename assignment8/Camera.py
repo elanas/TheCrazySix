@@ -43,6 +43,7 @@ class Camera(object):
                 Camera.BOTTOM_PADDING
             self.viewpoint.centerx = (tileRect.width *
                                       self.tileEngine.getMaxCols()) / 2
+            print "test"
 
     def render(self, screen):
         screen.fill(Camera.EMPTY_COLOR, self.container)
