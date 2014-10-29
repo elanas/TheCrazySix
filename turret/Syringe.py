@@ -6,15 +6,18 @@ from asset_loader import AssetLoader
 class Syringe (pygame.sprite.Sprite):
     NEGATIVE_MARGIN = 2
 
-    def __init__(self, x, y, left):
+    def __init__(self, x, y, left, left_img_path, right_img_path):
         super(Syringe, self).__init__()
         self.x = x
         self.y = y
         self.left = left
-        self.image = None
-        self.rect = None
         self.loader = AssetLoader("images")
         self.is_dead = False
+        if left:
+            self.image = self.loader.load_image_alpha(left_img_path)
+        else:
+            self.image = self.loader.load_image_alpha(right_img_path)
+        self.init_rect(self.image.get_rect())
 
     def init_rect(self, rect):
         self.rect = rect
@@ -43,10 +46,6 @@ class NormalSyringe(Syringe):
     RIGHT_PATH = "normal_syringe_right.png"
 
     def __init__(self, x, y, left):
-        super(NormalSyringe, self).__init__(x,y,left)
-        if left:
-            self.image = self.loader.load_image_alpha(NormalSyringe.LEFT_PATH)
-        else:
-            self.image = self.loader.load_image_alpha(NormalSyringe.RIGHT_PATH)
-        self.init_rect(self.image.get_rect())
-        
+        super(NormalSyringe, self).__init__(x, y, left,
+                                            NormalSyringe.LEFT_PATH,
+                                            NormalSyringe.RIGHT_PATH)        
