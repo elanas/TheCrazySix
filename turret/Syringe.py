@@ -30,8 +30,8 @@ class Syringe (pygame.sprite.Sprite):
         self.rect.centery = y
 
     def move(self, x_delta, y_delta):
-        self.x += x_delta
-        self.y += y_delta
+        self.rect.x += x_delta
+        self.rect.y += y_delta
 
     def get_health_effect(self):
         return 0
@@ -52,8 +52,12 @@ class Syringe (pygame.sprite.Sprite):
 class NormalSyringe(Syringe):
     LEFT_PATH = "normal_syringe_left.png"
     RIGHT_PATH = "normal_syringe_right.png"
+    HEALTH_EFFECT = -5
 
     def __init__(self, x, y, left):
         super(NormalSyringe, self).__init__(x, y, left,
                                             NormalSyringe.LEFT_PATH,
-                                            NormalSyringe.RIGHT_PATH)        
+                                            NormalSyringe.RIGHT_PATH)
+
+    def get_health_effect(self):
+        return NormalSyringe.HEALTH_EFFECT

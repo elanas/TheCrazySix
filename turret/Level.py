@@ -139,6 +139,8 @@ class Level(GameState):
             self.player.rect.centerx -= diff
             for enemy in self.enemySprites:
                 enemy.rect.centerx -= diff
+            for turret in self.turrets:
+            	turret.move(-diff, 0)
         if abs(dist_y) > Level.MAX_OFFSET_Y:
             diff = abs(dist_y) - Level.MAX_OFFSET_Y
             # player is below center
@@ -151,6 +153,8 @@ class Level(GameState):
             self.player.rect.centery -= diff
             for enemy in self.enemySprites:
                 enemy.rect.centery -= diff
+            for turret in self.turrets:
+            	turret.move(0, -diff)
 
     def reload_level(self):
         try:

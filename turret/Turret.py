@@ -31,5 +31,7 @@ class Turret(object):
             self.lastshot = 0
 
     def move(self, x_delta, y_delta):
+    	self.x += x_delta
+    	self.y += y_delta
         for syringe in self.syringeSprites:
             syringe.move(x_delta, y_delta)
