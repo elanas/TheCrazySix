@@ -98,11 +98,15 @@ class Level(GameState):
     def render(self):
         self.camera.render(Globals.SCREEN)
         self.enemySprites.draw(Globals.SCREEN)
+        for turret in self.turrets:
+            turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
 
     def update(self, time):
         self.player.update(time, self.camera, self.enemySprites, self)
         self.enemySprites.update(time, self.camera)
+        for turret in self.turrets:
+            turret.update(time, self.camera)
         self.checkCameraPosition()
 
     def event(self, event):

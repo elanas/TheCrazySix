@@ -1,27 +1,36 @@
 import pygame
 import random
+import Syringe
 
 
 class Turret(object):
-	MIN_WAIT = 30000
-	PROB_NORMAL = .01
+    MIN_WAIT = 3000
+    PROB_NORMAL = .01
 
     def __init__(self, x, y, left):
-    	self.x = x
-    	self.y = y
-    	self.left = left
-    	self.lastshot = Turret.MIN_WAIT
-    	self.syringeSprites = pygame.sprite.Group()
+        self.x = x
+        self.y = y
+        self.left = left
+        self.lastshot = Turret.MIN_WAIT
+        self.syringeSprites = pygame.sprite.Group()
+
+    def render(self, screen):
+        self.syringeSprites.draw(screen)
 
     def update(self, time, camera):
         self.lastshot += time
         if self.lastshot >= Turret.MIN_WAIT:
-        	self.lastshot = 0
-        	self.fire()
+            self.fire()
         self.syringeSprites.update(time, camera)
-        dead = [syringe in self.syringeSprites if syringe.is_dead()]
+        dead = [syringe for syringe in self.syringeSprites if syringe.is_dead]
         self.syringeSprites.remove(dead)
 
     def fire(self):
-    	if random.random() <= PROB_NORMAL:
-    		self.syringeSprites.add(Syringe.NormalSyringe(self.x,self.y, self.left))
+        if random.random() <= Turret.PROB_NORMAL:
+            print "fired"
+            self.syringeSprites.add(Syringe.NormalSyringe(self.x,self.y, self.left))
+            self.lastshot = 0
+
+    def move(self, x_delta, y_delta):
+        for syringe in self.syringeSprites:
+            syringe.move(x_delta, y_delta)
