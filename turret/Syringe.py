@@ -4,7 +4,7 @@ from asset_loader import AssetLoader
 
 
 class Syringe (pygame.sprite.Sprite):
-    NEGATIVE_MARGIN = 2
+    NEGATIVE_MARGIN = 10
     VELOCITY = 200
 
     def __init__(self, x, y, left, left_img_path, right_img_path):
