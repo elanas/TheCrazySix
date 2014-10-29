@@ -76,11 +76,9 @@ class Level(GameState):
                     self.add_enemy(row_num, col_num)
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
-                    tile_map[row_num][col_num] = base_tile
                     self.add_turret(row_num, col_num, True)
                 elif TileType.TURRET_RIGHT in \
                         tile_map[row_num][col_num].special_attr:
-                    tile_map[row_num][col_num] = base_tile
                     self.add_turret(row_num, col_num, False)
 
     def add_enemy(self, row_num, col_num):
