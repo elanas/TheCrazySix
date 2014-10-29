@@ -9,6 +9,7 @@ class Syringe (pygame.sprite.Sprite):
 
     def __init__(self, x, y, left, left_img_path, right_img_path):
         super(Syringe, self).__init__()
+        self.health_effect = 0
         self.left = left
         self.velocity = Syringe.VELOCITY
         if self.left:
@@ -33,8 +34,11 @@ class Syringe (pygame.sprite.Sprite):
         self.rect.x += x_delta
         self.rect.y += y_delta
 
+    def set_health_effect(self, health_effect):
+        self.health_effect = health_effect
+
     def get_health_effect(self):
-        return 0
+        return self.health_effect
 
     def kill(self):
         self.is_dead = True
@@ -58,6 +62,4 @@ class NormalSyringe(Syringe):
         super(NormalSyringe, self).__init__(x, y, left,
                                             NormalSyringe.LEFT_PATH,
                                             NormalSyringe.RIGHT_PATH)
-
-    def get_health_effect(self):
-        return NormalSyringe.HEALTH_EFFECT
+        self.set_health_effect(NormalSyringe.HEALTH_EFFECT)
