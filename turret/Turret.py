@@ -4,8 +4,8 @@ import Syringe
 
 
 class Turret(object):
-    MIN_WAIT = 3000
-    PROB_NORMAL = .01
+    MIN_WAIT = 3
+    PROB_NORMAL = .05
 
     def __init__(self, x, y, left):
         self.x = x
@@ -20,14 +20,13 @@ class Turret(object):
     def update(self, time, camera):
         self.lastshot += time
         if self.lastshot >= Turret.MIN_WAIT:
-            self.fire()
+	        self.fire()
         self.syringeSprites.update(time, camera)
         dead = [syringe for syringe in self.syringeSprites if syringe.is_dead]
         self.syringeSprites.remove(dead)
 
     def fire(self):
         if random.random() <= Turret.PROB_NORMAL:
-            print "fired"
             self.syringeSprites.add(Syringe.NormalSyringe(self.x,self.y, self.left))
             self.lastshot = 0
 
