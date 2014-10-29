@@ -40,6 +40,9 @@ class Syringe (pygame.sprite.Sprite):
     def get_health_effect(self):
         return self.health_effect
 
+    def kill(self):
+        self.is_dead = True
+
     def update(self, time, camera):
         self.rect.x += time * self.velocity
         radius = max(self.rect.size) * 1.5
