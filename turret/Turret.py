@@ -4,7 +4,7 @@ import Syringe
 
 
 class Turret(object):
-    MIN_WAIT = 3
+    MIN_WAIT = 1.5
     PROB_NORMAL = .05
 
     def __init__(self, x, y, left):
