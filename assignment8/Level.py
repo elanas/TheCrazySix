@@ -8,7 +8,7 @@ from Player import Player
 from Enemy import Enemy
 from os.path import join
 import pygame
-from Turret import Turret
+# from Turret import Turret
 
 
 class Level(GameState):
