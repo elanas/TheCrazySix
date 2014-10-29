@@ -1,17 +1,22 @@
 import pygame
 from Globals import Globals
 from asset_loader import AssetLoader
+import random
 
 
 class Syringe (pygame.sprite.Sprite):
     NEGATIVE_MARGIN = 10
     VELOCITY = 200
+    BURST_VELOCITY = 300
+    BURST_PROB = .2
 
     def __init__(self, x, y, left, left_img_path, right_img_path):
         super(Syringe, self).__init__()
         self.health_effect = 0
         self.left = left
         self.velocity = Syringe.VELOCITY
+        if random.random() <= Syringe.BURST_PROB:
+            self.velocity = Syringe.BURST_VELOCITY
         if self.left:
             self.velocity *= -1
         self.loader = AssetLoader("images")
