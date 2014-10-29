@@ -94,6 +94,15 @@ class Level(GameState):
         x = self.tile_rect.width * col_num - self.camera.viewpoint.left
         self.turrets.append(Turret(x,y,left))
 
+    def check_collisions(self):
+    	# radius = max(self.player.rect.size) * 1.5
+    	# center = self.player.rect.center
+    	for turret in self.turrets:
+    		for syringe in turret.syringeSprites:
+    			if self.player.rect.colliderect(syringe):
+    				# take damange?
+    				# damage amount = syringe.health_effect
+    				syringe.kill()
 
     def render(self):
         self.camera.render(Globals.SCREEN)
@@ -108,6 +117,7 @@ class Level(GameState):
         for turret in self.turrets:
             turret.update(time, self.camera)
         self.checkCameraPosition()
+        self.check_collisions()
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

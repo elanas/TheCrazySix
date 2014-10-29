@@ -1,6 +1,7 @@
 import pygame
 import random
 import Syringe
+from collections import namedtuple
 
 
 class Turret(object):

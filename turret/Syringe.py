@@ -34,12 +34,6 @@ class Syringe (pygame.sprite.Sprite):
         self.rect.x += x_delta
         self.rect.y += y_delta
 
-    def set_health_effect(self, health_effect):
-        self.health_effect = health_effect
-
-    def get_health_effect(self):
-        return self.health_effect
-
     def kill(self):
         self.is_dead = True
 
@@ -50,7 +44,7 @@ class Syringe (pygame.sprite.Sprite):
         solid_rects = [pair.rect for pair in solid_tiles]
         collide_rects = self.rect.collidelistall(solid_rects)
         if len(collide_rects) > 0:
-            self.is_dead = True
+            self.kill()
 
 
 class NormalSyringe(Syringe):
@@ -62,4 +56,4 @@ class NormalSyringe(Syringe):
         super(NormalSyringe, self).__init__(x, y, left,
                                             NormalSyringe.LEFT_PATH,
                                             NormalSyringe.RIGHT_PATH)
-        self.set_health_effect(NormalSyringe.HEALTH_EFFECT)
+        self.health_effect = NormalSyringe.HEALTH_EFFECT
