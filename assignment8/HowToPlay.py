@@ -7,11 +7,11 @@ from IntroScreen import IntroScreen
 
 TITLE = "~How To Play~"
 TITLE_COLOR = pygame.color.Color("white")
-TITLE_PADDING = 100
+TITLE_PADDING = 110
 BACKGROUND_IMG = pygame.image.load("images/background.png")
 KEYBOARD_IMG = pygame.image.load("images/keyboard.png");
 ENEMY_IMG = pygame.image.load("images/zombie_walking_down_profile.png")
-STAIR_IMG = pygame.image.load("images/tiles/stair_right.png")
+STAIR_IMG = pygame.image.load("images/stair_profile.png")
 
 
 
@@ -20,7 +20,7 @@ class HowToPlay(GameState):
     ALT_FONT = pygame.font.Font(None, 30)
     ALT_COLOR = pygame.color.Color("white")
     ALT_PADDING = 50
-    INIT_SIZE = 64
+    INIT_SIZE = 80
     MAX_DELTA = 8
     TIME_DELTA = .05
 
@@ -48,7 +48,7 @@ class HowToPlay(GameState):
 
         Globals.SCREEN.blit(KEYBOARD_IMG, [50, 300])
         Globals.SCREEN.blit(ENEMY_IMG, [400, 307])
-        Globals.SCREEN.blit(STAIR_IMG, [750, 307])
+        Globals.SCREEN.blit(STAIR_IMG, [645, 250])
 
 
         # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
