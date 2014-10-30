@@ -72,8 +72,8 @@ class Camera(object):
             curr_y += curr_rect.height
 
     def move(self, xDelta, yDelta):
-            self.viewpoint.x += xDelta
-            self.viewpoint.y += yDelta
+        self.viewpoint.x += xDelta
+        self.viewpoint.y += yDelta
 
     def get_nearby_tiles(self, center, radius):
         tiles = list()
