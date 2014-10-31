@@ -6,7 +6,7 @@
 & floor_grey_chair.png 0
 / stair_left.png 0 stair
 \ stair_right.png 0 stair
-$ coin.png 0 coin coin_replace
+$ floor_key.png 0 coin coin_replace
 7 wall_up_left_1.png 1
 [ wall_up_left.png 1
 8 wall_up.png 1
@@ -36,3 +36,6 @@ l turret_left_topleft.png 1 turret_spawn_left
 j turret_left_topright.png 1
 @ turret_left_bottomright.png 1
 % turret_left_bottomleft.png 1
+q floor_gate_top.png 1
+w floor_gate_body.png 1
+e floor_gate_bottom.png 1
