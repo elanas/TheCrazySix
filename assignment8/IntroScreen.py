@@ -1,5 +1,5 @@
 from Level import Level
-from TileTest import TileTest
+from SyringeLevel import SyringeLevel
 from asset_loader import AssetLoader
 from Globals import Globals
 import Menu
@@ -67,7 +67,7 @@ class IntroScreen(Level):
 
     def handle_stairs(self):
         self.stop_music()
-        Globals.STATE = TileTest()
+        Globals.STATE = SyringeLevel()
 
     def handle_escape(self):
         self.stop_music()
