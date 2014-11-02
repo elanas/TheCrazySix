@@ -2,6 +2,7 @@ import pygame
 from Level import Level
 from TileTest import TileTest
 from Globals import Globals
+import Menu
 
 
 class SyringeLevel(Level):
