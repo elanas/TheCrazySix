@@ -35,6 +35,8 @@ class TileManager(object):
             solid = not int(solidStr) == 0
             curr_tile = \
                 TileType(self.loader, symbol, img_path, solid, specialField)
+            if symbol in self.tileDefinitions:
+                raise Exception('The symbol ' + symbol + ' is already defined')
             self.tileDefinitions[symbol] = curr_tile
         if len(self.tileDefinitions) == 0:
             raise Exception("The tile definition file cannot be empty.")
