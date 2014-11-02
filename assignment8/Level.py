@@ -8,7 +8,7 @@ from Player import Player
 from Enemy import Enemy
 from os.path import join
 import pygame
-# from Turret import Turret
+from Turret import Turret
 
 
 class Level(GameState):
@@ -30,6 +30,7 @@ class Level(GameState):
         self.tile_rect = self.tile_engine.get_tile_rect()
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
+        self.turrets = list()
         self.init_player()
         self.init_enemies()
 
@@ -72,15 +73,12 @@ class Level(GameState):
                     continue
                 if TileType.SPAWN_ATTR in \
                         tile_map[row_num][col_num].special_attr:
-                    tile_map[row_num][col_num] = base_tile
                     self.add_enemy(row_num, col_num)
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
-                    tile_map[row_num][col_num] = base_tile
                     self.add_turret(row_num, col_num, True)
                 elif TileType.TURRET_RIGHT in \
                         tile_map[row_num][col_num].special_attr:
-                    tile_map[row_num][col_num] = base_tile
                     self.add_turret(row_num, col_num, False)
 
     def add_enemy(self, row_num, col_num):
@@ -89,18 +87,37 @@ class Level(GameState):
         self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y))
 
     def add_turret(self,row_num, col_num, left):
+        row_num += 1
+        if not left:
+            col_num+=1
         y = self.tile_rect.height * row_num - self.camera.viewpoint.top
         x = self.tile_rect.width * col_num - self.camera.viewpoint.left
+        self.turrets.append(Turret(x,y,left))
+
+    def check_collisions(self):
+    	# radius = max(self.player.rect.size) * 1.5
+    	# center = self.player.rect.center
+    	for turret in self.turrets:
+    		for syringe in turret.syringeSprites:
+    			if self.player.rect.colliderect(syringe):
+    				# take damange?
+    				# damage amount = syringe.health_effect
+    				syringe.kill()
 
     def render(self):
         self.camera.render(Globals.SCREEN)
         self.enemySprites.draw(Globals.SCREEN)
+        for turret in self.turrets:
+            turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
 
     def update(self, time):
         self.player.update(time, self.camera, self.enemySprites, self)
         self.enemySprites.update(time, self.camera)
+        for turret in self.turrets:
+            turret.update(time, self.camera)
         self.checkCameraPosition()
+        self.check_collisions()
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
@@ -132,6 +149,8 @@ class Level(GameState):
             self.player.rect.centerx -= diff
             for enemy in self.enemySprites:
                 enemy.rect.centerx -= diff
+            for turret in self.turrets:
+            	turret.move(-diff, 0)
         if abs(dist_y) > Level.MAX_OFFSET_Y:
             diff = abs(dist_y) - Level.MAX_OFFSET_Y
             # player is below center
@@ -144,6 +163,8 @@ class Level(GameState):
             self.player.rect.centery -= diff
             for enemy in self.enemySprites:
                 enemy.rect.centery -= diff
+            for turret in self.turrets:
+            	turret.move(0, -diff)
 
     def reload_level(self):
         try:
