@@ -58,5 +58,5 @@ class TileType(object):
         return self.special_attr is not None and \
             TileType.STAIR_ATTR in self.special_attr
 
-TileType.EMPTY_TILE = TileType(None, None, None, True, 
+TileType.EMPTY_TILE = TileType(None, None, None, True,
                                set(TileType.EMPTY_ATTR))

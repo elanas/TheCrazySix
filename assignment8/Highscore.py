@@ -51,7 +51,7 @@ class Highscore(GameState):
         ), True, COLOR)
         title_rect = op2.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        title_rect.centery += TOP_SPACE + (2*VERT_SPACING)
+        title_rect.centery += TOP_SPACE + (2 * VERT_SPACING)
         Globals.SCREEN.blit(op2, title_rect)
 
         op3 = font.render("{} - {}".format(
@@ -60,7 +60,7 @@ class Highscore(GameState):
         ), True, COLOR)
         title_rect = op3.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        title_rect.centery += TOP_SPACE + (3*VERT_SPACING)
+        title_rect.centery += TOP_SPACE + (3 * VERT_SPACING)
         Globals.SCREEN.blit(op3, title_rect)
 
         op4 = font.render("{} - {}".format(
@@ -69,7 +69,7 @@ class Highscore(GameState):
         ), True, COLOR)
         title_rect = op4.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        title_rect.centery += TOP_SPACE + (4*VERT_SPACING)
+        title_rect.centery += TOP_SPACE + (4 * VERT_SPACING)
         Globals.SCREEN.blit(op4, title_rect)
 
     def update(self, time):

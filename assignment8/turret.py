@@ -34,7 +34,8 @@ class Turret(object):
 
     def fire(self):
         # if random.random() <= Turret.PROB_NORMAL:
-        self.syringeSprites.add(Syringe.NormalSyringe(self.x,self.y, self.left))
+        self.syringeSprites.add(
+            Syringe.NormalSyringe(self.x, self.y, self.left))
         self.lastshot = 0
 
     def move(self, x_delta, y_delta):

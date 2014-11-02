@@ -9,10 +9,9 @@ TITLE = "~How To Play~"
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 110
 BACKGROUND_IMG = pygame.image.load("images/background.png")
-KEYBOARD_IMG = pygame.image.load("images/keyboard.png");
+KEYBOARD_IMG = pygame.image.load("images/keyboard.png")
 ENEMY_IMG = pygame.image.load("images/zombie_walking_down_profile.png")
 STAIR_IMG = pygame.image.load("images/stair_profile.png")
-
 
 
 class HowToPlay(GameState):
@@ -36,7 +35,7 @@ class HowToPlay(GameState):
         self.title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
 
         self.alt_surf = HowToPlay.ALT_FONT.render(HowToPlay.ALT_TITLE, True,
-                                              HowToPlay.ALT_COLOR)
+                                                  HowToPlay.ALT_COLOR)
         self.alt_rect = self.alt_surf.get_rect()
         self.alt_rect.centerx = Globals.SCREEN.get_rect().centerx
         self.alt_rect.centery = self.title_rect.bottom + HowToPlay.MAX_DELTA + \
@@ -49,7 +48,6 @@ class HowToPlay(GameState):
         Globals.SCREEN.blit(KEYBOARD_IMG, [50, 300])
         Globals.SCREEN.blit(ENEMY_IMG, [400, 307])
         Globals.SCREEN.blit(STAIR_IMG, [645, 250])
-
 
         # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(self.title_surf, self.title_rect)

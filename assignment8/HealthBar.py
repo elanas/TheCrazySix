@@ -20,7 +20,7 @@ class HealthBar():
         health_surf = font.render("HP: " + str(health_string), True, COLOR)
         health_rect = health_surf.get_rect()
         health_rect.topleft = Globals.SCREEN.get_rect().topleft
-        health_rect.width = Globals.WIDTH/3
+        health_rect.width = Globals.WIDTH / 3
         Globals.SCREEN.blit(health_surf, health_rect)
 
     def update(self):
