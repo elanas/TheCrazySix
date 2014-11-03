@@ -14,6 +14,7 @@ class DefinitionBrowser:
                            (DefinitionBrowser.NUM_COLS + 1))
         self.definitions = \
             self.tile_engine.tileManager.tileDefinitions.values()
+        self.definitions = sorted(self.definitions, key=lambda tile: tile.line_num)
         width = self.padding * (DefinitionBrowser.NUM_COLS + 1) + \
             self.tile_rect.width * DefinitionBrowser.NUM_COLS
         num_vert = ceil(len(self.definitions) / DefinitionBrowser.NUM_COLS)
