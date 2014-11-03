@@ -1,6 +1,6 @@
 - floor_grey_damaged2.png 0
 + floor_grey_damaged1.png 0
-* floor_grey.png 0 base coin_base
+* floor-white-gray-black.png 0 base coin_base
 ! box.png 1
 ~ bag.png 1
 & floor_grey_chair.png 0
