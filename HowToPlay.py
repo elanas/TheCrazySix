@@ -3,7 +3,7 @@ import pygame
 from GameState import GameState
 from Globals import Globals
 import NameInput
-from IntroScreen import IntroScreen
+# from HowToPlay import HowToPlay
 
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 110
@@ -12,6 +12,12 @@ KEYBOARD_IMG = pygame.image.load("images/keyboard.png")
 ENEMY_IMG = pygame.image.load("images/zombie_walking_down_profile.png")
 STAIR_IMG = pygame.image.load("images/stair_profile.png")
 TITLE_IMG = pygame.image.load("images/howtoplay.png")
+SUBTITLE_BACKGROUND = pygame.color.Color("black")
+SUBTITLE_PADDING = 5
+SUBTITLE_TEXT = "Press enter to continue"
+SUBTITLE_COLOR = pygame.color.Color("white")
+SUBTITLE_FONT = pygame.font.Font(None, 32)
+SUBTITLE_MARGIN = 380
 
 
 class HowToPlay(GameState):
@@ -29,6 +35,8 @@ class HowToPlay(GameState):
         self.delta = 1
         self.time_delta = 0
         self.font = pygame.font.Font(None, self.size)
+        self.alpha_factor = 300
+
         # self.title_surf = self.font.render(TITLE, True, TITLE_COLOR)
         # self.title_rect = self.title_surf.get_rect()
         # self.title_rect.centerx = Globals.SCREEN.get_rect().centerx
@@ -40,6 +48,27 @@ class HowToPlay(GameState):
         self.alt_rect.centerx = Globals.SCREEN.get_rect().centerx
         self.alt_rect.centery = HowToPlay.MAX_DELTA + \
             HowToPlay.ALT_PADDING
+
+        self.init_subtitle()
+
+    def init_subtitle(self):
+        text_surf = SUBTITLE_FONT.render(
+            SUBTITLE_TEXT, True, SUBTITLE_COLOR)
+        self.subtitle_rect = text_surf.get_rect()
+        self.subtitle_rect.centerx = Globals.WIDTH / 2
+        self.subtitle_rect.bottom = \
+            Globals.HEIGHT - SUBTITLE_MARGIN
+        self.subtitle_rect.inflate_ip(
+            SUBTITLE_PADDING * 2,
+            SUBTITLE_PADDING * 2
+        )
+        self.subtitle_surf = pygame.Surface(self.subtitle_rect.size).convert()
+        self.subtitle_surf.fill(SUBTITLE_BACKGROUND)
+        self.subtitle_surf.blit(text_surf, (
+            SUBTITLE_PADDING,
+            SUBTITLE_PADDING
+        ))
+        self.subtitle_surf.set_alpha(255)
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
@@ -53,13 +82,27 @@ class HowToPlay(GameState):
 
         # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         # Globals.SCREEN.blit(self.title_surf, self.title_rect)
-        Globals.SCREEN.blit(self.alt_surf, self.alt_rect)
+        # Globals.SCREEN.blit(self.alt_surf, self.alt_rect)
+        Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
+
+
+
 
     def update(self, time):
         self.time_delta += time
+
+        old_alpha = self.subtitle_surf.get_alpha()
+        if old_alpha == 0 or old_alpha == 255:
+            self.alpha_factor *= -1
+        new_alpha = int(old_alpha + self.alpha_factor * time)
+        if new_alpha < 0:
+            new_alpha = 0
+        elif new_alpha > 255:
+            new_alpha = 255
+        self.subtitle_surf.set_alpha(new_alpha)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.STATE = NameInput.NameInput()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            Globals.STATE = IntroScreen()
+            Globals.STATE = HowToPlay()
