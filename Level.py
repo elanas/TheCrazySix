@@ -114,6 +114,7 @@ class Level(GameState):
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+        Globals.HEALTH_BAR.render(Globals.SCREEN)
 
 
     def update(self, time):
