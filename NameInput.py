@@ -19,7 +19,10 @@ class NameInput(GameState):
     PROMPT = "Please type your name"
     INPUT_FONT = None
     INPUT_SIZE = 60
-    INPUT_SURF_PADDING = 20
+    HIGHLIGHT_PADDING_HEIGHT = 10
+    HIGHLIGHT_PADDING_WIDTH = 20
+    HIGHLIGHT_COLOR = pygame.color.Color("black")
+    HIGHLIGHT_ALPHA = 150
     INPUT_COLOR = pygame.color.Color("white")
     HINT = "Press Enter to continue"
     HINT_FONT = None
@@ -90,6 +93,13 @@ class NameInput(GameState):
             input_rect = input_surf.get_rect()
             input_rect.centerx = Globals.WIDTH / 2
             input_rect.centery = Globals.HEIGHT / 2
+            highlight_rect = input_rect.inflate(
+                NameInput.HIGHLIGHT_PADDING_WIDTH * 2,
+                NameInput.HIGHLIGHT_PADDING_HEIGHT * 2)
+            highlight_surf = pygame.Surface(highlight_rect.size).convert()
+            highlight_surf.fill(NameInput.HIGHLIGHT_COLOR)
+            highlight_surf.set_alpha(NameInput.HIGHLIGHT_ALPHA)
+            Globals.SCREEN.blit(highlight_surf, highlight_rect)
             Globals.SCREEN.blit(input_surf, input_rect)
 
     def handle_entry(self, typed_char):

@@ -6,7 +6,7 @@ from Menu import Menu
 from BorderPlayer import BorderPlayer
 from Player import Player
 
-GAME_TITLE = "~The Crazy Six~"
+GAME_TITLE = "~Field Day~"
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 100
 BACKGROUND_IMG = pygame.image.load("images/background.png")
