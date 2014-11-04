@@ -55,7 +55,7 @@ class Syringe (pygame.sprite.Sprite):
 class NormalSyringe(Syringe):
     LEFT_PATH = "blue_syringe_left.png"
     RIGHT_PATH = "blue_syringe_right.png"
-    HEALTH_EFFECT = -5
+    HEALTH_EFFECT = -2
 
     def __init__(self, x, y, left):
         super(NormalSyringe, self).__init__(x, y, left,
@@ -66,7 +66,7 @@ class NormalSyringe(Syringe):
 class HealthSyringe(Syringe):
     LEFT_PATH = "pink_syringe_left.png"
     RIGHT_PATH = "pink_syringe_right.png"
-    HEALTH_EFFECT = -5
+    HEALTH_EFFECT = 15
 
     def __init__(self, x, y, left):
         super(HealthSyringe, self).__init__(x, y, left,
@@ -77,7 +77,7 @@ class HealthSyringe(Syringe):
 class DeathSyringe(Syringe):
     LEFT_PATH = "green_syringe_left.png"
     RIGHT_PATH = "green_syringe_right.png"
-    HEALTH_EFFECT = -5
+    HEALTH_EFFECT = -10
 
     def __init__(self, x, y, left):
         super(DeathSyringe, self).__init__(x, y, left,
