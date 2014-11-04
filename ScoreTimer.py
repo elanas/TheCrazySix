@@ -5,25 +5,25 @@ class ScoreTimer():
 
     def __init__(self):
 
-        self.total_time = 30000
+        self.total_time = 0
         self.font = pygame.font.SysFont(None, 64)
         self.offset = pygame.time.get_ticks()
 
-    def render(self, Globals):
-        COLOR = pygame.Color("white")
-        time_string = pygame.time.get_ticks() - self.offset
-        Globals.REMAINING_TIME = self.total_time - time_string
-        time_surf = self.font.render(
-            str(Globals.REMAINING_TIME)[:2],
-            True,
-            COLOR
-        )
-        if Globals.REMAINING_TIME < self.total_time / 4:
-            COLOR = pygame.Color("red")
-        time_rect = time_surf.get_rect()
-        time_rect.topright = Globals.SCREEN.get_rect().topright
-        time_rect.width = Globals.WIDTH / 4
-        Globals.SCREEN.blit(time_surf, time_rect)
+    def render(self, screen):
+        pass
+        # COLOR = pygame.Color("white")
+        # total_time = pygame.time.get_ticks() - self.offset
+        # time_surf = self.font.render(
+        #     str(sel)[:2],
+        #     True,
+        #     COLOR
+        # )
+        # if Globals.REMAINING_TIME < self.total_time / 4:
+        #     COLOR = pygame.Color("red")
+        # time_rect = time_surf.get_rect()
+        # time_rect.topright = screen.get_rect().topright
+        # time_rect.width = screen.get_rect().width / 4
+        # screen.blit(time_surf, time_rect)
 
     def update(self):
         pass

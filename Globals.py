@@ -11,7 +11,5 @@ class Globals(object):
     STATE = None
     BACKGROUND_COLOR = (165, 242, 212)
     PLAYER_NAME = None
-    PLAYER_HEALTH = 100
-    TIME_ELAPSED = 0
     PLAYER_SCORE = 0
     INTRO_SOUND_PLAYED = False
