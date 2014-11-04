@@ -15,8 +15,8 @@ class Syringe (pygame.sprite.Sprite):
         self.health_effect = 0
         self.left = left
         self.velocity = Syringe.VELOCITY
-        if random.random() <= Syringe.BURST_PROB:
-            self.velocity = Syringe.BURST_VELOCITY
+        # if random.random() <= Syringe.BURST_PROB:
+            # self.velocity = Syringe.BURST_VELOCITY
         if self.left:
             self.velocity *= -1
         self.loader = AssetLoader("images")
