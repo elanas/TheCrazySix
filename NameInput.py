@@ -18,7 +18,7 @@ class NameInput(GameState):
     PROMPT_SIZE = 100
     PROMPT = "Please type your name"
     INPUT_FONT = None
-    INPUT_SIZE = 60
+    INPUT_SIZE = 70
     HIGHLIGHT_PADDING_HEIGHT = 10
     HIGHLIGHT_PADDING_WIDTH = 20
     HIGHLIGHT_COLOR = pygame.color.Color("black")
@@ -36,6 +36,10 @@ class NameInput(GameState):
     ERROR_BACKSPACE = "You can't delete nothing!"
     ERROR_TOO_LONG = "Your name is too long!"
     ERROR_TOO_SHORT = "Your name is too short to continue!"
+    EXTRA_BLINK_TIME = .75
+    EXTRA_POSTTEXT = '|'
+    EXTRA_COLOR = pygame.color.Color("white")
+
 
     def __init__(self):
         Globals.INTRO_SOUND_PLAYED = False
@@ -44,6 +48,8 @@ class NameInput(GameState):
         self.error_message = None
         self.loader = AssetLoader('images')
         self.setup_text()
+        self.show_extra = False
+        self.extra_time = 0
 
     def setup_text(self):
         self.input_font = pygame.font.Font(NameInput.INPUT_FONT,
@@ -72,6 +78,12 @@ class NameInput(GameState):
         self.hint_rect.centerx = Globals.WIDTH / 2
         self.hint_rect.top = NameInput.HINT_PADDING
 
+    def update(self, time):
+        self.extra_time += time
+        if self.extra_time >= NameInput.EXTRA_BLINK_TIME:
+            self.extra_time = 0
+            self.show_extra = not self.show_extra
+
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
@@ -87,6 +99,8 @@ class NameInput(GameState):
             error_rect.bottom = Globals.HEIGHT - NameInput.ERROR_PADDING
             Globals.SCREEN.blit(error_surf, error_rect)
 
+        input_rect = None
+
         if len(Globals.PLAYER_NAME) > 0:
             input_surf = self.input_font.render(Globals.PLAYER_NAME, True,
                                                 NameInput.INPUT_COLOR)
@@ -101,6 +115,25 @@ class NameInput(GameState):
             highlight_surf.set_alpha(NameInput.HIGHLIGHT_ALPHA)
             Globals.SCREEN.blit(highlight_surf, highlight_rect)
             Globals.SCREEN.blit(input_surf, input_rect)
+        if self.show_extra:
+            extra_surf = self.input_font.render(NameInput.EXTRA_POSTTEXT,
+                                                True,
+                                                NameInput.EXTRA_COLOR)
+            extra_rect = extra_surf.get_rect()
+            extra_rect.centery = Globals.HEIGHT / 2
+            if input_rect is not None:
+                extra_rect.left = input_rect.right
+            else:
+                extra_rect.centerx = Globals.WIDTH / 2
+                highlight_rect = extra_rect.inflate(
+                    NameInput.HIGHLIGHT_PADDING_WIDTH * 2,
+                    NameInput.HIGHLIGHT_PADDING_HEIGHT * 2)
+                highlight_surf = pygame.Surface(highlight_rect.size).convert()
+                highlight_surf.fill(NameInput.HIGHLIGHT_COLOR)
+                highlight_surf.set_alpha(NameInput.HIGHLIGHT_ALPHA)
+                Globals.SCREEN.blit(highlight_surf, highlight_rect)
+            Globals.SCREEN.blit(extra_surf, extra_rect)
+
 
     def handle_entry(self, typed_char):
         if len(Globals.PLAYER_NAME) == NameInput.MAX_LENGTH:
