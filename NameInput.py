@@ -7,6 +7,8 @@ import Menu
 import HowToPlay
 
 BACKGROUND_IMG = pygame.image.load("images/background.png")
+TITLE_IMG = pygame.image.load("images/name-input-title.png")
+
 
 
 class NameInput(GameState):
@@ -87,7 +89,8 @@ class NameInput(GameState):
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
-        Globals.SCREEN.blit(self.prompt_surf, self.prompt_rect)
+        # Globals.SCREEN.blit(self.prompt_surf, self.prompt_rect)
+        Globals.SCREEN.blit(TITLE_IMG, [0, 0])
 
         Globals.SCREEN.blit(self.hint_surf, self.hint_rect)
 
