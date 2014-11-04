@@ -62,3 +62,25 @@ class NormalSyringe(Syringe):
                                             NormalSyringe.LEFT_PATH,
                                             NormalSyringe.RIGHT_PATH)
         self.health_effect = NormalSyringe.HEALTH_EFFECT
+
+class HealthSyringe(Syringe):
+    LEFT_PATH = "normal_syringe_left.png"
+    RIGHT_PATH = "normal_syringe_right.png"
+    HEALTH_EFFECT = -5
+
+    def __init__(self, x, y, left):
+        super(NormalSyringe, self).__init__(x, y, left,
+                                            NormalSyringe.LEFT_PATH,
+                                            NormalSyringe.RIGHT_PATH)
+        self.health_effect = NormalSyringe.HEALTH_EFFECT
+        
+class DeathSyringe(Syringe):
+    LEFT_PATH = "green_syringe_left.png"
+    RIGHT_PATH = "green_syringe_right.png"
+    HEALTH_EFFECT = -5
+
+    def __init__(self, x, y, left):
+        super(NormalSyringe, self).__init__(x, y, left,
+                                            NormalSyringe.LEFT_PATH,
+                                            NormalSyringe.RIGHT_PATH)
+        self.health_effect = NormalSyringe.HEALTH_EFFECT
