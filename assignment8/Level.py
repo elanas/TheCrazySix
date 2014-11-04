@@ -100,7 +100,7 @@ class Level(GameState):
         for turret in self.turrets:
             for syringe in turret.syringeSprites:
                 if self.player.rect.colliderect(syringe):
-                    Globals.PLAYER_HEALTH -= syringe.health_effect
+                    Globals.PLAYER_HEALTH += syringe.health_effect
                     print Globals.PLAYER_HEALTH
                     syringe.kill()
 

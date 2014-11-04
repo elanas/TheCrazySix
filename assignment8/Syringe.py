@@ -72,7 +72,7 @@ class HealthSyringe(Syringe):
         super(HealthSyringe, self).__init__(x, y, left,
                                             HealthSyringe.LEFT_PATH,
                                             HealthSyringe.RIGHT_PATH)
-        self.health_effect = NormalSyringe.HEALTH_EFFECT
+        self.health_effect = HealthSyringe.HEALTH_EFFECT
         
 class DeathSyringe(Syringe):
     LEFT_PATH = "green_syringe_left.png"
