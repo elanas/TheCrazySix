@@ -16,10 +16,11 @@ class HealthBar():
 
     def render(self, screen):
         screen.blit(self.base_surf, self.base_rect)
-        screen.blit(self.health_surf, self.health_rect)
+        screen.blit(self.health_surf, self.health_rect, self.health_area)
 
     def changeHealth(self, delta):
         self.health += delta
+        self.health_area.width = int(self.max_width * (self.health /100))
 
     def printHealth(self):
         print self.health
@@ -33,6 +34,7 @@ class HealthBar():
 
         self.health_surf = pygame.Surface((HealthBar.width - 2*HealthBar.border_width, HealthBar.height - 2*HealthBar.border_width)).convert()
         self.health_rect = self.health_surf.get_rect()
+        self.health_area = self.health_surf.get_rect()
         self.health_rect.topleft = self.base_rect.topleft
         self.health_rect.left += HealthBar.border_width
         self.health_rect.top += HealthBar.border_width
