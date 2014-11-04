@@ -34,10 +34,11 @@ class NameInput(GameState):
     ERROR_FONT = None
     ERROR_SIZE = 40
     ERROR_PADDING = 110
-    ERROR_COLOR = pygame.color.Color("red")
+    # ERROR_COLOR = pygame.color.Color("red")
+    ERROR_COLOR = (255, 71, 71)
     ERROR_BACKSPACE = "You can't delete nothing!"
-    ERROR_TOO_LONG = "Your name is too long!"
-    ERROR_TOO_SHORT = "Your name is too short to continue!"
+    ERROR_TOO_LONG = "Name is too long!"
+    ERROR_TOO_SHORT = "Name is too short!"
     EXTRA_BLINK_TIME = .75
     EXTRA_POSTTEXT = '|'
     EXTRA_COLOR = pygame.color.Color("white")
