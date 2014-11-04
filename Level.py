@@ -102,8 +102,8 @@ class Level(GameState):
         for turret in self.turrets:
             for syringe in turret.syringeSprites:
                 if self.player.rect.colliderect(syringe):
-                    Globals.PLAYER_HEALTH += syringe.health_effect
-                    print Globals.PLAYER_HEALTH
+                    HealthBar.changeHealth(syringe.health_effect)
+                    HealthBar.printHealth()
                     syringe.kill()
 
     def render(self):
@@ -112,6 +112,7 @@ class Level(GameState):
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+
 
     def update(self, time):
         self.player.update(time, self.camera, self.enemySprites, self)

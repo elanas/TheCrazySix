@@ -29,9 +29,8 @@ class TileTest(GameState):
     WALL_WIDTH = 50
 
     def __init__(self):
-        Globals.PLAYER_HEALTH = 100
         Globals.PLAYER_SCORE = 0
-        Globals.REMAINING_TIME = 30000
+        Globals.TIME_ELAPSED = 0
         self.tileEngine = TileEngine("test_def.txt", "test_map.txt", 1, 3)
         self.camera = Camera(self.tileEngine, pygame.Rect(
             0, 0, Globals.WIDTH, Globals.HEIGHT))
@@ -66,7 +65,7 @@ class TileTest(GameState):
         self.camera.render(Globals.SCREEN)
         self.enemySprites.draw(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
-        self.health.render(Globals)
+        self.health.render(Globals.SCREEN)
         self.score_timer.render(Globals)
 
     def update(self, time):
@@ -74,7 +73,7 @@ class TileTest(GameState):
         self.enemySprites.update(time, self.camera)
         self.checkCameraPosition()
         if pygame.sprite.spritecollideany(self.player, self.enemySprites):
-            Globals.PLAYER_HEALTH -= .5
+            HealthBar.changeHealth(-.5)
 
     def checkCameraPosition(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx

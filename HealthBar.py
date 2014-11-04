@@ -25,6 +25,9 @@ class HealthBar():
 
     def changeHealth(delta):
         self.health += delta
+
+    def printHealth(self):
+        print self.health
         
     def update(self):
         pass
