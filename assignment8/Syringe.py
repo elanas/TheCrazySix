@@ -69,7 +69,7 @@ class HealthSyringe(Syringe):
     HEALTH_EFFECT = -5
 
     def __init__(self, x, y, left):
-        super(NormalSyringe, self).__init__(x, y, left,
+        super(HealthSyringe, self).__init__(x, y, left,
                                             NormalSyringe.LEFT_PATH,
                                             NormalSyringe.RIGHT_PATH)
         self.health_effect = NormalSyringe.HEALTH_EFFECT
@@ -80,7 +80,7 @@ class DeathSyringe(Syringe):
     HEALTH_EFFECT = -5
 
     def __init__(self, x, y, left):
-        super(NormalSyringe, self).__init__(x, y, left,
-                                            NormalSyringe.LEFT_PATH,
-                                            NormalSyringe.RIGHT_PATH)
-        self.health_effect = NormalSyringe.HEALTH_EFFECT
+        super(DeathSyringe, self).__init__(x, y, left,
+                                            DeathSyringe.LEFT_PATH,
+                                            DeathSyringe.RIGHT_PATH)
+        self.health_effect = DeathSyringe.HEALTH_EFFECT
