@@ -9,6 +9,7 @@ from Enemy import Enemy
 from os.path import join
 import pygame
 from Turret import Turret
+from HealthBar import HealthBar
 
 
 class Level(GameState):
