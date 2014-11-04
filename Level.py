@@ -34,6 +34,8 @@ class Level(GameState):
         self.turrets = list()
         self.init_player()
         self.init_enemies()
+        if Globals.HEALTH_BAR is None:
+            Globals.HEALTH_BAR = HealthBar()
 
     def handle_stairs(self):
         pass
@@ -102,8 +104,8 @@ class Level(GameState):
         for turret in self.turrets:
             for syringe in turret.syringeSprites:
                 if self.player.rect.colliderect(syringe):
-                    HealthBar.changeHealth(syringe.health_effect)
-                    HealthBar.printHealth()
+                    Globals.HEALTH_BAR.changeHealth(syringe.health_effect)
+                    Globals.HEALTH_BAR.printHealth()
                     syringe.kill()
 
     def render(self):
