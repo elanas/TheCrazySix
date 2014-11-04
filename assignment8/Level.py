@@ -74,6 +74,7 @@ class Level(GameState):
                 if TileType.SPAWN_ATTR in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_enemy(row_num, col_num)
+                    tile_map[row_num][col_num] = base_tile
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, True)
