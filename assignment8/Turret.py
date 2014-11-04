@@ -20,12 +20,15 @@ class Turret(object):
         self.time_elapsed = 0
         self.lastshot = Turret.MIN_WAIT
         self.syringeSprites = pygame.sprite.Group()
+        self.turned_on = True
 
     def render(self, screen):
         self.syringeSprites.draw(screen)
 
     def update(self, time, camera):
         self.time_elapsed += time
+        if not self.turned_on:
+            return
         if self.time_elapsed >= self.time_till:
             self.fire()
             self.time_elapsed = 0
@@ -33,6 +36,12 @@ class Turret(object):
         self.syringeSprites.update(time, camera)
         dead = [syringe for syringe in self.syringeSprites if syringe.is_dead]
         self.syringeSprites.remove(dead)
+
+    def turn_on(self):
+        self.turned_on = True
+
+    def turn_off(self):
+        self.turned_on = False
 
     def fire(self):
         num = random.random()
