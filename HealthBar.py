@@ -23,11 +23,11 @@ class HealthBar():
         health_rect.width = screen.get_rect().width / 3
         screen.blit(health_surf, health_rect)
 
-    def changeHealth(delta):
+    def changeHealth(self, delta):
         self.health += delta
 
     def printHealth(self):
         print self.health
-        
+
     def update(self):
         pass
