@@ -11,7 +11,7 @@ class HealthBar():
     position = (20, 20)
     def __init__(self):
         self.color = pygame.color.Color("cyan")
-        self.health = 100
+        self.health = 100.0
         self.makeHealthBar()
 
     def render(self, screen):
@@ -20,7 +20,11 @@ class HealthBar():
 
     def changeHealth(self, delta):
         self.health += delta
-        self.health_area.width = int(self.max_width * (self.health /100))
+        if self.health > 100:
+            self.health = 100
+        elif self.health < 0:
+            self.health = 0
+        self.health_area.width = int(self.max_width * (self.health / 100))
 
     def printHealth(self):
         print self.health
