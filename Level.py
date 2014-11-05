@@ -17,6 +17,8 @@ class Level(GameState):
     MAX_OFFSET_X = 150
     MAX_OFFSET_Y = 75
     FACTOR = 10
+    ALPHA_FACTOR = 550
+    MAX_ALPHA = 255
 
     def __init__(self, definition_path, map_path):
         self.keyCode = None
@@ -36,6 +38,10 @@ class Level(GameState):
         self.init_enemies()
         if Globals.HEALTH_BAR is None:
             Globals.HEALTH_BAR = HealthBar()
+        self.black_surf = pygame.Surface(
+            (Globals.WIDTH, Globals.HEIGHT)).convert()
+        self.black_surf.fill((0, 0, 0))
+        self.fade_out = False
 
     def handle_stairs(self):
         pass
@@ -115,9 +121,17 @@ class Level(GameState):
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
         Globals.HEALTH_BAR.render(Globals.SCREEN)
+        self.render_pre_fade()
+        if self.fade_out:
+            Globals.SCREEN.blit(self.black_surf, (0, 0))
 
+    def render_pre_fade(self):
+        pass
 
     def update(self, time):
+        if self.fade_out:
+            self.update_alpha(time)
+            return
         Globals.HEALTH_BAR.update(time)
         self.player.update(time, self.camera, self.enemySprites, self)
         self.enemySprites.update(time, self.camera)
@@ -125,6 +139,23 @@ class Level(GameState):
             turret.update(time, self.camera)
         self.checkCameraPosition()
         self.check_collisions()
+
+    def update_alpha(self, time):
+        if self.fade_out:
+            old_alpha = self.black_surf.get_alpha()
+            new_alpha = int(old_alpha + time * Level.ALPHA_FACTOR)
+            if new_alpha >= Level.MAX_ALPHA:
+                self.fade_out = False
+                self.handle_finish_fade_out()
+            print new_alpha
+            self.black_surf.set_alpha(new_alpha)
+
+    def start_fade_out(self):
+        self.black_surf.set_alpha(0)  # min alpha (transparent)
+        self.fade_out = True
+
+    def handle_finish_fade_out(self):
+        pass
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
