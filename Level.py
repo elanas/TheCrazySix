@@ -10,6 +10,7 @@ from os.path import join
 import pygame
 from Turret import Turret
 from HealthBar import HealthBar
+import Menu
 
 
 class Level(GameState):
@@ -51,13 +52,19 @@ class Level(GameState):
         pass
 
     def handle_escape(self):
-        pass
+        Globals.STATE = Menu.Menu()
 
     def handle_enemy_collision(self):
         pass
 
     def handle_special_collision(self, pair):
         self.replace_special_tile(pair)
+
+    def handle_finish_fade_out(self):
+        Globals.goto_next_level()
+
+    def handle_finish_fade_in(self):
+        pass
 
     def replace_special_tile(self, pair):
         if pair.tile.is_replaceable:
@@ -167,12 +174,6 @@ class Level(GameState):
     def start_fade_in(self):
         self.black_surf.set_alpha(Level.MAX_ALPHA)
         self.fade_in = True
-
-    def handle_finish_fade_out(self):
-        pass
-
-    def handle_finish_fade_in(self):
-        pass
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

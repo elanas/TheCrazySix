@@ -66,11 +66,11 @@ class IntroScreen(Level):
 
     def handle_finish_fade_out(self):
         self.stop_music()
-        Globals.STATE = SyringeLevel()
+        super(IntroScreen, self).handle_finish_fade_out()
 
     def handle_escape(self):
         self.stop_music()
-        Globals.STATE = Menu.Menu()
+        super(IntroScreen, self).handle_escape()
 
     def start_music(self):
         if not Globals.INTRO_SOUND_PLAYED:

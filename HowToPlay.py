@@ -3,8 +3,6 @@ import pygame
 from GameState import GameState
 from Globals import Globals
 import NameInput
-# from HowToPlay import HowToPlay
-import IntroScreen
 
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 110
@@ -106,4 +104,4 @@ class HowToPlay(GameState):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.STATE = NameInput.NameInput()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            Globals.STATE = IntroScreen.IntroScreen()
+            Globals.goto_next_level()

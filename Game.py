@@ -19,6 +19,7 @@ def initialize():
     Globals.HEIGHT = 600
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
     Globals.STATE = Title()
+    Globals.init_levels()
 
 
 def loadGame():

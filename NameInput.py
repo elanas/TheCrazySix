@@ -1,14 +1,12 @@
 import pygame
 from Globals import Globals
 from GameState import GameState
-from IntroScreen import IntroScreen
 from asset_loader import AssetLoader
 import Menu
 import HowToPlay
 
 BACKGROUND_IMG = pygame.image.load("images/background.png")
 TITLE_IMG = pygame.image.load("images/name-input-title.png")
-
 
 
 class NameInput(GameState):
