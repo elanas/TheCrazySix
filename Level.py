@@ -132,18 +132,20 @@ class Level(GameState):
                     syringe.kill()
 
     def render(self):
+        self.render_pre_fade()
+        if self.fade_out or self.fade_in:
+            Globals.SCREEN.blit(self.black_surf, (0, 0))
+        self.render_post_fade()
+
+    def render_pre_fade(self):
         self.camera.render(Globals.SCREEN)
         self.enemySprites.draw(Globals.SCREEN)
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
-        Globals.HEALTH_BAR.render(Globals.SCREEN)
-        self.render_pre_fade()
-        if self.fade_out or self.fade_in:
-            Globals.SCREEN.blit(self.black_surf, (0, 0))
 
-    def render_pre_fade(self):
-        pass
+    def render_post_fade(self):
+        Globals.HEALTH_BAR.render(Globals.SCREEN)
 
     def update(self, time):
         if self.fade_out or self.fade_in:

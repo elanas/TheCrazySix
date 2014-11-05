@@ -52,6 +52,7 @@ class IntroScreen(Level):
         self.subtitle_surf.set_alpha(255)
 
     def render_pre_fade(self):
+        super(IntroScreen, self).render_pre_fade()
         if self.played_intro:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
