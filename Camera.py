@@ -14,6 +14,8 @@ class Camera(object):
         self.container = container
         self.viewpoint = container.copy()
         self.initView()
+        self.surface = pygame.Surface(self.viewpoint.size).convert()
+        self.surface_ready = False
 
     def initView(self):
         tileRect = self.tileEngine.get_tile_rect()
@@ -47,32 +49,39 @@ class Camera(object):
 
     def render(self, screen):
         screen.fill(Camera.EMPTY_COLOR, self.container)
+        if self.surface_ready:
+            screen.blit(self.surface, self.container)
+        else:
+            self.build_surface()
+            self.render(screen)
+
+    def build_surface(self):
+        self.surface.fill(Camera.EMPTY_COLOR)
         curr_y = self.viewpoint.top
-        while curr_y - self.viewpoint.top + self.container.top < \
-                self.container.bottom:
+        while curr_y - self.viewpoint.top < self.container.height:
             curr_x = self.viewpoint.left
-            while curr_x - self.viewpoint.left + self.container.left < \
-                    self.container.right:
+            while curr_x - self.viewpoint.left < self.container.right:
                 curr_tile_img, curr_rect = \
                     self.tileEngine.get_tile_image(curr_x, curr_y)
                 curr_rect.left = \
-                    (curr_x - self.viewpoint.left) + self.container.left
+                    (curr_x - self.viewpoint.left)
                 curr_rect.top = \
-                    (curr_y - self.viewpoint.top) + self.container.top
+                    (curr_y - self.viewpoint.top)
                 if curr_tile_img is not None:
                     img_area = curr_tile_img.get_rect()
-                    if curr_rect.bottom > self.container.bottom:
+                    if curr_rect.bottom > self.container.height:
                         img_area.height -= \
-                            curr_rect.bottom - self.container.bottom
-                    if curr_rect.right > self.container.right:
+                            curr_rect.bottom - self.container.height
+                    if curr_rect.right > self.container.width:
                         img_area.width -= \
-                            curr_rect.right - self.container.right
-
-                    screen.blit(curr_tile_img, curr_rect, img_area)
+                            curr_rect.right - self.container.width
+                    self.surface.blit(curr_tile_img, curr_rect, img_area)
                 curr_x += curr_rect.width
             curr_y += curr_rect.height
+        self.surface_ready = True
 
     def move(self, xDelta, yDelta):
+        self.surface_ready = False
         self.viewpoint.x += xDelta
         self.viewpoint.y += yDelta
 
