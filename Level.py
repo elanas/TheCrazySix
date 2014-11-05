@@ -18,6 +18,7 @@ class Level(GameState):
     MAX_OFFSET_Y = 75
     FACTOR = 10
     ALPHA_FACTOR = 550
+    MIN_ALPHA = 0
     MAX_ALPHA = 255
 
     def __init__(self, definition_path, map_path):
@@ -41,7 +42,9 @@ class Level(GameState):
         self.black_surf = pygame.Surface(
             (Globals.WIDTH, Globals.HEIGHT)).convert()
         self.black_surf.fill((0, 0, 0))
+        self.fade_in = False
         self.fade_out = False
+        self.start_fade_in()
 
     def handle_stairs(self):
         pass
@@ -122,14 +125,14 @@ class Level(GameState):
         self.playerSprites.draw(Globals.SCREEN)
         Globals.HEALTH_BAR.render(Globals.SCREEN)
         self.render_pre_fade()
-        if self.fade_out:
+        if self.fade_out or self.fade_in:
             Globals.SCREEN.blit(self.black_surf, (0, 0))
 
     def render_pre_fade(self):
         pass
 
     def update(self, time):
-        if self.fade_out:
+        if self.fade_out or self.fade_in:
             self.update_alpha(time)
             return
         Globals.HEALTH_BAR.update(time)
@@ -145,15 +148,29 @@ class Level(GameState):
             old_alpha = self.black_surf.get_alpha()
             new_alpha = int(old_alpha + time * Level.ALPHA_FACTOR)
             if new_alpha >= Level.MAX_ALPHA:
-                self.fade_out = False
                 self.handle_finish_fade_out()
+                self.fade_out = False
             self.black_surf.set_alpha(new_alpha)
-
+        elif self.fade_in:
+            old_alpha = self.black_surf.get_alpha()
+            new_alpha = int(old_alpha - time * Level.ALPHA_FACTOR)
+            if new_alpha <= Level.MIN_ALPHA:
+                self.handle_finish_fade_in()
+                self.fade_in = False
+            self.black_surf.set_alpha(new_alpha)
+    
     def start_fade_out(self):
-        self.black_surf.set_alpha(0)  # min alpha (transparent)
+        self.black_surf.set_alpha(Level.MIN_ALPHA)
         self.fade_out = True
 
+    def start_fade_in(self):
+        self.black_surf.set_alpha(Level.MAX_ALPHA)
+        self.fade_in = True
+
     def handle_finish_fade_out(self):
+        pass
+
+    def handle_finish_fade_in(self):
         pass
 
     def event(self, event):
