@@ -104,4 +104,5 @@ class HowToPlay(GameState):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.STATE = NameInput.NameInput()
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            Globals.goto_next_level()
+            Globals.reset_game()
+            Globals.goto_first_level()

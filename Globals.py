@@ -39,3 +39,14 @@ class Globals(object):
             return True
         else:
             return False
+
+    @staticmethod
+    def goto_first_level():
+        Globals.CURRENT_LEVEL = -1
+        Globals.goto_next_level()
+
+    @staticmethod
+    def reset_game():
+        Globals.CURRENT_LEVEL = -1
+        Globals.HEALTH_BAR = None
+        Globals.init_levels()
