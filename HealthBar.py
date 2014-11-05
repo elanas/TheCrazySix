@@ -48,9 +48,6 @@ class HealthBar():
             self.color_change = True
             self.health_surf.fill(HealthBar.GOOD_COLOR)
 
-    def printHealth(self):
-        print self.health
-
     def makeHealthBar(self):
         self.base_surf = pygame.Surface((HealthBar.width,HealthBar.height)).convert()
         self.base_surf.fill(HealthBar.base_color)
