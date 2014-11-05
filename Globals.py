@@ -2,6 +2,7 @@ import pygame
 import random
 import HealthBar
 
+
 class Globals(object):
     RUNNING = True
     SCREEN = None
@@ -14,3 +15,23 @@ class Globals(object):
     PLAYER_NAME = None
     PLAYER_SCORE = 0
     INTRO_SOUND_PLAYED = False
+    CURRENT_LEVEL = -1
+    LEVELS = None
+
+    @staticmethod
+    def init_levels():
+        import IntroScreen
+        import SyringeLevel
+        import TileTest
+        Globals.CURRENT_LEVEL = -1
+        Globals.LEVELS = (
+            IntroScreen.IntroScreen(),
+            SyringeLevel.SyringeLevel(),
+            TileTest.TileTest()
+            )
+
+    @staticmethod
+    def goto_next_level():
+        if Globals.CURRENT_LEVEL + 1 < len(Globals.LEVELS):
+            Globals.CURRENT_LEVEL += 1
+            Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]

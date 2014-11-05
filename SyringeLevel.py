@@ -12,9 +12,3 @@ class SyringeLevel(Level):
     def __init__(self):
         super(SyringeLevel, self).__init__(
             SyringeLevel.DEF_NAME, SyringeLevel.MAP_NAME)
-
-    def handle_finish_fade_out(self):
-    	Globals.STATE = TileTest()
-
-    def handle_escape(self):
-        Globals.STATE = Menu.Menu()
