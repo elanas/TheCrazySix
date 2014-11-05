@@ -112,7 +112,11 @@ class Camera(object):
                         coords=(trans_x, trans_y)
                     ))
                 curr_x += curr_rect.width
+                if curr_rect.width == 0:
+                    break
             curr_y += curr_rect.height
+            if curr_rect.height == 0:
+                break
         return tiles
 
     def get_solid_tiles(self, center, radius):
