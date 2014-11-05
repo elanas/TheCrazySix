@@ -156,7 +156,7 @@ class Level(GameState):
         self.enemySprites.update(time, self.camera)
         for turret in self.turrets:
             turret.update(time, self.camera)
-        self.checkCameraPosition()
+        self.check_camera_position()
         self.check_collisions()
 
     def update_alpha(self, time):
@@ -196,7 +196,7 @@ class Level(GameState):
             for p in self.playerSprites:
                 p.keyReleased(event.key)
 
-    def checkCameraPosition(self):
+    def check_camera_position(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx
         dist_y = self.camera.container.centery - self.player.rect.centery
         if abs(dist_x) > Level.MAX_OFFSET_X:
