@@ -147,7 +147,6 @@ class Level(GameState):
             if new_alpha >= Level.MAX_ALPHA:
                 self.fade_out = False
                 self.handle_finish_fade_out()
-            print new_alpha
             self.black_surf.set_alpha(new_alpha)
 
     def start_fade_out(self):
