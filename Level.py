@@ -118,6 +118,7 @@ class Level(GameState):
 
 
     def update(self, time):
+        Globals.HEALTH_BAR.update(time)
         self.player.update(time, self.camera, self.enemySprites, self)
         self.enemySprites.update(time, self.camera)
         for turret in self.turrets:

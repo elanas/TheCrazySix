@@ -17,7 +17,7 @@ class Player(Character):
     MOVE_VELOCITY = 200
     SECONDS_TO_FULL_SPEED = .5
     ACCELERATION = MOVE_VELOCITY / SECONDS_TO_FULL_SPEED
-    SOUND_PATH = "hitSound.ogg"
+    SOUND_PATH = "collision_sound.ogg"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
     INDEX_UP = 2
