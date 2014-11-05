@@ -22,7 +22,6 @@ class Globals(object):
     def init_levels():
         import IntroScreen
         import SyringeLevel
-        import TileTest
         import ZombieLevel
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (

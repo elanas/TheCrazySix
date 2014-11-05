@@ -11,6 +11,7 @@ import pygame
 from Turret import Turret
 from HealthBar import HealthBar
 import Menu
+import WinGame
 
 
 class Level(GameState):
@@ -61,7 +62,11 @@ class Level(GameState):
         self.replace_special_tile(pair)
 
     def handle_finish_fade_out(self):
-        Globals.goto_next_level()
+        if not Globals.goto_next_level():
+            self.handle_last_level()
+
+    def handle_last_level(self):
+        Globals.STATE = WinGame.WinGame()  # for now
 
     def handle_finish_fade_in(self):
         pass
