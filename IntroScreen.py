@@ -27,6 +27,7 @@ class IntroScreen(Level):
         self.played_intro = False
         self.alpha_factor = 300
         self.start_music()
+        self.init_subtitle()
 
     def init_subtitle(self):
         text_surf = IntroScreen.SUBTITLE_FONT.render(
