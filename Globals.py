@@ -23,11 +23,12 @@ class Globals(object):
         import IntroScreen
         import SyringeLevel
         import TileTest
+        import ZombieLevel
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (
             IntroScreen.IntroScreen(),
             SyringeLevel.SyringeLevel(),
-            TileTest.TileTest()
+            ZombieLevel.ZombieLevel()
             )
 
     @staticmethod
@@ -35,3 +36,6 @@ class Globals(object):
         if Globals.CURRENT_LEVEL + 1 < len(Globals.LEVELS):
             Globals.CURRENT_LEVEL += 1
             Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
+            return True
+        else:
+            return False
