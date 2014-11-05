@@ -182,9 +182,7 @@ class Level(GameState):
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_r:
-                self.reload_level()
-            elif event.key == pygame.K_ESCAPE:
+            if event.key == pygame.K_ESCAPE:
                 self.handle_escape()
             else:
                 self.keyCode = event.key
@@ -226,11 +224,3 @@ class Level(GameState):
                 enemy.rect.centery -= diff
             for turret in self.turrets:
                 turret.move(0, -diff)
-
-    def reload_level(self):
-        try:
-            new_state = Level(self.definition_path, self.map_path)
-            Globals.STATE = new_state
-            print "Reloaded level"
-        except Exception as e:
-            print "Reload failed: ", e
