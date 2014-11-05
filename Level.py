@@ -46,6 +46,8 @@ class Level(GameState):
         self.black_surf.fill((0, 0, 0))
         self.fade_in = False
         self.fade_out = False
+
+    def got_current_state(self):
         self.start_fade_in()
 
     def handle_stairs(self):

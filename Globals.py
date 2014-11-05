@@ -35,6 +35,7 @@ class Globals(object):
         if Globals.CURRENT_LEVEL + 1 < len(Globals.LEVELS):
             Globals.CURRENT_LEVEL += 1
             Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
+            Globals.LEVELS[Globals.CURRENT_LEVEL].got_current_state()
             return True
         else:
             return False

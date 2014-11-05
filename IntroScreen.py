@@ -26,8 +26,11 @@ class IntroScreen(Level):
             IntroScreen.LOADER = AssetLoader("images", "sounds")
         self.played_intro = False
         self.alpha_factor = 300
-        self.start_music()
         self.init_subtitle()
+
+    def got_current_state(self):
+        super(IntroScreen, self).got_current_state()
+        self.start_music()
 
     def init_subtitle(self):
         text_surf = IntroScreen.SUBTITLE_FONT.render(
