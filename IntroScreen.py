@@ -64,12 +64,8 @@ class IntroScreen(Level):
             new_alpha = 255
         self.subtitle_surf.set_alpha(new_alpha)
 
-    def handle_stairs(self):
-        self.start_fade_out()
-        self.stop_music()
-        # Globals.STATE = SyringeLevel()
-
     def handle_finish_fade_out(self):
+        self.stop_music()
         Globals.STATE = SyringeLevel()
 
     def handle_escape(self):

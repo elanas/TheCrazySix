@@ -47,6 +47,7 @@ class Level(GameState):
         self.start_fade_in()
 
     def handle_stairs(self):
+        self.start_fade_out()
         pass
 
     def handle_escape(self):

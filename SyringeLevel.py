@@ -13,9 +13,6 @@ class SyringeLevel(Level):
         super(SyringeLevel, self).__init__(
             SyringeLevel.DEF_NAME, SyringeLevel.MAP_NAME)
 
-    def handle_stairs(self):
-        self.start_fade_out()
-
     def handle_finish_fade_out(self):
     	Globals.STATE = TileTest()
 
