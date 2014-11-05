@@ -67,9 +67,9 @@ class IntroScreen(Level):
             new_alpha = 255
         self.subtitle_surf.set_alpha(new_alpha)
 
-    def handle_finish_fade_out(self):
+    def handle_stairs(self):
         self.stop_music()
-        super(IntroScreen, self).handle_finish_fade_out()
+        super(IntroScreen, self).handle_stairs()
 
     def handle_escape(self):
         self.stop_music()
