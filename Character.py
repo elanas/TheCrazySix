@@ -42,17 +42,17 @@ class Character (pygame.sprite.Sprite):
         if self.rect.left < 0:
             self.rect.left = 0
             self.velocity = 0
-            # self.playSound()
+            self.playSound()
         elif self.rect.right > self.w:
             self.rect.right = self.w
             self.velocity = 0
-            # self.playSound()
+            self.playSound()
 
         if self.rect.top < 0:
             self.rect.top = 0
             self.velocity = 0
-            # self.playSound()
+            self.playSound()
         elif self.rect.bottom > self.h:
             self.rect.bottom = self.h
             self.velocity = 0
-            # self.playSound()
+            self.playSound()

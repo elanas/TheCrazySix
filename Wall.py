@@ -9,7 +9,7 @@ from Globals import Globals
 
 
 class Wall(Border):
-    SOUND_PATH = "hitSound.ogg"
+    SOUND_PATH = "collision_sound.ogg"
     image = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
