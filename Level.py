@@ -149,6 +149,7 @@ class Level(GameState):
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
+        Globals.TIME.render(Globals.SCREEN)
 
     def update(self, time):
         if self.fade_out or self.fade_in:
