@@ -72,3 +72,6 @@ class HealthBar():
         self.health_rect.top += HealthBar.border_width
         self.max_width = self.health_rect.width
         self.health_surf.fill(HealthBar.normal_color)
+
+    def is_dead(self):
+        return self.health <= 0

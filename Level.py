@@ -13,6 +13,7 @@ from HealthBar import HealthBar
 from ScoreTimer import ScoreTimer
 import Menu
 import WinGame
+import LoseGame
 
 
 class Level(GameState):
@@ -186,6 +187,8 @@ class Level(GameState):
         # self.timer.render(Globals.SCREEN)
 
     def update(self, time):
+        if Globals.HEALTH_BAR.is_dead():
+            Globals.STATE = LoseGame.LoseGame()
         if self.fade_out or self.fade_in:
             self.update_alpha(time)
             return

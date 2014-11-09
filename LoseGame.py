@@ -31,8 +31,8 @@ class LoseGame(GameState):
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         Globals.SCREEN.blit(title_surf, title_rect)
 
-        # score = "Score: " + str(int(Globals.PLAYER_SCORE)) + " pts"
-        score = "Score: 10pts"
+        score = "Score: " + str(int(Globals.PLAYER_SCORE)) + " pts"
+        # score = "Score: 10pts"
         title_surf = font.render(score, True, (255, 255, 255))
         title_rect = title_surf.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
