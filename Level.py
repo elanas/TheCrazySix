@@ -39,6 +39,8 @@ class Level(GameState):
         self.turrets = list()
         self.init_player()
         self.init_enemies()
+        if Globals.TIME is None:
+            Globals.TIME = ScoreTimer()
         if Globals.HEALTH_BAR is None:
             Globals.HEALTH_BAR = HealthBar()
         self.black_surf = pygame.Surface(
