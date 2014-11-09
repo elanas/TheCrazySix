@@ -31,7 +31,7 @@ class Player(Character):
     STILL_ANIM_TIME = .5
     in_collision = False
 
-    def __init__(self, w, h, x, y, score_timer=None):
+    def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
         self.empty = pygame.Surface((1, 1)).convert()
         self.loadResources()
@@ -45,9 +45,8 @@ class Player(Character):
         self.cycle = -1
         self.time_elapsed = 0
         self.anim_time = Player.STILL_ANIM_TIME
-        self.score_timer = score_timer
 
-    def update(self, time, camera=None, enemy_sprites=None, level=None):
+    def update(self, time, camera=None):
         self.updateVelocity(time)
         self.time_elapsed += time
         if self.time_elapsed >= self.anim_time:
@@ -69,14 +68,7 @@ class Player(Character):
 
         if self.velocity > 0:
             self.move(time)
-        if camera is not None:
-            self.checkCollisions(camera, level)
-        else:
-            self.checkScreenCollisions()
-        if enemy_sprites is not None:
-            self.checkEnemyCollisions(enemy_sprites, level)
-        if self.in_collision and self.cycle % 2 is not 0:
-            self.image = self.empty
+        self.checkCollisions(camera)
 
     def updateVelocity(self, time):
         if self.velocity == Player.MOVE_VELOCITY:
@@ -178,11 +170,6 @@ class Player(Character):
     def getDirection(self):
         return self.direction
 
-    def getOppositeDirection(self):
-        # this only works if the indicies are defined such that the opposite
-        # directions are off by 2 (every other)
-        return (self.direction + 2) % 4
-
     def getMoveNormalized(self):
         if self.direction == Player.INDEX_UP:
             return 0, -1
@@ -200,65 +187,3 @@ class Player(Character):
 
     def playSound(self):
         Player.hitSound.play()
-
-    def checkCollisions(self, camera, level=None):
-        super(Player, self).checkCollisions(camera)
-        radius = max(self.rect.height, self.rect.width) * 2
-        special_tiles = camera.get_special_tiles(self.rect.center, radius)
-        stair_rects = [pair.rect for pair in special_tiles
-                       if TileType.STAIR_ATTR in pair.tile.special_attr]
-        temp_rect = self.rect.inflate(
-            -Player.STAIR_OFFSET, -Player.STAIR_OFFSET)
-        num_stairs = len(temp_rect.collidelistall(stair_rects))
-        highscoreManager = HighscoreManager()
-        if num_stairs > 0:
-          #  Globals.PLAYER_SCORE = Globals.REMAINING_TIME
-           # if Globals.PLAYER_HEALTH >= 95:
-                #Globals.PLAYER_SCORE += Globals.PLAYER_HEALTH
-            Globals.PLAYER_SCORE /= 100
-            highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
-            if level is not None:
-                level.handle_stairs()
-            else:
-                Globals.STATE = WinGame()
-       # if Globals.PLAYER_HEALTH <= 0:
-       #     Globals.STATE = LoseGame()
-       # if Globals.REMAINING_TIME <= 00000:
-       #     Globals.STATE = LoseGame()
-        self.checkSpecialCollisions(camera, level)
-        self.checkCoinCollisions(camera)
-
-    def checkSpecialCollisions(self, camera, level):
-        radius = max(self.rect.height, self.rect.width) * 2
-        special_tiles = camera.get_special_tiles(self.rect.center, radius)
-        for pair in special_tiles:
-            if self.rect.colliderect(pair.rect):
-                if level is not None:
-                    level.handle_special_collision(pair)
-
-    def checkCoinCollisions(self, camera):
-        radius = max(self.rect.height, self.rect.width) * 2
-        special_tiles = camera.get_special_tiles(self.rect.center, radius)
-        coin_pairs = [
-            pair for pair in special_tiles
-            if pair.tile.special_attr == TileType.COIN_ATTR
-        ]
-        for coin_pair in coin_pairs:
-            if self.rect.colliderect(coin_pair.rect):
-                row, col = camera.tileEngine.get_tile_pos(coin_pair.coords[0],
-                                                          coin_pair.coords[1])
-                base = camera.tileEngine.get_tile_from_attr(TileType.BASE_ATTR)
-                camera.tileEngine.tileMap[row][col] = base
-                Globals.REMAINING_TIME += Player.COIN_FACTOR
-                if self.score_timer is not None:
-                    self.score_timer.total_time += Player.COIN_FACTOR
-
-    def checkEnemyCollisions(self, enemy_sprites, level):
-        enemy_rects = [enemy.rect for enemy in enemy_sprites]
-        collided_indices = self.rect.collidelistall(enemy_rects)
-        if len(collided_indices) > 0:
-            if level is not None:
-                level.handle_enemy_collision()
-            self.in_collision = True
-        else:
-            self.in_collision = False

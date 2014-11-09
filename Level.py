@@ -54,7 +54,7 @@ class Level(GameState):
     def got_current_state(self):
         self.start_fade_in()
 
-    def handle_stairs(self):
+    def handle_stair_up(self):
         self.start_fade_out()
         pass
 
@@ -127,13 +127,43 @@ class Level(GameState):
         self.turrets.append(Turret(x, y, left))
 
     def check_collisions(self):
-        # radius = max(self.player.rect.size) * 1.5
-        # center = self.player.rect.center
+        radius = max(self.player.rect.size) * 2
+        self.check_turret_collisions()
+        self.check_enemy_collisions()
+        special_tiles = self.camera.get_special_tiles(self.player.rect.center, radius)
+        self.check_stair_collisions(special_tiles)
+        self.check_special_collisions(special_tiles)
+
+    def check_special_collisions(self, special_tiles):
+        for pair in special_tiles:
+            if self.player.rect.colliderect(pair.rect):
+                self.handle_special_collision(pair)
+
+    def check_stair_collisions(self, special_tiles):
+        stair_up_rects = [pair.rect for pair in special_tiles
+                       if TileType.STAIR_UP_ATTR in pair.tile.special_attr]
+        temp_rect = self.player.rect.inflate(
+            -Player.STAIR_OFFSET, -Player.STAIR_OFFSET)
+        num_up_stairs = len(temp_rect.collidelistall(stair_up_rects))
+        if num_up_stairs > 0:
+            self.handle_stair_up()
+
+    def check_enemy_collisions(self):
+        enemy_rects = [enemy.rect for enemy in self.enemySprites]
+        collided_indices = self.player.rect.collidelistall(enemy_rects)
+        if len(collided_indices) > 0:
+            self.handle_health_change(Enemy.health_effect)
+
+    def check_turret_collisions(self):
         for turret in self.turrets:
             for syringe in turret.syringeSprites:
                 if self.player.rect.colliderect(syringe):
-                    Globals.HEALTH_BAR.changeHealth(syringe.health_effect)
+                    self.handle_health_change(syringe.health_effect)
                     syringe.kill()
+
+    def handle_health_change(self, health_effect):
+        Globals.HEALTH_BAR.changeHealth(health_effect)
+        pass
 
     def render(self):
         self.render_pre_fade()
@@ -158,7 +188,7 @@ class Level(GameState):
             self.update_alpha(time)
             return
         Globals.HEALTH_BAR.update(time)
-        self.player.update(time, self.camera, self.enemySprites, self)
+        self.player.update(time, self.camera)
         self.enemySprites.update(time, self.camera)
         for turret in self.turrets:
             turret.update(time, self.camera)

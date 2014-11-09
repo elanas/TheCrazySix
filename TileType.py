@@ -3,7 +3,8 @@ from asset_loader import AssetLoader
 
 class TileType(object):
     EMPTY_ATTR = "empty"
-    STAIR_ATTR = "stair"
+    STAIR_UP_ATTR = "stair"
+    STAIR_DOWN_ATTR = "stair_down"
     COIN_ATTR = "coin"
     BASE_ATTR = "base"
     START_ATTR = "player_start"
