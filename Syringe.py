@@ -16,7 +16,7 @@ class Syringe (pygame.sprite.Sprite):
         self.left = left
         self.velocity = Syringe.VELOCITY
         # if random.random() <= Syringe.BURST_PROB:
-            # self.velocity = Syringe.BURST_VELOCITY
+        # self.velocity = Syringe.BURST_VELOCITY
         if self.left:
             self.velocity *= -1
         self.loader = AssetLoader("images")
@@ -63,6 +63,7 @@ class NormalSyringe(Syringe):
                                             NormalSyringe.RIGHT_PATH)
         self.health_effect = NormalSyringe.HEALTH_EFFECT
 
+
 class HealthSyringe(Syringe):
     LEFT_PATH = "pink_syringe_left.png"
     RIGHT_PATH = "pink_syringe_right.png"
@@ -73,14 +74,16 @@ class HealthSyringe(Syringe):
                                             HealthSyringe.LEFT_PATH,
                                             HealthSyringe.RIGHT_PATH)
         self.health_effect = HealthSyringe.HEALTH_EFFECT
-        
+
+
 class DeathSyringe(Syringe):
     LEFT_PATH = "green_syringe_left.png"
     RIGHT_PATH = "green_syringe_right.png"
     HEALTH_EFFECT = -10
 
     def __init__(self, x, y, left):
-        super(DeathSyringe, self).__init__(x, y, left,
-                                            DeathSyringe.LEFT_PATH,
-                                            DeathSyringe.RIGHT_PATH)
+        super(
+            DeathSyringe,
+            self
+        ).__init__(x, y, left, DeathSyringe.LEFT_PATH, DeathSyringe.RIGHT_PATH)
         self.health_effect = DeathSyringe.HEALTH_EFFECT
