@@ -34,4 +34,7 @@ l turret_left_topright.png 1 turret_spawn_left
 j turret_left_topleft.png 1
 @ turret_left_bottomleft.png 1
 % turret_left_bottomright.png 1
+t sliding_door.png 1 sliding_door
+v floor_switch.png 1 switch
+u floor_switch_on.png 1 switch_on
 
