@@ -9,6 +9,7 @@ from Globals import Globals
 
 
 class Enemy(Character):
+    HEALTH_EFFECT = -1
     MOVE_VELOCITY = 75
     INDEX_DOWN = 0
     INDEX_LEFT = 1

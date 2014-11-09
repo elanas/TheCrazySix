@@ -26,6 +26,7 @@ class Globals(object):
         import ZombieLevel
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (
+            ZombieLevel.ZombieLevel(),
             IntroScreen.IntroScreen(),
             SyringeLevel.SyringeLevel(),
             ZombieLevel.ZombieLevel()

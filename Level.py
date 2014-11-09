@@ -152,7 +152,7 @@ class Level(GameState):
         enemy_rects = [enemy.rect for enemy in self.enemySprites]
         collided_indices = self.player.rect.collidelistall(enemy_rects)
         if len(collided_indices) > 0:
-            self.handle_health_change(Enemy.health_effect)
+            self.handle_health_change(Enemy.HEALTH_EFFECT)
 
     def check_turret_collisions(self):
         for turret in self.turrets:
