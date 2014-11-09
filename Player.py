@@ -4,11 +4,7 @@ import math
 
 from Character import Character
 from asset_loader import AssetLoader
-from WinGame import WinGame
-from LoseGame import LoseGame
-from TileType import TileType
 from Globals import Globals
-from HighscoreManager import HighscoreManager
 
 
 class Player(Character):
