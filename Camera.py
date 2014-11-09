@@ -17,6 +17,9 @@ class Camera(object):
         self.surface = pygame.Surface(self.viewpoint.size).convert()
         self.surface_ready = False
 
+    def set_dirty(self):
+        self.surface_ready = False
+
     def initView(self):
         tileRect = self.tileEngine.get_tile_rect()
         numRows = self.tileEngine.getNumRows()

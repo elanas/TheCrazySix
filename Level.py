@@ -86,6 +86,7 @@ class Level(GameState):
                 base = self.camera.tileEngine.get_tile_from_attr(
                     TileType.BASE_ATTR)
             self.camera.tileEngine.tileMap[row][col] = base
+            self.camera.set_dirty()
 
     def init_player(self):
         self.player = Player(
@@ -105,6 +106,7 @@ class Level(GameState):
                         tile_map[row_num][col_num].special_attr:
                     self.add_enemy(row_num, col_num)
                     tile_map[row_num][col_num] = base_tile
+                    self.camera.set_dirty()
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, True)
