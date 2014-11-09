@@ -40,7 +40,6 @@ class Level(GameState):
         self.turrets = list()
         self.init_player()
         self.init_enemies()
-        # self.timer = ScoreTimer()
         if Globals.TIME is None:
             Globals.TIME = ScoreTimer()
         if Globals.HEALTH_BAR is None:
