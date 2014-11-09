@@ -13,6 +13,7 @@ class Globals(object):
     BACKGROUND_COLOR = (165, 242, 212)
     HEALTH_BAR = None
     PLAYER_NAME = None
+    TIME = 0
     PLAYER_SCORE = 0
     INTRO_SOUND_PLAYED = False
     CURRENT_LEVEL = -1
@@ -34,6 +35,7 @@ class Globals(object):
     def goto_next_level():
         if Globals.CURRENT_LEVEL + 1 < len(Globals.LEVELS):
             Globals.CURRENT_LEVEL += 1
+            Globals.TIME = 0
             Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
             Globals.LEVELS[Globals.CURRENT_LEVEL].got_current_state()
             return True
@@ -49,4 +51,5 @@ class Globals(object):
     def reset_game():
         Globals.CURRENT_LEVEL = -1
         Globals.HEALTH_BAR = None
+        Globals.TIME = 0
         Globals.init_levels()
