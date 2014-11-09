@@ -29,11 +29,12 @@ class Player(Character):
     WALK_ANIM_TIME = .05
     ACCEL_ANIM_TIME = .2
     STILL_ANIM_TIME = .5
-    in_collision = False
+    BLINK_SPEED = .1
+    TOTAL_BLINK_TIME = .5
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
-        self.empty = pygame.Surface((1, 1)).convert()
+        self.empty_image = pygame.Surface((1, 1)).convert()
         self.loadResources()
         self.image = Player.still_images[Player.INDEX_DOWN][0]
         self.rect = self.image.get_rect()
@@ -45,6 +46,10 @@ class Player(Character):
         self.cycle = -1
         self.time_elapsed = 0
         self.anim_time = Player.STILL_ANIM_TIME
+        self.proper_image = None
+        self.blinking = False
+        self.blinking_time = 0
+        self.total_blinking_time = 0
 
     def update(self, time, camera=None):
         self.updateVelocity(time)
@@ -65,10 +70,28 @@ class Player(Character):
                 self.rect = self.image.get_rect()
                 self.rect.center = old_rect.center
             self.time_elapsed = 0
-
         if self.velocity > 0:
             self.move(time)
+        self.update_blinking(time)
         self.checkCollisions(camera)
+
+    def update_blinking(self, time):
+        if not self.blinking:
+            return
+        if self.image is not self.empty_image:
+            self.proper_image = self.image
+        self.total_blinking_time += time
+        self.blinking_time += time
+        if self.blinking_time >= Player.BLINK_SPEED:
+            self.blinking_time = 0
+            if self.image is self.empty_image:
+                self.image = self.proper_image
+            else:
+                self.image = self.empty_image
+        if self.total_blinking_time >= Player.TOTAL_BLINK_TIME:
+            self.total_blinking_time = 0
+            self.blinking_time = 0
+            self.blinking = False
 
     def updateVelocity(self, time):
         if self.velocity == Player.MOVE_VELOCITY:
@@ -187,3 +210,6 @@ class Player(Character):
 
     def playSound(self):
         Player.hitSound.play()
+
+    def show_damage(self):
+        self.blinking = True

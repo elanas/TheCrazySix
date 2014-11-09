@@ -163,7 +163,8 @@ class Level(GameState):
 
     def handle_health_change(self, health_effect):
         Globals.HEALTH_BAR.changeHealth(health_effect)
-        pass
+        if health_effect < 0:
+            self.player.show_damage()
 
     def render(self):
         self.render_pre_fade()
