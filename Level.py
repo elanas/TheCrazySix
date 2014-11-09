@@ -132,7 +132,8 @@ class Level(GameState):
         radius = max(self.player.rect.size) * 2
         self.check_turret_collisions()
         self.check_enemy_collisions()
-        special_tiles = self.camera.get_special_tiles(self.player.rect.center, radius)
+        special_tiles = self.camera.get_special_tiles(
+            self.player.rect.center, radius)
         self.check_stair_collisions(special_tiles)
         self.check_special_collisions(special_tiles)
 
@@ -143,7 +144,7 @@ class Level(GameState):
 
     def check_stair_collisions(self, special_tiles):
         stair_up_rects = [pair.rect for pair in special_tiles
-                       if TileType.STAIR_UP_ATTR in pair.tile.special_attr]
+                          if TileType.STAIR_UP_ATTR in pair.tile.special_attr]
         temp_rect = self.player.rect.inflate(
             -Player.STAIR_OFFSET, -Player.STAIR_OFFSET)
         num_up_stairs = len(temp_rect.collidelistall(stair_up_rects))

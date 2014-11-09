@@ -34,7 +34,8 @@ class TileManager(object):
                 specialField = fields[3:]
             solid = not int(solidStr) == 0
             curr_tile = \
-                TileType(self.loader, symbol, img_path, solid, specialField, len(self.tileDefinitions))
+                TileType(self.loader, symbol, img_path, solid,
+                         specialField, len(self.tileDefinitions))
             if symbol in self.tileDefinitions:
                 raise Exception('The symbol ' + symbol + ' is already defined')
             self.tileDefinitions[symbol] = curr_tile

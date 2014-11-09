@@ -63,8 +63,8 @@ class HealthBar():
         self.base_rect.topleft = HealthBar.position
 
         self.health_surf = pygame.Surface((
-            HealthBar.width - 2*HealthBar.border_width,
-            HealthBar.height - 2*HealthBar.border_width)).convert()
+            HealthBar.width - 2 * HealthBar.border_width,
+            HealthBar.height - 2 * HealthBar.border_width)).convert()
         self.health_rect = self.health_surf.get_rect()
         self.health_area = self.health_surf.get_rect()
         self.health_rect.topleft = self.base_rect.topleft

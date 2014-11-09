@@ -65,8 +65,8 @@ class Menu(GameState):
         # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         # Globals.SCREEN.blit(title_surf, title_rect)
 
-        WIDTH = Globals.WIDTH/3
-        HEIGHT = Globals.HEIGHT/5
+        WIDTH = Globals.WIDTH / 3
+        HEIGHT = Globals.HEIGHT / 5
 
         CIRCLE_WIDTH = WIDTH - 110
         CIRCLE_HEIGHT = HEIGHT - 70

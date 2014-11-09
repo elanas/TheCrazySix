@@ -91,7 +91,7 @@ class Player(Character):
 
     def updateVelocity(self, time):
         if self.velocity == Player.MOVE_VELOCITY:
-                self.anim_time = Player.WALK_ANIM_TIME
+            self.anim_time = Player.WALK_ANIM_TIME
         if self.is_moving and self.velocity < Player.MOVE_VELOCITY:
             self.velocity = min(self.velocity + Player.ACCELERATION
                                 * time, Player.MOVE_VELOCITY)

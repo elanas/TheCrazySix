@@ -6,7 +6,8 @@ class TileType(object):
 
     EMPTY_SYMBOL = " "
 
-    def __init__(self, loader, symbol, img_path, is_solid, special_attr, line_num=-1):
+    def __init__(self, loader, symbol, img_path, is_solid, special_attr,
+                 line_num=-1):
         self.symbol = symbol
         self.is_solid = is_solid
         self.image = None

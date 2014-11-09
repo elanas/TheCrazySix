@@ -29,7 +29,7 @@ class Globals(object):
             IntroScreen.IntroScreen(),
             SyringeLevel.SyringeLevel(),
             ZombieLevel.ZombieLevel()
-            )
+        )
 
     @staticmethod
     def goto_next_level():
