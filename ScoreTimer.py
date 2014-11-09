@@ -13,7 +13,7 @@ class ScoreTimer():
         COLOR = pygame.Color("white")
         self.total_time = pygame.time.get_ticks() - self.offset
         time_surf = self.font.render(
-            str(self.total_time)[:2],
+            str(self.total_time/1000),
             True,
             COLOR
         )
