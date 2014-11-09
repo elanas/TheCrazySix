@@ -72,9 +72,7 @@ class HowToPlay(GameState):
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
-        Globals.SCREEN.blit(TITLE_IMG, [0, 0])  
-
-
+        Globals.SCREEN.blit(TITLE_IMG, [0, 0])
         Globals.SCREEN.blit(KEYBOARD_IMG, [50, 300])
         Globals.SCREEN.blit(ENEMY_IMG, [400, 307])
         Globals.SCREEN.blit(STAIR_IMG, [645, 250])
@@ -83,9 +81,6 @@ class HowToPlay(GameState):
         # Globals.SCREEN.blit(self.title_surf, self.title_rect)
         # Globals.SCREEN.blit(self.alt_surf, self.alt_rect)
         Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
-
-
-
 
     def update(self, time):
         self.time_delta += time

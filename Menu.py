@@ -77,7 +77,6 @@ class Menu(GameState):
 
         Globals.SCREEN.blit(MENU_IMG, [WIDTH, HEIGHT])
 
-
         if self.selection is 0:
             Globals.SCREEN.blit(CIRCLE_SELECT, [CIRCLE_WIDTH, CIRCLE_HEIGHT])
 
@@ -86,25 +85,37 @@ class Menu(GameState):
         # Globals.SCREEN.blit(op1, title_rect)
 
         if self.selection is 1:
-            Globals.SCREEN.blit(CIRCLE_SELECT, [CIRCLE_WIDTH, CIRCLE_HEIGHT + CIRCLE_GAP * 1])
+            Globals.SCREEN.blit(
+                CIRCLE_SELECT,
+                [CIRCLE_WIDTH, CIRCLE_HEIGHT + CIRCLE_GAP * 1]
+            )
         # op2 = font.render(VOLUME, True, AUDIO_SELECT)
         # title_rect.centery += VERT_SPACING
         # Globals.SCREEN.blit(op2, title_rect)
 
         if self.selection is 2:
-            Globals.SCREEN.blit(CIRCLE_SELECT, [CIRCLE_WIDTH,  CIRCLE_HEIGHT + CIRCLE_GAP * 2])
+            Globals.SCREEN.blit(
+                CIRCLE_SELECT,
+                [CIRCLE_WIDTH,  CIRCLE_HEIGHT + CIRCLE_GAP * 2]
+            )
         # op3 = font.render(SCORE, True, SCORE_SELECT)
         # title_rect.centery += VERT_SPACING
         # Globals.SCREEN.blit(op3, title_rect)
 
         if self.selection is 3:
-            Globals.SCREEN.blit(CIRCLE_SELECT, [CIRCLE_WIDTH,  CIRCLE_HEIGHT + CIRCLE_GAP * 3])
+            Globals.SCREEN.blit(
+                CIRCLE_SELECT,
+                [CIRCLE_WIDTH, CIRCLE_HEIGHT + CIRCLE_GAP * 3]
+            )
         # op4 = font.render(QUIT, True, QUIT_SELECT)
         # title_rect.centery += VERT_SPACING
         # Globals.SCREEN.blit(op4, title_rect)
 
         if self.selection is 4:
-            Globals.SCREEN.blit(CIRCLE_SELECT, [CIRCLE_WIDTH,  CIRCLE_HEIGHT + CIRCLE_GAP * 4])
+            Globals.SCREEN.blit(
+                CIRCLE_SELECT,
+                [CIRCLE_WIDTH,  CIRCLE_HEIGHT + CIRCLE_GAP * 4]
+            )
 
         pygame.display.flip()
 

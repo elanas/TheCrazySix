@@ -4,9 +4,9 @@ import pygame
 class HealthBar():
     width = 200
     height = 30
-    base_color = (175,175,175)
+    base_color = (175, 175, 175)
     border_color = (255, 255, 255)
-    normal_color = (0,255,240)
+    normal_color = (0, 255, 240)
     HURT_COLOR = (255, 0, 0)
     GOOD_COLOR = (0, 255, 0)
     border_width = 3
@@ -49,13 +49,22 @@ class HealthBar():
             self.health_surf.fill(HealthBar.GOOD_COLOR)
 
     def makeHealthBar(self):
-        self.base_surf = pygame.Surface((HealthBar.width,HealthBar.height)).convert()
+        self.base_surf = pygame.Surface((
+            HealthBar.width,
+            HealthBar.height)).convert()
         self.base_surf.fill(HealthBar.base_color)
         self.base_rect = self.base_surf.get_rect()
-        pygame.draw.rect(self.base_surf, HealthBar.border_color, self.base_rect, HealthBar.border_width)
+        pygame.draw.rect(
+            self.base_surf,
+            HealthBar.border_color,
+            self.base_rect,
+            HealthBar.border_width
+        )
         self.base_rect.topleft = HealthBar.position
 
-        self.health_surf = pygame.Surface((HealthBar.width - 2*HealthBar.border_width, HealthBar.height - 2*HealthBar.border_width)).convert()
+        self.health_surf = pygame.Surface((
+            HealthBar.width - 2*HealthBar.border_width,
+            HealthBar.height - 2*HealthBar.border_width)).convert()
         self.health_rect = self.health_surf.get_rect()
         self.health_area = self.health_surf.get_rect()
         self.health_rect.topleft = self.base_rect.topleft

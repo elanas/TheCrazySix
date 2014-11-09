@@ -40,7 +40,7 @@ class Level(GameState):
         self.turrets = list()
         self.init_player()
         self.init_enemies()
-        #self.timer = ScoreTimer()
+        # self.timer = ScoreTimer()
         if Globals.TIME is None:
             Globals.TIME = ScoreTimer()
         if Globals.HEALTH_BAR is None:
@@ -181,7 +181,7 @@ class Level(GameState):
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
         Globals.TIME.render(Globals.SCREEN)
-        #self.timer.render(Globals.SCREEN)
+        # self.timer.render(Globals.SCREEN)
 
     def update(self, time):
         if self.fade_out or self.fade_in:
@@ -210,7 +210,7 @@ class Level(GameState):
                 self.handle_finish_fade_in()
                 self.fade_in = False
             self.black_surf.set_alpha(new_alpha)
-    
+
     def start_fade_out(self):
         self.black_surf.set_alpha(Level.MIN_ALPHA)
         self.fade_out = True

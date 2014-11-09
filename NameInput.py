@@ -41,7 +41,6 @@ class NameInput(GameState):
     EXTRA_POSTTEXT = '|'
     EXTRA_COLOR = pygame.color.Color("white")
 
-
     def __init__(self):
         Globals.INTRO_SOUND_PLAYED = False
         if Globals.PLAYER_NAME is None:
@@ -135,7 +134,6 @@ class NameInput(GameState):
                 highlight_surf.set_alpha(NameInput.HIGHLIGHT_ALPHA)
                 Globals.SCREEN.blit(highlight_surf, highlight_rect)
             Globals.SCREEN.blit(extra_surf, extra_rect)
-
 
     def handle_entry(self, typed_char):
         if len(Globals.PLAYER_NAME) == NameInput.MAX_LENGTH:
