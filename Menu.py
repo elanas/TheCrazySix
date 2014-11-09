@@ -3,8 +3,6 @@ import sys
 
 from GameState import GameState
 from Globals import Globals
-from Character import Character
-from BorderPlayer import BorderPlayer
 from NameInput import NameInput
 from Highscore import Highscore
 import Title
@@ -125,7 +123,6 @@ class Menu(GameState):
 
     def update(self, time):
         self.time += time
-        # self.playerSprites.update(time)
 
     def event(self, event):
         if event.type == pygame.QUIT:
