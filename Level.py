@@ -10,6 +10,7 @@ from os.path import join
 import pygame
 from Turret import Turret
 from HealthBar import HealthBar
+from ScoreTimer import ScoreTimer
 import Menu
 import WinGame
 
