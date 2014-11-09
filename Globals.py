@@ -35,7 +35,6 @@ class Globals(object):
     def goto_next_level():
         if Globals.CURRENT_LEVEL + 1 < len(Globals.LEVELS):
             Globals.CURRENT_LEVEL += 1
-            Globals.TIME = None
             Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
             Globals.LEVELS[Globals.CURRENT_LEVEL].got_current_state()
             return True
