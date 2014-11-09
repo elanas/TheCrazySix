@@ -4,7 +4,6 @@ import pygame
 class ScoreTimer():
 
     def __init__(self):
-
         self.total_time = 0
         self.font = pygame.font.SysFont(None, 64)
         self.offset = pygame.time.get_ticks()
