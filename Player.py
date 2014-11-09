@@ -212,19 +212,19 @@ class Player(Character):
         num_stairs = len(temp_rect.collidelistall(stair_rects))
         highscoreManager = HighscoreManager()
         if num_stairs > 0:
-          #  Globals.PLAYER_SCORE = Globals.REMAINING_TIME
-           # if Globals.PLAYER_HEALTH >= 95:
-                #Globals.PLAYER_SCORE += Globals.PLAYER_HEALTH
+            # Globals.PLAYER_SCORE = Globals.REMAINING_TIME
+            # if Globals.PLAYER_HEALTH >= 95:
+                # Globals.PLAYER_SCORE += Globals.PLAYER_HEALTH
             Globals.PLAYER_SCORE /= 100
             highscoreManager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
             if level is not None:
                 level.handle_stairs()
             else:
                 Globals.STATE = WinGame()
-       # if Globals.PLAYER_HEALTH <= 0:
-       #     Globals.STATE = LoseGame()
-       # if Globals.REMAINING_TIME <= 00000:
-       #     Globals.STATE = LoseGame()
+            # if Globals.PLAYER_HEALTH <= 0:
+                # Globals.STATE = LoseGame()
+            # if Globals.REMAINING_TIME <= 00000:
+                # Globals.STATE = LoseGame()
         self.checkSpecialCollisions(camera, level)
         self.checkCoinCollisions(camera)
 
