@@ -21,9 +21,9 @@ class Globals(object):
 
     @staticmethod
     def init_levels():
-        import IntroScreen
-        import SyringeLevel
-        import ZombieLevel
+        from Levels import IntroScreen
+        from Levels import SyringeLevel
+        from Levels import ZombieLevel
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (
             IntroScreen.IntroScreen(),
