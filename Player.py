@@ -208,8 +208,9 @@ class Player(Character):
         dist_delta = [x * time * self.velocity for x in norm_delta]
         super(Player, self).move(dist_delta[0], dist_delta[1])
 
-    def playSound(self):
+    def play_sound(self):
         Player.hitSound.play()
 
     def show_damage(self):
         self.blinking = True
+        self.play_sound()
