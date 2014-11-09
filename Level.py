@@ -150,7 +150,7 @@ class Level(GameState):
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
-        Global.TIME.render(Globals.SCREEN)
+        Globals.TIME.render(Globals.SCREEN)
         #self.timer.render(Globals.SCREEN)
 
     def update(self, time):
