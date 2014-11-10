@@ -41,8 +41,7 @@ class Level(GameState):
         self.turrets = list()
         self.init_player()
         self.init_enemies()
-        if Globals.TIME is None:
-            Globals.TIME = ScoreTimer()
+        self.timer = None
         if Globals.HEALTH_BAR is None:
             Globals.HEALTH_BAR = HealthBar()
         self.black_surf = pygame.Surface(
@@ -53,6 +52,7 @@ class Level(GameState):
 
     def got_current_state(self):
         self.start_fade_in()
+        self.timer = ScoreTimer()
 
     def handle_stair_up(self):
         self.start_fade_out()
@@ -181,11 +181,10 @@ class Level(GameState):
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+        self.timer.render(Globals.SCREEN)
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
-        Globals.TIME.render(Globals.SCREEN)
-        # self.timer.render(Globals.SCREEN)
 
     def update(self, time):
         if Globals.HEALTH_BAR.is_dead():

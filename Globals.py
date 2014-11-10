@@ -13,7 +13,6 @@ class Globals(object):
     BACKGROUND_COLOR = (165, 242, 212)
     HEALTH_BAR = None
     PLAYER_NAME = None
-    TIME = None
     PLAYER_SCORE = 0
     INTRO_SOUND_PLAYED = False
     CURRENT_LEVEL = -1

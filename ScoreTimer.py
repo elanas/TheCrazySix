@@ -3,11 +3,12 @@ from Globals import Globals
 
 
 class ScoreTimer():
-    OFFSET = 10
+    SCREEN_OFFSET = 10
     COLOR = pygame.Color("white")
     TEXT_SIZE = 50
 
     def __init__(self):
+        print 'created'
         self.total_time = 0
         self.font = pygame.font.SysFont(None, ScoreTimer.TEXT_SIZE)
         self.offset = pygame.time.get_ticks()
@@ -20,8 +21,8 @@ class ScoreTimer():
             ScoreTimer.COLOR
         )
         time_rect = time_surf.get_rect()
-        time_rect.top = ScoreTimer.OFFSET
-        time_rect.right = Globals.WIDTH - ScoreTimer.OFFSET
+        time_rect.top = ScoreTimer.SCREEN_OFFSET
+        time_rect.right = Globals.WIDTH - ScoreTimer.SCREEN_OFFSET
         screen.blit(time_surf, time_rect)
 
     def update(self):
