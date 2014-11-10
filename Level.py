@@ -40,7 +40,7 @@ class Level(GameState):
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
         self.turrets = list()
-        self.init_player()tot
+        self.init_player()
         self.init_enemies()
         self.timer = None
         if Globals.HEALTH_BAR is None:
