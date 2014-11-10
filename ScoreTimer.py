@@ -8,7 +8,6 @@ class ScoreTimer():
     TEXT_SIZE = 50
 
     def __init__(self):
-        print 'created'
         self.total_time = 0
         self.font = pygame.font.SysFont(None, ScoreTimer.TEXT_SIZE)
         self.offset = pygame.time.get_ticks()
