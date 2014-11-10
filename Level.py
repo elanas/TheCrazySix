@@ -40,7 +40,7 @@ class Level(GameState):
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
         self.turrets = list()
-        self.init_player()
+        self.init_player()tot
         self.init_enemies()
         self.timer = None
         if Globals.HEALTH_BAR is None:
@@ -57,6 +57,9 @@ class Level(GameState):
 
     def handle_stair_up(self):
         Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
+        time = self.timer.total_time / 1000
+        diff = max(300 - time, 0)
+        Globals.PLAYER_SCORE += diff
         self.start_fade_out()
         pass
 
