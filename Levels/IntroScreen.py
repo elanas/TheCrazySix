@@ -20,7 +20,8 @@ class IntroScreen(Level):
 
     def __init__(self):
         super(IntroScreen, self).__init__(IntroScreen.DEF_NAME,
-                                          IntroScreen.MAP_NAME)
+                                          IntroScreen.MAP_NAME,
+                                          has_timer=False)
         self.audio = None
         if IntroScreen.LOADER is None:
             IntroScreen.LOADER = AssetLoader("images", "sounds")

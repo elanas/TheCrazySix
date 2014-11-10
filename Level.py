@@ -26,7 +26,8 @@ class Level(GameState):
     MIN_ALPHA = 0
     MAX_ALPHA = 255
 
-    def __init__(self, definition_path, map_path):
+    def __init__(self, definition_path, map_path, has_timer=True):
+        self.has_timer = has_timer
         self.keyCode = None
         self.definition_path = definition_path
         self.map_path = map_path
@@ -53,13 +54,15 @@ class Level(GameState):
 
     def got_current_state(self):
         self.start_fade_in()
-        self.timer = ScoreTimer()
+        if self.has_timer:
+            self.timer = ScoreTimer()
 
     def handle_stair_up(self):
         Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
-        time = self.timer.total_time / 1000
-        diff = max(300 - time, 0)
-        Globals.PLAYER_SCORE += diff
+        if self.has_timer:
+            time = self.timer.total_time / 1000
+            diff = max(300 - time, 0)
+            Globals.PLAYER_SCORE += diff
         self.start_fade_out()
         pass
 
@@ -188,7 +191,8 @@ class Level(GameState):
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
-        self.timer.render(Globals.SCREEN)
+        if self.has_timer:
+            self.timer.render(Globals.SCREEN)
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
