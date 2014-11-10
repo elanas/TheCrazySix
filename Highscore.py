@@ -6,6 +6,7 @@ from HighscoreManager import HighscoreManager
 import Menu
 
 BACKGROUND_IMG = pygame.image.load("images/background.png")
+TITLE_IMG = pygame.image.load("images/highscore.png")
 
 
 class Highscore(GameState):
@@ -19,6 +20,7 @@ class Highscore(GameState):
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
+        Globals.SCREEN.blit(TITLE_IMG, [Globals.WIDTH/5.5,0])
         font = pygame.font.SysFont(None, 64)
 
         TITLE_PADDING = 100
@@ -29,12 +31,12 @@ class Highscore(GameState):
 
         highscoreEntry = self.highscoreManager.get_list()
 
-        title_surf = font.render("Highscores", True, (255, 255, 255))
-        title_rect = title_surf.get_rect()
-        title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        title_rect.centery = Globals.SCREEN.get_rect().centery
-        title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
-        Globals.SCREEN.blit(title_surf, title_rect)
+        # title_surf = font.render("Highscores", True, (255, 255, 255))
+        # title_rect = title_surf.get_rect()
+        # title_rect.centerx = Globals.SCREEN.get_rect().centerx
+        # title_rect.centery = Globals.SCREEN.get_rect().centery
+        # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
+        # Globals.SCREEN.blit(title_surf, title_rect)
 
         op1 = font.render("{} - {}".format(
             highscoreEntry[0].name,
