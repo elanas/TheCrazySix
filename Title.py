@@ -36,6 +36,7 @@ class Title(GameState):
         self.alt_rect.centerx = Globals.SCREEN.get_rect().centerx
         self.alt_rect.centery = self.title_rect.bottom + Title.MAX_DELTA + \
             Title.ALT_PADDING
+        Globals.play_menu_sound()
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)

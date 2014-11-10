@@ -49,6 +49,7 @@ class HowToPlay(GameState):
             HowToPlay.ALT_PADDING
 
         self.init_subtitle()
+        Globals.play_menu_sound()
 
     def init_subtitle(self):
         text_surf = SUBTITLE_FONT.render(

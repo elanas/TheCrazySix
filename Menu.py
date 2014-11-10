@@ -22,6 +22,7 @@ class Menu(GameState):
         self.color = pygame.color.Color("black")
         self.time = 0
         self.selection = 0
+        Globals.play_menu_sound()
 
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)

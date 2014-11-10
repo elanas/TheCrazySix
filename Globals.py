@@ -1,6 +1,7 @@
 import pygame
 import random
 import HealthBar
+from asset_loader import AssetLoader
 
 
 class Globals(object):
@@ -17,6 +18,7 @@ class Globals(object):
     INTRO_SOUND_PLAYED = False
     CURRENT_LEVEL = -1
     LEVELS = None
+    MENU_SOUND = None
 
     @staticmethod
     def init_levels():
@@ -39,6 +41,19 @@ class Globals(object):
             return True
         else:
             return False
+
+    @staticmethod
+    def play_menu_sound():
+        if Globals.MENU_SOUND is None:
+            loader = AssetLoader(sound_path_start='sounds')
+            Globals.MENU_SOUND = loader.load_sound('menu_music.ogg')
+        if Globals.MENU_SOUND.get_num_channels() > 0:
+            return
+        Globals.MENU_SOUND.play(loops=-1)
+
+    @staticmethod
+    def stop_menu_sound():
+        Globals.MENU_SOUND.stop()
 
     @staticmethod
     def goto_first_level():

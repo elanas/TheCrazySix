@@ -50,6 +50,7 @@ class NameInput(GameState):
         self.setup_text()
         self.show_extra = False
         self.extra_time = 0
+        Globals.play_menu_sound()
 
     def setup_text(self):
         self.input_font = pygame.font.Font(NameInput.INPUT_FONT,

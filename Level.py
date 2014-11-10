@@ -56,6 +56,7 @@ class Level(GameState):
         self.start_fade_in()
         if self.has_timer:
             self.timer = ScoreTimer()
+        Globals.stop_menu_sound()
 
     def handle_stair_up(self):
         Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
