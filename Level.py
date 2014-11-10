@@ -55,6 +55,7 @@ class Level(GameState):
         self.timer = ScoreTimer()
 
     def handle_stair_up(self):
+        Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
         self.start_fade_out()
         pass
 
