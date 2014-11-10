@@ -14,6 +14,7 @@ from ScoreTimer import ScoreTimer
 import Menu
 import WinGame
 import LoseGame
+from HighscoreManager import HighscoreManager
 
 
 class Level(GameState):
@@ -73,6 +74,8 @@ class Level(GameState):
             self.handle_last_level()
 
     def handle_last_level(self):
+        manager = HighscoreManager()
+        manager.add(Globals.PLAYER_NAME, Globals.PLAYER_SCORE)
         Globals.STATE = WinGame.WinGame()  # for now
 
     def handle_finish_fade_in(self):
