@@ -65,8 +65,12 @@ class NormalSyringe(Syringe):
 
 
 class HealthSyringe(Syringe):
-    LEFT_PATH = "pink_syringe_left.png"
-    RIGHT_PATH = "pink_syringe_right.png"
+    # LEFT_PATH = "pink_syringe_left.png"
+    # RIGHT_PATH = "pink_syringe_right.png"
+    LEFT_PATH = "redcross.png"
+    RIGHT_PATH = "redcross.png"
+    print "TEST"
+
     HEALTH_EFFECT = 15
 
     def __init__(self, x, y, left):
