@@ -228,6 +228,10 @@ class Level(GameState):
         old_alpha = self.subtitle_surf.get_alpha()
         if old_alpha == 0 or old_alpha == 255:
             self.alpha_factor *= -1
+            if self.subtitle_loops != -1:
+                self.subtitle_loops -= 1
+                if self.subtitle_loops == 0:
+                    self.stop_subtitle()
         new_alpha = int(old_alpha + self.alpha_factor * time)
         if new_alpha < 0:
             new_alpha = 0
@@ -323,9 +327,12 @@ class Level(GameState):
         ))
         self.subtitle_surf.set_alpha(255)
 
-    def show_subtitle(self, text):
+    def show_subtitle(self, text, loops=-1):
+        self.subtitle_loops = loops
+        if self.subtitle_loops != -1:
+            self.subtitle_loops *= 2
         self.init_subtitle(text)
         self.showing_subtitle = True
 
     def stop_subtitle(self):
-        self.show_subtitle = False
+        self.showing_subtitle = False
