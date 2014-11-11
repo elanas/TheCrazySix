@@ -25,6 +25,11 @@ class Level(GameState):
     ALPHA_FACTOR = 550
     MIN_ALPHA = 0
     MAX_ALPHA = 255
+    SUBTITLE_BACKGROUND = pygame.color.Color("black")
+    SUBTITLE_PADDING = 5
+    SUBTITLE_COLOR = pygame.color.Color("white")
+    SUBTITLE_FONT = pygame.font.Font(None, 32)
+    SUBTITLE_MARGIN = 20
 
     def __init__(self, definition_path, map_path, has_timer=True):
         self.has_timer = has_timer
@@ -51,6 +56,8 @@ class Level(GameState):
         self.black_surf.fill((0, 0, 0))
         self.fade_in = False
         self.fade_out = False
+        self.showing_subtitle = False
+        self.alpha_factor = 300
 
     def got_current_state(self):
         self.start_fade_in()
@@ -194,6 +201,8 @@ class Level(GameState):
         self.playerSprites.draw(Globals.SCREEN)
         if self.has_timer:
             self.timer.render(Globals.SCREEN)
+        if self.showing_subtitle:
+            Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
@@ -211,6 +220,20 @@ class Level(GameState):
             turret.update(time, self.camera)
         self.check_camera_position()
         self.check_collisions()
+        self.update_subtitle(time)
+
+    def update_subtitle(self, time):
+        if not self.showing_subtitle:
+            return
+        old_alpha = self.subtitle_surf.get_alpha()
+        if old_alpha == 0 or old_alpha == 255:
+            self.alpha_factor *= -1
+        new_alpha = int(old_alpha + self.alpha_factor * time)
+        if new_alpha < 0:
+            new_alpha = 0
+        elif new_alpha > 255:
+            new_alpha = 255
+        self.subtitle_surf.set_alpha(new_alpha)
 
     def update_alpha(self, time):
         if self.fade_out:
@@ -280,3 +303,29 @@ class Level(GameState):
                 enemy.rect.centery -= diff
             for turret in self.turrets:
                 turret.move(0, -diff)
+
+    def init_subtitle(self, text):
+        text_surf = Level.SUBTITLE_FONT.render(
+            text, True, Level.SUBTITLE_COLOR)
+        self.subtitle_rect = text_surf.get_rect()
+        self.subtitle_rect.centerx = Globals.WIDTH / 2
+        self.subtitle_rect.bottom = \
+            Globals.HEIGHT - Level.SUBTITLE_MARGIN
+        self.subtitle_rect.inflate_ip(
+            Level.SUBTITLE_PADDING * 2,
+            Level.SUBTITLE_PADDING * 2
+        )
+        self.subtitle_surf = pygame.Surface(self.subtitle_rect.size).convert()
+        self.subtitle_surf.fill(Level.SUBTITLE_BACKGROUND)
+        self.subtitle_surf.blit(text_surf, (
+            Level.SUBTITLE_PADDING,
+            Level.SUBTITLE_PADDING
+        ))
+        self.subtitle_surf.set_alpha(255)
+
+    def show_subtitle(self, text):
+        self.init_subtitle(text)
+        self.showing_subtitle = True
+
+    def stop_subtitle(self):
+        self.show_subtitle = False

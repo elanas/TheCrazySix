@@ -11,12 +11,7 @@ class IntroScreen(Level):
     DEF_NAME = "map_def.txt"
     MAP_NAME = "intro_screen.txt"
     SOUND_NAME = "intro_sound.ogg"
-    SUBTITLE_BACKGROUND = pygame.color.Color("black")
-    SUBTITLE_PADDING = 5
     SUBTITLE_TEXT = "Climb the stairs to skip"
-    SUBTITLE_COLOR = pygame.color.Color("white")
-    SUBTITLE_FONT = pygame.font.Font(None, 32)
-    SUBTITLE_MARGIN = 20
 
     def __init__(self):
         super(IntroScreen, self).__init__(IntroScreen.DEF_NAME,
@@ -26,48 +21,12 @@ class IntroScreen(Level):
         if IntroScreen.LOADER is None:
             IntroScreen.LOADER = AssetLoader("images", "sounds")
         self.played_intro = False
-        self.alpha_factor = 300
-        self.init_subtitle()
+        if not Globals.INTRO_SOUND_PLAYED:
+            self.show_subtitle(IntroScreen.SUBTITLE_TEXT)
 
     def got_current_state(self):
         super(IntroScreen, self).got_current_state()
         self.start_music()
-
-    def init_subtitle(self):
-        text_surf = IntroScreen.SUBTITLE_FONT.render(
-            IntroScreen.SUBTITLE_TEXT, True, IntroScreen.SUBTITLE_COLOR)
-        self.subtitle_rect = text_surf.get_rect()
-        self.subtitle_rect.centerx = Globals.WIDTH / 2
-        self.subtitle_rect.bottom = \
-            Globals.HEIGHT - IntroScreen.SUBTITLE_MARGIN
-        self.subtitle_rect.inflate_ip(
-            IntroScreen.SUBTITLE_PADDING * 2,
-            IntroScreen.SUBTITLE_PADDING * 2
-        )
-        self.subtitle_surf = pygame.Surface(self.subtitle_rect.size).convert()
-        self.subtitle_surf.fill(IntroScreen.SUBTITLE_BACKGROUND)
-        self.subtitle_surf.blit(text_surf, (
-            IntroScreen.SUBTITLE_PADDING,
-            IntroScreen.SUBTITLE_PADDING
-        ))
-        self.subtitle_surf.set_alpha(255)
-
-    def render_pre_fade(self):
-        super(IntroScreen, self).render_pre_fade()
-        if self.played_intro:
-            Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
-
-    def update(self, time):
-        super(IntroScreen, self).update(time)
-        old_alpha = self.subtitle_surf.get_alpha()
-        if old_alpha == 0 or old_alpha == 255:
-            self.alpha_factor *= -1
-        new_alpha = int(old_alpha + self.alpha_factor * time)
-        if new_alpha < 0:
-            new_alpha = 0
-        elif new_alpha > 255:
-            new_alpha = 255
-        self.subtitle_surf.set_alpha(new_alpha)
 
     def handle_stair_up(self):
         self.stop_music()

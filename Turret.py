@@ -8,8 +8,7 @@ class Turret(object):
     # MIN_WAIT = 1.5
     MIN_WAIT = 1.5
     MAX_WAIT = 3
-    PROB_NORMAL = .7
-    PROB_HEALTH = .15
+    PROB_NORMAL = .85
     PROB_DEATH = .15
 
     def __init__(self, x, y, left):
@@ -48,9 +47,6 @@ class Turret(object):
         if num <= Turret.PROB_NORMAL:
             self.syringeSprites.add(
                 Syringe.NormalSyringe(self.x, self.y, self.left))
-        elif num <= Turret.PROB_NORMAL + Turret.PROB_HEALTH:
-            self.syringeSprites.add(
-                Syringe.HealthSyringe(self.x, self.y, self.left))
         else:
             self.syringeSprites.add(
                 Syringe.DeathSyringe(self.x, self.y, self.left))
