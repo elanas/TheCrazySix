@@ -4,8 +4,9 @@ from Enemy import Enemy
 class CutSceneEnemy(Enemy):
     WALK_ANIM_TIME = .10
     VELOCITY = 220
+    WAIT_TIME = 1
 
-    def __init__(self, centerx, target_y):
+    def __init__(self, centerx, target_y, level):
         super(CutSceneEnemy, self).__init__()
         self.direction = Enemy.INDEX_DOWN
         self.image = Enemy.images[self.direction][0]
@@ -16,14 +17,28 @@ class CutSceneEnemy(Enemy):
         self.rect.centerx = centerx
         self.target_y = target_y
         self.velocity = CutSceneEnemy.VELOCITY
+        self.level = level
+        self.time_waiting = 0
+        self.is_waiting = False
 
     def update(self, time, camera=None):
+        if self.velocity < 0 and self.rect.bottom < 0:
+            return
+        if self.is_waiting:
+            self.time_waiting += time
+            if self.time_waiting >= CutSceneEnemy.WAIT_TIME:
+                self.is_waiting = False
+                self.time_waiting = 0
+                self.direction = Enemy.INDEX_UP
+                self.image = Enemy.images[self.direction][self.cycle]
+            else:
+                return
         self.rect.bottom += time * self.velocity
         if self.rect.bottom > self.target_y:
             self.rect.bottom = self.target_y
             self.velocity *= -1
-            self.direction = Enemy.INDEX_UP
-            self.image = Enemy.images[self.direction][self.cycle]
+            self.is_waiting = True
+            self.level.handle_hit_player()
 
         if self.is_moving:
             self.anim_time += time
