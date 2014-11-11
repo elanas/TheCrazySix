@@ -32,11 +32,11 @@ class Player(Character):
         super(Player, self).__init__(w, h, x, y)
         self.empty_image = pygame.Surface((1, 1)).convert()
         self.loadResources()
-        self.image = Player.still_images[Player.INDEX_DOWN][0]
+        self.image = Player.still_images[Player.INDEX_UP][0]
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.direction = Player.INDEX_DOWN
+        self.direction = Player.INDEX_UP
         self.is_moving = False
         self.velocity = 0
         self.cycle = -1
