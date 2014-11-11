@@ -5,6 +5,7 @@ from Globals import Globals
 import Menu
 
 BACKGROUND_IMG = pygame.image.load("images/background.png")
+LOST_GAME = pygame.image.load("images/lostgame.png")
 
 
 class LoseGame(GameState):
@@ -16,6 +17,7 @@ class LoseGame(GameState):
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
+        Globals.SCREEN.blit(LOST_GAME, [100, 0])
         font = pygame.font.SysFont(None, 80)
 
         TITLE_PADDING = 150
@@ -29,7 +31,7 @@ class LoseGame(GameState):
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery = Globals.SCREEN.get_rect().centery
         title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
-        Globals.SCREEN.blit(title_surf, title_rect)
+        # Globals.SCREEN.blit(title_surf, title_rect)
 
         score = "Score: " + str(int(Globals.PLAYER_SCORE)) + " pts"
         # score = "Score: 10pts"

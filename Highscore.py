@@ -31,13 +31,6 @@ class Highscore(GameState):
 
         highscoreEntry = self.highscoreManager.get_list()
 
-        # title_surf = font.render("Highscores", True, (255, 255, 255))
-        # title_rect = title_surf.get_rect()
-        # title_rect.centerx = Globals.SCREEN.get_rect().centerx
-        # title_rect.centery = Globals.SCREEN.get_rect().centery
-        # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
-        # Globals.SCREEN.blit(title_surf, title_rect)
-
         op1 = font.render("{} - {}".format(
             highscoreEntry[0].name,
             highscoreEntry[0].score
