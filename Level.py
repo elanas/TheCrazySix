@@ -31,7 +31,8 @@ class Level(GameState):
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN = 20
 
-    def __init__(self, definition_path, map_path, has_timer=True):
+    def __init__(self, definition_path, map_path, has_timer=True,
+                 should_fade_in=True):
         self.has_timer = has_timer
         self.keyCode = None
         self.definition_path = definition_path
@@ -58,9 +59,11 @@ class Level(GameState):
         self.fade_out = False
         self.showing_subtitle = False
         self.alpha_factor = 300
+        self.should_fade_in = should_fade_in
 
     def got_current_state(self):
-        self.start_fade_in()
+        if self.should_fade_in:
+            self.start_fade_in()
         if self.has_timer:
             self.timer = ScoreTimer()
         Globals.stop_menu_sound()
@@ -199,10 +202,14 @@ class Level(GameState):
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
+        self.render_overlay()
         if self.has_timer:
             self.timer.render(Globals.SCREEN)
         if self.showing_subtitle:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
+
+    def render_overlay(self):
+        pass
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
@@ -265,16 +272,23 @@ class Level(GameState):
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                self.handle_escape()
-            else:
-                self.keyCode = event.key
-                for p in self.playerSprites:
-                    p.keyPressed(event.key)
-        elif event.type == pygame.KEYUP and event.key == self.keyCode:
+            self.handle_keydown(event.key)
+        elif event.type == pygame.KEYUP:
+            self.handle_keyup(event.key)
+
+    def handle_keydown(self, key):
+        if key == pygame.K_ESCAPE:
+            self.handle_escape()
+        else:
+            self.keyCode = key
+            for p in self.playerSprites:
+                p.keyPressed(key)
+
+    def handle_keyup(self, key):
+        if key == self.keyCode:
             self.keyCode = None
             for p in self.playerSprites:
-                p.keyReleased(event.key)
+                p.keyReleased(key)
 
     def check_camera_position(self):
         dist_x = self.camera.container.centerx - self.player.rect.centerx

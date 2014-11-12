@@ -24,6 +24,7 @@ class CutSceneEnemy(Enemy):
 
     def update(self, time, camera=None):
         if self.velocity < 0 and self.rect.bottom < 0:
+            self.level.handle_done()
             return
         if self.is_waiting:
             self.time_waiting += time

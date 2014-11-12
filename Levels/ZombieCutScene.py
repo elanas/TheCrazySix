@@ -13,6 +13,9 @@ class ZombieCutScene(Level):
     SHAKE_WAIT = .05
     INITIAL_SUBTITLE = 'Press enter to skip'
     INITIAL_TIMES = 3
+    HIT_ALPHA = 70
+    POST_HIT_ALPHA = 40
+    OVERLAY_COLOR_SUB = (0, 70, 70)
 
     def __init__(self):
         super(ZombieCutScene, self).__init__(
@@ -24,6 +27,7 @@ class ZombieCutScene(Level):
         self.shaking_time = 0
         self.show_subtitle(ZombieCutScene.INITIAL_SUBTITLE,
         				   ZombieCutScene.INITIAL_TIMES)
+       	self.overlay_sub = False
 
     def init_enemy(self):
     	self.enemy = CutSceneEnemy(self.player.rect.centerx,
@@ -49,31 +53,35 @@ class ZombieCutScene(Level):
     							 ZombieCutScene.SHAKE_AMOUNT)
     	y_delta = random.randint(-ZombieCutScene.SHAKE_AMOUNT,
     							 ZombieCutScene.SHAKE_AMOUNT)
+    	self.camera.viewpoint.x = self.old_viewpoint.x
+    	self.camera.viewpoint.y = self.old_viewpoint.y
     	self.camera.move(x_delta, y_delta)
-    	self.player.rect.left -= x_delta
-    	self.player.rect.top -= y_delta
-    	self.enemy.rect.left -= x_delta
-    	self.enemy.rect.top -= y_delta
+    	self.player.rect.x = self.old_player_rect.x + x_delta
+    	self.player.rect.y = self.old_player_rect.y + y_delta
+    	self.enemy.rect.x = self.old_enemy_rect.x + x_delta
+    	self.enemy.rect.y = self.old_enemy_rect.y + y_delta
 
     def start_shaking(self):
     	self.shaking_time = 0
     	self.shaking = True
-    	self.old_viewpoint = self.camera.viewpoint
+    	self.old_viewpoint = pygame.Rect.copy(self.camera.viewpoint)
+    	self.old_player_rect = pygame.Rect.copy(self.player.rect)
+    	self.old_enemy_rect = pygame.Rect.copy(self.enemy.rect)
 
     def stop_shaking(self):
     	self.shaking = False
-    	x_delta = self.old_viewpoint.x - self.camera.viewpoint.x
-    	y_delta = self.old_viewpoint.y - self.camera.viewpoint.y
-    	self.camera.move(x_delta, y_delta)
-    	self.player.rect.left -= x_delta
-    	self.player.rect.top -= y_delta
-    	self.enemy.rect.left -= x_delta
-    	self.enemy.rect.top -= y_delta
+    	self.camera.viewpoint.x = self.old_viewpoint.x
+    	self.camera.viewpoint.y = self.old_viewpoint.y
+    	self.camera.surface_ready = False
+    	self.player.rect.x = self.old_player_rect.x
+    	self.player.rect.y = self.old_player_rect.y
+    	self.enemy.rect.x = self.old_enemy_rect.x
+    	self.enemy.rect.y = self.old_enemy_rect.y
 
     def render_pre_fade(self):
     	super(ZombieCutScene, self).render_pre_fade()
     	if self.overlay_surf is not None:
-    		Globals.SCREEN.blit(self.overlay_surf, (0, 0))
+    		Globals.SCREEN.blit(self.overlay_surf, (0, 0), special_flags=pygame.BLEND_SUB)
     	if self.showing_subtitle:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
@@ -81,6 +89,8 @@ class ZombieCutScene(Level):
     	if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE:
                 self.handle_escape()
+            elif event.key == pygame.K_RETURN:
+            	self.handle_done()
 
     def init_enemies(self):
     	pass
@@ -89,11 +99,12 @@ class ZombieCutScene(Level):
     	pass
 
     def handle_pause(self):
-    	self.overlay_surf = pygame.Surface(Globals.SCREEN.get_rect().size)
-    	self.overlay_surf.fill(pygame.color.Color('red'))
-    	self.overlay_surf.set_alpha(70)
+    	self.overlay_surf = pygame.Surface(Globals.SCREEN.get_rect().size).convert()
+    	self.overlay_surf.fill(ZombieCutScene.OVERLAY_COLOR_SUB)
     	self.start_shaking()
 
     def handle_unpause(self):
-    	self.overlay_surf = None
     	self.stop_shaking()
+
+    def handle_done(self):
+    	self.handle_finish_fade_out()
