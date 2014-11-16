@@ -29,9 +29,9 @@ class Globals(object):
         from Levels import PostZombieCutScene
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (
-            # ZombieCutScene.ZombieCutScene(),
-            # PostZombieCutScene.PostZombieCutScene(),
-            # IntroScreen.IntroScreen(),
+            ZombieCutScene.ZombieCutScene(),
+            PostZombieCutScene.PostZombieCutScene(),
+            IntroScreen.IntroScreen(),
             SyringeLevel.SyringeLevel(),
             ZombieLevel.ZombieLevel()
         )
