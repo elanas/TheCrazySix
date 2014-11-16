@@ -31,7 +31,7 @@ class Level(GameState):
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN = 20
     ACTION_TILE_HINT = 'Press the action key to use'
-    ACTION_TILE_LOOPS = 3
+    ACTION_TILE_LOOPS = 1
 
     def __init__(self, definition_path, map_path, has_timer=True,
                  should_fade_in=True):
