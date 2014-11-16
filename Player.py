@@ -10,7 +10,7 @@ from Globals import Globals
 class Player(Character):
     COIN_FACTOR = 10000
     STAIR_OFFSET = 20
-    LEVER_OFFSET = 40
+    ACTION_OFFSET = 40
     MOVE_VELOCITY = 200
     SECONDS_TO_FULL_SPEED = .5
     ACCELERATION = MOVE_VELOCITY / SECONDS_TO_FULL_SPEED

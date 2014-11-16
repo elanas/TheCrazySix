@@ -270,9 +270,19 @@ class Level(GameState):
         self.black_surf.set_alpha(Level.MAX_ALPHA)
         self.fade_in = True
 
+    def handle_action_key(self):
+        radius = max(self.player.rect.size) * 2
+        temp_rect = self.player.rect.inflate(
+            -Player.ACTION_OFFSET, -Player.ACTION_OFFSET)
+        special_tiles = self.camera.get_special_tiles(
+            self.player.rect.center, radius)
+        for tile in special_tiles:
+
     def event(self, event):
         if event.type == pygame.KEYDOWN:
             self.handle_keydown(event.key)
+            if event.key == pygame.K_SPACE:
+                self.handle_action_key()
         elif event.type == pygame.KEYUP:
             self.handle_keyup(event.key)
 
