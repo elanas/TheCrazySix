@@ -308,7 +308,6 @@ class Level(GameState):
 
     def handle_action_switch(self, special_tiles):
         for pair in special_tiles:
-            if 
             if TileType.LEVER_LEFT_ATTR in pair.tile.special_attr:
                 row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
                                                                pair.coords[1])
