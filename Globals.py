@@ -61,19 +61,6 @@ class Globals(object):
         Globals.MENU_SOUND.stop()
 
     @staticmethod
-    def play_cutscene_sound():
-        if Globals.CUTSCENE_SOUND is None:
-            loader = AssetLoader(sound_path_start='sounds')
-            Globals.CUTSCENE_SOUND = loader.load_sound('cutscene_music.ogg')
-        if Globals.CUTSCENE_SOUND.get_num_channels() > 0:
-            return
-        Globals.CUTSCENE_SOUND.play(loops=-1)
-
-    @staticmethod
-    def stop_cutscene_sound():
-        Globals.CUTSCENE_SOUND.stop()
-
-    @staticmethod
     def goto_first_level():
         Globals.CURRENT_LEVEL = -1
         Globals.goto_next_level()
