@@ -20,7 +20,7 @@ class Highscore(GameState):
     def render(self):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
-        Globals.SCREEN.blit(TITLE_IMG, [Globals.WIDTH/5.5,0])
+        Globals.SCREEN.blit(TITLE_IMG, [Globals.WIDTH/5.5, 0])
         font = pygame.font.SysFont(None, 64)
 
         TITLE_PADDING = 100

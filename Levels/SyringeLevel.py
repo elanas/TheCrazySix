@@ -13,7 +13,10 @@ class SyringeLevel(Level):
     def __init__(self):
         super(SyringeLevel, self).__init__(
             SyringeLevel.DEF_NAME, SyringeLevel.MAP_NAME)
-        self.show_subtitle(SyringeLevel.SUBTITLE_TEXT, SyringeLevel.SUBTITLE_LOOPS)
+        self.show_subtitle(
+            SyringeLevel.SUBTITLE_TEXT,
+            SyringeLevel.SUBTITLE_LOOPS
+        )
 
     def handle_lever_on(self):
         for turret in self.turrets:

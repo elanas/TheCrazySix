@@ -47,7 +47,8 @@ class CutSceneEnemy(Enemy):
             self.anim_time += time
             if self.anim_time >= CutSceneEnemy.WALK_ANIM_TIME:
                 self.anim_time = 0
-                self.cycle = (self.cycle + 1) % len(Enemy.images[self.direction])
+                self.cycle = (self.cycle + 1) % \
+                    len(Enemy.images[self.direction])
                 self.image = Enemy.images[self.direction][self.cycle]
                 old_rect = self.rect
                 self.rect = self.image.get_rect()

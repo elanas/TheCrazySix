@@ -281,11 +281,13 @@ class Level(GameState):
 
     def handle_sliding_doors(self, special_tiles):
         base = self.camera.tileEngine.get_tile_from_attr(
-                    TileType.BASE_ATTR)
+            TileType.BASE_ATTR)
         for pair in special_tiles:
             if TileType.SLIDING_DOOR_ATTR in pair.tile.special_attr:
-                row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
-                                                           pair.coords[1])
+                row, col = self.camera.tileEngine.get_tile_pos(
+                    pair.coords[0],
+                    pair.coords[1]
+                )
                 self.camera.tileEngine.tileMap[row][col] = base
                 self.camera.surface_ready = False
 
