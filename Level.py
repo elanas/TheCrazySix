@@ -308,8 +308,30 @@ class Level(GameState):
                     pair.coords[0],
                     pair.coords[1]
                 )
-                self.camera.tileEngine.tileMap[row][col] = base
+                doors = self.get_sliding_doors(row, col)
+                for pos in doors:
+                    row, col = pos
+                    self.camera.tileEngine.tileMap[row][col] = base
                 self.camera.set_dirty()
+
+    def get_sliding_doors(self, row, col):
+        coords = list()
+        coords.append([row, col])
+        coords.extend(self.get_doors_delta(row, col, row_delta=-1))
+        coords.extend(self.get_doors_delta(row, col, row_delta=1))
+        return coords
+
+    def get_doors_delta(self, row, col, row_delta=0, col_delta=0):
+        coords = list()
+        tile_map = self.camera.tileEngine.tileMap
+        row += row_delta
+        col += col_delta
+        while self.camera.tileEngine.is_coord_valid(row, col) and \
+                TileType.SLIDING_DOOR_ATTR in tile_map[row][col].special_attr:
+            coords.append([row, col])
+            row += row_delta
+            col += col_delta
+        return coords
 
     def handle_action_switch(self, special_tiles):
         for pair in special_tiles:
