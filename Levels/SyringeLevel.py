@@ -1,6 +1,7 @@
 import pygame
 from Level import Level
 from TileSystem.TileType import TileType
+from Player import Player
 
 
 class SyringeLevel(Level):
