@@ -27,7 +27,7 @@ class SyringeLevel(Level):
         lever_rects = [pair.rect for pair in special_tiles
                         if TileType.LEVER_LEFT_ATTR in pair.tile.special_attr]
         temp_rect = self.player.rect.inflate(
-            -Player.LEVER_OFFSET, -Player.LEVER_OFFSET)
+            -Player.ACTION_OFFSET, -Player.ACTION_OFFSET)
         num_lever_left = len(temp_rect.collidelistall(lever_rects))
         if num_lever_left > 0:
             self.handle_lever_on()
