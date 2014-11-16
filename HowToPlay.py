@@ -11,6 +11,7 @@ KEYBOARD_IMG = pygame.image.load("images/keyboard.png")
 ENEMY_IMG = pygame.image.load("images/zombie_walking_down_profile.png")
 STAIR_IMG = pygame.image.load("images/stair_profile.png")
 TITLE_IMG = pygame.image.load("images/howtoplay.png")
+SPACEBAR_IMG = pygame.image.load("images/spacebar.png")
 SUBTITLE_BACKGROUND = pygame.color.Color("black")
 SUBTITLE_PADDING = 5
 SUBTITLE_TEXT = "Press enter to continue"
@@ -74,9 +75,10 @@ class HowToPlay(GameState):
         Globals.SCREEN.fill(Globals.BACKGROUND_COLOR)
         Globals.SCREEN.blit(BACKGROUND_IMG, [0, 0])
         Globals.SCREEN.blit(TITLE_IMG, [0, 0])
-        Globals.SCREEN.blit(KEYBOARD_IMG, [50, 300])
-        Globals.SCREEN.blit(ENEMY_IMG, [400, 307])
+        Globals.SCREEN.blit(KEYBOARD_IMG, [0, 300])
+        Globals.SCREEN.blit(SPACEBAR_IMG, [400, 307])
         Globals.SCREEN.blit(STAIR_IMG, [645, 250])
+        # Globals.SCREEN.blit(SPACEBAR_IMG, [645, 250])
 
         # title_rect.top = Globals.SCREEN.get_rect().top + TITLE_PADDING
         # Globals.SCREEN.blit(self.title_surf, self.title_rect)
