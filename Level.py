@@ -32,6 +32,7 @@ class Level(GameState):
     SUBTITLE_MARGIN = 20
     ACTION_TILE_HINT = 'Press the action key to use'
     ACTION_TILE_LOOPS = 1
+    HEALTH_PICKUP = 5
 
     def __init__(self, definition_path, map_path, has_timer=True,
                  should_fade_in=True):
@@ -102,6 +103,8 @@ class Level(GameState):
 
     def replace_special_tile(self, pair):
         if pair.tile.is_replaceable:
+            if TileType.HEALTH_ATTR in pair.tile.special_attr:
+                Globals.HEALTH_BAR.changeHealth(Level.HEALTH_PICKUP)
             row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
                                                            pair.coords[1])
             base = self.camera.tileEngine.get_tile_from_attr(
@@ -304,7 +307,7 @@ class Level(GameState):
                 row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
                                                            pair.coords[1])
                 self.camera.tileEngine.tileMap[row][col] = base
-                self.camera.surface_ready = False
+                self.camera.set_dirty()
 
     def handle_action_switch(self, special_tiles):
         for pair in special_tiles:
@@ -314,7 +317,7 @@ class Level(GameState):
                 lever_right = self.camera.tileEngine.get_tile_from_attr(
                     TileType.LEVER_RIGHT_ATTR)
                 self.camera.tileEngine.tileMap[row][col] = lever_right
-                self.camera.surface_ready = False
+                self.camera.set_dirty()
                 self.handle_lever_on()
             elif TileType.LEVER_RIGHT_ATTR in pair.tile.special_attr:
                 row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
@@ -322,7 +325,7 @@ class Level(GameState):
                 lever_left = self.camera.tileEngine.get_tile_from_attr(
                     TileType.LEVER_LEFT_ATTR)
                 self.camera.tileEngine.tileMap[row][col] = lever_left
-                self.camera.surface_ready = False
+                self.camera.set_dirty()
                 self.handle_lever_off()
 
     def event(self, event):
