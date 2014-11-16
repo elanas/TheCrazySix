@@ -30,6 +30,8 @@ class Level(GameState):
     SUBTITLE_COLOR = pygame.color.Color("white")
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN = 20
+    ACTION_TILE_HINT = 'Press the action key to use'
+    ACTION_TILE_LOOPS = 1
 
     def __init__(self, definition_path, map_path, has_timer=True,
                  should_fade_in=True):
@@ -157,6 +159,19 @@ class Level(GameState):
             self.player.rect.center, radius)
         self.check_stair_collisions(special_tiles)
         self.check_special_collisions(special_tiles)
+        self.check_action_hints()
+
+    def check_action_hints(self):
+        temp_rect = self.player.rect.inflate(
+            Player.ACTION_OFFSET, Player.ACTION_OFFSET)
+        radius = max(temp_rect.size) * 2
+        special_tiles = self.camera.get_special_tiles(
+            self.player.rect.center, radius)
+        action_tiles = [pair for pair in special_tiles if
+                        TileType.ACTION_ATTR in pair.tile.special_attr and
+                        temp_rect.colliderect(pair.rect)]
+        if len(action_tiles) > 0 and not self.showing_subtitle:
+            self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)
 
     def check_special_collisions(self, special_tiles):
         for pair in special_tiles:
@@ -274,8 +289,10 @@ class Level(GameState):
         temp_rect = self.player.rect.inflate(
             Player.ACTION_OFFSET, Player.ACTION_OFFSET)
         radius = max(temp_rect.size) * 2
-        special_tiles = self.camera.get_special_tiles(
+        pairs = self.camera.get_special_tiles(
             self.player.rect.center, radius)
+        special_tiles = [pair for pair in pairs if
+                         temp_rect.colliderect(pair.rect)]
         self.handle_sliding_doors(special_tiles)
         self.handle_action_switch(special_tiles)
 

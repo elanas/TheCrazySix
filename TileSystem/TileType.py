@@ -12,6 +12,7 @@ class TileType(object):
     LEVER_LEFT_ATTR = "switch"
     LEVER_RIGHT_ATTR = "switch_on"
     SLIDING_DOOR_ATTR = "sliding_door"
+    ACTION_ATTR = "action"
     TURRET_LEFT = "turret_spawn_left"
     TURRET_RIGHT = "turret_spawn_right"
     REPLACE_POSTFIX = "_replace"
