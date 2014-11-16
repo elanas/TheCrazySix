@@ -30,7 +30,7 @@ class ZombieCutScene(Level):
             ZombieCutScene.INITIAL_TIMES
         )
         self.overlay_sub = False
-        # Globals.play_cutscene_music()
+        Globals.play_cutscene_sound()
 
     def init_enemy(self):
         self.enemy = CutSceneEnemy(

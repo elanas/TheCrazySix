@@ -19,7 +19,7 @@ class PostZombieCutScene(Level):
         self.overlay_surf.fill(ZombieCutScene.OVERLAY_COLOR_SUB)
         self.show_subtitle(PostZombieCutScene.SUBTITLE_TEXT,
                            PostZombieCutScene.SUBTITLE_LOOPS)
-        # Globals.stop_cutscene_music()
+        Globals.stop_cutscene_sound()
 
     def event(self, event):
         if event.type == pygame.KEYUP or event.type == pygame.KEYDOWN:
