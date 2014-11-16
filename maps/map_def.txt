@@ -36,4 +36,5 @@ u floor_switch_on.png 1 switch_on action
 1 floor_trap.png 0 trap
 2 floor_gap.png 1 gap
 3 floor_gap_filled.png 0
-5 floor_ball.png 1 ball
+' floor_ball.png 1 ball
+; floor_key.png 0 
