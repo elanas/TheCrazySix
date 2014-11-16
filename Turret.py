@@ -26,9 +26,7 @@ class Turret(object):
 
     def update(self, time, camera):
         self.time_elapsed += time
-        if not self.turned_on:
-            return
-        if self.time_elapsed >= self.time_till:
+        if self.turned_on and self.time_elapsed >= self.time_till:
             self.fire()
             self.time_elapsed = 0
             self.time_till = random.uniform(Turret.MIN_WAIT, Turret.MAX_WAIT)

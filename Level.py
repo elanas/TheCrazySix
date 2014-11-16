@@ -276,6 +276,10 @@ class Level(GameState):
         radius = max(temp_rect.size) * 2
         special_tiles = self.camera.get_special_tiles(
             self.player.rect.center, radius)
+        self.handle_sliding_doors(special_tiles)
+        self.handle_action_switch(special_tiles)
+
+    def handle_sliding_doors(self, special_tiles):
         base = self.camera.tileEngine.get_tile_from_attr(
                     TileType.BASE_ATTR)
         for pair in special_tiles:
@@ -284,6 +288,25 @@ class Level(GameState):
                                                            pair.coords[1])
                 self.camera.tileEngine.tileMap[row][col] = base
                 self.camera.surface_ready = False
+
+    def handle_action_switch(self, special_tiles):
+        for pair in special_tiles:
+            if TileType.LEVER_LEFT_ATTR in pair.tile.special_attr:
+                row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
+                                                               pair.coords[1])
+                lever_right = self.camera.tileEngine.get_tile_from_attr(
+                    TileType.LEVER_RIGHT_ATTR)
+                self.camera.tileEngine.tileMap[row][col] = lever_right
+                self.camera.surface_ready = False
+                self.handle_lever_on()
+            elif TileType.LEVER_RIGHT_ATTR in pair.tile.special_attr:
+                row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
+                                                               pair.coords[1])
+                lever_left = self.camera.tileEngine.get_tile_from_attr(
+                    TileType.LEVER_LEFT_ATTR)
+                self.camera.tileEngine.tileMap[row][col] = lever_left
+                self.camera.surface_ready = False
+                self.handle_lever_off()
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
