@@ -271,12 +271,19 @@ class Level(GameState):
         self.fade_in = True
 
     def handle_action_key(self):
-        radius = max(self.player.rect.size) * 2
         temp_rect = self.player.rect.inflate(
-            -Player.ACTION_OFFSET, -Player.ACTION_OFFSET)
+            Player.ACTION_OFFSET, Player.ACTION_OFFSET)
+        radius = max(temp_rect.size) * 2
         special_tiles = self.camera.get_special_tiles(
             self.player.rect.center, radius)
-        for tile in special_tiles:
+        base = self.camera.tileEngine.get_tile_from_attr(
+                    TileType.BASE_ATTR)
+        for pair in special_tiles:
+            if TileType.SLIDING_DOOR_ATTR in pair.tile.special_attr:
+                row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
+                                                           pair.coords[1])
+                self.camera.tileEngine.tileMap[row][col] = base
+                self.camera.surface_ready = False
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
