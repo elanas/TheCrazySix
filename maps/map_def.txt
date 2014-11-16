@@ -1,6 +1,6 @@
 - floor_grey_damaged2.png 0
 + floor_grey_damaged1.png 0
-* floor-white-gray-black.png 0 base coin_base
+* floor-white-gray-black.png 0 base coin_base health_base
 ! box.png 1
 ~ bag.png 1
 & floor_grey_chair.png 0
@@ -37,4 +37,5 @@ j turret_left_topleft.png 1
 t sliding_door.png 1 sliding_door
 v floor_switch.png 1 switch
 u floor_switch_on.png 1 switch_on
+` floor_health.png 0 health_replace
 
