@@ -10,8 +10,10 @@ class PostZombieCutScene(Level):
 
     def __init__(self):
         super(PostZombieCutScene, self).__init__(
-              ZombieCutScene.DEF_NAME, ZombieCutScene.MAP_NAME,
-              should_fade_in=False)
+            ZombieCutScene.DEF_NAME,
+            ZombieCutScene.MAP_NAME,
+            should_fade_in=False
+        )
         self.overlay_surf = pygame.Surface(
             Globals.SCREEN.get_rect().size).convert()
         self.overlay_surf.fill(ZombieCutScene.OVERLAY_COLOR_SUB)
@@ -40,4 +42,3 @@ class PostZombieCutScene(Level):
     def render_overlay(self):
         Globals.SCREEN.blit(self.overlay_surf, (0, 0),
                             special_flags=pygame.BLEND_SUB)
-        
