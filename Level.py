@@ -370,6 +370,11 @@ class Level(GameState):
             self.handle_keydown(event.key)
             if event.key == pygame.K_SPACE:
                 self.handle_action_key()
+            elif event.key == pygame.K_1:
+                self.handle_stair_up()
+            elif event.key == pygame.K_2:
+                delta = 100 - Globals.HEALTH_BAR.health
+                Globals.HEALTH_BAR.changeHealth(delta)
         elif event.type == pygame.KEYUP:
             self.handle_keyup(event.key)
 
