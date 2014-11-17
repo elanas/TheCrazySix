@@ -19,6 +19,7 @@ def initialize():
     Globals.HEIGHT = 600
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
     Globals.STATE = Title()
+    pygame.display.set_caption('The Crazy Six - Field Day')
 
 
 def loadGame():
