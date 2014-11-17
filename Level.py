@@ -33,6 +33,7 @@ class Level(GameState):
     ACTION_TILE_HINT = 'Press the action key to use'
     ACTION_TILE_LOOPS = 1
     HEALTH_PICKUP = 5
+    DAMAGE_TRAP = -1
 
     def __init__(self, definition_path, map_path, has_timer=True,
                  should_fade_in=True):
@@ -88,6 +89,8 @@ class Level(GameState):
 
     def handle_special_collision(self, pair):
         self.replace_special_tile(pair)
+        if TileType.TRAP_ATTR in pair.tile.special_attr:
+                Globals.HEALTH_BAR.changeHealth(Level.DAMAGE_TRAP)
 
     def handle_finish_fade_out(self):
         if not Globals.goto_next_level():
