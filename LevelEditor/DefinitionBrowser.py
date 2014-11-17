@@ -27,8 +27,19 @@ class DefinitionBrowser:
         self.area.height -= self.area.top
         self.area.topleft = (0, 0)
         self.selection = [-1, -1]
+        self.offset = 0
+        self.scroll_amount = self.tile_rect.height + self.padding * 2
+
+    def scroll_up(self):
+        self.offset += self.scroll_amount
+        if self.offset > self.container.height:
+            self.offset = self.container.height
+
+    def scroll_down(self):
+        self.offset = max(0, self.offset - self.scroll_amount)
 
     def render(self, screen):
+        self.surface.fill((0, 0, 0))
         row = 0
         col = 0
         for tile in self.definitions:
@@ -49,7 +60,7 @@ class DefinitionBrowser:
         screen.blit(self.surface, self.container, self.area)
 
     def get_coords(self, row, col):
-        y = self.padding + row * (self.padding + self.tile_rect.height)
+        y = self.padding + row * (self.padding + self.tile_rect.height) - self.offset
         x = self.padding + col * (self.padding + self.tile_rect.width)
         return (x, y)
 

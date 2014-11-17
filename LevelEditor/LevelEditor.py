@@ -91,7 +91,7 @@ class LevelEditor(GameState):
 
     def init_browser(self):
         width = (Globals.WIDTH - self.camera_dest.right) - 20
-        height = Globals.HEIGHT - self.title_rect.bottom - 20
+        height = Globals.HEIGHT - self.title_rect.height - 20
         c = pygame.Rect(0, self.title_rect.bottom + 20, width, height)
         c.centerx = self.title_rect.centerx
         if self.browser is not None:
@@ -300,6 +300,10 @@ class LevelEditor(GameState):
                 self.revert_and_reload()
             elif event.key == pygame.K_u:
                 self.undo_action()
+            elif event.key == pygame.K_MINUS:
+                self.browser.scroll_up()
+            elif event.key == pygame.K_EQUALS:
+                self.browser.scroll_down()
             elif self.key_code is None:
                 self.key_code = event.key
         elif event.type == pygame.KEYUP:
