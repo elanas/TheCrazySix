@@ -322,6 +322,8 @@ class Level(GameState):
         coords.append([row, col])
         coords.extend(self.get_doors_delta(row, col, row_delta=-1))
         coords.extend(self.get_doors_delta(row, col, row_delta=1))
+        coords.extend(self.get_doors_delta(row, col, col_delta=-1))
+        coords.extend(self.get_doors_delta(row, col, col_delta=1))
         return coords
 
     def get_doors_delta(self, row, col, row_delta=0, col_delta=0):
