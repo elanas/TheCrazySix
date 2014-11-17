@@ -357,6 +357,14 @@ class Level(GameState):
                 self.camera.set_dirty()
                 self.handle_lever_off()
 
+    def handle_lever_on(self):
+        for turret in self.turrets:
+            turret.turn_off()
+
+    def handle_lever_off(self):
+        for turret in self.turrets:
+            turret.turn_on()
+
     def event(self, event):
         if event.type == pygame.KEYDOWN:
             self.handle_keydown(event.key)

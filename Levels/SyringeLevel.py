@@ -17,11 +17,3 @@ class SyringeLevel(Level):
             SyringeLevel.SUBTITLE_TEXT,
             SyringeLevel.SUBTITLE_LOOPS
         )
-
-    def handle_lever_on(self):
-        for turret in self.turrets:
-            turret.turn_off()
-
-    def handle_lever_off(self):
-        for turret in self.turrets:
-            turret.turn_on()
