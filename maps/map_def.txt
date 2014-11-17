@@ -29,7 +29,8 @@ l turret_left_topright.png 1 turret_spawn_left
 j turret_left_topleft.png 1
 @ turret_left_bottomleft.png 1
 % turret_left_bottomright.png 1
-t sliding_door.png 1 sliding_door action
+t sliding_door_vert.png 1 sliding_door action
+w sliding_door_horiz.png 1 sliding_door action
 v floor_switch.png 1 switch action 
 u floor_switch_on.png 1 switch_on action
 ` floor_health.png 0 health_replace
@@ -37,4 +38,4 @@ u floor_switch_on.png 1 switch_on action
 2 floor_gap.png 1 gap
 3 floor_gap_filled.png 0
 ' floor_ball.png 1 ball
-; floor_key.png 0 
+; floor_key.png 0
