@@ -39,4 +39,4 @@ u floor_switch_on.png 1 switch_on action
 3 floor_gap_filled.png 0
 ' floor_ball.png 1 ball
 ; floor_key.png 0 key_replace
-A sliding_door_horiz.png 1 sliding_door action locked
+A sliding_door_horiz_locked.png 1 sliding_door action locked
