@@ -4,6 +4,7 @@ from math import ceil
 
 class DefinitionBrowser:
     NUM_COLS = 3.0
+    HIDDEN_ATTR = ['switch_on']
 
     def __init__(self, tile_engine, container):
         self.tile_engine = tile_engine
