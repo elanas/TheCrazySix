@@ -15,6 +15,8 @@ class TileType(object):
     HEALTH_ATTR = "health_replace"
     TRAP_ATTR = "trap"
     ACTION_ATTR = "action"
+    LOCKED_ATTR = "locked"
+    KEY_ATTR = "key_replace"
     TURRET_LEFT = "turret_spawn_left"
     TURRET_RIGHT = "turret_spawn_right"
     REPLACE_POSTFIX = "_replace"

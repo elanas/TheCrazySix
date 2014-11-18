@@ -32,6 +32,8 @@ class Level(GameState):
     SUBTITLE_MARGIN = 20
     ACTION_TILE_HINT = 'Press the action key to use'
     ACTION_TILE_LOOPS = 1
+    LOCKED_TILE_HINT = 'This is locked'
+    LOCKED_TILE_LOOPS = 1
     HEALTH_PICKUP = 5
     DAMAGE_TRAP = -1
 
@@ -64,6 +66,7 @@ class Level(GameState):
         self.showing_subtitle = False
         self.alpha_factor = 300
         self.should_fade_in = should_fade_in
+        self.has_key = False
 
     def got_current_state(self):
         if self.should_fade_in:
@@ -90,7 +93,11 @@ class Level(GameState):
     def handle_special_collision(self, pair):
         self.replace_special_tile(pair)
         if TileType.TRAP_ATTR in pair.tile.special_attr:
-                Globals.HEALTH_BAR.changeHealth(Level.DAMAGE_TRAP)
+            Globals.HEALTH_BAR.changeHealth(Level.DAMAGE_TRAP)
+        elif TileType.HEALTH_ATTR in pair.tile.special_attr:
+            Globals.HEALTH_BAR.changeHealth(Level.HEALTH_PICKUP)
+        elif TileType.KEY_ATTR in pair.tile.special_attr:
+            self.has_key = True
 
     def handle_finish_fade_out(self):
         if not Globals.goto_next_level():
@@ -106,8 +113,6 @@ class Level(GameState):
 
     def replace_special_tile(self, pair):
         if pair.tile.is_replaceable:
-            if TileType.HEALTH_ATTR in pair.tile.special_attr:
-                Globals.HEALTH_BAR.changeHealth(Level.HEALTH_PICKUP)
             row, col = self.camera.tileEngine.get_tile_pos(pair.coords[0],
                                                            pair.coords[1])
             base = self.camera.tileEngine.get_tile_from_attr(
@@ -168,6 +173,8 @@ class Level(GameState):
         self.check_action_hints()
 
     def check_action_hints(self):
+        if self.showing_subtitle:
+            return
         temp_rect = self.player.rect.inflate(
             Player.ACTION_OFFSET, Player.ACTION_OFFSET)
         radius = max(temp_rect.size) * 2
@@ -176,7 +183,11 @@ class Level(GameState):
         action_tiles = [pair for pair in special_tiles if
                         TileType.ACTION_ATTR in pair.tile.special_attr and
                         temp_rect.colliderect(pair.rect)]
-        if len(action_tiles) > 0 and not self.showing_subtitle:
+        locked_tiles = [pair for pair in action_tiles if
+                        TileType.LOCKED_ATTR in pair.tile.special_attr]
+        if not self.has_key and len(locked_tiles) > 0:
+            self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
+        elif len(action_tiles) > 0:
             self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)
 
     def check_special_collisions(self, special_tiles):
@@ -319,11 +330,26 @@ class Level(GameState):
 
     def get_sliding_doors(self, row, col):
         coords = list()
+        if not self.has_key and TileType.LOCKED_ATTR in \
+                self.camera.tileEngine.tileMap[row][col].special_attr:
+            return list()
         coords.append([row, col])
-        coords.extend(self.get_doors_delta(row, col, row_delta=-1))
-        coords.extend(self.get_doors_delta(row, col, row_delta=1))
-        coords.extend(self.get_doors_delta(row, col, col_delta=-1))
-        coords.extend(self.get_doors_delta(row, col, col_delta=1))
+        result = self.get_doors_delta(row, col, row_delta=-1)
+        if result == -1:
+            return list()
+        coords.extend(result)
+        result = self.get_doors_delta(row, col, row_delta=1)
+        if result == -1:
+            return list()
+        coords.extend(result)
+        result = self.get_doors_delta(row, col, col_delta=-1)
+        if result == -1:
+            return list()
+        coords.extend(result)
+        result = self.get_doors_delta(row, col, col_delta=1)
+        if result == -1:
+            return list()
+        coords.extend(result)
         return coords
 
     def get_doors_delta(self, row, col, row_delta=0, col_delta=0):
@@ -333,6 +359,9 @@ class Level(GameState):
         col += col_delta
         while self.camera.tileEngine.is_coord_valid(row, col) and \
                 TileType.SLIDING_DOOR_ATTR in tile_map[row][col].special_attr:
+            if not self.has_key and \
+                    TileType.LOCKED_ATTR in tile_map[row][col].special_attr:
+                return -1
             coords.append([row, col])
             row += row_delta
             col += col_delta
