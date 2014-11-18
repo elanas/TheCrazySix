@@ -398,19 +398,19 @@ class Level(GameState):
     def event(self, event):
         if event.type == pygame.KEYDOWN:
             self.handle_keydown(event.key)
-            if event.key == pygame.K_SPACE:
-                self.handle_action_key()
-            elif event.key == pygame.K_1:
-                self.handle_stair_up()
-            elif event.key == pygame.K_2:
-                delta = 100 - Globals.HEALTH_BAR.health
-                Globals.HEALTH_BAR.changeHealth(delta)
         elif event.type == pygame.KEYUP:
             self.handle_keyup(event.key)
 
     def handle_keydown(self, key):
         if key == pygame.K_ESCAPE:
             self.handle_escape()
+        elif key == pygame.K_SPACE:
+            self.handle_action_key()
+        elif key == pygame.K_1:
+            self.handle_stair_up()
+        elif key == pygame.K_2:
+            delta = 100 - Globals.HEALTH_BAR.health
+            Globals.HEALTH_BAR.changeHealth(delta)
         else:
             self.keyCode = key
             for p in self.playerSprites:
