@@ -206,8 +206,9 @@ class Player(Character):
         super(Player, self).move(dist_delta[0], dist_delta[1])
 
     def play_sound(self):
-        if Player.hitSound.get_num_channels() == 0:
-            Player.hitSound.play()
+        if Player.hitSound.get_num_channels() > 0:
+            return
+        Player.hitSound.play()
 
     def show_damage(self):
         self.blinking = True
