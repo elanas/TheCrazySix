@@ -94,6 +94,7 @@ class Level(GameState):
         self.replace_special_tile(pair)
         if TileType.TRAP_ATTR in pair.tile.special_attr:
             Globals.HEALTH_BAR.changeHealth(Level.DAMAGE_TRAP)
+            self.player.show_damage()
         elif TileType.HEALTH_ATTR in pair.tile.special_attr:
             Globals.HEALTH_BAR.changeHealth(Level.HEALTH_PICKUP)
         elif TileType.KEY_ATTR in pair.tile.special_attr:
