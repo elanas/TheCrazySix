@@ -47,6 +47,7 @@ class Player(Character):
         self.blinking = False
         self.blinking_time = 0
         self.total_blinking_time = 0
+        self.last_sound_time = 0.0
 
     def update(self, time, camera=None):
         self.updateVelocity(time)
@@ -206,9 +207,10 @@ class Player(Character):
         super(Player, self).move(dist_delta[0], dist_delta[1])
 
     def play_sound(self):
-        if Player.hitSound.get_num_channels() > 0:
-            return
-        Player.hitSound.play()
+        current_time = pygame.time.get_ticks() / 1000
+        if self.last_sound_time == 0.0 or current_time - Player.hitSound.get_length() >= self.last_sound_time:
+            self.last_sound_time = current_time
+            Player.hitSound.play()
 
     def show_damage(self):
         self.blinking = True
