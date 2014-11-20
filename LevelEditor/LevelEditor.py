@@ -29,7 +29,8 @@ class LevelEditor(GameState):
     TITLE = "Tiles:"
     TITLE_COLOR = pygame.color.Color("white")
 
-    def __init__(self, definition_path, map_path):
+    def __init__(self, definition_path, map_path, globals=Globals):
+        self.globals = globals
         self.actions = list()
         self.browser = None
         self.message_time = 0
@@ -60,13 +61,13 @@ class LevelEditor(GameState):
             LevelEditor.TITLE, False, LevelEditor.TITLE_COLOR)
         self.title_rect = self.title_surf.get_rect()
         self.title_rect.centerx = self.camera_dest.right + \
-            (Globals.WIDTH - self.camera_dest.right) / 2
+            (self.globals.WIDTH - self.camera_dest.right) / 2
         self.title_rect.top = self.camera_dest.top + 20
 
     def init_camera(self):
         self.camera_dest = pygame.Rect(
-            LevelEditor.PADDING, LevelEditor.PADDING, Globals.WIDTH -
-            self.right_padding - LevelEditor.PADDING, Globals.HEIGHT -
+            LevelEditor.PADDING, LevelEditor.PADDING, self.globals.WIDTH -
+            self.right_padding - LevelEditor.PADDING, self.globals.HEIGHT -
             LevelEditor.PADDING)
         self.camera = Camera(self.tile_engine, self.camera_dest)
         extra_y = self.camera_dest.height % self.tile_rect.height
@@ -75,7 +76,7 @@ class LevelEditor(GameState):
             self.camera_dest.height -= extra_y
         if extra_x > 0:
             self.camera_dest.width -= extra_x
-        self.camera_dest.centery = Globals.HEIGHT / 2
+        self.camera_dest.centery = self.globals.HEIGHT / 2
 
     def init_highlight(self, source=None, alpha=HIGHLIGHT_ALPHA, border=False):
         self.highlight_surf = pygame.Surface(self.tile_rect.size).convert()
@@ -90,23 +91,24 @@ class LevelEditor(GameState):
                              LevelEditor.HIGHLIGHT_BORDER, self.tile_rect, 1)
 
     def init_browser(self):
-        width = (Globals.WIDTH - self.camera_dest.right) - 20
-        height = Globals.HEIGHT - self.title_rect.height - 20
+        width = (self.globals.WIDTH - self.camera_dest.right) - 20
+        height = self.globals.HEIGHT - self.title_rect.height - 20
         c = pygame.Rect(0, self.title_rect.bottom + 20, width, height)
         c.centerx = self.title_rect.centerx
         if self.browser is not None:
-            pygame.draw.rect(Globals.SCREEN, (0, 0, 0), self.browser.container)
+            pygame.draw.rect(self.globals.SCREEN, (0, 0, 0), self.browser.container)
         self.browser = DefinitionBrowser(self.tile_engine, c)
 
     def render(self):
-        self.camera.render(Globals.SCREEN, False)
+        self.globals.SCREEN.fill((0, 0, 0))
+        self.camera.render(self.globals.SCREEN, False)
         self.handle_mouse()
 
         if self.message_surf is not None:
-            Globals.SCREEN.blit(self.message_surf, self.message_rect)
+            self.globals.SCREEN.blit(self.message_surf, self.message_rect)
 
-        Globals.SCREEN.blit(self.title_surf, self.title_rect)
-        self.browser.render(Globals.SCREEN)
+        self.globals.SCREEN.blit(self.title_surf, self.title_rect)
+        self.browser.render(self.globals.SCREEN)
 
     def update(self, time):
         if self.key_code is not None:
@@ -150,7 +152,7 @@ class LevelEditor(GameState):
             x = pos[0] - temp[0] % self.tile_rect.width
             y = pos[1] - temp[1] % self.tile_rect.height
             rect.topleft = (x, y)
-            Globals.SCREEN.blit(self.highlight_surf, rect)
+            self.globals.SCREEN.blit(self.highlight_surf, rect)
 
     def handle_mouse_click(self):
         coord = list(pygame.mouse.get_pos())
