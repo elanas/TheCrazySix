@@ -81,9 +81,10 @@ class CustomLevelPicker(GameState):
         self.build_text()
 
     def handle_selection(self):
-        if self.current_selection == 0:
-            print 'new level'
-        else:
+        pass
+
+    def handle_edit_selection(self):
+        if self.current_selection != 0:
             file_path = self.file_manager.fix_ext(
                 self.file_names[self.current_selection - 1])
             Globals.STATE = LevelEditor(join('maps', 'map_def.txt'),
@@ -98,5 +99,7 @@ class CustomLevelPicker(GameState):
                 self.handle_change(-1)
             elif event.key == pygame.K_RETURN:
                 self.handle_selection()
+            elif event.key == pygame.K_e:
+                self.handle_edit_selection()
             elif event.key == pygame.K_ESCAPE:
                 Globals.RUNNING = False
