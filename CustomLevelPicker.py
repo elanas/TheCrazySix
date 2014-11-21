@@ -22,9 +22,10 @@ class CustomLevelPicker(GameState):
     HIGHLIGHT_ALPHA = 150
     ARROW_MARGIN = 20
     SUBTITLE_BACKGROUND = pygame.color.Color("black")
-    SUBTITLE_PADDING = 5
+    SUBTITLE_PADDING = 10
     RIGHT_SUBTITLE_TEXT = "Press enter to play"
     LEFT_SUBTITLE_TEXT = "Press e to edit"
+    NEW_SUBTITLE_TEXT = "Press enter"
     SUBTITLE_COLOR = pygame.color.Color("white")
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN_BOTTOM = 50
@@ -59,6 +60,9 @@ class CustomLevelPicker(GameState):
         self.right_subtitle_surf, self.right_subtitle_rect = \
             self.init_subtitle(CustomLevelPicker.RIGHT_SUBTITLE_TEXT,
                 (3 * Globals.WIDTH) / 4)
+        self.new_subtitle_surf, self.new_subtitle_rect = \
+            self.init_subtitle(CustomLevelPicker.NEW_SUBTITLE_TEXT,
+                Globals.WIDTH / 2)
 
     def init_subtitle(self, text, centerx):
         text_surf = CustomLevelPicker.SUBTITLE_FONT.render(
@@ -83,10 +87,14 @@ class CustomLevelPicker(GameState):
         Globals.SCREEN.blit(self.background_img, (0, 0))
         Globals.SCREEN.blit(self.highlight_surf, self.highlight_rect)
         Globals.SCREEN.blit(self.text_surf, self.text_rect)
-        Globals.SCREEN.blit(self.arrow_down_surf, self.arrow_down_rect)
-        Globals.SCREEN.blit(self.arrow_up_surf, self.arrow_up_rect)
-        Globals.SCREEN.blit(self.left_subtitle_surf, self.left_subtitle_rect)
-        Globals.SCREEN.blit(self.right_subtitle_surf, self.right_subtitle_rect)
+        if self.current_selection == 0:
+            Globals.SCREEN.blit(self.new_subtitle_surf, self.new_subtitle_rect)
+        else:
+            Globals.SCREEN.blit(self.left_subtitle_surf, self.left_subtitle_rect)
+            Globals.SCREEN.blit(self.right_subtitle_surf, self.right_subtitle_rect)
+        if len(self.file_names) > 0:
+            Globals.SCREEN.blit(self.arrow_down_surf, self.arrow_down_rect)
+            Globals.SCREEN.blit(self.arrow_up_surf, self.arrow_up_rect)
 
     def build_text(self):
         self.text_surf = CustomLevelPicker.SELECTION_FONT.render(
