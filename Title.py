@@ -2,7 +2,7 @@ import pygame
 
 from GameState import GameState
 from Globals import Globals
-from Menu import Menu
+import Menu
 
 GAME_TITLE = "~Field Day~"
 TITLE_COLOR = pygame.color.Color("white")
@@ -62,4 +62,4 @@ class Title(GameState):
         if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
             Globals.RUNNING = False
         elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            Globals.STATE = Menu()
+            Globals.STATE = Menu.Menu()
