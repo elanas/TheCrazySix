@@ -7,6 +7,7 @@ import pygame
 import sys, os
 from LevelEditor.LevelEditor import LevelEditor
 from Levels.CustomLevel import CustomLevel
+from CustomLevelNameInput import CustomLevelNameInput
 
 
 class CustomLevelPicker(GameState):
@@ -45,6 +46,7 @@ class CustomLevelPicker(GameState):
         self.highlight_rect = None
         self.build_text()
         self.build_subtitles()
+        Globals.play_menu_sound()
 
     def init_images(self):
         self.loader = AssetLoader('images')
@@ -135,7 +137,7 @@ class CustomLevelPicker(GameState):
             level.got_current_state()
             Globals.STATE = level
         else:
-            pass
+            Globals.STATE = CustomLevelNameInput()
 
     def handle_edit_selection(self):
         if self.current_selection != 0:
@@ -145,7 +147,7 @@ class CustomLevelPicker(GameState):
                 join(CustomLevelPicker.CUSTOM_MAP_PATH, file_path),
                 globals=Globals)
         else:
-            pass
+            Globals.STATE = CustomLevelNameInput()
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
