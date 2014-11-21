@@ -58,7 +58,8 @@ class Globals(object):
 
     @staticmethod
     def stop_menu_sound():
-        Globals.MENU_SOUND.stop()
+        if Globals.MENU_SOUND is not None:
+            Globals.MENU_SOUND.stop()
 
     @staticmethod
     def goto_first_level():
