@@ -21,6 +21,13 @@ class CustomLevelPicker(GameState):
     HIGHLIGHT_COLOR = pygame.color.Color("black")
     HIGHLIGHT_ALPHA = 150
     ARROW_MARGIN = 20
+    SUBTITLE_BACKGROUND = pygame.color.Color("black")
+    SUBTITLE_PADDING = 5
+    RIGHT_SUBTITLE_TEXT = "Press enter to play"
+    LEFT_SUBTITLE_TEXT = "Press e to edit"
+    SUBTITLE_COLOR = pygame.color.Color("white")
+    SUBTITLE_FONT = pygame.font.Font(None, 32)
+    SUBTITLE_MARGIN_BOTTOM = 50
     
     def __init__(self):
         self.init_images()
@@ -34,6 +41,7 @@ class CustomLevelPicker(GameState):
         self.highlight_surf = None
         self.highlight_rect = None
         self.build_text()
+        self.build_subtitles()
 
     def init_images(self):
         self.loader = AssetLoader('images')
@@ -45,12 +53,40 @@ class CustomLevelPicker(GameState):
         self.arrow_up_rect.centerx = Globals.WIDTH / 2
         self.arrow_down_rect.centerx = Globals.WIDTH / 2
 
+    def build_subtitles(self):
+        self.left_subtitle_surf, self.left_subtitle_rect = self.init_subtitle(
+            CustomLevelPicker.LEFT_SUBTITLE_TEXT, Globals.WIDTH / 4)
+        self.right_subtitle_surf, self.right_subtitle_rect = \
+            self.init_subtitle(CustomLevelPicker.RIGHT_SUBTITLE_TEXT,
+                (3 * Globals.WIDTH) / 4)
+
+    def init_subtitle(self, text, centerx):
+        text_surf = CustomLevelPicker.SUBTITLE_FONT.render(
+            text, True, CustomLevelPicker.SUBTITLE_COLOR)
+        subtitle_rect = text_surf.get_rect()
+        subtitle_rect.bottom = \
+            Globals.HEIGHT - CustomLevelPicker.SUBTITLE_MARGIN_BOTTOM
+        subtitle_rect.centerx = centerx
+        subtitle_rect.inflate_ip(
+            CustomLevelPicker.SUBTITLE_PADDING * 2,
+            CustomLevelPicker.SUBTITLE_PADDING * 2
+        )
+        subtitle_surf = pygame.Surface(subtitle_rect.size).convert()
+        subtitle_surf.fill(CustomLevelPicker.SUBTITLE_BACKGROUND)
+        subtitle_surf.blit(text_surf, (
+            CustomLevelPicker.SUBTITLE_PADDING,
+            CustomLevelPicker.SUBTITLE_PADDING
+        ))
+        return subtitle_surf, subtitle_rect
+
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))
         Globals.SCREEN.blit(self.highlight_surf, self.highlight_rect)
         Globals.SCREEN.blit(self.text_surf, self.text_rect)
         Globals.SCREEN.blit(self.arrow_down_surf, self.arrow_down_rect)
         Globals.SCREEN.blit(self.arrow_up_surf, self.arrow_up_rect)
+        Globals.SCREEN.blit(self.left_subtitle_surf, self.left_subtitle_rect)
+        Globals.SCREEN.blit(self.right_subtitle_surf, self.right_subtitle_rect)
 
     def build_text(self):
         self.text_surf = CustomLevelPicker.SELECTION_FONT.render(
