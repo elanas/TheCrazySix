@@ -249,7 +249,7 @@ class Level(GameState):
 
     def update(self, time):
         if Globals.HEALTH_BAR.is_dead():
-            Globals.STATE = LoseGame.LoseGame()
+            self.handle_lose_game()
         if self.fade_out or self.fade_in:
             self.update_alpha(time)
             return
@@ -261,6 +261,9 @@ class Level(GameState):
         self.check_camera_position()
         self.check_collisions()
         self.update_subtitle(time)
+
+    def handle_lose_game(self):
+        Globals.STATE = LoseGame.LoseGame()
 
     def update_subtitle(self, time):
         if not self.showing_subtitle:
