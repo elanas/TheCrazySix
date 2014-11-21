@@ -1,11 +1,11 @@
-from os import listdir
+from os import listdir, makedirs
 from os.path import isfile, join, isdir, splitext
 
 class FileManager(object):
 
     def __init__(self, path='', file_ext=None):
         if not isdir(path):
-            raise IOError('The directory path given does not exist.')
+            makedirs(path)
         self.path = path
         self.file_ext = file_ext
         if not self.file_ext.startswith("."):
