@@ -6,11 +6,13 @@ from FileManager import FileManager
 import pygame
 import sys, os
 from LevelEditor.LevelEditor import LevelEditor
+from Levels.CustomLevel import CustomLevel
 
 
 class CustomLevelPicker(GameState):
     MAP_FILE_EXT = 'txt'
     CUSTOM_MAP_PATH = join('maps', 'custom')
+    PLAY_PATH = 'custom'
     SELECTION_FONT = pygame.font.Font(None, 70)
     SELECTION_COLOR = pygame.color.Color('white')
     CREATE_NEW_TEXT = 'Create New Level'
@@ -125,7 +127,15 @@ class CustomLevelPicker(GameState):
         self.build_text()
 
     def handle_selection(self):
-        pass
+        if self.current_selection != 0:
+            file_path = self.file_manager.fix_ext(
+                self.file_names[self.current_selection - 1])
+            level = CustomLevel(join(CustomLevelPicker.PLAY_PATH,
+                file_path))
+            level.got_current_state()
+            Globals.STATE = level
+        else:
+            pass
 
     def handle_edit_selection(self):
         if self.current_selection != 0:
@@ -134,6 +144,8 @@ class CustomLevelPicker(GameState):
             Globals.STATE = LevelEditor(join('maps', 'map_def.txt'),
                 join(CustomLevelPicker.CUSTOM_MAP_PATH, file_path),
                 globals=Globals)
+        else:
+            pass
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
