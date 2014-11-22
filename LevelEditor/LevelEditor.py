@@ -25,7 +25,7 @@ class LevelEditor(GameState):
     MESSAGE_TIMEOUT = 2
     INFO_TIMEOUT = 6
     MESSAGE_PADDING = 10
-    MESSAGE_FONT = pygame.font.Font(None, 40)
+    MESSAGE_FONT = pygame.font.Font(None, 30)
     DEFAULT_MESSAGE_COLOR = pygame.color.Color("white")
     ERROR_MESSAGE_COLOR = pygame.color.Color("red")
     MESSAGE_BACKGROUND = pygame.color.Color("black")
@@ -146,6 +146,8 @@ class LevelEditor(GameState):
         self.message_surf.blit(
             temp_surf, (LevelEditor.MESSAGE_PADDING,
                         LevelEditor.MESSAGE_PADDING))
+        if self.message_rect.left < 0:
+            self.message_rect.left = 0
         self.message_time = timeout
 
     def handle_mouse(self):
