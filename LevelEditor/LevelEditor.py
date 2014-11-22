@@ -401,9 +401,9 @@ class LevelEditor(GameState):
             elif event.key == pygame.K_u:
                 self.undo_action()
             elif event.key == pygame.K_MINUS:
-                self.browser.scroll_up()
-            elif event.key == pygame.K_EQUALS:
                 self.browser.scroll_down()
+            elif event.key == pygame.K_EQUALS:
+                self.browser.scroll_up()
             elif self.key_code is None:
                 self.key_code = event.key
         elif event.type == pygame.KEYUP:
