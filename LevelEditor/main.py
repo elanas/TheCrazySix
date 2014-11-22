@@ -1,6 +1,5 @@
 import pygame
 from Globals import Globals
-from LevelEditor import LevelEditor
 import sys
 import os
 
@@ -15,6 +14,7 @@ def create_map_file(file_path):
 
 
 def initialize():
+    import LevelEditor
     if len(sys.argv) < 3:
         print "The level editor should be run as:"
         print "\t python main.py [definition file path] [map file path]"
@@ -30,7 +30,7 @@ def initialize():
     Globals.WIDTH = 1200
     Globals.HEIGHT = 750
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.STATE = LevelEditor(def_file, map_file)
+    Globals.STATE = LevelEditor.LevelEditor(def_file, map_file)
 
 
 def loop():
@@ -57,4 +57,5 @@ def main():
     loop()
 
 if __name__ == '__main__':
+    RUN_DIRECTLY = True
     main()

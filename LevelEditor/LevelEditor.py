@@ -12,7 +12,6 @@ from os.path import join
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-import CustomLevelPicker
 
 
 class LevelEditor(GameState):
@@ -335,6 +334,7 @@ class LevelEditor(GameState):
                 if not self.in_game:
                     self.revert_and_reload()
                 else:
+                    import CustomLevelPicker
                     self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
             elif event.key == pygame.K_u:
                 self.undo_action()
