@@ -1,5 +1,6 @@
 import Level
 import Globals
+from HealthBar import HealthBar
 import pygame
 import sys
 import os
@@ -13,6 +14,7 @@ class CustomLevel(Level.Level):
     def __init__(self, map_path):
         super(CustomLevel, self).__init__(CustomLevel.DEF_NAME,
                                           map_path)
+        Globals.Globals.HEALTH_BAR = HealthBar()
 
     def handle_escape(self):
         Globals.Globals.STATE = CustomLevelPicker.CustomLevelPicker()
