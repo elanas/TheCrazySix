@@ -10,6 +10,7 @@ TITLE_IMG = pygame.image.load("images/name-input-title.png")
 
 
 class NameInput(GameState):
+    ARROW_KEYS = [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]
     MIN_LENGTH = 3
     MAX_LENGTH = 15
     PROMPT_FONT = None
@@ -37,6 +38,7 @@ class NameInput(GameState):
     ERROR_BACKSPACE = "You can't delete nothing!"
     ERROR_TOO_LONG = "Name is too long!"
     ERROR_TOO_SHORT = "Name is too short!"
+    ERROR_ARROW_KEY = "The arrow keys are disabled!"
     EXTRA_BLINK_TIME = .75
     EXTRA_POSTTEXT = '|'
     EXTRA_COLOR = pygame.color.Color("white")
@@ -166,6 +168,8 @@ class NameInput(GameState):
                 self.handle_backspace()
             elif event.key == pygame.K_RETURN:
                 self.handle_return()
+            elif event.key in NameInput.ARROW_KEYS:
+                self.error_message = NameInput.ERROR_ARROW_KEY
 
     def parse_key(self, event_key):
         if self.is_num(event_key):
