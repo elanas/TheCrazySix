@@ -267,6 +267,7 @@ class LevelEditor(GameState):
                 row += 1
         a = Action(type=Action.COMBO_SET, num_sets=4)
         self.actions.append(a)
+        self.set_message('combo added', timeout=LevelEditor.QUICK_TIMEOUT)
 
     def make_room(self, row, col):
         row_delta, col_delta = 0, 0
