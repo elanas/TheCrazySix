@@ -15,7 +15,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 class LevelEditor(GameState):
-    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR]#, TileType.TURRET_ATTR]
+    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR, TileType.TURRET_ATTR]
     RIGHT_PADDING_FACTOR = 4
     PADDING = 20
     HIGHLIGHT_COLOR = (255, 0, 255)
@@ -35,6 +35,7 @@ class LevelEditor(GameState):
     SECOND_TITLE = "Combos:"
     TITLE_COLOR = pygame.color.Color("white")
     COMBO_DEF_PATH = join('maps', 'combo_def.txt')
+    # TURRET_RIGHT_COMBO = ''
 
     def __init__(self, definition_path, map_path, globals=Globals, in_game=False):
         self.globals = globals
@@ -66,6 +67,7 @@ class LevelEditor(GameState):
         self.init_browser()
         self.init_second_title()
         self.init_combo_browser()
+        self.in_combo = False
 
     def init_title(self):
         self.title_surf = LevelEditor.TITLE_FONT.render(
@@ -215,6 +217,12 @@ class LevelEditor(GameState):
                 self.handle_combo_browser_click(coord)
 
     def handle_tile_set(self, row, col):
+        if not self.in_combo:
+            self.handle_normal_tile_set(row, col)
+        else:
+            self.handle_combo_tile_set(row, col)
+
+    def handle_normal_tile_set(self, row, col):
         tile = self.browser.get_selected_tile()
         if tile is None:
             return
@@ -228,6 +236,37 @@ class LevelEditor(GameState):
         else:
             new_row, new_col = self.make_room(row, col)
             self.handle_tile_set(new_row, new_col)
+
+    def handle_combo_tile_set(self, row, col):
+        tile = self.combo_browser.get_selected_tile()
+        if tile is None:
+            return
+        if TileType.TURRET_COMBO in tile.special_attr:
+            if TileType.TURRET_COMBO_RIGHT in tile.special_attr:
+                prefix = 't_right_'
+            elif TileType.TURRET_COMBO_LEFT in tile.special_attr:
+                prefix = 't_left_'
+            else:
+                return
+            self.handle_turret_combo(row, col, prefix)
+
+    def handle_turret_combo(self, row, col, prefix):
+        orig_col = col
+        for i in range(0, 4):
+            attr = prefix + str(i)
+            tile = self.tile_engine.get_tile_from_attr(attr)
+            old_tile = self.tile_engine.tileMap[row][col]
+            self.tile_engine.tileMap[row][col] = tile
+            a = Action(type=Action.SET_TYPE, row=row, col=col,
+                       old_tile=old_tile, new_tile=tile)
+            self.actions.append(a)
+
+            col += 1
+            if col == orig_col + 2:
+                col = orig_col
+                row += 1
+        a = Action(type=Action.COMBO_SET, num_sets=4)
+        self.actions.append(a)
 
     def make_room(self, row, col):
         row_delta, col_delta = 0, 0
@@ -272,6 +311,8 @@ class LevelEditor(GameState):
         self.browser.handle_mouse_click(coord)
         tile = self.browser.get_selected_tile()
         if tile is not None:
+            self.combo_browser.clear_selection()
+            self.in_combo = False
             if self.info_mode:
                 self.toggle_info_mode()
             elif self.delete_mode:
@@ -281,7 +322,16 @@ class LevelEditor(GameState):
 
     def handle_combo_browser_click(self, coord):
         self.combo_browser.handle_mouse_click(coord)
-        # tile = self.combo_browser.get_selected_tile()
+        tile = self.combo_browser.get_selected_tile()
+        if tile is not None:
+            self.browser.clear_selection()
+            self.in_combo = True
+            if self.info_mode:
+                self.toggle_info_mode()
+            elif self.delete_mode:
+                self.toggle_delete_mode()
+            self.init_highlight(tile.image, alpha=LevelEditor.SELECTION_ALPHA,
+                                border=True)
 
     def delete_tile(self, row, col):
         if self.tile_engine.is_coord_valid(row, col) and \
@@ -369,19 +419,27 @@ class LevelEditor(GameState):
         elif event.type == pygame.MOUSEBUTTONUP:
             self.mouse_down = False
 
-    def undo_action(self):
+    def undo_action(self, supress_message=False):
         if len(self.actions) == 0:
-            self.set_message("there is nothing left to undo",
-                             color=LevelEditor.ERROR_MESSAGE_COLOR)
+            if not supress_message:
+                self.set_message("there is nothing left to undo",
+                                 color=LevelEditor.ERROR_MESSAGE_COLOR)
             return
         action = self.actions.pop()
         if action.type == Action.DELETE_TYPE:
             self.tile_engine.tileMap[action.row][action.col] = action.old_tile
-            self.set_message("delete undone",
-                             timeout=LevelEditor.QUICK_TIMEOUT)
+            if not supress_message:
+                self.set_message("delete undone",
+                                 timeout=LevelEditor.QUICK_TIMEOUT)
         elif action.type == Action.SET_TYPE:
             self.tile_engine.tileMap[action.row][action.col] = action.old_tile
-            self.set_message("tile set undone",
+            if not supress_message:
+                self.set_message("tile set undone",
+                                 timeout=LevelEditor.QUICK_TIMEOUT)
+        elif action.type == Action.COMBO_SET:
+            for i in range(0, action.num_sets):
+                self.undo_action(supress_message=True)
+            self.set_message("combo set undone",
                              timeout=LevelEditor.QUICK_TIMEOUT)
         else:
             self.set_message("Undo failed",

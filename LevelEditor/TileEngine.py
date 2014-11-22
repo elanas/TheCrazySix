@@ -69,3 +69,11 @@ class TileEngine(object):
     def is_coord_valid(self, row_num, col_num):
         return 0 <= row_num and row_num < len(self.tileMap) and \
             0 <= col_num and col_num < len(self.tileMap[row_num])
+
+    def get_tile_from_attr(self, special_attr):
+        definitions = self.tileManager.tileDefinitions
+        for symbol in definitions:
+            tile = definitions[symbol]
+            if special_attr in tile.special_attr:
+                return tile
+        return None

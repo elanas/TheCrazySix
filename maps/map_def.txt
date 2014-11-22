@@ -19,14 +19,14 @@ c floor_bed_top.png 1
 b table_top.png 1
 n table_top_potion.png 1
 m table_bottom.png 1
-k turret_right_topleft.png 1 turret
-) turret_right_topright.png 1 turret turret_spawn_right
-( turret_right_bottomright.png 1 turret
-^ turret_right_bottomleft.png 1 turret
-l turret_left_topright.png 1 turret turret_spawn_left
-j turret_left_topleft.png 1 turret
-@ turret_left_bottomleft.png 1 turret
-% turret_left_bottomright.png 1 turret
+k turret_right_topleft.png 1 turret t_right_0
+) turret_right_topright.png 1 turret t_right_1 turret_spawn_right
+( turret_right_bottomright.png 1 turret t_right_3
+^ turret_right_bottomleft.png 1 turret t_right_2
+l turret_left_topright.png 1 turret t_left_0 turret_spawn_left
+j turret_left_topleft.png 1 turret t_left_1
+@ turret_left_bottomleft.png 1 turret t_left_3
+% turret_left_bottomright.png 1 turret t_left_2
 t sliding_door_vert.png 1 sliding_door action
 w sliding_door_horiz.png 1 sliding_door action
 v floor_switch.png 1 switch action 
