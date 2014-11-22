@@ -2,6 +2,7 @@ import pygame
 from GameState import GameState
 from Globals import Globals
 from TileEngine import TileEngine
+from TileManager import TileManager
 from TileType import TileType
 from Camera import Camera
 from DefinitionBrowser import DefinitionBrowser
@@ -15,6 +16,7 @@ import CustomLevelPicker
 
 
 class LevelEditor(GameState):
+    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR]#, TileType.TURRET_ATTR]
     RIGHT_PADDING_FACTOR = 4
     PADDING = 20
     HIGHLIGHT_COLOR = (255, 0, 255)
@@ -29,9 +31,11 @@ class LevelEditor(GameState):
     DEFAULT_MESSAGE_COLOR = pygame.color.Color("white")
     ERROR_MESSAGE_COLOR = pygame.color.Color("red")
     MESSAGE_BACKGROUND = pygame.color.Color("black")
-    TITLE_FONT = pygame.font.Font(None, 40)
+    TITLE_FONT = pygame.font.Font(None, 35)
     TITLE = "Tiles:"
+    SECOND_TITLE = "Combos:"
     TITLE_COLOR = pygame.color.Color("white")
+    COMBO_DEF_PATH = join('maps', 'combo_def.txt')
 
     def __init__(self, definition_path, map_path, globals=Globals, in_game=False):
         self.globals = globals
@@ -52,6 +56,7 @@ class LevelEditor(GameState):
         self.definition_path = definition_path
         self.map_path = map_path
         self.tile_engine = TileEngine(self.definition_path, self.map_path)
+        self.combo_tile_manager = TileManager(LevelEditor.COMBO_DEF_PATH, None)
         self.tile_rect = self.tile_engine.get_tile_rect()
         self.right_padding = self.tile_rect.width * \
             LevelEditor.RIGHT_PADDING_FACTOR
@@ -60,6 +65,8 @@ class LevelEditor(GameState):
         self.init_highlight()
         self.init_title()
         self.init_browser()
+        self.init_second_title()
+        self.init_combo_browser()
 
     def init_title(self):
         self.title_surf = LevelEditor.TITLE_FONT.render(
@@ -67,7 +74,33 @@ class LevelEditor(GameState):
         self.title_rect = self.title_surf.get_rect()
         self.title_rect.centerx = self.camera_dest.right + \
             (self.globals.WIDTH - self.camera_dest.right) / 2
-        self.title_rect.top = self.camera_dest.top + 20
+        self.title_rect.top = self.camera_dest.top
+
+    def init_second_title(self):
+        self.second_title_surf = LevelEditor.TITLE_FONT.render(
+            LevelEditor.SECOND_TITLE, False, LevelEditor.TITLE_COLOR)
+        self.second_title_rect = self.second_title_surf.get_rect()
+        self.second_title_rect.centerx = self.camera_dest.right + \
+            (self.globals.WIDTH - self.camera_dest.right) / 2
+        self.second_title_rect.top = self.browser.container.bottom + 10
+
+    def init_browser(self):
+        width = (self.globals.WIDTH - self.camera_dest.right) - 20
+        height = self.globals.HEIGHT - self.title_rect.height * 2 - (32 * 4)
+        c = pygame.Rect(0, self.title_rect.bottom + 5, width, height)
+        c.centerx = self.title_rect.centerx
+        # if self.browser is not None:
+        #     pygame.draw.rect(self.globals.SCREEN, (0, 0, 0), self.browser.container)
+        self.browser = DefinitionBrowser(self.tile_engine.tileManager,
+            self.tile_engine.get_tile_rect(), c, LevelEditor.HIDDEN_ATTR)
+
+    def init_combo_browser(self):
+        width = self.browser.container.width
+        height = self.globals.HEIGHT - self.second_title_rect.bottom - 10
+        c = pygame.Rect(0, self.second_title_rect.bottom + 5, width, height)
+        c.centerx = self.browser.container.centerx
+        self.combo_browser = DefinitionBrowser(self.combo_tile_manager,
+            self.tile_engine.get_tile_rect(), c)
 
     def init_camera(self):
         self.camera_dest = pygame.Rect(
@@ -95,15 +128,6 @@ class LevelEditor(GameState):
             pygame.draw.rect(self.highlight_surf,
                              LevelEditor.HIGHLIGHT_BORDER, self.tile_rect, 1)
 
-    def init_browser(self):
-        width = (self.globals.WIDTH - self.camera_dest.right) - 20
-        height = self.globals.HEIGHT - self.title_rect.height - 20
-        c = pygame.Rect(0, self.title_rect.bottom + 20, width, height)
-        c.centerx = self.title_rect.centerx
-        if self.browser is not None:
-            pygame.draw.rect(self.globals.SCREEN, (0, 0, 0), self.browser.container)
-        self.browser = DefinitionBrowser(self.tile_engine, c)
-
     def render(self):
         self.globals.SCREEN.fill((0, 0, 0))
         self.camera.render(self.globals.SCREEN, False)
@@ -114,6 +138,8 @@ class LevelEditor(GameState):
 
         self.globals.SCREEN.blit(self.title_surf, self.title_rect)
         self.browser.render(self.globals.SCREEN)
+        self.globals.SCREEN.blit(self.second_title_surf, self.second_title_rect)
+        self.combo_browser.render(self.globals.SCREEN)
 
     def update(self, time):
         if self.key_code is not None:

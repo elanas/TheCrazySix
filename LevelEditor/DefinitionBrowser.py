@@ -5,17 +5,17 @@ from TileType import TileType
 
 class DefinitionBrowser:
     NUM_COLS = 3.0
-    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR]
 
-    def __init__(self, tile_engine, container):
-        self.tile_engine = tile_engine
+    def __init__(self, tile_manager, tile_rect, container, hidden_attr=set()):
+        self.tile_manager = tile_manager
         self.container = container
-        self.tile_rect = self.tile_engine.get_tile_rect()
+        self.hidden_attr = hidden_attr
+        self.tile_rect = tile_rect
         self.padding = int((self.container.width - DefinitionBrowser.NUM_COLS
                             * self.tile_rect.width) /
                            (DefinitionBrowser.NUM_COLS + 1))
         self.definitions = \
-            self.tile_engine.tileManager.tileDefinitions.values()
+            self.tile_manager.tileDefinitions.values()
         self.filter_tiles()
         self.definitions = sorted(
             self.definitions, key=lambda tile: tile.line_num)
@@ -26,8 +26,9 @@ class DefinitionBrowser:
             self.padding
         self.surface = pygame.Surface((width, height)).convert()
         self.area = self.container.copy()
-        self.area.width -= self.area.left
-        self.area.height -= self.area.top
+        # self.area.width -= self.area.left
+        # self.area.height -= self.area.top
+        # self.area.topleft = (0, 0)
         self.area.topleft = (0, 0)
         self.selection = [-1, -1]
         self.offset = 0
@@ -36,7 +37,7 @@ class DefinitionBrowser:
     def filter_tiles(self):
         temp_def = list()
         for tile in self.definitions:
-            if not any(i in DefinitionBrowser.HIDDEN_ATTR for i in
+            if not any(i in self.hidden_attr for i in
                     tile.special_attr):
                 temp_def.append(tile)
         self.definitions = temp_def

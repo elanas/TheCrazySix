@@ -16,7 +16,8 @@ class TileManager(object):
         self.tileDefinitions = dict()
         self.tileMap = list()
         self.readTileDefinitions()
-        self.readTileMap()
+        if mapPath is not None:
+            self.readTileMap()
 
     def readTileDefinitions(self):
         lines = [line.strip() for line in open(self.definitionPath)]
