@@ -14,12 +14,14 @@ class FileManager(object):
         if not self.file_ext.startswith("."):
             self.file_ext = '.' + self.file_ext
 
-    def get_files(self, strip_ext=False):
+    def get_files(self, strip_ext=False, sort=True):
         files = [f for f in listdir(self.path) if isfile(join(self.path, f))]
         if self.file_ext is not None:
             files = [f for f in files if f.lower().endswith(self.file_ext)]
         if strip_ext:
             files = [splitext(f)[0] for f in files]
+        if sort:
+            files.sort()
         return files
 
     def file_exists(self, file_path):
