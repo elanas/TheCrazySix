@@ -167,7 +167,7 @@ class CustomLevelNameInput(GameState):
                 self.create_map_file(full_path)
                 Globals.STATE = LevelEditor(join('maps', 'map_def.txt'),
                     join(CustomLevelNameInput.CUSTOM_MAP_PATH, full_name),
-                    globals=Globals)
+                    globals=Globals, in_game=True)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

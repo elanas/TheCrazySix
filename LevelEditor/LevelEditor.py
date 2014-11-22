@@ -8,6 +8,10 @@ from DefinitionBrowser import DefinitionBrowser
 from asset_loader import AssetLoader
 from Action import Action
 from os.path import join
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+import CustomLevelPicker
 
 
 class LevelEditor(GameState):
@@ -29,7 +33,7 @@ class LevelEditor(GameState):
     TITLE = "Tiles:"
     TITLE_COLOR = pygame.color.Color("white")
 
-    def __init__(self, definition_path, map_path, globals=Globals):
+    def __init__(self, definition_path, map_path, globals=Globals, in_game=False):
         self.globals = globals
         self.actions = list()
         self.browser = None
@@ -40,6 +44,7 @@ class LevelEditor(GameState):
         self.mouse_down = False
         self.info_mode = False
         self.delete_mode = False
+        self.in_game = in_game
         loader = AssetLoader(join("images", "tiles"))
         TileType.create_empty(loader)
         self.base_image = loader.load_image("transparent.png")
@@ -299,7 +304,10 @@ class LevelEditor(GameState):
             elif event.key == pygame.K_RETURN:
                 self.handle_save()
             elif event.key == pygame.K_ESCAPE:
-                self.revert_and_reload()
+                if not self.in_game:
+                    self.revert_and_reload()
+                else:
+                    self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
             elif event.key == pygame.K_u:
                 self.undo_action()
             elif event.key == pygame.K_MINUS:

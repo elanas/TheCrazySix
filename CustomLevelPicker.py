@@ -145,7 +145,7 @@ class CustomLevelPicker(GameState):
                 self.file_names[self.current_selection - 1])
             Globals.STATE = LevelEditor(join('maps', 'map_def.txt'),
                 join(CustomLevelPicker.CUSTOM_MAP_PATH, file_path),
-                globals=Globals)
+                globals=Globals, in_game=True)
         else:
             Globals.STATE = CustomLevelNameInput()
 
