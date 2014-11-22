@@ -1,2 +1,2 @@
-0 turret_left_combo.png 1 turret_left
-1 turret_right_combo.png 1 turret_right
+0 turret_left_combo.png 1 turret_left_combo
+1 turret_right_combo.png 1 turret_right_combo

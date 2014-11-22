@@ -206,6 +206,13 @@ class LevelEditor(GameState):
                 self.browser.handle_info_click(coord, self)
             else:
                 self.handle_browser_click(coord)
+        elif self.combo_browser.container.collidepoint(coord):
+            coord[0] -= self.combo_browser.container.left
+            coord[1] -= self.combo_browser.container.top
+            if self.info_mode:
+                self.combo_browser.handle_info_click(coord, self)
+            else:
+                self.handle_combo_browser_click(coord)
 
     def handle_tile_set(self, row, col):
         tile = self.browser.get_selected_tile()
@@ -271,6 +278,10 @@ class LevelEditor(GameState):
                 self.toggle_delete_mode()
             self.init_highlight(tile.image, alpha=LevelEditor.SELECTION_ALPHA,
                                 border=True)
+
+    def handle_combo_browser_click(self, coord):
+        self.combo_browser.handle_mouse_click(coord)
+        # tile = self.combo_browser.get_selected_tile()
 
     def delete_tile(self, row, col):
         if self.tile_engine.is_coord_valid(row, col) and \
