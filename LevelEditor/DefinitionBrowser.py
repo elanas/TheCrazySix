@@ -16,6 +16,7 @@ class DefinitionBrowser:
                            (DefinitionBrowser.NUM_COLS + 1))
         self.definitions = \
             self.tile_engine.tileManager.tileDefinitions.values()
+        self.filter_tiles()
         self.definitions = sorted(
             self.definitions, key=lambda tile: tile.line_num)
         width = self.padding * (DefinitionBrowser.NUM_COLS + 1) + \
@@ -31,7 +32,6 @@ class DefinitionBrowser:
         self.selection = [-1, -1]
         self.offset = 0
         self.scroll_amount = self.tile_rect.height + self.padding * 2
-        self.filter_tiles()
 
     def filter_tiles(self):
         temp_def = list()
