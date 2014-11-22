@@ -2,8 +2,24 @@
 
 class TileType(object):
     EMPTY_ATTR = "empty"
-    STAIR_ATTR = "stair"
-
+    STAIR_UP_ATTR = "stair"
+    STAIR_DOWN_ATTR = "stair_down"
+    COIN_ATTR = "coin"
+    BASE_ATTR = "base"
+    START_ATTR = "player_start"
+    SPAWN_ATTR = "enemy_spawn"
+    LEVER_LEFT_ATTR = "switch"
+    LEVER_RIGHT_ATTR = "switch_on"
+    SLIDING_DOOR_ATTR = "sliding_door"
+    HEALTH_ATTR = "health_replace"
+    TRAP_ATTR = "trap"
+    ACTION_ATTR = "action"
+    LOCKED_ATTR = "locked"
+    KEY_ATTR = "key_replace"
+    TURRET_LEFT = "turret_spawn_left"
+    TURRET_RIGHT = "turret_spawn_right"
+    REPLACE_POSTFIX = "_replace"
+    BASE_POSTFIX = "_base"
     EMPTY_SYMBOL = " "
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr,
