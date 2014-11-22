@@ -3,9 +3,12 @@ from os.path import isfile, join, isdir, splitext
 
 class FileManager(object):
 
-    def __init__(self, path='', file_ext=None):
+    def __init__(self, path='', file_ext=None, create_dir=True):
         if not isdir(path):
-            makedirs(path)
+            if create_dir:
+                makedirs(path)
+            else:
+                raise Exception('The path "' + path + '" does not exist.')
         self.path = path
         self.file_ext = file_ext
         if not self.file_ext.startswith("."):
