@@ -12,7 +12,7 @@ import shutil
 class CustomLevelNameInput(GameState):
     ARROW_KEYS = [pygame.K_UP, pygame.K_DOWN, pygame.K_LEFT, pygame.K_RIGHT]
     MIN_LENGTH = 3
-    MAX_LENGTH = 15
+    MAX_LENGTH = 25
     PROMPT_FONT = None
     PROMPT_COLOR = (240, 250, 190)
     PROMPT_PADDING = 70
