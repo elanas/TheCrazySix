@@ -26,8 +26,10 @@ class CustomLevelPicker(GameState):
     ARROW_MARGIN = 20
     SUBTITLE_BACKGROUND = pygame.color.Color("black")
     SUBTITLE_PADDING = 10
-    RIGHT_SUBTITLE_TEXT = "Press enter to play"
-    LEFT_SUBTITLE_TEXT = "Press e to edit"
+    CENTER_SUBTITLE_TEXT = "Press enter to play"
+    LEFT_SUBTITLE_TEXT = "Press 'd' to delete"
+    RIGHT_SUBTITLE_TEXT = "Press 'e' to edit"
+    SUBTITLE_OFFSET = 40
     NEW_SUBTITLE_TEXT = "Press enter"
     SUBTITLE_COLOR = pygame.color.Color("white")
     SUBTITLE_FONT = pygame.font.Font(None, 32)
@@ -60,10 +62,14 @@ class CustomLevelPicker(GameState):
 
     def build_subtitles(self):
         self.left_subtitle_surf, self.left_subtitle_rect = self.init_subtitle(
-            CustomLevelPicker.LEFT_SUBTITLE_TEXT, Globals.WIDTH / 4)
+            CustomLevelPicker.LEFT_SUBTITLE_TEXT,
+            Globals.WIDTH / 4 - CustomLevelPicker.SUBTITLE_OFFSET)
+        self.center_subtitle_surf, self.center_subtitle_rect = \
+            self.init_subtitle(CustomLevelPicker.CENTER_SUBTITLE_TEXT,
+                Globals.WIDTH / 2)
         self.right_subtitle_surf, self.right_subtitle_rect = \
             self.init_subtitle(CustomLevelPicker.RIGHT_SUBTITLE_TEXT,
-                (3 * Globals.WIDTH) / 4)
+                (3 * Globals.WIDTH) / 4 + CustomLevelPicker.SUBTITLE_OFFSET)
         self.new_subtitle_surf, self.new_subtitle_rect = \
             self.init_subtitle(CustomLevelPicker.NEW_SUBTITLE_TEXT,
                 Globals.WIDTH / 2)
@@ -95,6 +101,7 @@ class CustomLevelPicker(GameState):
             Globals.SCREEN.blit(self.new_subtitle_surf, self.new_subtitle_rect)
         else:
             Globals.SCREEN.blit(self.left_subtitle_surf, self.left_subtitle_rect)
+            Globals.SCREEN.blit(self.center_subtitle_surf, self.center_subtitle_rect)
             Globals.SCREEN.blit(self.right_subtitle_surf, self.right_subtitle_rect)
         if len(self.file_names) > 0:
             Globals.SCREEN.blit(self.arrow_down_surf, self.arrow_down_rect)
@@ -149,15 +156,30 @@ class CustomLevelPicker(GameState):
         else:
             Globals.STATE = CustomLevelNameInput()
 
+    def handle_delete(self):
+        if self.current_selection != 0:
+            full_name = self.file_manager.fix_ext(
+                self.file_names[self.current_selection - 1])
+            full_path = join(CustomLevelPicker.CUSTOM_MAP_PATH, full_name)
+            try:
+                os.remove(full_path)
+                self.file_names = self.file_manager.get_files(strip_ext=True)
+                self.handle_change(-1)
+            except Exception as e:
+                print 'An error occured while deleting "' + full_path + '"'
+                print e
+
     def event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
-                self.handle_change(1)
-            elif event.key == pygame.K_DOWN:
                 self.handle_change(-1)
+            elif event.key == pygame.K_DOWN:
+                self.handle_change(1)
             elif event.key == pygame.K_RETURN:
                 self.handle_selection()
             elif event.key == pygame.K_e:
                 self.handle_edit_selection()
+            elif event.key == pygame.K_d:
+                self.handle_delete()
             elif event.key == pygame.K_ESCAPE:
                 Globals.RUNNING = False
