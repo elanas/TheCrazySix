@@ -1,10 +1,11 @@
 import pygame
 from math import ceil
+from TileType import TileType
 
 
 class DefinitionBrowser:
     NUM_COLS = 3.0
-    HIDDEN_ATTR = ['switch_on']
+    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR]
 
     def __init__(self, tile_engine, container):
         self.tile_engine = tile_engine
@@ -30,6 +31,15 @@ class DefinitionBrowser:
         self.selection = [-1, -1]
         self.offset = 0
         self.scroll_amount = self.tile_rect.height + self.padding * 2
+        self.filter_tiles()
+
+    def filter_tiles(self):
+        temp_def = list()
+        for tile in self.definitions:
+            if not any(i in DefinitionBrowser.HIDDEN_ATTR for i in
+                    tile.special_attr):
+                temp_def.append(tile)
+        self.definitions = temp_def
 
     def scroll_up(self):
         self.offset += self.scroll_amount
