@@ -39,9 +39,10 @@ class FileManager(object):
             file_path += self.file_ext
         return isfile(join(self.path, file_path))
 
-    def fix_ext(self, file_path):
-        if self.file_ext is None:
-            raise Exception('You must set a file extension first.')
-        if not file_path.endswith(self.file_ext):
-            return file_path + self.file_ext
-        return file_path
+    def fix_ext(self, file_path, file_ext=None):
+        if file_ext is None:
+            if self.file_ext is None:
+                raise Exception('You must provide or set a file extension.')
+            file_ext = self.file_ext
+        return file_path if file_path.endswith(file_ext) else \
+            file_path + file_ext
