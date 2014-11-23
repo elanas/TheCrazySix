@@ -208,7 +208,9 @@ class Player(Character):
 
     def play_sound(self):
         current_time = pygame.time.get_ticks() / 1000
-        if self.last_sound_time == 0.0 or current_time - Player.hitSound.get_length() >= self.last_sound_time:
+        if self.last_sound_time == 0.0 or \
+                current_time - Player.hitSound.get_length() >= \
+                self.last_sound_time:
             self.last_sound_time = current_time
             Player.hitSound.play()
 

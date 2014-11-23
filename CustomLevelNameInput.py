@@ -74,8 +74,9 @@ class CustomLevelNameInput(GameState):
                                            CustomLevelNameInput.ERROR_SIZE)
         self.prompt_font = pygame.font.Font(CustomLevelNameInput.PROMPT_FONT,
                                             CustomLevelNameInput.PROMPT_SIZE)
-        self.prompt_surf = self.prompt_font.render(CustomLevelNameInput.PROMPT, True,
-                                                   CustomLevelNameInput.PROMPT_COLOR)
+        self.prompt_surf = self.prompt_font.render(
+            CustomLevelNameInput.PROMPT, True,
+            CustomLevelNameInput.PROMPT_COLOR)
 
         self.prompt_rect = self.prompt_surf.get_rect()
         self.prompt_rect.centerx = Globals.WIDTH / 2
@@ -102,18 +103,19 @@ class CustomLevelNameInput(GameState):
         Globals.SCREEN.blit(self.hint_surf, self.hint_rect)
 
         if self.error_message is not None:
-            error_surf = self.error_font.render(self.error_message, True,
-                                                CustomLevelNameInput.ERROR_COLOR)
+            error_surf = self.error_font.render(
+                self.error_message, True, CustomLevelNameInput.ERROR_COLOR)
             error_rect = error_surf.get_rect()
             error_rect.centerx = Globals.WIDTH / 2
-            error_rect.bottom = Globals.HEIGHT - CustomLevelNameInput.ERROR_PADDING
+            error_rect.bottom = Globals.HEIGHT - \
+                CustomLevelNameInput.ERROR_PADDING
             Globals.SCREEN.blit(error_surf, error_rect)
 
         input_rect = None
 
         if len(self.file_name) > 0:
-            input_surf = self.input_font.render(self.file_name, True,
-                                                CustomLevelNameInput.INPUT_COLOR)
+            input_surf = self.input_font.render(
+                self.file_name, True, CustomLevelNameInput.INPUT_COLOR)
             input_rect = input_surf.get_rect()
             input_rect.centerx = Globals.WIDTH / 2
             input_rect.centery = Globals.HEIGHT / 2
@@ -126,9 +128,9 @@ class CustomLevelNameInput(GameState):
             Globals.SCREEN.blit(highlight_surf, highlight_rect)
             Globals.SCREEN.blit(input_surf, input_rect)
         if self.show_extra:
-            extra_surf = self.input_font.render(CustomLevelNameInput.EXTRA_POSTTEXT,
-                                                True,
-                                                CustomLevelNameInput.EXTRA_COLOR)
+            extra_surf = self.input_font.render(
+                CustomLevelNameInput.EXTRA_POSTTEXT, True,
+                CustomLevelNameInput.EXTRA_COLOR)
             extra_rect = extra_surf.get_rect()
             extra_rect.centery = Globals.HEIGHT / 2
             if input_rect is not None:
@@ -165,9 +167,11 @@ class CustomLevelNameInput(GameState):
                 self.error_message = CustomLevelNameInput.ERROR_EXISTS
             else:
                 full_name = self.file_manager.fix_ext(self.file_name)
-                full_path = join(CustomLevelNameInput.CUSTOM_MAP_PATH, full_name)
+                full_path = join(
+                    CustomLevelNameInput.CUSTOM_MAP_PATH, full_name)
                 self.create_map_file(full_path)
-                Globals.STATE = LevelEditor(join('maps', 'map_def.txt'),
+                Globals.STATE = LevelEditor(
+                    join('maps', 'map_def.txt'),
                     join(CustomLevelNameInput.CUSTOM_MAP_PATH, full_name),
                     globals=Globals, in_game=True)
 

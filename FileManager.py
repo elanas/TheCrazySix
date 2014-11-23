@@ -2,6 +2,7 @@ from os import listdir, makedirs
 from os.path import isfile, join, isdir, splitext
 import re
 
+
 class FileManager(object):
 
     def __init__(self, path='', file_ext=None, create_dir=True):
@@ -28,14 +29,15 @@ class FileManager(object):
     @staticmethod
     def natural_key(text):
         # method from http://stackoverflow.com/a/5967539
-        return [ FileManager.atoi(c) for c in re.split('(\d+)', text) ]
+        return [FileManager.atoi(c) for c in re.split('(\d+)', text)]
 
     @staticmethod
     def atoi(text):
         return int(text) if text.isdigit() else text
 
     def file_exists(self, file_path):
-        if self.file_ext is not None and not file_path.lower().endswith(self.file_ext):
+        if self.file_ext is not None and \
+                not file_path.lower().endswith(self.file_ext):
             file_path += self.file_ext
         return isfile(join(self.path, file_path))
 

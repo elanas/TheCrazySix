@@ -4,7 +4,8 @@ from Globals import Globals
 from os.path import join
 from FileManager import FileManager
 import pygame
-import sys, os
+import sys
+import os
 from LevelEditor.LevelEditor import LevelEditor
 from Levels.CustomLevel import CustomLevel
 from CustomLevelNameInput import CustomLevelNameInput
@@ -34,7 +35,7 @@ class CustomLevelPicker(GameState):
     SUBTITLE_COLOR = pygame.color.Color("white")
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN_BOTTOM = 50
-    
+
     def __init__(self):
         self.init_images()
         self.file_manager = FileManager(
@@ -66,13 +67,14 @@ class CustomLevelPicker(GameState):
             Globals.WIDTH / 4 - CustomLevelPicker.SUBTITLE_OFFSET)
         self.center_subtitle_surf, self.center_subtitle_rect = \
             self.init_subtitle(CustomLevelPicker.CENTER_SUBTITLE_TEXT,
-                Globals.WIDTH / 2)
+                               Globals.WIDTH / 2)
         self.right_subtitle_surf, self.right_subtitle_rect = \
-            self.init_subtitle(CustomLevelPicker.RIGHT_SUBTITLE_TEXT,
+            self.init_subtitle(
+                CustomLevelPicker.RIGHT_SUBTITLE_TEXT,
                 (3 * Globals.WIDTH) / 4 + CustomLevelPicker.SUBTITLE_OFFSET)
         self.new_subtitle_surf, self.new_subtitle_rect = \
             self.init_subtitle(CustomLevelPicker.NEW_SUBTITLE_TEXT,
-                Globals.WIDTH / 2)
+                               Globals.WIDTH / 2)
 
     def init_subtitle(self, text, centerx):
         text_surf = CustomLevelPicker.SUBTITLE_FONT.render(
@@ -100,9 +102,12 @@ class CustomLevelPicker(GameState):
         if self.current_selection == 0:
             Globals.SCREEN.blit(self.new_subtitle_surf, self.new_subtitle_rect)
         else:
-            Globals.SCREEN.blit(self.left_subtitle_surf, self.left_subtitle_rect)
-            Globals.SCREEN.blit(self.center_subtitle_surf, self.center_subtitle_rect)
-            Globals.SCREEN.blit(self.right_subtitle_surf, self.right_subtitle_rect)
+            Globals.SCREEN.blit(
+                self.left_subtitle_surf, self.left_subtitle_rect)
+            Globals.SCREEN.blit(
+                self.center_subtitle_surf, self.center_subtitle_rect)
+            Globals.SCREEN.blit(
+                self.right_subtitle_surf, self.right_subtitle_rect)
         if len(self.file_names) > 0:
             Globals.SCREEN.blit(self.arrow_down_surf, self.arrow_down_rect)
             Globals.SCREEN.blit(self.arrow_up_surf, self.arrow_up_rect)
@@ -140,7 +145,7 @@ class CustomLevelPicker(GameState):
             file_path = self.file_manager.fix_ext(
                 self.file_names[self.current_selection - 1])
             level = CustomLevel(join(CustomLevelPicker.PLAY_PATH,
-                file_path))
+                                     file_path))
             level.got_current_state()
             Globals.STATE = level
         else:
@@ -150,7 +155,8 @@ class CustomLevelPicker(GameState):
         if self.current_selection != 0:
             file_path = self.file_manager.fix_ext(
                 self.file_names[self.current_selection - 1])
-            Globals.STATE = LevelEditor(join('maps', 'map_def.txt'),
+            Globals.STATE = LevelEditor(
+                join('maps', 'map_def.txt'),
                 join(CustomLevelPicker.CUSTOM_MAP_PATH, file_path),
                 globals=Globals, in_game=True)
         else:
