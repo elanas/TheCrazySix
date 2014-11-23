@@ -30,6 +30,15 @@ class AssetLoader():
             AssetLoader.loaded_images[img_path] = img
             return img
 
+    def load_images(self, image_paths, is_alpha=True):
+        images = list()
+        for path in image_paths:
+            if is_alpha:
+                images.append(self.load_image_alpha(path))
+            else:
+                images.append(self.load_image(path))
+        return images
+
     def unload_image(self, img_path):
         img_path = path.abspath(path.join(self.image_path_start, img_path))
         try:
