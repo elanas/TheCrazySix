@@ -222,10 +222,11 @@ class LevelEditor(GameState):
         else:
             self.handle_combo_tile_set(row, col)
 
-    def handle_normal_tile_set(self, row, col):
-        tile = self.browser.get_selected_tile()
+    def handle_normal_tile_set(self, row, col, tile=None):
         if tile is None:
-            return
+            tile = self.browser.get_selected_tile()
+        if tile is None:
+            return row, col, False
         if self.tile_engine.is_coord_valid(row, col):
             if self.tile_engine.tileMap[row][col] is not tile:
                 old_tile = self.tile_engine.tileMap[row][col]
@@ -233,9 +234,13 @@ class LevelEditor(GameState):
                 a = Action(type=Action.SET_TYPE, row=row, col=col,
                            old_tile=old_tile, new_tile=tile)
                 self.actions.append(a)
+                return row, col, True
+            else:
+                return row, col, False
         else:
             new_row, new_col = self.make_room(row, col)
-            self.handle_tile_set(new_row, new_col)
+            result = self.handle_normal_tile_set(new_row, new_col)
+            return new_row, new_col, result
 
     def handle_combo_tile_set(self, row, col):
         tile = self.combo_browser.get_selected_tile()
@@ -251,22 +256,36 @@ class LevelEditor(GameState):
             self.handle_turret_combo(row, col, prefix)
 
     def handle_turret_combo(self, row, col, prefix):
-        orig_col = col
+        num_added = 0
+        old_row = row
+        old_col = col
+        for i in range(0, 4):
+            if not self.tile_engine.is_coord_valid(row, col):
+                self.set_message('combo cannot be added off map',
+                                 color=LevelEditor.ERROR_MESSAGE_COLOR)
+                return
+            if i == 1:
+                col -= 1
+                row += 1
+            else:
+                 col += 1
+        row = old_row
+        col = old_col
         for i in range(0, 4):
             attr = prefix + str(i)
             tile = self.tile_engine.get_tile_from_attr(attr)
-            old_tile = self.tile_engine.tileMap[row][col]
-            self.tile_engine.tileMap[row][col] = tile
-            a = Action(type=Action.SET_TYPE, row=row, col=col,
-                       old_tile=old_tile, new_tile=tile)
-            self.actions.append(a)
+            row, col, result = self.handle_normal_tile_set(row, col, tile)
+            if result:
+                num_added += 1
 
-            col += 1
-            if col == orig_col + 2:
-                col = orig_col
+            if i == 1:
+                col -= 1
                 row += 1
-        a = Action(type=Action.COMBO_SET, num_sets=4)
-        self.actions.append(a)
+            else:
+                 col += 1
+        if num_added > 0:
+            a = Action(type=Action.COMBO_SET, num_sets=num_added)
+            self.actions.append(a)
         self.set_message('combo added', timeout=LevelEditor.QUICK_TIMEOUT)
 
     def make_room(self, row, col):
