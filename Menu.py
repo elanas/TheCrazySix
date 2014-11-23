@@ -5,6 +5,7 @@ from GameState import GameState
 from Globals import Globals
 from NameInput import NameInput
 from Highscore import Highscore
+from CustomLevelPicker import CustomLevelPicker
 import Title
 
 
@@ -142,6 +143,8 @@ class Menu(GameState):
             if self.selection == 0:
                 # Globals.STATE = MainGame()
                 Globals.STATE = NameInput()
+            if self.selection == 1:
+                Globals.STATE = CustomLevelPicker()
             if self.selection == 3:
                 Globals.STATE = Highscore()
                 pass
