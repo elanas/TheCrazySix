@@ -87,7 +87,7 @@ class LevelEditor(GameState):
 
     def init_browser(self):
         width = (self.globals.WIDTH - self.camera_dest.right) - 20
-        height = self.globals.HEIGHT - self.title_rect.height * 2 - (32 * 4)
+        height = self.globals.HEIGHT - self.title_rect.height * 2 - (32 * 3)
         c = pygame.Rect(0, self.title_rect.bottom + 5, width, height)
         c.centerx = self.title_rect.centerx
         # if self.browser is not None:
