@@ -38,7 +38,7 @@ class DefinitionBrowser:
         temp_def = list()
         for tile in self.definitions:
             if not any(i in self.hidden_attr for i in
-                    tile.special_attr):
+                       tile.special_attr):
                 temp_def.append(tile)
         self.definitions = temp_def
 
@@ -72,7 +72,8 @@ class DefinitionBrowser:
         screen.blit(self.surface, self.container, self.area)
 
     def get_coords(self, row, col):
-        y = self.padding + row * (self.padding + self.tile_rect.height) - self.offset
+        y = self.padding + row * \
+            (self.padding + self.tile_rect.height) - self.offset
         x = self.padding + col * (self.padding + self.tile_rect.width)
         return (x, y)
 

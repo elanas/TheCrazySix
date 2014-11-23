@@ -37,7 +37,8 @@ class LevelEditor(GameState):
     COMBO_DEF_PATH = join('maps', 'combo_def.txt')
     # TURRET_RIGHT_COMBO = ''
 
-    def __init__(self, definition_path, map_path, globals=Globals, in_game=False):
+    def __init__(self, definition_path, map_path, globals=Globals,
+                 in_game=False):
         self.globals = globals
         self.actions = list()
         self.browser = None
@@ -93,15 +94,17 @@ class LevelEditor(GameState):
         # if self.browser is not None:
         #     pygame.draw.rect(self.globals.SCREEN, (0, 0, 0), self.browser.container)
         self.browser = DefinitionBrowser(self.tile_engine.tileManager,
-            self.tile_engine.get_tile_rect(), c, LevelEditor.HIDDEN_ATTR)
+                                         self.tile_engine.get_tile_rect(), c,
+                                         LevelEditor.HIDDEN_ATTR)
 
     def init_combo_browser(self):
         width = self.browser.container.width
         height = self.globals.HEIGHT - self.second_title_rect.bottom - 10
         c = pygame.Rect(0, self.second_title_rect.bottom + 5, width, height)
         c.centerx = self.browser.container.centerx
-        self.combo_browser = DefinitionBrowser(self.combo_tile_manager,
-            self.tile_engine.get_tile_rect(), c)
+        self.combo_browser = DefinitionBrowser(
+            self.combo_tile_manager, self.tile_engine.get_tile_rect(),
+            c)
 
     def init_camera(self):
         self.camera_dest = pygame.Rect(
@@ -139,7 +142,8 @@ class LevelEditor(GameState):
 
         self.globals.SCREEN.blit(self.title_surf, self.title_rect)
         self.browser.render(self.globals.SCREEN)
-        self.globals.SCREEN.blit(self.second_title_surf, self.second_title_rect)
+        self.globals.SCREEN.blit(
+            self.second_title_surf, self.second_title_rect)
         self.combo_browser.render(self.globals.SCREEN)
 
     def update(self, time):
@@ -268,7 +272,7 @@ class LevelEditor(GameState):
                 col -= 1
                 row += 1
             else:
-                 col += 1
+                col += 1
         row = old_row
         col = old_col
         for i in range(0, 4):
@@ -282,7 +286,7 @@ class LevelEditor(GameState):
                 col -= 1
                 row += 1
             else:
-                 col += 1
+                col += 1
         if num_added > 0:
             a = Action(type=Action.COMBO_SET, num_sets=num_added)
             self.actions.append(a)

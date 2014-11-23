@@ -5,7 +5,8 @@ class Action(object):
     SET_TYPE = "set"
     COMBO_SET = "combo_set"
 
-    def __init__(self, type, row=-1, col=-1, old_tile=None, new_tile=None, num_sets=1):
+    def __init__(self, type, row=-1, col=-1, old_tile=None, new_tile=None,
+                 num_sets=1):
         self.type = type
         self.row = row
         self.col = col
