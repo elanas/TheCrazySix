@@ -9,6 +9,7 @@ import os
 from LevelEditor.LevelEditor import LevelEditor
 from Levels.CustomLevel import CustomLevel
 from CustomLevelNameInput import CustomLevelNameInput
+import Menu
 
 
 class CustomLevelPicker(GameState):
@@ -188,4 +189,4 @@ class CustomLevelPicker(GameState):
             elif event.key == pygame.K_d:
                 self.handle_delete()
             elif event.key == pygame.K_ESCAPE:
-                Globals.RUNNING = False
+                Globals.STATE = Menu.Menu()
