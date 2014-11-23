@@ -423,7 +423,7 @@ class LevelEditor(GameState):
     def undo_action(self, supress_message=False):
         if len(self.actions) == 0:
             if not supress_message:
-                self.set_message("there is nothing left to undo",
+                self.set_message("there is nothing to undo",
                                  color=LevelEditor.ERROR_MESSAGE_COLOR)
             return
         action = self.actions.pop()
