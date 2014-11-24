@@ -36,6 +36,8 @@ class CustomLevelPicker(GameState):
     SUBTITLE_COLOR = pygame.color.Color("white")
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN_BOTTOM = 50
+    TITLE_IMAGE_PATH = 'customlevel.png'
+    TITLE_MARGIN_TOP = 70
 
     def __init__(self):
         self.init_images()
@@ -55,6 +57,11 @@ class CustomLevelPicker(GameState):
     def init_images(self):
         self.loader = AssetLoader('images')
         self.background_img = self.loader.load_image('background.png')
+        self.title_surf = self.loader.load_image_alpha(
+            CustomLevelPicker.TITLE_IMAGE_PATH)
+        self.title_rect = self.title_surf.get_rect()
+        self.title_rect.center = Globals.SCREEN.get_rect().center
+        self.title_rect.top = CustomLevelPicker.TITLE_MARGIN_TOP
         self.arrow_down_surf = self.loader.load_image_alpha('arrow_down.png')
         self.arrow_down_rect = self.arrow_down_surf.get_rect()
         self.arrow_up_surf = self.loader.load_image_alpha('arrow_up.png')
@@ -98,6 +105,7 @@ class CustomLevelPicker(GameState):
 
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))
+        Globals.SCREEN.blit(self.title_surf, self.title_rect)
         Globals.SCREEN.blit(self.highlight_surf, self.highlight_rect)
         Globals.SCREEN.blit(self.text_surf, self.text_rect)
         if self.current_selection == 0:
