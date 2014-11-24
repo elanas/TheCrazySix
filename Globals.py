@@ -20,6 +20,8 @@ class Globals(object):
     LEVELS = None
     MENU_SOUND = None
     CUTSCENE_SOUND = None
+    VOLUME = 1.0
+    BRIGHTNESS = 1.0
 
     @staticmethod
     def init_levels():
