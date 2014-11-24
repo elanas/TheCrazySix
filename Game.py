@@ -11,6 +11,8 @@ from Title import Title
 import sys
 
 MIN_UPDATE_INTERVAL = .05
+BRIGHTNESS_SURF = None
+USE_BRIGHTNESS = False
 
 
 def initialize():
@@ -32,6 +34,8 @@ def loop():
         last = pygame.time.get_ticks()
 
         Globals.STATE.render()
+        if Globals.USE_BRIGHTNESS:
+            Globals.SCREEN.blit(Globals.BRIGHTNESS_SURF, (0, 0))
         pygame.display.flip()
 
         elapsed = (pygame.time.get_ticks() - last) / 1000.0

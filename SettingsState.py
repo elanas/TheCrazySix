@@ -12,6 +12,7 @@ class SettingsState(GameState):
     TITLE_MARGIN_TOP = 70
     SLIDER_SIZE = (400, 50)
     SLIDER_DELTA = .1
+    MIN_BRIGHTNESS = .3
 
     def __init__(self):
         self.loader = AssetLoader('images')
@@ -37,7 +38,8 @@ class SettingsState(GameState):
     	brightness_slider_rect.top = volume_slider_rect.bottom + 20
     	self.brightness_slider = SettingsSlider(
     		brightness_slider_rect,
-    		max_value=1, value=Globals.BRIGHTNESS)
+    		max_value=(1 - SettingsState.MIN_BRIGHTNESS),
+    		value=Globals.BRIGHTNESS - SettingsState.MIN_BRIGHTNESS)
 
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))
@@ -62,7 +64,8 @@ class SettingsState(GameState):
     	else:
     		self.brightness_slider.change_value(
     			SettingsState.SLIDER_DELTA * factor)
-    		Globals.set_brightness(self.brightness_slider.value)
+    		Globals.set_brightness((1 - SettingsState.MIN_BRIGHTNESS) -
+    							   self.brightness_slider.value)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

@@ -22,6 +22,8 @@ class Globals(object):
     CUTSCENE_SOUND = None
     VOLUME = 1.0
     BRIGHTNESS = 1.0
+    USE_BRIGHTNESS = False
+    BRIGHTNESS_SURF = None
 
     @staticmethod
     def init_levels():
@@ -82,4 +84,14 @@ class Globals(object):
 
     @staticmethod
     def set_brightness(brightness):
+        if Globals.BRIGHTNESS_SURF is None:
+            Globals.BRIGHTNESS_SURF = \
+                pygame.Surface((Globals.WIDTH, Globals.HEIGHT))
+            Globals.BRIGHTNESS_SURF.fill((0, 0, 0))
         Globals.BRIGHTNESS = brightness
+        if brightness == 1:
+            Globals.USE_BRIGHTNESS = False
+        else:
+            Globals.USE_BRIGHTNESS = True
+            Globals.BRIGHTNESS_SURF.set_alpha(int(brightness * 255))
+        
