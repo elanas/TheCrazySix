@@ -68,6 +68,7 @@ class Level(GameState):
         self.alpha_factor = 300
         self.should_fade_in = should_fade_in
         self.has_key = False
+        self.pausing = False
 
     def got_current_state(self):
         if self.should_fade_in:
@@ -285,7 +286,10 @@ class Level(GameState):
             old_alpha = self.black_surf.get_alpha()
             new_alpha = int(old_alpha + time * Level.ALPHA_FACTOR)
             if new_alpha >= Level.MAX_ALPHA:
-                self.handle_finish_fade_out()
+                if self.pausing:
+                    self.handle_pause()
+                else:
+                    self.handle_finish_fade_out()
                 self.fade_out = False
             self.black_surf.set_alpha(new_alpha)
         elif self.fade_in:
@@ -413,11 +417,15 @@ class Level(GameState):
             delta = 100 - Globals.HEALTH_BAR.health
             Globals.HEALTH_BAR.changeHealth(delta)
         elif key == pygame.K_p:
-            self.handle_pause()
+            self.start_pause_fade()
         else:
             self.keyCode = key
             for p in self.playerSprites:
                 p.keyPressed(key)
+
+    def start_pause_fade(self):
+        self.pausing = True
+        self.start_fade_out()
 
     def handle_pause(self):
         if self.has_timer:
