@@ -12,6 +12,7 @@ class IntroScreen(Level):
     MAP_NAME = "intro_screen.txt"
     SOUND_NAME = "intro_sound.ogg"
     SUBTITLE_TEXT = "Climb the stairs to skip"
+    END_SOUND_ID = pygame.USEREVENT
 
     def __init__(self):
         super(IntroScreen, self).__init__(IntroScreen.DEF_NAME,
@@ -55,10 +56,10 @@ class IntroScreen(Level):
             Globals.INTRO_SOUND_PLAYED = True
             self.audio = IntroScreen.LOADER.load_sound(IntroScreen.SOUND_NAME)
             self.channel = self.audio.play()
-            self.channel.set_endevent(pygame.USEREVENT)
+            self.channel.set_endevent(IntroScreen.END_SOUND_ID)
 
     def event(self, event):
-        if event.type == pygame.USEREVENT:
+        if event.type == IntroScreen.END_SOUND_ID:
             self.stop_subtitle()
         else:
             super(IntroScreen, self).event(event)
