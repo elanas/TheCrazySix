@@ -93,5 +93,5 @@ class Globals(object):
             Globals.USE_BRIGHTNESS = False
         else:
             Globals.USE_BRIGHTNESS = True
-            Globals.BRIGHTNESS_SURF.set_alpha(int(brightness * 255))
+            Globals.BRIGHTNESS_SURF.set_alpha(int((1 - brightness) * 255))
         

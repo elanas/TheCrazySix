@@ -1,4 +1,5 @@
 import pygame
+from asset_loader import AssetLoader
 
 
 class SettingsSlider(object):
@@ -11,12 +12,16 @@ class SettingsSlider(object):
 	INDICATOR_BORDER_PERCENT = .6
 	INDICATOR_BORDER_COLOR = pygame.color.Color('black')
 	INDICATOR_INNER_COLOR = pygame.color.Color('gray')
+	ARROW_MARGIN = 15
 
 	def __init__(self, container, max_value=100, value=None):
 		self.container = container
 		self.max_value = float(max_value)
 		self.value = float(value) if value is not None else self.max_value
+		self.loader = AssetLoader('images')
 		self.init_slider()
+		self.init_arrows()
+		self.selected = False
 
 	def init_slider(self):
 		self.init_indicator()
@@ -38,6 +43,18 @@ class SettingsSlider(object):
 		self.indicator_rect.centerx = self.container.left + \
 			self.container.width * self.get_percentage()
 
+	def init_arrows(self):
+		self.arrow_left_surf = self.loader.load_image_alpha('arrow_left.png')
+		self.arrow_right_surf = self.loader.load_image_alpha('arrow_right.png')
+		self.arrow_left_rect = self.arrow_left_surf.get_rect()
+		self.arrow_right_rect = self.arrow_right_surf.get_rect()
+		self.arrow_left_rect.centery = self.container.centery
+		self.arrow_right_rect.centery = self.container.centery
+		self.arrow_left_rect.right = self.container.left - \
+			SettingsSlider.ARROW_MARGIN
+		self.arrow_right_rect.left = self.container.right + \
+			SettingsSlider.ARROW_MARGIN
+
 	def init_base(self):
 		base_height = self.container.height * \
 			SettingsSlider.BASE_HEIGHT_PERCENT
@@ -58,9 +75,11 @@ class SettingsSlider(object):
 
 	def select(self):
 		self.fill_base(SettingsSlider.BASE_HIGHLIGHT_COLOR)
+		self.selected = True
 
 	def deselect(self):
 		self.fill_base()
+		self.selected = False
 
 	def change_value(self, delta):
 		self.set_value(self.value + delta)
@@ -80,3 +99,6 @@ class SettingsSlider(object):
 	def render(self, screen):
 		screen.blit(self.base_surf, self.base_rect)
 		screen.blit(self.indicator_surf, self.indicator_rect)
+		if self.selected:
+			screen.blit(self.arrow_left_surf, self.arrow_left_rect)
+			screen.blit(self.arrow_right_surf, self.arrow_right_rect)
