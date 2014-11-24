@@ -41,6 +41,8 @@ class ZombieCutScene(Level):
 
     def update(self, time):
         super(ZombieCutScene, self).update(time)
+        if self.fade_in or self.fade_out:
+            return
         if self.shaking:
             self.shaking_time += time
             if self.shaking_time >= ZombieCutScene.SHAKE_WAIT:
