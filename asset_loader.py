@@ -1,5 +1,6 @@
 from os import path
 import pygame
+import Globals
 
 
 class AssetLoader():
@@ -52,6 +53,7 @@ class AssetLoader():
             return AssetLoader.loaded_sounds[sound_path]
         except KeyError:
             sound = pygame.mixer.Sound(sound_path)
+            sound.set_volume(Globals.Globals.VOLUME)
             AssetLoader.loaded_sounds[sound_path] = sound
             return sound
 
@@ -77,3 +79,8 @@ class AssetLoader():
                           (start_x, start_y, img_width, img_height))
                 images.append(surf)
         return images
+
+    @staticmethod
+    def set_volume(volume):
+        for sound in AssetLoader.loaded_sounds.itervalues():
+            sound.set_volume(volume)

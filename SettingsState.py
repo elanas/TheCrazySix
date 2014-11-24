@@ -58,9 +58,11 @@ class SettingsState(GameState):
     	if self.selected == 0:
     		self.volume_slider.change_value(
     			SettingsState.SLIDER_DELTA * factor)
+    		Globals.set_volume(self.volume_slider.value)
     	else:
     		self.brightness_slider.change_value(
     			SettingsState.SLIDER_DELTA * factor)
+    		Globals.set_brightness(self.brightness_slider.value)
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:

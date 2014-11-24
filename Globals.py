@@ -74,3 +74,12 @@ class Globals(object):
         Globals.HEALTH_BAR = None
         Globals.TIME = None
         Globals.init_levels()
+
+    @staticmethod
+    def set_volume(volume):
+        Globals.VOLUME = volume
+        AssetLoader.set_volume(volume)
+
+    @staticmethod
+    def set_brightness(brightness):
+        Globals.BRIGHTNESS = brightness
