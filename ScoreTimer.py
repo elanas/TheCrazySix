@@ -11,6 +11,19 @@ class ScoreTimer():
         self.total_time = 0
         self.font = pygame.font.SysFont(None, ScoreTimer.TEXT_SIZE)
         self.offset = pygame.time.get_ticks()
+        self.paused = False
+
+    def pause(self):
+        if self.paused:
+            return
+        self.pause_time = pygame.time.get_ticks()
+        self.paused = True
+
+    def unpause(self):
+        if not self.paused:
+            return
+        self.paused = False
+        self.offset += pygame.time.get_ticks() - self.pause_time
 
     def render(self, screen):
         self.total_time = pygame.time.get_ticks() - self.offset

@@ -23,6 +23,7 @@ class IntroScreen(Level):
         self.played_intro = False
         if not Globals.INTRO_SOUND_PLAYED:
             self.show_subtitle(IntroScreen.SUBTITLE_TEXT)
+        self.channel = None
 
     def got_current_state(self):
         super(IntroScreen, self).got_current_state()
@@ -32,16 +33,35 @@ class IntroScreen(Level):
         self.stop_music()
         super(IntroScreen, self).handle_stair_up()
 
-    def handle_escape(self):
-        self.stop_music()
-        super(IntroScreen, self).handle_escape()
+    def handle_pause(self):
+        self.pause_music()
+        super(IntroScreen, self).handle_pause()
+
+    def handle_unpause(self):
+        self.resume_music()
+        super(IntroScreen, self).handle_unpause()
+
+    def pause_music(self):
+        if self.channel:
+            self.channel.pause()
+
+    def resume_music(self):
+        if self.channel:
+            self.channel.unpause()
 
     def start_music(self):
         if not Globals.INTRO_SOUND_PLAYED:
             self.played_intro = True
             Globals.INTRO_SOUND_PLAYED = True
             self.audio = IntroScreen.LOADER.load_sound(IntroScreen.SOUND_NAME)
-            self.audio.play()
+            self.channel = self.audio.play()
+            self.channel.set_endevent(pygame.USEREVENT)
+
+    def event(self, event):
+        if event.type == pygame.USEREVENT:
+            self.stop_subtitle()
+        else:
+            super(IntroScreen, self).event(event)
 
     def stop_music(self):
         if self.audio is not None:

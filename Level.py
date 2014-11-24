@@ -15,6 +15,7 @@ import Menu
 import WinGame
 import LoseGame
 from HighscoreManager import HighscoreManager
+from PauseScreen import PauseScreen
 
 
 class Level(GameState):
@@ -83,9 +84,6 @@ class Level(GameState):
             Globals.PLAYER_SCORE += diff
         self.start_fade_out()
         pass
-
-    def handle_escape(self):
-        Globals.STATE = Menu.Menu()
 
     def handle_enemy_collision(self):
         pass
@@ -414,10 +412,24 @@ class Level(GameState):
         elif key == pygame.K_2:
             delta = 100 - Globals.HEALTH_BAR.health
             Globals.HEALTH_BAR.changeHealth(delta)
+        elif key == pygame.K_p:
+            self.handle_pause()
         else:
             self.keyCode = key
             for p in self.playerSprites:
                 p.keyPressed(key)
+
+    def handle_pause(self):
+        if self.has_timer:
+            self.timer.pause()
+        Globals.STATE = PauseScreen(self)
+
+    def handle_unpause(self):
+        if self.has_timer:
+            self.timer.unpause()
+
+    def handle_escape(self):
+        self.handle_pause()
 
     def handle_keyup(self, key):
         if key == self.keyCode:
