@@ -66,7 +66,6 @@ class SettingsState(GameState):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
                 Globals.STATE = Menu.Menu()
-                Globals.RUNNING = False
             elif event.key == pygame.K_LEFT:
             	self.change_value(-1)
             elif event.key == pygame.K_RIGHT:
