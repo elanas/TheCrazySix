@@ -99,6 +99,10 @@ class ZombieCutScene(Level):
                 self.handle_escape()
             elif event.key == pygame.K_RETURN:
                 self.handle_done()
+            elif event.key == pygame.K_p:
+                self.start_pause_fade()
+            elif event.key == pygame.K_ESCAPE:
+                self.handle_escape()
 
     def init_enemies(self):
         pass
@@ -106,13 +110,13 @@ class ZombieCutScene(Level):
     def check_collisions(self):
         pass
 
-    def handle_pause(self):
+    def handle_anim_pause(self):
         self.overlay_surf = pygame.Surface(
             Globals.SCREEN.get_rect().size).convert()
         self.overlay_surf.fill(ZombieCutScene.OVERLAY_COLOR_SUB)
         self.start_shaking()
 
-    def handle_unpause(self):
+    def handle_anim_unpause(self):
         self.stop_shaking()
 
     def handle_done(self):

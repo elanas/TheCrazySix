@@ -33,7 +33,7 @@ class CutSceneEnemy(Enemy):
                 self.time_waiting = 0
                 self.direction = Enemy.INDEX_UP
                 self.image = Enemy.images[self.direction][self.cycle]
-                self.level.handle_unpause()
+                self.level.handle_anim_unpause()
             return
         self.rect.bottom += time * self.velocity
         if self.rect.bottom > self.target_y and not self.has_paused:
@@ -41,7 +41,7 @@ class CutSceneEnemy(Enemy):
             self.rect.bottom = self.target_y
             self.velocity *= -1
             self.is_waiting = True
-            self.level.handle_pause()
+            self.level.handle_anim_pause()
 
         if self.is_moving:
             self.anim_time += time
