@@ -118,8 +118,6 @@ class Menu(GameState):
                 [CIRCLE_WIDTH,  CIRCLE_HEIGHT + CIRCLE_GAP * 4]
             )
 
-        pygame.display.flip()
-
     def draw_circle(self, title_rect):
         pos = (title_rect.left - Menu.CIRCLE_PADDING, title_rect.centery)
         pygame.draw.circle(Globals.SCREEN, Menu.CIRCLE_COLOR, pos, 10)
