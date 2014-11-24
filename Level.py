@@ -425,6 +425,8 @@ class Level(GameState):
 
     def start_pause_fade(self):
         self.pausing = True
+        if self.has_timer:
+            self.timer.pause()
         self.start_fade_out()
 
     def handle_pause(self):
