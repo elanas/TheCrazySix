@@ -6,6 +6,7 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 import CustomLevelPicker
+from PauseScreen import PauseScreen
 
 
 class CustomLevel(Level.Level):
@@ -16,8 +17,9 @@ class CustomLevel(Level.Level):
                                           map_path)
         Globals.Globals.HEALTH_BAR = HealthBar()
 
-    def handle_escape(self):
-        Globals.Globals.STATE = CustomLevelPicker.CustomLevelPicker()
+    def goto_pause(self):
+        escape_state = CustomLevelPicker.CustomLevelPicker()
+        Globals.Globals.STATE = PauseScreen(self, escape_state)
 
     def handle_finish_fade_out(self):
         Globals.Globals.STATE = CustomLevelPicker.CustomLevelPicker()

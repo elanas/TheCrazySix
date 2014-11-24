@@ -428,8 +428,12 @@ class Level(GameState):
         self.start_fade_out()
 
     def handle_pause(self):
+        self.pausing = False
         if self.has_timer:
             self.timer.pause()
+        self.goto_pause()
+
+    def goto_pause(self):
         Globals.STATE = PauseScreen(self)
 
     def handle_unpause(self):

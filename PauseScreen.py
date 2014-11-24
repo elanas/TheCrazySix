@@ -14,8 +14,10 @@ class PauseScreen(GameState):
     MIN_ALPHA = 0
     MAX_ALPHA = 255
 
-    def __init__(self, return_state):
+    def __init__(self, return_state, escape_state=None):
         self.return_state = return_state
+        self.escape_state = escape_state if escape_state is not None else \
+            Menu.Menu()
         self.loader = AssetLoader('images')
         self.background_img = self.loader.load_image('background.png')
         Globals.play_menu_sound()
@@ -70,7 +72,7 @@ class PauseScreen(GameState):
         if event.type == pygame.KEYDOWN:
             key = event.key
             if key == pygame.K_ESCAPE:
-                Globals.STATE = Menu.Menu()
+                Globals.STATE = self.escape_state
             if key in PauseScreen.UNPAUSE_KEYS:
                 Globals.stop_menu_sound()
                 self.start_fade_out()
