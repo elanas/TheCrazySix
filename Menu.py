@@ -6,6 +6,7 @@ from Globals import Globals
 from NameInput import NameInput
 from Highscore import Highscore
 from CustomLevelPicker import CustomLevelPicker
+from SettingsState import SettingsState
 import Title
 
 
@@ -143,12 +144,13 @@ class Menu(GameState):
             if self.selection == 0:
                 # Globals.STATE = MainGame()
                 Globals.STATE = NameInput()
-            if self.selection == 1:
+            elif self.selection == 1:
                 Globals.STATE = CustomLevelPicker()
-            if self.selection == 3:
+            elif self.selection == 2:
+                Globals.STATE = SettingsState()
+            elif self.selection == 3:
                 Globals.STATE = Highscore()
-                pass
-            if self.selection == 4:
+            elif self.selection == 4:
                 sys.exit()
 
     def updateSelection(self):
