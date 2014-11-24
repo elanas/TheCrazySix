@@ -20,12 +20,12 @@ class Globals(object):
     CURRENT_LEVEL = -1
     LEVELS = None
     MENU_SOUND = None
-    MENU_SOUND_CHANNEL = None
     CUTSCENE_SOUND = None
     VOLUME = 100
     BRIGHTNESS = 100
     USE_BRIGHTNESS = False
     BRIGHTNESS_SURF = None
+    PLAYING_MENU_SOUND = False
 
     @staticmethod
     def init_levels():
@@ -58,15 +58,16 @@ class Globals(object):
         if Globals.MENU_SOUND is None:
             loader = AssetLoader(sound_path_start='sounds')
             Globals.MENU_SOUND = loader.load_sound('menu_music.ogg')
-        if Globals.MENU_SOUND_CHANNEL is not None and \
-                Globals.MENU_SOUND_CHANNEL.get_busy():
+        if Globals.PLAYING_MENU_SOUND:
             return
-        Globals.MENU_SOUND_CHANNEL = Globals.MENU_SOUND.play(loops=-1)
+        Globals.MENU_SOUND.play(loops=-1)
+        Globals.PLAYING_MENU_SOUND = True
 
     @staticmethod
     def stop_menu_sound():
-        if Globals.MENU_SOUND is not None:
+        if Globals.PLAYING_MENU_SOUND:
             Globals.MENU_SOUND.stop()
+            Globals.PLAYING_MENU_SOUND = False
 
     @staticmethod
     def goto_first_level():
