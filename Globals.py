@@ -1,3 +1,4 @@
+from __future__ import division
 import pygame
 import random
 import HealthBar
@@ -20,8 +21,8 @@ class Globals(object):
     LEVELS = None
     MENU_SOUND = None
     CUTSCENE_SOUND = None
-    VOLUME = 1.0
-    BRIGHTNESS = 1.0
+    VOLUME = 100
+    BRIGHTNESS = 100
     USE_BRIGHTNESS = False
     BRIGHTNESS_SURF = None
 
@@ -80,7 +81,7 @@ class Globals(object):
     @staticmethod
     def set_volume(volume):
         Globals.VOLUME = volume
-        AssetLoader.set_volume(volume)
+        AssetLoader.set_volume(volume / 100)
 
     @staticmethod
     def set_brightness(brightness):
@@ -89,9 +90,9 @@ class Globals(object):
                 pygame.Surface((Globals.WIDTH, Globals.HEIGHT))
             Globals.BRIGHTNESS_SURF.fill((0, 0, 0))
         Globals.BRIGHTNESS = brightness
-        if brightness == 1:
+        if brightness == 100:
             Globals.USE_BRIGHTNESS = False
         else:
             Globals.USE_BRIGHTNESS = True
-            Globals.BRIGHTNESS_SURF.set_alpha(int((1 - brightness) * 255))
+            Globals.BRIGHTNESS_SURF.set_alpha(int((1 - brightness / 100) * 255))
         

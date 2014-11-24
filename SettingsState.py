@@ -8,8 +8,8 @@ import pygame
 
 class SettingsState(GameState):
     SLIDER_SIZE = (400, 50)
-    SLIDER_DELTA = .1
-    MIN_BRIGHTNESS = .3
+    SLIDER_DELTA = 10
+    MIN_BRIGHTNESS = 30
     TITLE_IMAGE_PATH = 'settings.png'
     TITLE_MARGIN_TOP = 70
     TITLE_MARGIN_BOTTOM = 80
@@ -56,7 +56,7 @@ class SettingsState(GameState):
     		SettingsState.LABEL_SLIDER_MARGIN
     	self.volume_slider = SettingsSlider(
     		volume_slider_rect,
-    		max_value=1, value=Globals.VOLUME)
+    		max_value=100, value=Globals.VOLUME)
     	self.volume_slider.select()
     	brightness_slider_rect = pygame.Rect((0, 0), SettingsState.SLIDER_SIZE)
     	brightness_slider_rect.centerx = Globals.WIDTH / 2
@@ -64,7 +64,7 @@ class SettingsState(GameState):
     		SettingsState.LABEL_SLIDER_MARGIN
     	self.brightness_slider = SettingsSlider(
     		brightness_slider_rect,
-    		max_value=(1 - SettingsState.MIN_BRIGHTNESS),
+    		max_value=(100 - SettingsState.MIN_BRIGHTNESS),
     		value=(Globals.BRIGHTNESS - SettingsState.MIN_BRIGHTNESS))
 
     def render(self):
@@ -75,6 +75,10 @@ class SettingsState(GameState):
         					self.brightness_label_rect)
         self.volume_slider.render(Globals.SCREEN)
         self.brightness_slider.render(Globals.SCREEN)
+
+    def update(self, time):
+    	self.volume_slider.update(time)
+    	self.brightness_slider.update(time)
 
     def change_selection(self, delta):
     	self.selected = (self.selected + delta) % 2
