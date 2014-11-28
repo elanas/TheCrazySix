@@ -484,9 +484,7 @@ class LevelEditor(GameState):
     def handle_save(self):
         min_x = 0
         tile_map = self.tile_engine.tileMap
-        if len(tile_map) == 0:
-            self.set_message("cannot save an empty map",
-                             color=LevelEditor.ERROR_MESSAGE_COLOR)
+        if not self.validate_map():
             return
         min_x = min([self.get_x_start(row) for row in tile_map
                      if len(row) > 0])
@@ -555,3 +553,33 @@ class LevelEditor(GameState):
                 break
             y_end -= 1
         return y_end
+
+    def validate_map(self):
+        tile_map = self.tile_engine.tileMap
+        if len(tile_map) == 0:
+            self.set_message("cannot save an empty map",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
+            return False
+        num_player_spawn = 0
+        num_stairs_up = 0
+        for col in tile_map:
+            for tile in col:
+                if tile is None:
+                    continue
+                if TileType.START_ATTR in tile.special_attr:
+                    num_player_spawn += 1
+                if TileType.STAIR_UP_ATTR in tile.special_attr:
+                    num_stairs_up += 1
+        if num_player_spawn == 0:
+            self.set_message("you must define a player spawn point",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
+            return False
+        elif num_player_spawn > 1:
+            self.set_message("you cannot define multiple player spawn points",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
+            return False
+        if num_stairs_up == 0:
+            self.set_message("you must define at least on stair going \"up\"",
+                             color=LevelEditor.ERROR_MESSAGE_COLOR)
+            return False
+        return True
