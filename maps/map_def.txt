@@ -12,7 +12,8 @@ $ coin.png 0 coin coin_replace
 ] mwall_top.png 1
 4 mwall_turn.png 1
 6 mwall_up.png 1
-< player_start.png 0 player_start
+< player_spawn.png 0 player_spawn
+_ player_respawn.png 0 player_respawn
 > enemy_spawn.png 0 enemy_spawn
 z floor_bed_bottom.png 1
 c floor_bed_top.png 1

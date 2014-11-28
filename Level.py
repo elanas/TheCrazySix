@@ -69,6 +69,29 @@ class Level(GameState):
         self.should_fade_in = should_fade_in
         self.has_key = False
         self.pausing = False
+        self.respawn_coords = [-1, -1]
+        self.find_respawn()
+
+    def find_respawn(self):
+        tile_map = self.tile_engine.tileMap
+        for row_num in range(0, len(tile_map)):
+            for col_num in range(0, len(tile_map[row_num])):
+                if tile_map[row_num][col_num] is None:
+                    continue
+                if TileType.RESPAWN_ATTR in \
+                        tile_map[row_num][col_num].special_attr:
+                    if self.has_respawn_coords():
+                        raise Exception(
+                            "There can only be one respawn point in the map"
+                        )
+                    self.respawn_coords[0] = row_num
+                    self.respawn_coords[1] = col_num
+        if self.has_respawn_coords():
+            tile_map[self.respawn_coords[0]][self.respawn_coords[1]] = \
+                self.tile_engine.get_tile_from_attr(TileType.BASE_ATTR)
+
+    def has_respawn_coords(self):
+        return self.respawn_coords[0] != -1 and self.respawn_coords[1] != -1
 
     def got_current_state(self):
         if self.should_fade_in:
