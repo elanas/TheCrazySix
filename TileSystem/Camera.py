@@ -13,18 +13,21 @@ class Camera(object):
         self.tileEngine = tileEngine
         self.container = container
         self.viewpoint = container.copy()
-        self.initView()
         self.surface = pygame.Surface(self.viewpoint.size).convert()
         self.surface_ready = False
+        self.start_pos = [-1, -1]
+        self.initView()
 
     def set_dirty(self):
         self.surface_ready = False
 
     def initView(self):
+        if self.start_pos[0] != -1 and self.start_pos[1] != -1:
+            self.set_viewpoint_with_coords(self.start_pos[0], self.start_pos[1])
+            return
         tileRect = self.tileEngine.get_tile_rect()
         numRows = self.tileEngine.getNumRows()
         tile_map = self.tileEngine.tileMap
-        start_pos = [-1, -1]
         for row_num in range(0, len(tile_map)):
             for col_num in range(0, len(tile_map[row_num])):
                 if tile_map[
@@ -33,22 +36,27 @@ class Camera(object):
                     continue
                 if TileType.START_ATTR in \
                         tile_map[row_num][col_num].special_attr:
-                    if start_pos[0] != -1:
+                    if self.start_pos[0] != -1:
                         raise Exception(
                             "There can only be one starting tile in the map"
                         )
-                    start_pos[0] = row_num
-                    start_pos[1] = col_num
-        if start_pos[0] != -1:
-            self.viewpoint.centery = tileRect.height * start_pos[0]
-            self.viewpoint.centerx = tileRect.width * start_pos[1]
-            tile_map[start_pos[0]][start_pos[1]] = \
+                    self.start_pos[0] = row_num
+                    self.start_pos[1] = col_num
+        if self.start_pos[0] != -1:
+            self.set_viewpoint_with_coords(self.start_pos[0], self.start_pos[1])
+            tile_map[self.start_pos[0]][self.start_pos[1]] = \
                 self.tileEngine.get_tile_from_attr(TileType.BASE_ATTR)
         else:
             self.viewpoint.bottom = tileRect.height * numRows + \
                 Camera.BOTTOM_PADDING
             self.viewpoint.centerx = (tileRect.width *
                                       self.tileEngine.getMaxCols()) / 2
+
+    def set_viewpoint_with_coords(self, row, col):
+        tileRect = self.tileEngine.get_tile_rect()
+        self.viewpoint.centery = tileRect.height * row
+        self.viewpoint.centerx = tileRect.width * col
+        self.set_dirty()
 
     def render(self, screen):
         screen.fill(Camera.EMPTY_COLOR, self.container)

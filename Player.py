@@ -49,6 +49,13 @@ class Player(Character):
         self.total_blinking_time = 0
         self.last_sound_time = 0.0
 
+    def stop_and_set_direction(self, direction):
+        self.velocity = 0
+        self.direction = direction
+        self.anim_time = Player.STILL_ANIM_TIME
+        self.time_elapsed = Player.STILL_ANIM_TIME
+        self.cycle = 0
+
     def update(self, time, camera=None):
         self.updateVelocity(time)
         self.time_elapsed += time

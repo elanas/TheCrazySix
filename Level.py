@@ -5,6 +5,7 @@ from TileSystem.TileEngine import TileEngine
 from TileSystem.TileType import TileType
 from TileSystem.Camera import Camera
 from Player import Player
+from Character import Character
 from Enemy import Enemy
 from os.path import join
 import pygame
@@ -69,7 +70,10 @@ class Level(GameState):
         self.should_fade_in = should_fade_in
         self.has_key = False
         self.pausing = False
+        self.going_back = False
+        self.score_counted = False
         self.respawn_coords = [-1, -1]
+        self.timer = None
         self.find_respawn()
 
     def find_respawn(self):
@@ -94,20 +98,44 @@ class Level(GameState):
         return self.respawn_coords[0] != -1 and self.respawn_coords[1] != -1
 
     def got_current_state(self):
+        self.camera.initView()
+        self.player.rect.center = Globals.SCREEN.get_rect().center
         if self.should_fade_in:
             self.start_fade_in()
-        if self.has_timer:
+        if self.has_timer and self.timer is None:
             self.timer = ScoreTimer()
+        elif self.timer is not None:
+            self.timer.unpause()
         Globals.stop_menu_sound()
 
+    def got_state_back(self):
+        if self.has_respawn_coords():
+            self.camera.set_viewpoint_with_coords(
+                self.respawn_coords[0], self.respawn_coords[1])
+            center = Globals.SCREEN.get_rect().center
+            self.player.rect.left = center[0] + 10
+            self.player.rect.top = center[1] + 10
+            self.player.stop_and_set_direction(Character.INDEX_DOWN)
+            self.start_fade_in()
+        else:
+            raise Exception(
+                "A respawn point must be defined to return to the level")
+
     def handle_stair_up(self):
-        Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
-        if self.has_timer:
-            time = self.timer.total_time / 1000
-            diff = max(300 - time, 0)
-            Globals.PLAYER_SCORE += diff
+        if not self.score_counted:
+            self.score_counted = True
+            Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
+            if self.has_timer:
+                time = self.timer.total_time / 1000
+                diff = max(300 - time, 0)
+                Globals.PLAYER_SCORE += diff
+        self.going_back = False
+        self.pausing = False
         self.start_fade_out()
-        pass
+
+    def handle_stair_down(self):
+        self.going_back = True
+        self.start_fade_out()
 
     def handle_enemy_collision(self):
         pass
@@ -132,7 +160,8 @@ class Level(GameState):
         Globals.STATE = WinGame.WinGame()  # for now
 
     def handle_finish_fade_in(self):
-        pass
+        if self.timer is not None:
+            self.timer.unpause()
 
     def replace_special_tile(self, pair):
         if pair.tile.is_replaceable:
@@ -226,6 +255,11 @@ class Level(GameState):
         num_up_stairs = len(temp_rect.collidelistall(stair_up_rects))
         if num_up_stairs > 0:
             self.handle_stair_up()
+        stair_down_rects = [pair.rect for pair in special_tiles if 
+                            TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
+        num_down_stairs = len(temp_rect.collidelistall(stair_down_rects))
+        if num_down_stairs > 0:
+            self.handle_stair_down()
 
     def check_enemy_collisions(self):
         enemy_rects = [enemy.rect for enemy in self.enemySprites]
@@ -258,7 +292,7 @@ class Level(GameState):
             turret.render(Globals.SCREEN)
         self.playerSprites.draw(Globals.SCREEN)
         self.render_overlay()
-        if self.has_timer:
+        if self.has_timer and not self.score_counted:
             self.timer.render(Globals.SCREEN)
         if self.showing_subtitle:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
@@ -311,6 +345,8 @@ class Level(GameState):
             if new_alpha >= Level.MAX_ALPHA:
                 if self.pausing:
                     self.handle_pause()
+                elif self.going_back:
+                    self.handle_go_back()
                 else:
                     self.handle_finish_fade_out()
                 self.fade_out = False
@@ -445,6 +481,12 @@ class Level(GameState):
             self.keyCode = key
             for p in self.playerSprites:
                 p.keyPressed(key)
+
+    def handle_go_back(self):
+        if Globals.goto_previous_level():
+            self.timer.pause()
+            self.player.stop_and_set_direction(Character.INDEX_UP)
+            self.camera.initView()
 
     def start_pause_fade(self):
         self.pausing = True

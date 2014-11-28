@@ -54,6 +54,16 @@ class Globals(object):
             return False
 
     @staticmethod
+    def goto_previous_level():
+        if Globals.CURRENT_LEVEL > 0 and len(Globals.LEVELS) > 1:
+            Globals.CURRENT_LEVEL -= 1
+            Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
+            Globals.LEVELS[Globals.CURRENT_LEVEL].got_state_back()
+            return True
+        else:
+            return False
+
+    @staticmethod
     def play_menu_sound():
         if Globals.MENU_SOUND is None:
             loader = AssetLoader(sound_path_start='sounds')
