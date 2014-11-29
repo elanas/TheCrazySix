@@ -16,6 +16,7 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 class LevelEditor(GameState):
     HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR, TileType.TURRET_ATTR]
+    IN_GAME_HIDDEN_EXTRA = [TileType.STAIR_DOWN_ATTR, TileType.RESPAWN_ATTR]
     RIGHT_PADDING_FACTOR = 4
     PADDING = 20
     HIGHLIGHT_COLOR = (255, 0, 255)
@@ -93,9 +94,12 @@ class LevelEditor(GameState):
         c.centerx = self.title_rect.centerx
         # if self.browser is not None:
         #     pygame.draw.rect(self.globals.SCREEN, (0, 0, 0), self.browser.container)
+        hidden_attr = LevelEditor.HIDDEN_ATTR
+        if self.in_game:
+            hidden_attr.extend(LevelEditor.IN_GAME_HIDDEN_EXTRA)
         self.browser = DefinitionBrowser(self.tile_engine.tileManager,
                                          self.tile_engine.get_tile_rect(), c,
-                                         LevelEditor.HIDDEN_ATTR)
+                                         hidden_attr)
 
     def init_combo_browser(self):
         width = self.browser.container.width
