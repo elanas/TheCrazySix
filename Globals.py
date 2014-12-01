@@ -26,6 +26,7 @@ class Globals(object):
     USE_BRIGHTNESS = False
     BRIGHTNESS_SURF = None
     PLAYING_MENU_SOUND = False
+    HUD_MANAGER = None
 
     @staticmethod
     def init_levels():
@@ -88,6 +89,7 @@ class Globals(object):
     def reset_game():
         Globals.CURRENT_LEVEL = -1
         Globals.HEALTH_BAR = None
+        Globals.HUD_MANAGER = None
         Globals.TIME = None
         Globals.init_levels()
 

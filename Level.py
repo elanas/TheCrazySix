@@ -17,6 +17,7 @@ import WinGame
 import LoseGame
 from HighscoreManager import HighscoreManager
 from PauseScreen import PauseScreen
+from HUDManager import HUDManager
 
 
 class Level(GameState):
@@ -60,6 +61,8 @@ class Level(GameState):
         self.timer = None
         if Globals.HEALTH_BAR is None:
             Globals.HEALTH_BAR = HealthBar()
+        if Globals.HUD_MANAGER is None:
+            Globals.HUD_MANAGER = HUDManager() 
         self.black_surf = pygame.Surface(
             (Globals.WIDTH, Globals.HEIGHT)).convert()
         self.black_surf.fill((0, 0, 0))
@@ -68,7 +71,6 @@ class Level(GameState):
         self.showing_subtitle = False
         self.alpha_factor = 300
         self.should_fade_in = should_fade_in
-        self.has_key = False
         self.pausing = False
         self.going_back = False
         self.score_counted = False
@@ -156,7 +158,7 @@ class Level(GameState):
         elif TileType.HEALTH_ATTR in pair.tile.special_attr:
             Globals.HEALTH_BAR.changeHealth(Level.HEALTH_PICKUP)
         elif TileType.KEY_ATTR in pair.tile.special_attr:
-            self.has_key = True
+            Globals.HUD_MANAGER.add_key()
 
     def handle_finish_fade_out(self):
         if not Globals.goto_next_level():
@@ -245,7 +247,7 @@ class Level(GameState):
                         temp_rect.colliderect(pair.rect)]
         locked_tiles = [pair for pair in action_tiles if
                         TileType.LOCKED_ATTR in pair.tile.special_attr]
-        if not self.has_key and len(locked_tiles) > 0:
+        if not Globals.HUD_MANAGER.has_key() and len(locked_tiles) > 0:
             self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
         elif len(action_tiles) > 0:
             self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)
@@ -310,6 +312,7 @@ class Level(GameState):
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
+        Globals.HUD_MANAGER.render(Globals.SCREEN)
 
     def update(self, time):
         if Globals.HEALTH_BAR.is_dead():
@@ -402,39 +405,46 @@ class Level(GameState):
                 self.camera.set_dirty()
 
     def get_sliding_doors(self, row, col):
+        init_num_keys = Globals.HUD_MANAGER.num_keys
         coords = list()
-        if not self.has_key and TileType.LOCKED_ATTR in \
+        if TileType.LOCKED_ATTR in \
                 self.camera.tileEngine.tileMap[row][col].special_attr:
-            return list()
+            if not Globals.HUD_MANAGER.has_key():
+                return list()
+            else:
+                init_num_keys = -1
+                Globals.HUD_MANAGER.use_key()
         coords.append([row, col])
-        result = self.get_doors_delta(row, col, row_delta=-1)
+        result = self.get_doors_delta(row, col, init_num_keys, row_delta=-1)
         if result == -1:
             return list()
         coords.extend(result)
-        result = self.get_doors_delta(row, col, row_delta=1)
+        result = self.get_doors_delta(row, col, init_num_keys, row_delta=1)
         if result == -1:
             return list()
         coords.extend(result)
-        result = self.get_doors_delta(row, col, col_delta=-1)
+        result = self.get_doors_delta(row, col, init_num_keys, col_delta=-1)
         if result == -1:
             return list()
         coords.extend(result)
-        result = self.get_doors_delta(row, col, col_delta=1)
+        result = self.get_doors_delta(row, col, init_num_keys, col_delta=1)
         if result == -1:
             return list()
         coords.extend(result)
         return coords
 
-    def get_doors_delta(self, row, col, row_delta=0, col_delta=0):
+    def get_doors_delta(self, row, col, init_num_keys, row_delta=0, col_delta=0):
         coords = list()
         tile_map = self.camera.tileEngine.tileMap
         row += row_delta
         col += col_delta
         while self.camera.tileEngine.is_coord_valid(row, col) and \
                 TileType.SLIDING_DOOR_ATTR in tile_map[row][col].special_attr:
-            if not self.has_key and \
-                    TileType.LOCKED_ATTR in tile_map[row][col].special_attr:
-                return -1
+            if TileType.LOCKED_ATTR in tile_map[row][col].special_attr:
+                if not Globals.HUD_MANAGER.has_key():
+                    return -1
+                elif Globals.HUD_MANAGER.num_keys >= init_num_keys:
+                    Globals.HUD_MANAGER.use_key()
             coords.append([row, col])
             row += row_delta
             col += col_delta
