@@ -33,7 +33,7 @@ class ZombieCutScene(Level):
 
     def init_enemy(self):
         self.enemy = CutSceneEnemy(
-            self.player.rect.centerx,
+            self.player.rect.left,
             self.player.rect.top + ZombieCutScene.NEGATIVE_MARGIN,
             self
         )

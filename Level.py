@@ -110,16 +110,24 @@ class Level(GameState):
 
     def got_state_back(self):
         if self.has_respawn_coords():
-            self.camera.set_viewpoint_with_coords(
+            diff = self.camera.set_viewpoint_with_coords(
                 self.respawn_coords[0], self.respawn_coords[1])
             center = Globals.SCREEN.get_rect().center
             self.player.rect.left = center[0] + 10
             self.player.rect.top = center[1] + 10
             self.player.stop_and_set_direction(Character.INDEX_DOWN)
+            self.shift_non_player_objects(diff[0], diff[1])
             self.start_fade_in()
         else:
             raise Exception(
                 "A respawn point must be defined to return to the level")
+
+    def shift_non_player_objects(self, x_delta, y_delta):
+        for enemy in self.enemySprites:
+                enemy.rect.centerx += x_delta
+                enemy.rect.centery += y_delta
+        for turret in self.turrets:
+            turret.move(x_delta, y_delta)
 
     def handle_stair_up(self):
         if not self.score_counted:

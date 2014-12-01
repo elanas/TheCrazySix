@@ -54,9 +54,13 @@ class Camera(object):
 
     def set_viewpoint_with_coords(self, row, col):
         tileRect = self.tileEngine.get_tile_rect()
+        old_center = self.viewpoint.center
         self.viewpoint.centery = tileRect.height * row
         self.viewpoint.centerx = tileRect.width * col
+        diff = (old_center[0] - self.viewpoint.centerx,
+                old_center[1] - self.viewpoint.centery)
         self.set_dirty()
+        return diff
 
     def render(self, screen):
         screen.fill(Camera.EMPTY_COLOR, self.container)
