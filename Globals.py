@@ -90,6 +90,7 @@ class Globals(object):
         Globals.CURRENT_LEVEL = -1
         Globals.HEALTH_BAR = None
         Globals.HUD_MANAGER = None
+        Globals.INTRO_SOUND_PLAYED = False
         Globals.TIME = None
         Globals.init_levels()
 
@@ -110,4 +111,3 @@ class Globals(object):
         else:
             Globals.USE_BRIGHTNESS = True
             Globals.BRIGHTNESS_SURF.set_alpha(int((1 - brightness / 100) * 255))
-        
