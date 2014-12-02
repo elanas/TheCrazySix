@@ -8,6 +8,7 @@ from GameState import GameState
 from Globals import Globals
 # from MainGame import MainGame
 from Title import Title
+from SettingsManager import SettingsManager
 import sys
 
 MIN_UPDATE_INTERVAL = .05
@@ -20,8 +21,11 @@ def initialize():
     Globals.WIDTH = 1000
     Globals.HEIGHT = 600
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.STATE = Title()
+    SettingsManager.load()
+    Globals.set_brightness(SettingsManager.BRIGHTNESS, save=False)
+    Globals.set_volume(SettingsManager.VOLUME, save=False)
     pygame.display.set_caption('The Crazy Six - Field Day')
+    Globals.STATE = Title()
 
 
 def loadGame():

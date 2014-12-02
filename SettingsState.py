@@ -1,5 +1,6 @@
 from GameState import GameState
 from Globals import Globals
+from SettingsManager import SettingsManager
 from asset_loader import AssetLoader
 from SettingsSlider import SettingsSlider
 import Menu
@@ -56,7 +57,7 @@ class SettingsState(GameState):
     		SettingsState.LABEL_SLIDER_MARGIN
     	self.volume_slider = SettingsSlider(
     		volume_slider_rect,
-    		max_value=100, value=Globals.VOLUME)
+    		max_value=100, value=SettingsManager.VOLUME)
     	self.volume_slider.select()
     	brightness_slider_rect = pygame.Rect((0, 0), SettingsState.SLIDER_SIZE)
     	brightness_slider_rect.centerx = Globals.WIDTH / 2
@@ -65,7 +66,7 @@ class SettingsState(GameState):
     	self.brightness_slider = SettingsSlider(
     		brightness_slider_rect,
     		max_value=(100 - SettingsState.MIN_BRIGHTNESS),
-    		value=(Globals.BRIGHTNESS - SettingsState.MIN_BRIGHTNESS))
+    		value=(SettingsManager.BRIGHTNESS - SettingsState.MIN_BRIGHTNESS))
 
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))

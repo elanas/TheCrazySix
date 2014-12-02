@@ -37,7 +37,7 @@ class SettingsManager(object):
             SettingsManager.BRIGHTNESS = \
                 SettingsManager.to_int(label, value)
         elif SettingsManager.VOLUME_LABEL == label:
-            SettingsManager.VOLUME = SettingsManager.to_int(label, value)
+            SettingsManager.VOLUME = SettingsManager.to_float(label, value)
         else:
             raise Exception('The settings label "' + label + '" is invalid.')
 
@@ -52,6 +52,16 @@ class SettingsManager(object):
                             '" is invalid')
 
     @staticmethod
+    def to_float(label, str_val):
+        try:
+            return float(str_val)
+
+        except ValueError:
+            raise Exception('The value "' + str_val +
+                            '" for the settings label "' + label +
+                            '" is invalid')
+
+    @staticmethod
     def set_brightness(value, file_path=DEFAULT_PATH):
         SettingsManager.BRIGHTNESS = value
         SettingsManager.save(file_path)
@@ -59,7 +69,7 @@ class SettingsManager(object):
     @staticmethod
     def set_volume(value, file_path=DEFAULT_PATH):
         SettingsManager.VOLUME = value
-        SettingsManager.save(file)
+        SettingsManager.save(file_path)
 
     @staticmethod
     def save(file_path=DEFAULT_PATH):

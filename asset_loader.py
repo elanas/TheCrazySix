@@ -1,6 +1,6 @@
 from os import path
 import pygame
-import Globals
+from SettingsManager import SettingsManager
 
 
 class AssetLoader():
@@ -53,7 +53,7 @@ class AssetLoader():
             return AssetLoader.loaded_sounds[sound_path]
         except KeyError:
             sound = pygame.mixer.Sound(sound_path)
-            sound.set_volume(Globals.Globals.VOLUME)
+            sound.set_volume(SettingsManager.VOLUME)
             AssetLoader.loaded_sounds[sound_path] = sound
             return sound
 
