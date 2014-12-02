@@ -29,9 +29,12 @@ class Player(Character):
     STILL_ANIM_TIME = .5
     BLINK_SPEED = .1
     TOTAL_BLINK_TIME = .5
-    WALKING_DOWN_PATH = os.path.join('images', 'main_character',
-                                     'walking_down')
-    WALKING_DOWN_PREFIX_PATH = os.path.join('main_character', 'walking_down')
+    WALKING_PATH = os.path.join('images', 'main_character')
+    PREFIX_PATH = os.path.join('main_character')
+    WALKING_DOWN_PATH = 'walking_down'
+    WALKING_UP_PATH = 'walking_up'
+    WALKING_LEFT_PATH = 'walking_left'
+    WALKING_RIGHT_PATH = 'walking_right'
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -133,32 +136,31 @@ class Player(Character):
             Player.still_images[Player.INDEX_RIGHT] = \
                 Player.loader.load_spritesheet_alpha(
                     "main_still_right.png", 2, 1)
-        if Player.walking_images[Player.INDEX_UP] is None:
-            Player.walking_images[Player.INDEX_UP] = \
-                Player.loader.load_spritesheet_alpha(
-                    "main_walking_up.png", 8, 1)
-            Player.walking_images[Player.INDEX_UP].reverse()
-
 
         if Player.walking_images[Player.INDEX_DOWN] is None:
-            # Player.walking_images[Player.INDEX_DOWN] = \
-            #     Player.loader.load_spritesheet_alpha(
-            #         "main_walking_down.png", 8, 1)
-            fM = FileManager(Player.WALKING_DOWN_PATH, file_ext='.png', create_dir=False)
+            path = os.path.join(Player.WALKING_PATH, Player.WALKING_DOWN_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_DOWN_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_DOWN] = \
-                Player.loader.load_images(
-                    fM.get_files(prefix_path=Player.WALKING_DOWN_PREFIX_PATH))
-
-
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+        if Player.walking_images[Player.INDEX_UP] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.WALKING_UP_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_UP_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
+            Player.walking_images[Player.INDEX_UP] = \
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
         if Player.walking_images[Player.INDEX_LEFT] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.WALKING_LEFT_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_LEFT_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_LEFT] = \
-                Player.loader.load_spritesheet_alpha(
-                    "main_walking_left.png", 1, 8)
-            Player.walking_images[Player.INDEX_LEFT].reverse()
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
         if Player.walking_images[Player.INDEX_RIGHT] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.WALKING_RIGHT_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_RIGHT_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_RIGHT] = \
-                Player.loader.load_spritesheet_alpha(
-                    "main_walking_right.png", 1, 8)
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
         if Player.hitSound is None:
             Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
 
