@@ -33,6 +33,7 @@ class Enemy(Character):
             self.setInitialPosition(camera)
         if x is not None and y is not None:
             self.rect.topleft = (x, y)
+        self.moving = True
 
     def setInitialPosition(self, camera):
         tile_rect = camera.tileEngine.get_tile_rect()
@@ -54,6 +55,8 @@ class Enemy(Character):
             keep_looking = num_collided > 0
 
     def update(self, time, camera=None, player=None, change_direction=True):
+        if not self.moving:
+            return
         self.time_elapsed_anim += time
         self.time_elapsed_direction += time
         if change_direction and \

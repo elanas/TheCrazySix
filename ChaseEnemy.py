@@ -8,8 +8,10 @@ from Globals import Globals
 
 
 class ChaseEnemy(Enemy):
-    CHASE_TILE_RADIUS = 5
+    CHASE_TILE_RADIUS = 10
     CHASE_RADIUS = None
+    COLLISION_OFFSET = -10
+    MIN_DIRECTION_CHANGE_TIME = .5
 
     def __init__(self, camera, x=None, y=None):
         super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y)
@@ -17,6 +19,7 @@ class ChaseEnemy(Enemy):
         if ChaseEnemy.CHASE_RADIUS is None:
             ChaseEnemy.CHASE_RADIUS = \
                 self.tile_size * ChaseEnemy.CHASE_TILE_RADIUS
+        self.time_since_change = ChaseEnemy.MIN_DIRECTION_CHANGE_TIME
 
     def update(self, time, camera, player):
         self.enemy_point = self.rect.center
@@ -30,6 +33,17 @@ class ChaseEnemy(Enemy):
                 change_direction=False)
 
     def update_chase(self, time, player):
+        temp_rect = self.rect.inflate(
+            ChaseEnemy.COLLISION_OFFSET, ChaseEnemy.COLLISION_OFFSET)
+        if temp_rect.colliderect(player.rect):
+            self.moving = False
+            return
+        self.time_since_change += time
+        if self.time_since_change >= ChaseEnemy.MIN_DIRECTION_CHANGE_TIME:
+            self.time_since_change = 0
+        else:
+            return
+        self.moving = True
         angle = ChaseEnemy.angle_to(self.enemy_point, self.player_point)
         dist = ChaseEnemy.distance(self.enemy_point, self.player_point)
         x_diff = dist * math.cos(angle)
