@@ -16,7 +16,7 @@ class FileManager(object):
         if file_ext is not None and not self.file_ext.startswith("."):
             self.file_ext = '.' + self.file_ext
 
-    def get_files(self, strip_ext=False, sort=True):
+    def get_files(self, strip_ext=False, sort=True, prefix_path=None):
         files = [f for f in listdir(self.path) if isfile(join(self.path, f))]
         if self.file_ext is not None:
             files = [f for f in files if f.lower().endswith(self.file_ext)]
@@ -24,6 +24,8 @@ class FileManager(object):
             files = [splitext(f)[0] for f in files]
         if sort:
             files.sort(key=FileManager.natural_key)
+        if prefix_path is not None:
+            files = [join(prefix_path, f) for f in files]
         return files
 
     @staticmethod

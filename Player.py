@@ -5,6 +5,7 @@ import math
 from Character import Character
 from asset_loader import AssetLoader
 from Globals import Globals
+from FileManager import FileManager
 
 
 class Player(Character):
@@ -28,6 +29,9 @@ class Player(Character):
     STILL_ANIM_TIME = .5
     BLINK_SPEED = .1
     TOTAL_BLINK_TIME = .5
+    WALKING_DOWN_PATH = os.path.join('images', 'main_character',
+                                     'walking_down')
+    WALKING_DOWN_PREFIX_PATH = os.path.join('main_character', 'walking_down')
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -134,10 +138,18 @@ class Player(Character):
                 Player.loader.load_spritesheet_alpha(
                     "main_walking_up.png", 8, 1)
             Player.walking_images[Player.INDEX_UP].reverse()
+
+
         if Player.walking_images[Player.INDEX_DOWN] is None:
+            # Player.walking_images[Player.INDEX_DOWN] = \
+            #     Player.loader.load_spritesheet_alpha(
+            #         "main_walking_down.png", 8, 1)
+            fM = FileManager(Player.WALKING_DOWN_PATH, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_DOWN] = \
-                Player.loader.load_spritesheet_alpha(
-                    "main_walking_down.png", 8, 1)
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=Player.WALKING_DOWN_PREFIX_PATH))
+
+
         if Player.walking_images[Player.INDEX_LEFT] is None:
             Player.walking_images[Player.INDEX_LEFT] = \
                 Player.loader.load_spritesheet_alpha(
