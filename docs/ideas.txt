@@ -1,0 +1,2 @@
+1. Move code related to disorientation to level.py
+2. Gain pushing ability (like box) after getting glove.
