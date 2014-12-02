@@ -14,6 +14,8 @@ class SettingsManager(object):
 
     @staticmethod
     def load(file_path=DEFAULT_PATH):
+        SettingsManager.VOLUME = SettingsManager.DEFAULT_VOLUME
+        SettingsManager.BRIGHTNESS = SettingsManager.DEFAULT_BRIGHTNESS
         try:
             with open(file_path, 'r') as file_handle:
                 for line in [l.strip() for l in file_handle]:
@@ -26,8 +28,7 @@ class SettingsManager(object):
                     label, value = parts
                     SettingsManager.set_label_value(label, value)
         except IOError:
-            SettingsManager.VOLUME = SettingsManager.DEFAULT_VOLUME
-            SettingsManager.BRIGHTNESS = SettingsManager.DEFAULT_BRIGHTNESS
+            pass
         SettingsManager.LOADED = True
 
     @staticmethod
