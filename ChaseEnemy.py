@@ -22,18 +22,23 @@ class ChaseEnemy(Enemy):
         self.enemy_point = self.rect.center
         self.player_point = player.rect.center
         if not self.player_in_radius(player):
-            # super(ChaseEnemy, self).update(time, camera, player)
-            pass
+            super(ChaseEnemy, self).update(time, camera, player)
         else:
             self.checkCollisions(camera)
             self.update_chase(time, player)
+            super(ChaseEnemy, self).update(time, camera, player,
+                change_direction=False)
 
     def update_chase(self, time, player):
         angle = ChaseEnemy.angle_to(self.enemy_point, self.player_point)
         dist = ChaseEnemy.distance(self.enemy_point, self.player_point)
         x_diff = dist * math.cos(angle)
         y_diff = dist * math.sin(angle)
-        print x_diff, y_diff
+        if math.fabs(x_diff) > math.fabs(y_diff):
+            new_direct = Enemy.INDEX_LEFT if x_diff < 0 else Enemy.INDEX_RIGHT
+        else:
+            new_direct = Enemy.INDEX_UP if y_diff < 0 else Enemy.INDEX_DOWN
+        self.setDirection(new_direct)
 
     def player_in_radius(self, player):
         return ChaseEnemy.distance(self.enemy_point, self.player_point) <= \
