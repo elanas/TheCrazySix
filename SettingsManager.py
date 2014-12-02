@@ -6,6 +6,10 @@ class SettingsManager(object):
     LABEL_SEPARATOR = ': '
     VOLUME_LABEL = 'volume'
     BRIGHTNESS_LABEL = 'brightness'
+    MIN_BRIGHTNESS = 30
+    MIN_VOLUME = 0
+    MAX_BRIGHTNESS = 100
+    MAX_VOLUME = 100
     DEFAULT_VOLUME = 100
     DEFAULT_BRIGHTNESS = 100
     VOLUME = None
@@ -35,10 +39,19 @@ class SettingsManager(object):
     def set_label_value(label, value):
         label = label.lower()
         if SettingsManager.BRIGHTNESS_LABEL == label:
-            SettingsManager.BRIGHTNESS = \
-                SettingsManager.to_int(label, value)
+            value = SettingsManager.to_int(label, value)
+            if SettingsManager.MIN_BRIGHTNESS > value or \
+                    value > SettingsManager.MAX_BRIGHTNESS:
+                raise Exception(
+                    'The brightness value must be in the range [30, 100]')
+            SettingsManager.BRIGHTNESS = value
         elif SettingsManager.VOLUME_LABEL == label:
-            SettingsManager.VOLUME = SettingsManager.to_float(label, value)
+            value = SettingsManager.to_float(label, value)
+            if SettingsManager.MIN_VOLUME > value or \
+                    value > SettingsManager.MAX_VOLUME:
+                raise Exception(
+                    'The volume value must be in the range [0, 100]')
+            SettingsManager.VOLUME = value
         else:
             raise Exception('The settings label "' + label + '" is invalid.')
 
