@@ -53,7 +53,7 @@ class Enemy(Character):
             num_collided = len(self.rect.collidelistall(solid_rects))
             keep_looking = num_collided > 0
 
-    def update(self, time, camera=None):
+    def update(self, time, camera=None, player=None):
         self.time_elapsed_anim += time
         self.time_elapsed_direction += time
         if self.time_elapsed_direction >= self.time_to_change_direction:

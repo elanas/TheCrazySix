@@ -17,6 +17,7 @@ $ coin.png 0 coin coin_replace
 < player_spawn.png 0 player_spawn
 _ player_respawn.png 0 player_respawn
 > enemy_spawn.png 0 enemy_spawn
+F chase_enemy_spawn.png 0 chase_enemy_spawn
 z floor_bed_bottom.png 1
 c floor_bed_top.png 1
 b table_top.png 1
@@ -43,4 +44,4 @@ w sliding_door_horiz.png 1 sliding_door action
 A sliding_door_horiz_locked.png 1 sliding_door action locked
 B sliding_door_vert_locked_left.png 1 sliding_door action locked
 C sliding_door_vert_locked_right.png 1 sliding_door action locked
-# last was "E"
+# last was "F"

@@ -10,6 +10,7 @@ class TileType(object):
     START_ATTR = "player_spawn"
     RESPAWN_ATTR = "player_respawn"
     SPAWN_ATTR = "enemy_spawn"
+    CHASE_SPAWN_ATTR = "chase_enemy_spawn"
     LEVER_LEFT_ATTR = "switch"
     LEVER_RIGHT_ATTR = "switch_on"
     SLIDING_DOOR_ATTR = "sliding_door"

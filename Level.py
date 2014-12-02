@@ -7,6 +7,7 @@ from TileSystem.Camera import Camera
 from Player import Player
 from Character import Character
 from Enemy import Enemy
+from ChaseEnemy import ChaseEnemy
 from os.path import join
 import pygame
 from Turret import Turret
@@ -115,9 +116,9 @@ class Level(GameState):
             diff = self.camera.set_viewpoint_with_coords(
                 self.respawn_coords[0], self.respawn_coords[1])
             center = Globals.SCREEN.get_rect().center
-            self.player.rect.left = center[0] + 10
-            self.player.rect.top = center[1] + 10
             self.player.stop_and_set_direction(Character.INDEX_DOWN)
+            self.player.rect.left = center[0] - 16
+            self.player.rect.top = center[1]
             self.shift_non_player_objects(diff[0], diff[1])
             self.start_fade_in()
         else:
@@ -204,6 +205,11 @@ class Level(GameState):
                     self.add_enemy(row_num, col_num)
                     tile_map[row_num][col_num] = base_tile
                     self.camera.set_dirty()
+                elif TileType.CHASE_SPAWN_ATTR in \
+                        tile_map[row_num][col_num].special_attr:
+                    self.add_enemy(row_num, col_num, chase_enemy=True)
+                    tile_map[row_num][col_num] = base_tile
+                    self.camera.set_dirty()
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, True)
@@ -211,10 +217,15 @@ class Level(GameState):
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, False)
 
-    def add_enemy(self, row_num, col_num):
+    def add_enemy(self, row_num, col_num, chase_enemy=False):
         y = self.tile_rect.height * row_num - self.camera.viewpoint.top
         x = self.tile_rect.width * col_num - self.camera.viewpoint.left
-        self.enemySprites.add(Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y))
+        if not chase_enemy:
+            enemy = Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y)
+        else:
+            enemy = ChaseEnemy(camera=self.camera, x=x, y=y)
+        self.enemySprites.add(enemy)
+
 
     def add_turret(self, row_num, col_num, left):
         row_num += 1
@@ -322,7 +333,7 @@ class Level(GameState):
             return
         Globals.HEALTH_BAR.update(time)
         self.player.update(time, self.camera)
-        self.enemySprites.update(time, self.camera)
+        self.enemySprites.update(time, self.camera, self.player)
         for turret in self.turrets:
             turret.update(time, self.camera)
         self.check_camera_position()

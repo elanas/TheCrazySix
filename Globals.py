@@ -57,8 +57,8 @@ class Globals(object):
     def goto_previous_level():
         if Globals.CURRENT_LEVEL > 0 and len(Globals.LEVELS) > 1:
             Globals.CURRENT_LEVEL -= 1
-            Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
             Globals.LEVELS[Globals.CURRENT_LEVEL].got_state_back()
+            Globals.STATE = Globals.LEVELS[Globals.CURRENT_LEVEL]
             return True
         else:
             return False

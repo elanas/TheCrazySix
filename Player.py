@@ -62,6 +62,7 @@ class Player(Character):
         self.anim_time = Player.STILL_ANIM_TIME
         self.time_elapsed = Player.STILL_ANIM_TIME
         self.cycle = 0
+        self.image = Player.still_images[self.direction][self.cycle]
 
     def update(self, time, camera=None):
         self.updateVelocity(time)
