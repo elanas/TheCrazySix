@@ -23,8 +23,8 @@ class Camera(object):
 
     def initView(self):
         if self.start_pos[0] != -1 and self.start_pos[1] != -1:
-            self.set_viewpoint_with_coords(self.start_pos[0], self.start_pos[1])
-            return
+            return self.set_viewpoint_with_coords(
+                self.start_pos[0], self.start_pos[1])
         tileRect = self.tileEngine.get_tile_rect()
         numRows = self.tileEngine.getNumRows()
         tile_map = self.tileEngine.tileMap
@@ -51,6 +51,7 @@ class Camera(object):
                 Camera.BOTTOM_PADDING
             self.viewpoint.centerx = (tileRect.width *
                                       self.tileEngine.getMaxCols()) / 2
+        return (0, 0)
 
     def set_viewpoint_with_coords(self, row, col):
         tileRect = self.tileEngine.get_tile_rect()

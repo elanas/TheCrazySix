@@ -22,7 +22,7 @@ class CutSceneEnemy(Enemy):
         self.is_waiting = False
         self.has_paused = False
 
-    def update(self, time, camera=None):
+    def update(self, time, camera=None, player=None):
         if self.velocity < 0 and self.rect.bottom < 0:
             self.level.handle_done()
             return

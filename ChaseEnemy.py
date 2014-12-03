@@ -5,13 +5,15 @@ from Enemy import Enemy
 from Character import Character
 from asset_loader import AssetLoader
 from Globals import Globals
+from Player import Player
 
 
 class ChaseEnemy(Enemy):
-    CHASE_TILE_RADIUS = 10
+    CHASE_TILE_RADIUS = 8
     CHASE_RADIUS = None
     COLLISION_OFFSET = -10
     MIN_DIRECTION_CHANGE_TIME = .5
+    CHASE_VELOCITY = Player.MOVE_VELOCITY * 2 / 3
 
     def __init__(self, camera, x=None, y=None):
         super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y)
@@ -25,8 +27,10 @@ class ChaseEnemy(Enemy):
         self.enemy_point = self.rect.center
         self.player_point = player.rect.center
         if not self.player_in_radius(player):
+            self.velocity = Enemy.MOVE_VELOCITY
             super(ChaseEnemy, self).update(time, camera, player)
         else:
+            self.velocity = ChaseEnemy.CHASE_VELOCITY
             self.checkCollisions(camera)
             self.update_chase(time, player)
             super(ChaseEnemy, self).update(time, camera, player,

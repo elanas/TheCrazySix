@@ -26,6 +26,17 @@ class Globals(object):
     BRIGHTNESS_SURF = None
     PLAYING_MENU_SOUND = False
     HUD_MANAGER = None
+    DISORIENTED = False
+    DISORIENTED_SURF = None
+    DISORIENTED_COLOR_SUB = (0, 70, 70)
+
+    @staticmethod
+    def get_disoriented_surf():
+        if Globals.DISORIENTED_SURF is None:
+            Globals.DISORIENTED_SURF = pygame.Surface(
+                Globals.SCREEN.get_rect().size).convert()
+            Globals.DISORIENTED_SURF.fill(Globals.DISORIENTED_COLOR_SUB)
+        return Globals.DISORIENTED_SURF
 
     @staticmethod
     def init_levels():

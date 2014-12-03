@@ -101,7 +101,9 @@ class Level(GameState):
         return self.respawn_coords[0] != -1 and self.respawn_coords[1] != -1
 
     def got_current_state(self):
-        self.camera.initView()
+        diff = self.camera.initView()
+        print diff
+        self.shift_non_player_objects(diff[0], diff[1])
         self.player.rect.center = Globals.SCREEN.get_rect().center
         if self.should_fade_in:
             self.start_fade_in()
@@ -319,7 +321,9 @@ class Level(GameState):
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
     def render_overlay(self):
-        pass
+        if Globals.DISORIENTED:
+            Globals.SCREEN.blit(Globals.get_disoriented_surf(), (0, 0),
+                special_flags=pygame.BLEND_SUB)
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
@@ -490,9 +494,24 @@ class Level(GameState):
 
     def event(self, event):
         if event.type == pygame.KEYDOWN:
-            self.handle_keydown(event.key)
+            key = event.key if not Globals.DISORIENTED else \
+                self.invert_key(event.key)
+            self.handle_keydown(key)
         elif event.type == pygame.KEYUP:
-            self.handle_keyup(event.key)
+            key = event.key if not Globals.DISORIENTED else \
+                self.invert_key(event.key)
+            self.handle_keyup(key)
+
+    def invert_key(self, key):
+        if key == pygame.K_LEFT:
+            key = pygame.K_RIGHT
+        elif key == pygame.K_RIGHT:
+            key = pygame.K_LEFT
+        elif key == pygame.K_UP:
+            key = pygame.K_DOWN
+        elif key == pygame.K_DOWN:
+            key = pygame.K_UP
+        return key
 
     def handle_keydown(self, key):
         if key == pygame.K_ESCAPE:
@@ -506,6 +525,8 @@ class Level(GameState):
             Globals.HEALTH_BAR.changeHealth(delta)
         elif key == pygame.K_p:
             self.start_pause_fade()
+        elif key == pygame.K_3:
+            Globals.HUD_MANAGER.add_key()
         else:
             self.keyCode = key
             for p in self.playerSprites:

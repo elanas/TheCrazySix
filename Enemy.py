@@ -34,6 +34,7 @@ class Enemy(Character):
         if x is not None and y is not None:
             self.rect.topleft = (x, y)
         self.moving = True
+        self.velocity = Enemy.MOVE_VELOCITY
 
     def setInitialPosition(self, camera):
         tile_rect = camera.tileEngine.get_tile_rect()
@@ -101,7 +102,7 @@ class Enemy(Character):
 
     def moveRandom(self, time):
         norm_delta = self.getMoveNormalized()
-        dist_delta = [x * time * Enemy.MOVE_VELOCITY for x in norm_delta]
+        dist_delta = [x * time * self.velocity for x in norm_delta]
         self.move(dist_delta[0], dist_delta[1])
 
     def getMoveNormalized(self):

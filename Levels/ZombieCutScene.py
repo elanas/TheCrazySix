@@ -15,7 +15,6 @@ class ZombieCutScene(Level):
     INITIAL_TIMES = 3
     HIT_ALPHA = 70
     POST_HIT_ALPHA = 40
-    OVERLAY_COLOR_SUB = (0, 70, 70)
 
     def __init__(self):
         super(ZombieCutScene, self).__init__(
@@ -30,6 +29,17 @@ class ZombieCutScene(Level):
             ZombieCutScene.INITIAL_TIMES
         )
         self.overlay_sub = False
+        self.played_already = False
+
+    def got_current_state(self):
+        if not self.played_already:
+            super(ZombieCutScene, self).got_current_state()
+            self.played_already = True
+        else:
+            Globals.goto_next_level()
+
+    def got_state_back(self):
+        Globals.goto_previous_level()
 
     def init_enemy(self):
         self.enemy = CutSceneEnemy(
@@ -89,9 +99,6 @@ class ZombieCutScene(Level):
 
     def render_pre_fade(self):
         super(ZombieCutScene, self).render_pre_fade()
-        if self.overlay_surf is not None:
-            Globals.SCREEN.blit(
-                self.overlay_surf, (0, 0), special_flags=pygame.BLEND_SUB)
         if self.showing_subtitle:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
@@ -100,6 +107,7 @@ class ZombieCutScene(Level):
             if event.key == pygame.K_ESCAPE:
                 self.handle_escape()
             elif event.key == pygame.K_RETURN:
+                Globals.DISORIENTED = True
                 self.handle_done()
             elif event.key == pygame.K_p:
                 self.start_pause_fade()
@@ -113,9 +121,7 @@ class ZombieCutScene(Level):
         pass
 
     def handle_anim_pause(self):
-        self.overlay_surf = pygame.Surface(
-            Globals.SCREEN.get_rect().size).convert()
-        self.overlay_surf.fill(ZombieCutScene.OVERLAY_COLOR_SUB)
+        Globals.DISORIENTED = True
         self.start_shaking()
 
     def handle_anim_unpause(self):
