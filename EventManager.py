@@ -8,6 +8,7 @@ class EventManager(object):
         pygame.JOYBUTTONUP, pygame.JOYBUTTONDOWN
     ])
     JOYSTICK_BUTTON_EVENTS = set([pygame.JOYBUTTONUP, pygame.JOYBUTTONDOWN])
+    JOYSTICK_AXIS_EVENTS = set([pygame.JOYAXISMOTION])
     KEYBOARD_EVENTS = set([pygame.KEYUP, pygame.KEYDOWN])
 
     def __init__(self):
@@ -39,7 +40,7 @@ class EventManager(object):
             elif event in Globals.EVENTS_ESCAPE:
                 self._send_escape(event)
             elif event in Globals.EVENTS_ACTION:
-                self._send_action_key()
+                self._send_action_key(event)
             elif self.handle_joystick_event(event):
                 pass
             elif self.handle_keyboard_event(event):
@@ -98,8 +99,9 @@ class EventManager(object):
         if self.is_keydown(event):
             Globals.STATE.handle_return()
 
-    def _send_action_key(self):
-        Globals.STATE.handle_action_key()
+    def _send_action_key(self, event):
+        if self.is_keydown(event):
+            Globals.STATE.handle_action_key()
 
     def _send_escape(self, event):
         if self.is_keydown(event):
