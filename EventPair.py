@@ -28,8 +28,9 @@ class EventPair(object):
 		if type(other) is type(self):
 			if EventManager.is_keyboard_event(self.type) and EventManager.is_keyboard_event(other.type):
 				return self.id == other.id
-			elif EventManager.is_joystick_event(self.type) and EventManager.is_joystick_event(other.type):
+			elif self.type in EventManager.JOYSTICK_BUTTON_EVENTS and other.type in EventManager.JOYSTICK_BUTTON_EVENTS:
 				return self.id == other.id
+			# need to handle more things
 			return False
 		else:
 			try:

@@ -49,12 +49,22 @@ class EventManager(object):
     def handle_joystick_event(self, event):
         if not EventManager.is_joystick_event(event.type):
             return False
+        if event.type in EventManager.JOYSTICK_BUTTON_EVENTS:
+            self.handle_joystick_button(event)
         return True
+
+    def handle_joystick_button(self, event):
+        keydown = event.type == pygame.JOYBUTTONDOWN
+        self.handle_simple_event(event, keydown)
 
     def handle_keyboard_event(self, event):
         if not EventManager.is_keyboard_event(event.type):
             return False
         keydown = event.type == pygame.KEYDOWN
+        self.handle_simple_event(event, keydown)
+        return True
+
+    def handle_simple_event(self, event, keydown):
         if event in Globals.EVENTS_UP:
             self._send_key_up(keydown)
         elif event in Globals.EVENTS_DOWN:
@@ -65,7 +75,6 @@ class EventManager(object):
             self._send_key_right(keydown)
         elif event in Globals.EVENTS_BACKSPACE:
             self._send_backspace(keydown)
-        return True
 
     def _send_raw(self, event):
         Globals.STATE.handle_raw_event(event)
@@ -100,4 +109,4 @@ class EventManager(object):
         Globals.STATE.handle_quit()
 
     def is_keydown(self, event):
-        return event.type == pygame.KEYDOWN
+        return event.type == pygame.KEYDOWN or event.type == pygame.JOYBUTTONDOWN
