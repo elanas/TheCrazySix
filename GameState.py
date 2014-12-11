@@ -1,4 +1,7 @@
-class GameState(object):
+from EventHandler import EventHandler
+
+
+class GameState(EventHandler):
 
     def __init__(self):
         pass

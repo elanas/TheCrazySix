@@ -98,9 +98,9 @@ class HowToPlay(GameState):
             new_alpha = 255
         self.subtitle_surf.set_alpha(new_alpha)
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.STATE = NameInput.NameInput()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            Globals.reset_game()
-            Globals.goto_first_level()
+    def handle_escape(self):
+        Globals.STATE = NameInput.NameInput()
+
+    def handle_return(self):
+        Globals.reset_game()
+        Globals.goto_first_level()

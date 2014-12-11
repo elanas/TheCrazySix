@@ -175,17 +175,14 @@ class CustomLevelNameInput(GameState):
                     join(CustomLevelNameInput.CUSTOM_MAP_PATH, full_name),
                     globals=Globals, in_game=True)
 
-    def event(self, event):
+    def handle_escape(self):
+        Globals.STATE = CustomLevelPicker.CustomLevelPicker()
+
+    def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
             self.error_message = None
-            if event.key == pygame.K_ESCAPE:
-                Globals.STATE = CustomLevelPicker.CustomLevelPicker()
-            elif self.is_valid(event.key):
+            if self.is_valid(event.key):
                 self.handle_entry(self.parse_key(event.key))
-            elif event.key == pygame.K_BACKSPACE:
-                self.handle_backspace()
-            elif event.key == pygame.K_RETURN:
-                self.handle_return()
             elif event.key in CustomLevelNameInput.ARROW_KEYS:
                 self.error_message = CustomLevelNameInput.ERROR_ARROW_KEY
 

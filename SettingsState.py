@@ -101,15 +101,24 @@ class SettingsState(GameState):
     		Globals.set_brightness(SettingsState.MIN_BRIGHTNESS + \
     							   self.brightness_slider.value)
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE or event.key == pygame.K_RETURN:
-                Globals.STATE = Menu.Menu()
-            elif event.key == pygame.K_LEFT:
-            	self.change_value(-1)
-            elif event.key == pygame.K_RIGHT:
-            	self.change_value(1)
-            elif event.key == pygame.K_UP:
-            	self.change_selection(-1)
-            elif event.key == pygame.K_DOWN:
-            	self.change_selection(1)
+    def handle_escape(self):
+        Globals.STATE = Menu.Menu()
+
+    def handle_return(self):
+        Globals.STATE = Menu.Menu()
+
+    def handle_key_left(self, keydown):
+        if keydown:
+            self.change_value(-1)
+
+    def handle_key_right(self, keydown):
+        if keydown:
+            self.change_value(1)
+
+    def handle_key_up(self, keydown):
+        if keydown:
+            self.change_selection(-1)
+
+    def handle_key_down(self, keydown):
+        if keydown:
+            self.change_selection(1)

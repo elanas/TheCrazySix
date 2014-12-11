@@ -3,6 +3,7 @@ from Globals import Globals
 from asset_loader import AssetLoader
 import pygame
 import Menu
+from EventManager import EventManager
 
 
 class PauseScreen(GameState):
@@ -68,11 +69,14 @@ class PauseScreen(GameState):
             fn()
         Globals.STATE = self.return_state
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN:
-            key = event.key
-            if key == pygame.K_ESCAPE:
-                Globals.STATE = self.escape_state
-            if key in PauseScreen.UNPAUSE_KEYS:
-                Globals.stop_menu_sound()
-                self.start_fade_out()
+    def handle_escape(self):
+        Globals.STATE = self.escape_state
+
+    def handle_return(self):
+        Globals.stop_menu_sound()
+        self.start_fade_out()
+
+    def handle_raw_event(self, event):
+        if EventManager.is_keyboard_event(event.type) and \
+                not event in Globals.EVENTS_ESCAPE:
+            self.handle_return()

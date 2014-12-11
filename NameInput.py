@@ -144,7 +144,7 @@ class NameInput(GameState):
         else:
             Globals.PLAYER_NAME += typed_char
 
-    def handle_backspace(self):
+    def handle_backspace(self, keydown):
         if len(Globals.PLAYER_NAME) > 0:
             Globals.PLAYER_NAME = \
                 Globals.PLAYER_NAME[0:len(Globals.PLAYER_NAME) - 1]
@@ -157,19 +157,16 @@ class NameInput(GameState):
         else:
             Globals.STATE = HowToPlay.HowToPlay()
 
-    def event(self, event):
+    def handle_escape(self):
+        Globals.STATE = Menu.Menu()
+
+    def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
             self.error_message = None
-            if event.key == pygame.K_ESCAPE:
-                Globals.STATE = Menu.Menu()
-            elif self.is_valid(event.key):
+            if self.is_valid(event.key):
                 self.handle_entry(self.parse_key(event.key))
-            elif event.key == pygame.K_BACKSPACE:
-                self.handle_backspace()
-            elif event.key == pygame.K_RETURN:
-                self.handle_return()
             elif event.key in NameInput.ARROW_KEYS:
-                self.error_message = NameInput.ERROR_ARROW_KEY
+                self.error_message = NameInput.ERROR_ARROW_KEY            
 
     def parse_key(self, event_key):
         if self.is_num(event_key):

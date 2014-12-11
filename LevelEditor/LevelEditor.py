@@ -1,5 +1,5 @@
 import pygame
-from GameState import GameState
+# from GameState import GameState
 from Globals import Globals
 from TileEngine import TileEngine
 from TileManager import TileManager
@@ -12,6 +12,7 @@ from os.path import join
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from GameState import GameState
 
 
 class LevelEditor(GameState):
@@ -411,7 +412,11 @@ class LevelEditor(GameState):
             self.set_message("end delete mode")
             self.set_default_cursor()
 
-    def event(self, event):
+    def handle_escape(self):
+        import CustomLevelPicker
+        self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
+
+    def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_i:
                 self.toggle_info_mode()
@@ -422,9 +427,6 @@ class LevelEditor(GameState):
             elif event.key == pygame.K_ESCAPE:
                 if not self.in_game:
                     self.revert_and_reload()
-                else:
-                    import CustomLevelPicker
-                    self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
             elif event.key == pygame.K_u:
                 self.undo_action()
             elif event.key == pygame.K_MINUS:

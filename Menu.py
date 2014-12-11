@@ -125,31 +125,25 @@ class Menu(GameState):
     def update(self, time):
         self.time += time
 
-    def event(self, event):
-        if event.type == pygame.QUIT:
-            sys.exit()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_UP:
-            if self.selection != 0:
-                self.selection -= 1
-                self.updateSelection()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_DOWN:
-            if self.selection != 4:
-                self.selection += 1
-                self.updateSelection()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.STATE = Title.Title()
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            if self.selection == 0:
-                # Globals.STATE = MainGame()
-                Globals.STATE = NameInput()
-            elif self.selection == 1:
-                Globals.STATE = CustomLevelPicker()
-            elif self.selection == 2:
-                Globals.STATE = SettingsState()
-            elif self.selection == 3:
-                Globals.STATE = Highscore()
-            elif self.selection == 4:
-                sys.exit()
+    def handle_key_up(self, keydown):
+        if keydown and self.selection != 0:
+            self.selection -= 1
 
-    def updateSelection(self):
-        pygame.display.flip()
+    def handle_key_down(self, keydown):
+        if keydown and self.selection != 4:
+            self.selection += 1
+
+    def handle_escape(self):
+        Globals.STATE = Title.Title()
+
+    def handle_return(self):
+        if self.selection == 0:
+            Globals.STATE = NameInput()
+        elif self.selection == 1:
+            Globals.STATE = CustomLevelPicker()
+        elif self.selection == 2:
+            Globals.STATE = SettingsState()
+        elif self.selection == 3:
+            Globals.STATE = Highscore()
+        elif self.selection == 4:
+            self.handle_quit()

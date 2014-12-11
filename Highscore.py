@@ -70,6 +70,5 @@ class Highscore(GameState):
     def update(self, time):
         pass
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.STATE = Menu.Menu()
+    def handle_escape(self):
+        Globals.STATE = Menu.Menu()

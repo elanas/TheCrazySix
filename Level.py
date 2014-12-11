@@ -502,35 +502,49 @@ class Level(GameState):
                 self.invert_key(event.key)
             self.handle_keyup(key)
 
-    def invert_key(self, key):
-        if key == pygame.K_LEFT:
-            key = pygame.K_RIGHT
-        elif key == pygame.K_RIGHT:
-            key = pygame.K_LEFT
-        elif key == pygame.K_UP:
-            key = pygame.K_DOWN
-        elif key == pygame.K_DOWN:
-            key = pygame.K_UP
-        return key
+    def handle_key_down(self, keydown):
+        key = pygame.K_DOWN if not Globals.DISORIENTED else pygame.K_UP
+        if keydown:
+            self.handle_keydown(key)
+        else:
+            self.handle_keyup(key)
+
+    def handle_key_up(self, keydown):
+        key = pygame.K_UP if not Globals.DISORIENTED else pygame.K_DOWN
+        if keydown:
+            self.handle_keydown(key)
+        else:
+            self.handle_keyup(key)
+
+    def handle_key_left(self, keydown):
+        key = pygame.K_LEFT if not Globals.DISORIENTED else pygame.K_RIGHT
+        if keydown:
+            self.handle_keydown(key)
+        else:
+            self.handle_keyup(key)
+
+    def handle_key_right(self, keydown):
+        key = pygame.K_RIGHT if not Globals.DISORIENTED else pygame.K_LEFT
+        if keydown:
+            self.handle_keydown(key)
+        else:
+            self.handle_keyup(key)
+
+    def handle_raw_event(self, event):
+        if event.type == pygame.KEYDOWN:
+            key = event.key
+            if key == pygame.K_1:
+                self.handle_stair_up()
+            elif key == pygame.K_2:
+                delta = 100 - Globals.HEALTH_BAR.health
+                Globals.HEALTH_BAR.changeHealth(delta)
+            elif key == pygame.K_3:
+                Globals.HUD_MANAGER.add_key()
 
     def handle_keydown(self, key):
-        if key == pygame.K_ESCAPE:
-            self.handle_escape()
-        elif key == pygame.K_SPACE:
-            self.handle_action_key()
-        elif key == pygame.K_1:
-            self.handle_stair_up()
-        elif key == pygame.K_2:
-            delta = 100 - Globals.HEALTH_BAR.health
-            Globals.HEALTH_BAR.changeHealth(delta)
-        elif key == pygame.K_p:
-            self.start_pause_fade()
-        elif key == pygame.K_3:
-            Globals.HUD_MANAGER.add_key()
-        else:
-            self.keyCode = key
-            for p in self.playerSprites:
-                p.keyPressed(key)
+        self.keyCode = key
+        for p in self.playerSprites:
+            p.keyPressed(key)
 
     def handle_go_back(self):
         if Globals.goto_previous_level():
@@ -558,7 +572,8 @@ class Level(GameState):
             self.timer.unpause()
 
     def handle_escape(self):
-        self.handle_pause()
+        # self.handle_pause()
+        self.start_pause_fade()
 
     def handle_keyup(self, key):
         if key == self.keyCode:

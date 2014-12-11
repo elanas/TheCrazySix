@@ -29,6 +29,27 @@ class Globals(object):
     DISORIENTED = False
     DISORIENTED_SURF = None
     DISORIENTED_COLOR_SUB = (0, 70, 70)
+    EVENT_MANAGER = None
+    EVENTS_UP = []
+    EVENTS_DOWN = []
+    EVENTS_LEFT = []
+    EVENTS_RIGHT = []
+    EVENTS_ACTION = []
+    EVENTS_ESCAPE = []
+    EVENTS_RETURN = []
+    EVENTS_BACKSPACE = []
+
+    @staticmethod
+    def init_event_keys():
+        from EventPair import EventPair
+        Globals.EVENTS_UP = [EventPair(type=pygame.KEYDOWN, id=pygame.K_UP)]
+        Globals.EVENTS_DOWN = [EventPair(type=pygame.KEYDOWN, id=pygame.K_DOWN)]
+        Globals.EVENTS_LEFT = [EventPair(type=pygame.KEYDOWN, id=pygame.K_LEFT)]
+        Globals.EVENTS_RIGHT = [EventPair(type=pygame.KEYDOWN, id=pygame.K_RIGHT)]
+        Globals.EVENTS_ACTION = [EventPair(type=pygame.KEYDOWN, id=pygame.K_SPACE)]
+        Globals.EVENTS_ESCAPE = [EventPair(type=pygame.KEYDOWN, id=pygame.K_ESCAPE)]
+        Globals.EVENTS_RETURN = [EventPair(type=pygame.KEYDOWN, id=pygame.K_RETURN)]
+        Globals.EVENTS_BACKSPACE = [EventPair(type=pygame.KEYDOWN, id=pygame.K_BACKSPACE)]
 
     @staticmethod
     def get_disoriented_surf():

@@ -184,7 +184,13 @@ class CustomLevelPicker(GameState):
                 print 'An error occured while deleting "' + full_path + '"'
                 print e
 
-    def event(self, event):
+    def handle_escape(self):
+        Globals.STATE = Menu.Menu()
+
+    def handle_return(self):
+        pass
+
+    def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                 self.handle_change(-1)
@@ -196,5 +202,3 @@ class CustomLevelPicker(GameState):
                 self.handle_edit_selection()
             elif event.key == pygame.K_d:
                 self.handle_delete()
-            elif event.key == pygame.K_ESCAPE:
-                Globals.STATE = Menu.Menu()

@@ -58,8 +58,8 @@ class Title(GameState):
                     self.size <= Title.INIT_SIZE - self.MAX_DELTA:
                 self.delta *= -1
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.RUNNING = False
-        elif event.type == pygame.KEYDOWN and event.key == pygame.K_RETURN:
-            Globals.STATE = Menu.Menu()
+    def handle_return(self):
+        Globals.STATE = Menu.Menu()
+
+    def handle_escape(self):
+        self.handle_quit()
