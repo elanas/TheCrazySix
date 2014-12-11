@@ -9,6 +9,7 @@ class EventManager(object):
     ])
     JOYSTICK_BUTTON_EVENTS = set([pygame.JOYBUTTONUP, pygame.JOYBUTTONDOWN])
     JOYSTICK_AXIS_EVENTS = set([pygame.JOYAXISMOTION])
+    JOYSTICK_HAT_EVENTS = set([pygame.JOYHATMOTION])
     KEYBOARD_EVENTS = set([pygame.KEYUP, pygame.KEYDOWN])
 
     def __init__(self):

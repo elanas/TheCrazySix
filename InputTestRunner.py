@@ -12,11 +12,11 @@ class TestInput(GameState):
         if EventManager.is_keyboard_event(event.type):
             result += ' ' + pygame.key.name(event.key)
         elif event.type in EventManager.JOYSTICK_BUTTON_EVENTS:
-            result += ' ' + str(event.button)
+            result += '\t' + str(event.button)
         elif event.type in EventManager.JOYSTICK_AXIS_EVENTS:
             result += '\tjoy: ' + str(event.joy) + '\taxis: ' + str(event.axis) + '\tvalue: ' + '%.3f'%(event.value)
-        elif EventManager.is_joystick_event(event.type):
-            result = '\t' + str(event)
+        elif event.type in EventManager.JOYSTICK_HAT_EVENTS:
+            result += '\tjoy: ' + str(event.joy) + '\that: ' + str(event.hat) + '\tvalue: ' + str(event.value)
         else:
             return
         print result
