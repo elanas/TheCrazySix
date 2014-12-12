@@ -102,17 +102,12 @@ class ZombieCutScene(Level):
         if self.showing_subtitle:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_ESCAPE:
-                self.handle_escape()
-            elif event.key == pygame.K_RETURN:
-                Globals.DISORIENTED = True
-                self.handle_done()
-            elif event.key == pygame.K_p:
-                self.start_pause_fade()
-            elif event.key == pygame.K_ESCAPE:
-                self.handle_escape()
+    def handle_return(self):
+        Globals.DISORIENTED = True
+        self.handle_done()
+
+    def handle_keydown(self, key):
+        pass
 
     def init_enemies(self):
         pass
