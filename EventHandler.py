@@ -33,7 +33,7 @@ class EventHandler(object):
     def handle_backspace(self):
         pass
 
-    def hanlde_backspace_keyup(self):
+    def handle_backspace_keyup(self):
         pass
 
     def handle_return(self):

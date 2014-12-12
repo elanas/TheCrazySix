@@ -11,6 +11,7 @@ from Action import Action
 from os.path import join
 import sys
 import os
+from GameState import GameState
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
