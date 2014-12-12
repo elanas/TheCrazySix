@@ -76,6 +76,10 @@ class PauseScreen(GameState):
         Globals.stop_menu_sound()
         self.start_fade_out()
 
+    def handle_action_key(self):
+        Globals.stop_menu_sound()
+        self.start_fade_out()
+
     def handle_raw_event(self, event):
         if EventManager.is_keyboard_event(event.type) and \
                 not event in Globals.EVENTS_ESCAPE:

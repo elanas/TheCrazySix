@@ -48,14 +48,7 @@ class SettingsManager(object):
     def load(file_path=DEFAULT_PATH):
         SettingsManager.VOLUME = SettingsManager.DEFAULT_VOLUME
         SettingsManager.BRIGHTNESS = SettingsManager.DEFAULT_BRIGHTNESS
-        SettingsManager.EVENTS_UP = SettingsManager.DEFAULT_UP
-        SettingsManager.EVENTS_DOWN = SettingsManager.DEFAULT_DOWN
-        SettingsManager.EVENTS_LEFT = SettingsManager.DEFAULT_LEFT
-        SettingsManager.EVENTS_RIGHT = SettingsManager.DEFAULT_RIGHT
-        SettingsManager.EVENTS_ACTION = SettingsManager.DEFAULT_ACTION
-        SettingsManager.EVENTS_ESCAPE = SettingsManager.DEFAULT_ESCAPE
-        SettingsManager.EVENTS_RETURN = SettingsManager.DEFAULT_RETURN
-        SettingsManager.EVENTS_BACKSPACE = SettingsManager.DEFAULT_BACKSPACE
+        SettingsManager.reset_controls(save=False)
         try:
             with open(file_path, 'r') as file_handle:
                 for line in [l.strip() for l in file_handle]:
@@ -76,6 +69,19 @@ class SettingsManager(object):
         except IOError:
             pass
         SettingsManager.LOADED = True
+
+    @staticmethod
+    def reset_controls(save=True):
+        SettingsManager.EVENTS_UP = SettingsManager.DEFAULT_UP
+        SettingsManager.EVENTS_DOWN = SettingsManager.DEFAULT_DOWN
+        SettingsManager.EVENTS_LEFT = SettingsManager.DEFAULT_LEFT
+        SettingsManager.EVENTS_RIGHT = SettingsManager.DEFAULT_RIGHT
+        SettingsManager.EVENTS_ACTION = SettingsManager.DEFAULT_ACTION
+        SettingsManager.EVENTS_ESCAPE = SettingsManager.DEFAULT_ESCAPE
+        SettingsManager.EVENTS_RETURN = SettingsManager.DEFAULT_RETURN
+        SettingsManager.EVENTS_BACKSPACE = SettingsManager.DEFAULT_BACKSPACE
+        if save:
+            SettingsManager.save()
 
     @staticmethod
     def convert_events(value):

@@ -3,6 +3,7 @@ from asset_loader import AssetLoader
 from Globals import Globals
 from os.path import join
 from SetJoystickKeyState import SetJoystickKeyState
+from SettingsManager import SettingsManager
 import pygame
 
 
@@ -22,6 +23,7 @@ class ControlSettings(GameState):
     SURF_INDEX_SELECTED = 2
     ARROW_PADDING = 10
     KEY_PADDING = 30
+    RESET_MARGIN_BOTTOM = 20
     INDEX_UP = 0
     INDEX_DOWN = 2
     INDEX_LEFT = 1
@@ -29,7 +31,8 @@ class ControlSettings(GameState):
     INDEX_ACTION = 4
     INDEX_ESCAPE = 5
     INDEX_RETURN = 6
-    NUM_OPTIONS = 7
+    INDEX_RESET = 7
+    NUM_OPTIONS = 8
 
     def __init__(self):
         self.loader = AssetLoader('images')
@@ -70,6 +73,10 @@ class ControlSettings(GameState):
     def select(self):
         if self.selection == -1:
             return
+        if self.selection == ControlSettings.INDEX_RESET:
+            SettingsManager.reset_controls()
+            self.set_selection(0)
+            return
         Globals.STATE = SetJoystickKeyState(
             self.surf_rect_pairs[self.selection].surf_arr[0],
             list_index=self.selection, return_state=self)
@@ -92,6 +99,7 @@ class ControlSettings(GameState):
         self.set_surf_arr(ControlSettings.INDEX_ACTION, 'action_key.png')
         self.set_surf_arr(ControlSettings.INDEX_ESCAPE, 'escape_key.png')
         self.set_surf_arr(ControlSettings.INDEX_RETURN, 'return_key.png')
+        self.set_surf_arr(ControlSettings.INDEX_RESET, 'reset_controls.png')
 
         centerx = int((3 * Globals.WIDTH) / 4)
         escape_key_rect = self.get_rect(ControlSettings.INDEX_ESCAPE)
@@ -105,6 +113,10 @@ class ControlSettings(GameState):
         return_key_rect = self.get_rect(ControlSettings.INDEX_RETURN)
         return_key_rect.centerx = centerx
         return_key_rect.top = escape_key_rect.bottom + ControlSettings.KEY_PADDING
+
+        reset_rect = self.get_rect(ControlSettings.INDEX_RESET)
+        reset_rect.centerx = int(Globals.WIDTH / 2)
+        reset_rect.bottom = Globals.HEIGHT - ControlSettings.RESET_MARGIN_BOTTOM
 
     def load_arrows(self):
         self.set_surf_arr(ControlSettings.INDEX_UP, 'arrow_up.png')
@@ -171,6 +183,8 @@ class ControlSettings(GameState):
         return True
 
     def set_last_state(self, index):
+        if self.last_surf_index[index] == ControlSettings.SURF_INDEX_HIT:
+            self.last_surf_index[index] = ControlSettings.SURF_INDEX_NORMAL
         self.surf_index[index] = self.last_surf_index[index]
 
     def handle_action_key(self, keydown=True):
