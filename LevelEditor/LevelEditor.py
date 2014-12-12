@@ -416,6 +416,30 @@ class LevelEditor(GameState):
         import CustomLevelPicker
         self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
 
+    def handle_key_up(self, keydown):
+        if keydown and self.key_code is None:
+            self.key_code = pygame.K_UP
+        elif not keydown and self.key_code == pygame.K_UP:
+            self.key_code = None
+
+    def handle_key_down(self, keydown):
+        if keydown and self.key_code is None:
+            self.key_code = pygame.K_DOWN
+        elif not keydown and self.key_code == pygame.K_DOWN:
+            self.key_code = None
+
+    def handle_key_left(self, keydown):
+        if keydown and self.key_code is None:
+            self.key_code = pygame.K_LEFT
+        elif not keydown and self.key_code == pygame.K_LEFT:
+            self.key_code = None
+
+    def handle_key_right(self, keydown):
+        if keydown and self.key_code is None:
+            self.key_code = pygame.K_RIGHT
+        elif not keydown and self.key_code == pygame.K_RIGHT:
+            self.key_code = None
+
     def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_i:

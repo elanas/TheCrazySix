@@ -53,7 +53,7 @@ class AssetLoader():
             return AssetLoader.loaded_sounds[sound_path]
         except KeyError:
             sound = pygame.mixer.Sound(sound_path)
-            sound.set_volume(SettingsManager.VOLUME)
+            sound.set_volume(SettingsManager.VOLUME / 100)
             AssetLoader.loaded_sounds[sound_path] = sound
             return sound
 

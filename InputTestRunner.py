@@ -10,13 +10,15 @@ class TestInput(GameState):
     def handle_raw_event(self, event):
         result = '\t' + pygame.event.event_name(event.type)
         if EventManager.is_keyboard_event(event.type):
-            result += ' ' + pygame.key.name(event.key)
+            result += '\t' + pygame.key.name(event.key)
         elif event.type in EventManager.JOYSTICK_BUTTON_EVENTS:
             result += '\t' + str(event.button)
         elif event.type in EventManager.JOYSTICK_AXIS_EVENTS:
             result += '\tjoy: ' + str(event.joy) + '\taxis: ' + str(event.axis) + '\tvalue: ' + '%.3f'%(event.value)
         elif event.type in EventManager.JOYSTICK_HAT_EVENTS:
             result += '\tjoy: ' + str(event.joy) + '\that: ' + str(event.hat) + '\tvalue: ' + str(event.value)
+        elif EventManager.is_joystick_event(event.type):
+            result = '\t' + str(event)
         else:
             return
         print result
@@ -61,4 +63,3 @@ if __name__ == '__main__':
         Globals.STATE.render()
         pygame.display.flip()
         Globals.EVENT_MANAGER.check_events()
-

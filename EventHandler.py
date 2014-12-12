@@ -21,7 +21,7 @@ class EventHandler(object):
 	def handle_key_right(self, keydown=True):
 		pass
 
-	def handle_backspace(self, keydown=True):
+	def handle_backspace(self):
 		pass
 
 	def handle_return(self):

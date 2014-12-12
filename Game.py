@@ -10,7 +10,6 @@ from Globals import Globals
 from Title import Title
 from SettingsManager import SettingsManager
 import sys
-from ControllerManager import ControllerManager
 from EventHandler import EventHandler
 from EventManager import EventManager
 

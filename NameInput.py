@@ -144,7 +144,7 @@ class NameInput(GameState):
         else:
             Globals.PLAYER_NAME += typed_char
 
-    def handle_backspace(self, keydown):
+    def handle_backspace(self):
         if len(Globals.PLAYER_NAME) > 0:
             Globals.PLAYER_NAME = \
                 Globals.PLAYER_NAME[0:len(Globals.PLAYER_NAME) - 1]
