@@ -57,7 +57,10 @@ class SettingsManager(object):
                         continue
                     parts = line.split(SettingsManager.LABEL_SEPARATOR)
                     if len(parts) != 2:
-                        raise Exception('The settings file is malformed.')
+                        print 'The settings file is malformed.'
+                        print '"' + line + '" is invalid and some settings' + \
+                            ' may now be set to defaults.'
+                        return
                     label, value = parts
                     if label.endswith(SettingsManager.EVENT_LABEL_POSTFIX):
                         # try:
