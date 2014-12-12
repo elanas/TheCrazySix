@@ -413,8 +413,11 @@ class LevelEditor(GameState):
             self.set_default_cursor()
 
     def handle_escape(self):
-        import CustomLevelPicker
-        self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
+        if not self.in_game:
+            self.revert_and_reload()
+        else:
+            import CustomLevelPicker
+            self.globals.STATE = CustomLevelPicker.CustomLevelPicker()
 
     def handle_key_up(self, keydown):
         if keydown and self.key_code is None:
@@ -448,9 +451,6 @@ class LevelEditor(GameState):
                 self.toggle_delete_mode()
             elif event.key == pygame.K_RETURN:
                 self.handle_save()
-            elif event.key == pygame.K_ESCAPE:
-                if not self.in_game:
-                    self.revert_and_reload()
             elif event.key == pygame.K_u:
                 self.undo_action()
             elif event.key == pygame.K_MINUS:
