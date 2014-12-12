@@ -68,7 +68,10 @@ class ControlSettings(GameState):
             self.surf_index[index] = ControlSettings.SURF_INDEX_SELECTED
 
     def change_selection(self, delta):
-        self.set_selection((self.selection + delta) % ControlSettings.NUM_OPTIONS)
+        index = self.selection + delta
+        if index < 0 or index >= ControlSettings.NUM_OPTIONS:
+            return
+        self.set_selection(index)
 
     def select(self):
         if self.selection == -1:
