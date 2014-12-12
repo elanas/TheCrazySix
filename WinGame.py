@@ -48,6 +48,8 @@ class WinGame(GameState):
         title_rect.centery = Globals.SCREEN.get_rect().centery + VERT_SPACING
         Globals.SCREEN.blit(title_surf, title_rect)
 
-    def event(self, event):
-        if event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE:
-            Globals.STATE = Menu.Highscore()
+    def handle_escape(self):
+        Globals.STATE = Menu.Highscore()
+
+    def handle_return(self):
+        Globals.STATE = Menu.Highscore()
