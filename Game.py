@@ -12,7 +12,6 @@ from SettingsManager import SettingsManager
 import sys
 from EventHandler import EventHandler
 from EventManager import EventManager
-from ControlSettings import ControlSettings
 
 MIN_UPDATE_INTERVAL = .05
 
@@ -32,9 +31,7 @@ class Game(EventHandler):
         Globals.set_brightness(SettingsManager.BRIGHTNESS, save=False)
         Globals.set_volume(SettingsManager.VOLUME, save=False)
         pygame.display.set_caption('The Crazy Six - Field Day')
-        # Globals.STATE = Title()
-        Globals.STATE = ControlSettings()
-        Globals.init_event_keys()
+        Globals.STATE = Title()
         Globals.EVENT_MANAGER = EventManager()
 
     def loop(self):

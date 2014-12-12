@@ -2,6 +2,7 @@ from Globals import Globals
 from GameState import GameState
 from asset_loader import AssetLoader
 from EventPair import EventPair
+from SettingsManager import SettingsManager
 import pygame
 
 
@@ -37,33 +38,34 @@ class SetJoystickKeyState(GameState):
 
     def set_event(self, event):
         pair = self.convert_event(event)
-        Globals.EVENTS_UP = [a for a in Globals.EVENTS_UP if a != event]
-        Globals.EVENTS_DOWN = [a for a in Globals.EVENTS_DOWN if a != event]
-        Globals.EVENTS_LEFT = [a for a in Globals.EVENTS_LEFT if a != event]
-        Globals.EVENTS_RIGHT = [a for a in Globals.EVENTS_RIGHT if a != event]
-        Globals.EVENTS_ACTION = [a for a in Globals.EVENTS_ACTION if a != event]
-        Globals.EVENTS_ESCAPE = [a for a in Globals.EVENTS_ESCAPE if a != event]
-        Globals.EVENTS_RETURN = [a for a in Globals.EVENTS_RETURN if a != event]
-        Globals.EVENTS_BACKSPACE = [a for a in Globals.EVENTS_BACKSPACE if a != event]
+        SettingsManager.EVENTS_UP = [a for a in SettingsManager.EVENTS_UP if a != event]
+        SettingsManager.EVENTS_DOWN = [a for a in SettingsManager.EVENTS_DOWN if a != event]
+        SettingsManager.EVENTS_LEFT = [a for a in SettingsManager.EVENTS_LEFT if a != event]
+        SettingsManager.EVENTS_RIGHT = [a for a in SettingsManager.EVENTS_RIGHT if a != event]
+        SettingsManager.EVENTS_ACTION = [a for a in SettingsManager.EVENTS_ACTION if a != event]
+        SettingsManager.EVENTS_ESCAPE = [a for a in SettingsManager.EVENTS_ESCAPE if a != event]
+        SettingsManager.EVENTS_RETURN = [a for a in SettingsManager.EVENTS_RETURN if a != event]
+        SettingsManager.EVENTS_BACKSPACE = [a for a in SettingsManager.EVENTS_BACKSPACE if a != event]
         self.get_event_list().append(pair)
+        SettingsManager.save()
         self.handle_escape()
 
     def get_event_list(self):
         from ControlSettings import ControlSettings
         if self.list_index == ControlSettings.INDEX_ESCAPE:
-            return Globals.EVENTS_ESCAPE
+            return SettingsManager.EVENTS_ESCAPE
         elif self.list_index == ControlSettings.INDEX_ACTION:
-            return Globals.EVENTS_ACTION
+            return SettingsManager.EVENTS_ACTION
         elif self.list_index == ControlSettings.INDEX_RETURN:
-            return Globals.EVENTS_RETURN
+            return SettingsManager.EVENTS_RETURN
         elif self.list_index == ControlSettings.INDEX_UP:
-            return Globals.EVENTS_UP
+            return SettingsManager.EVENTS_UP
         elif self.list_index == ControlSettings.INDEX_DOWN:
-            return Globals.EVENTS_DOWN
+            return SettingsManager.EVENTS_DOWN
         elif self.list_index == ControlSettings.INDEX_LEFT:
-            return Globals.EVENTS_LEFT
+            return SettingsManager.EVENTS_LEFT
         elif self.list_index == ControlSettings.INDEX_RIGHT:
-            return Globals.EVENTS_RIGHT
+            return SettingsManager.EVENTS_RIGHT
         else:
             return list()
 

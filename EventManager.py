@@ -1,5 +1,6 @@
 import pygame
-from Globals import Globals
+import SettingsManager
+import Globals
 
 
 DIRECTIONAL_STATUS = [False for i in range(0, 4)]
@@ -46,13 +47,13 @@ class EventManager(object):
             self._send_raw(event)
             if event.type == pygame.QUIT:
                 self._send_quit()
-            elif event in Globals.EVENTS_RETURN:
+            elif event in SettingsManager.SettingsManager.EVENTS_RETURN:
                 self._send_return(event)
-            elif event in Globals.EVENTS_ESCAPE:
+            elif event in SettingsManager.SettingsManager.EVENTS_ESCAPE:
                 self._send_escape(event)
-            elif event in Globals.EVENTS_ACTION:
+            elif event in SettingsManager.SettingsManager.EVENTS_ACTION:
                 self._send_action_key(event)
-            elif event in Globals.EVENTS_BACKSPACE:
+            elif event in SettingsManager.SettingsManager.EVENTS_BACKSPACE:
                 self._send_backspace(event)
             elif self.handle_joystick_event(event):
                 pass
@@ -85,16 +86,16 @@ class EventManager(object):
         return True
 
     def handle_directional_event(self, event, keydown):
-        if event in Globals.EVENTS_UP:
+        if event in SettingsManager.SettingsManager.EVENTS_UP:
             self._send_key_up(keydown)
             return STATUS_UP
-        elif event in Globals.EVENTS_DOWN:
+        elif event in SettingsManager.SettingsManager.EVENTS_DOWN:
             self._send_key_down(keydown)
             return STATUS_DOWN
-        elif event in Globals.EVENTS_LEFT:
+        elif event in SettingsManager.SettingsManager.EVENTS_LEFT:
             self._send_key_left(keydown)
             return STATUS_LEFT
-        elif event in Globals.EVENTS_RIGHT:
+        elif event in SettingsManager.SettingsManager.EVENTS_RIGHT:
             self._send_key_right(keydown)
             return STATUS_RIGHT
         else:
@@ -108,24 +109,24 @@ class EventManager(object):
         return False
 
     def should_keyup_directionals_hat(self, event):
-        if EventManager.hat_event_in(event, Globals.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
+        if EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
             return True
-        elif EventManager.hat_event_in(event, Globals.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
+        elif EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
             return True
-        elif EventManager.hat_event_in(event, Globals.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
+        elif EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
             return True
-        elif EventManager.hat_event_in(event, Globals.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
+        elif EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
             return True
         return False
 
     def should_keyup_directionals_axis(self, event):
-        if EventManager.axis_event_in(event, Globals.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
+        if EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
             return True
-        elif EventManager.axis_event_in(event, Globals.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
+        elif EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
             return True
-        elif EventManager.axis_event_in(event, Globals.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
+        elif EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
             return True
-        elif EventManager.axis_event_in(event, Globals.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
+        elif EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
             return True
         return False
 
@@ -171,17 +172,17 @@ class EventManager(object):
     @staticmethod
     def hat_used_directional():
         return \
-            EventManager.count_hat_pairs(Globals.EVENTS_UP) > 0 or \
-            EventManager.count_hat_pairs(Globals.EVENTS_DOWN) > 0 or \
-            EventManager.count_hat_pairs(Globals.EVENTS_LEFT) > 0 or \
-            EventManager.count_hat_pairs(Globals.EVENTS_RIGHT) > 0
+            EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_UP) > 0 or \
+            EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_DOWN) > 0 or \
+            EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_LEFT) > 0 or \
+            EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_RIGHT) > 0
 
     @staticmethod
     def count_hat_pairs(pair_list):
         return len([pair for pair in pair_list if pair.is_hat()])
 
     def _send_raw(self, event):
-        Globals.STATE.handle_raw_event(event)
+        Globals.Globals.STATE.handle_raw_event(event)
 
     def _send_keyup_directionals(self, ignore_id=-1):
         if ignore_id != STATUS_DOWN:
@@ -195,46 +196,46 @@ class EventManager(object):
 
     def _send_key_down(self, keydown):
         DIRECTIONAL_STATUS[STATUS_DOWN] = keydown
-        Globals.STATE.handle_key_down(keydown=keydown)
+        Globals.Globals.STATE.handle_key_down(keydown=keydown)
 
     def _send_key_up(self, keydown):
         DIRECTIONAL_STATUS[STATUS_UP] = keydown
-        Globals.STATE.handle_key_up(keydown=keydown)
+        Globals.Globals.STATE.handle_key_up(keydown=keydown)
 
     def _send_key_left(self, keydown):
         DIRECTIONAL_STATUS[STATUS_LEFT] = keydown
-        Globals.STATE.handle_key_left(keydown=keydown)
+        Globals.Globals.STATE.handle_key_left(keydown=keydown)
 
     def _send_key_right(self, keydown):
         DIRECTIONAL_STATUS[STATUS_RIGHT] = keydown
-        Globals.STATE.handle_key_right(keydown=keydown)
+        Globals.Globals.STATE.handle_key_right(keydown=keydown)
 
     def _send_backspace(self, event):
         if self.is_keydown(event):
-            Globals.STATE.handle_backspace()
+            Globals.Globals.STATE.handle_backspace()
         else:
-            Globals.STATE.handle_backspace_keyup()
+            Globals.Globals.STATE.handle_backspace_keyup()
 
     def _send_return(self, event):
         if self.is_keydown(event):
-            Globals.STATE.handle_return()
+            Globals.Globals.STATE.handle_return()
         else:
-            Globals.STATE.handle_return_keyup()
+            Globals.Globals.STATE.handle_return_keyup()
 
     def _send_action_key(self, event):
         if self.is_keydown(event):
-            Globals.STATE.handle_action_key()
+            Globals.Globals.STATE.handle_action_key()
         else:
-            Globals.STATE.handle_action_keyup()
+            Globals.Globals.STATE.handle_action_keyup()
 
     def _send_escape(self, event):
         if self.is_keydown(event):
-            Globals.STATE.handle_escape()
+            Globals.Globals.STATE.handle_escape()
         else:
-            Globals.STATE.handle_escape_keyup()
+            Globals.Globals.STATE.handle_escape_keyup()
 
     def _send_quit(self):
-        Globals.STATE.handle_quit()
+        Globals.Globals.STATE.handle_quit()
 
     def is_keydown(self, event):
         return event.type == pygame.KEYDOWN or \

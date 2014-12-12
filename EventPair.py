@@ -4,7 +4,7 @@ from EventManager import EventManager
 
 class EventPair(object):
 
-    def __init__(self, type, value=None, hat=-1, axis=-1):
+    def __init__(self, type=None, value=None, hat=-1, axis=-1):
         self.type = type
         self.value = value
         self.hat = hat
