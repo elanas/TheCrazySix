@@ -43,6 +43,7 @@ class EventManager(object):
 
     def check_events(self):
         for event in pygame.event.get():
+            self._send_raw(event)
             if event.type == pygame.QUIT:
                 self._send_quit()
             elif event in Globals.EVENTS_RETURN:
@@ -57,7 +58,6 @@ class EventManager(object):
                 pass
             elif self.handle_keyboard_event(event):
                 pass
-            self._send_raw(event)
 
     def handle_joystick_event(self, event):
         if not EventManager.is_joystick_event(event.type):
@@ -212,18 +212,26 @@ class EventManager(object):
     def _send_backspace(self, event):
         if self.is_keydown(event):
             Globals.STATE.handle_backspace()
+        else:
+            Globals.STATE.handle_backspace_keyup()
 
     def _send_return(self, event):
         if self.is_keydown(event):
             Globals.STATE.handle_return()
+        else:
+            Globals.STATE.handle_return_keyup()
 
     def _send_action_key(self, event):
         if self.is_keydown(event):
             Globals.STATE.handle_action_key()
+        else:
+            Globals.STATE.handle_action_keyup()
 
     def _send_escape(self, event):
         if self.is_keydown(event):
             Globals.STATE.handle_escape()
+        else:
+            Globals.STATE.handle_escape_keyup()
 
     def _send_quit(self):
         Globals.STATE.handle_quit()
@@ -231,4 +239,4 @@ class EventManager(object):
     def is_keydown(self, event):
         return event.type == pygame.KEYDOWN or \
             event.type == pygame.JOYBUTTONDOWN or \
-            event.type in EventManager.JOYSTICK_HAT_EVENTS and not event.value == EventManager.HAT_BASE
+            (event.type in EventManager.JOYSTICK_HAT_EVENTS and not event.value == EventManager.HAT_BASE)

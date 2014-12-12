@@ -16,13 +16,14 @@ class EventPair(object):
                 return False
             return self.value == event.key
         elif EventManager.is_joystick_event(self.type):
-                return self.match_joystick_event(event)
+            return self.match_joystick_event(event)
         return False
 
     def match_joystick_event(self, event):
-        if not self.type == event.type:
+        if not self.match_joystick_types(event):
             return False
         if self.type in EventManager.JOYSTICK_BUTTON_EVENTS:
+            
             return self.value == event.button
         elif self.type in EventManager.JOYSTICK_HAT_EVENTS:
             return self.hat == event.hat and EventManager.hat_values_match(self.value, event.value)
@@ -31,6 +32,12 @@ class EventPair(object):
         else:
             # need to handle this
             return False
+
+    def match_joystick_types(self, event):
+        return \
+            (self.type in EventManager.JOYSTICK_BUTTON_EVENTS and event.type in EventManager.JOYSTICK_BUTTON_EVENTS) or \
+            (self.type in EventManager.JOYSTICK_AXIS_EVENTS and event.type in EventManager.JOYSTICK_AXIS_EVENTS) or \
+            (self.type in EventManager.JOYSTICK_HAT_EVENTS and event.type in EventManager.JOYSTICK_HAT_EVENTS)
 
     def is_hat(self):
         return self.type in EventManager.JOYSTICK_HAT_EVENTS

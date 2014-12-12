@@ -26,6 +26,9 @@ class TestInput(GameState):
     def handle_action_key(self):
         print 'ACTION'
 
+    def handle_action_keyup(self):
+        print 'ACTION RELEASE'
+
     def handle_key_down(self, keydown=True):
         print 'DOWN', keydown
 
@@ -38,14 +41,23 @@ class TestInput(GameState):
     def handle_key_right(self, keydown=True):
         print 'RIGHT', keydown
 
-    def handle_backspace(self, keydown=True):
-        print 'BACKSPACE', keydown
+    def handle_backspace(self):
+        print 'BACKSPACE'
+
+    def handle_backspace_keyup(self):
+        print 'BACKSPACE RELEASE'
 
     def handle_return(self):
         print 'RETURN'
 
+    def handle_return_keyup(self):
+        print 'RETURN RELEASE'
+
     def handle_escape(self):
         print 'ESCAPE'
+
+    def handle_escape_keyup(self):
+        print 'ESCAPE RELEASE'
 
     def render(self):
         Globals.SCREEN.fill((0, 0, 0))
