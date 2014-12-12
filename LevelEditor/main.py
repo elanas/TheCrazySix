@@ -2,6 +2,8 @@ import pygame
 from Globals import Globals
 import sys
 import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
+from EventManager import EventManager
 
 MIN_UPDATE_INTERVAL = .05
 
@@ -30,6 +32,8 @@ def initialize():
     Globals.WIDTH = 1200
     Globals.HEIGHT = 750
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
+    Globals.init_event_keys()
+    Globals.EVENT_MANAGER = EventManager()
     Globals.STATE = LevelEditor.LevelEditor(def_file, map_file)
 
 
@@ -44,12 +48,7 @@ def loop():
         if time_elapsed >= MIN_UPDATE_INTERVAL:
             Globals.STATE.update(time_elapsed)
             time_elapsed -= MIN_UPDATE_INTERVAL
-
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                Globals.RUNNING = False
-            else:
-                Globals.STATE.event(event)
+        Globals.EVENT_MANAGER.check_events()
 
 
 def main():

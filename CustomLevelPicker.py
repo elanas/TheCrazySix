@@ -192,11 +192,15 @@ class CustomLevelPicker(GameState):
 
     def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                self.handle_change(-1)
-            elif event.key == pygame.K_DOWN:
-                self.handle_change(1)
-            elif event.key == pygame.K_e:
+            if event.key == pygame.K_e:
                 self.handle_edit_selection()
             elif event.key == pygame.K_d:
                 self.handle_delete()
+
+    def handle_key_up(self, keydown):
+        if keydown:
+            self.handle_change(-1)
+
+    def handle_key_down(self, keydown):
+        if keydown:
+            self.handle_change(1)
