@@ -53,7 +53,7 @@ class ControlSettings(GameState):
     def set_selection(self, index):
         if self.selection != -1:
             if self.surf_index[self.selection] == ControlSettings.SURF_INDEX_HIT:
-                self.last_surf_index[self.selection] = collections.SURF_INDEX_NORMAL
+                self.last_surf_index[self.selection] = ControlSettings.SURF_INDEX_NORMAL
             else:
                 self.last_surf_index[self.selection] = ControlSettings.SURF_INDEX_NORMAL
                 self.surf_index[self.selection] = ControlSettings.SURF_INDEX_NORMAL
