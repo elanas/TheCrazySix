@@ -51,6 +51,8 @@ class EventManager(object):
                 self._send_return(event)
             elif event in SettingsManager.SettingsManager.EVENTS_ESCAPE:
                 self._send_escape(event)
+            elif event in SettingsManager.SettingsManager.EVENTS_ATTACK:
+                self._send_attack(event)
             elif event in SettingsManager.SettingsManager.EVENTS_ACTION:
                 self._send_action_key(event)
             elif event in SettingsManager.SettingsManager.EVENTS_BACKSPACE:
@@ -65,7 +67,8 @@ class EventManager(object):
             return False
         if event.type in EventManager.JOYSTICK_BUTTON_EVENTS:
             self.handle_joystick_button(event)
-        elif event.type in EventManager.JOYSTICK_HAT_EVENTS or event.type in EventManager.JOYSTICK_AXIS_EVENTS:
+        elif event.type in EventManager.JOYSTICK_HAT_EVENTS or \
+                event.type in EventManager.JOYSTICK_AXIS_EVENTS:
             self.handle_joystick_other(event)
         return True
 
@@ -109,44 +112,65 @@ class EventManager(object):
         return False
 
     def should_keyup_directionals_hat(self, event):
-        if EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
+        if EventManager.hat_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_UP) and \
+                DIRECTIONAL_STATUS[STATUS_UP]:
             return True
-        elif EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
+        elif EventManager.hat_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_DOWN) and \
+                DIRECTIONAL_STATUS[STATUS_DOWN]:
             return True
-        elif EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
+        elif EventManager.hat_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_RIGHT) and \
+                DIRECTIONAL_STATUS[STATUS_RIGHT]:
             return True
-        elif EventManager.hat_event_in(event, SettingsManager.SettingsManager.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
+        elif EventManager.hat_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_LEFT) and \
+                DIRECTIONAL_STATUS[STATUS_LEFT]:
             return True
         return False
 
     def should_keyup_directionals_axis(self, event):
-        if EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
+        if EventManager.axis_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_UP) and \
+                DIRECTIONAL_STATUS[STATUS_UP]:
             return True
-        elif EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
+        elif EventManager.axis_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_DOWN) and \
+                DIRECTIONAL_STATUS[STATUS_DOWN]:
             return True
-        elif EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
+        elif EventManager.axis_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_RIGHT) and \
+                DIRECTIONAL_STATUS[STATUS_RIGHT]:
             return True
-        elif EventManager.axis_event_in(event, SettingsManager.SettingsManager.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
+        elif EventManager.axis_event_in(
+                event, SettingsManager.SettingsManager.EVENTS_LEFT) and \
+                DIRECTIONAL_STATUS[STATUS_LEFT]:
             return True
         return False
 
     @staticmethod
     def hat_event_in(event, event_list, match_base=True):
         for e in event_list:
-            if e.type in EventManager.JOYSTICK_HAT_EVENTS and EventManager.hat_values_match(event.value, e.value, match_base=match_base):
+            if e.type in EventManager.JOYSTICK_HAT_EVENTS and \
+                    EventManager.hat_values_match(event.value, e.value,
+                                                  match_base=match_base):
                 return True
         return False
 
     @staticmethod
     def axis_event_in(event, event_list, match_base=True):
         for e in event_list:
-            if e.type in EventManager.JOYSTICK_AXIS_EVENTS and EventManager.axis_values_match(event.value, e.value, match_base=match_base):
+            if e.type in EventManager.JOYSTICK_AXIS_EVENTS and \
+                    EventManager.axis_values_match(event.value, e.value,
+                                                   match_base=match_base):
                 return True
         return False
 
     @staticmethod
     def hat_values_match(value0, value1, match_base=False):
-        if match_base and (value0 == EventManager.HAT_BASE or value1 == EventManager.HAT_BASE):
+        if match_base and (value0 == EventManager.HAT_BASE or
+                           value1 == EventManager.HAT_BASE):
             return True
         return value0 == value1
 
@@ -175,7 +199,8 @@ class EventManager(object):
             EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_UP) > 0 or \
             EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_DOWN) > 0 or \
             EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_LEFT) > 0 or \
-            EventManager.count_hat_pairs(SettingsManager.SettingsManager.EVENTS_RIGHT) > 0
+            EventManager.count_hat_pairs(
+                SettingsManager.SettingsManager.EVENTS_RIGHT) > 0
 
     @staticmethod
     def count_hat_pairs(pair_list):
@@ -211,25 +236,31 @@ class EventManager(object):
         Globals.Globals.STATE.handle_key_right(keydown=keydown)
 
     def _send_backspace(self, event):
-        if self.is_keydown(event):
+        if EventManager.is_keydown(event):
             Globals.Globals.STATE.handle_backspace()
         else:
             Globals.Globals.STATE.handle_backspace_keyup()
 
     def _send_return(self, event):
-        if self.is_keydown(event):
+        if EventManager.is_keydown(event):
             Globals.Globals.STATE.handle_return()
         else:
             Globals.Globals.STATE.handle_return_keyup()
 
+    def _send_attack(self, event):
+        if EventManager.is_keydown(event):
+            Globals.Globals.STATE.handle_attack()
+        else:
+            Globals.Globals.STATE.handle_attack_keyup()
+
     def _send_action_key(self, event):
-        if self.is_keydown(event):
+        if EventManager.is_keydown(event):
             Globals.Globals.STATE.handle_action_key()
         else:
             Globals.Globals.STATE.handle_action_keyup()
 
     def _send_escape(self, event):
-        if self.is_keydown(event):
+        if EventManager.is_keydown(event):
             Globals.Globals.STATE.handle_escape()
         else:
             Globals.Globals.STATE.handle_escape_keyup()
@@ -237,7 +268,9 @@ class EventManager(object):
     def _send_quit(self):
         Globals.Globals.STATE.handle_quit()
 
-    def is_keydown(self, event):
+    @staticmethod
+    def is_keydown(event):
         return event.type == pygame.KEYDOWN or \
             event.type == pygame.JOYBUTTONDOWN or \
-            (event.type in EventManager.JOYSTICK_HAT_EVENTS and not event.value == EventManager.HAT_BASE)
+            (event.type in EventManager.JOYSTICK_HAT_EVENTS and
+                not event.value == EventManager.HAT_BASE)

@@ -3,6 +3,7 @@ from GameState import GameState
 from asset_loader import AssetLoader
 from EventPair import EventPair
 from SettingsManager import SettingsManager
+from EventManager import EventManager
 import pygame
 
 
@@ -42,6 +43,7 @@ class SetJoystickKeyState(GameState):
         SettingsManager.EVENTS_DOWN = [a for a in SettingsManager.EVENTS_DOWN if a != event]
         SettingsManager.EVENTS_LEFT = [a for a in SettingsManager.EVENTS_LEFT if a != event]
         SettingsManager.EVENTS_RIGHT = [a for a in SettingsManager.EVENTS_RIGHT if a != event]
+        SettingsManager.EVENTS_ATTACK = [a for a in SettingsManager.EVENTS_ATTACK if a != event]
         SettingsManager.EVENTS_ACTION = [a for a in SettingsManager.EVENTS_ACTION if a != event]
         SettingsManager.EVENTS_ESCAPE = [a for a in SettingsManager.EVENTS_ESCAPE if a != event]
         SettingsManager.EVENTS_RETURN = [a for a in SettingsManager.EVENTS_RETURN if a != event]
@@ -54,6 +56,8 @@ class SetJoystickKeyState(GameState):
         from ControlSettings import ControlSettings
         if self.list_index == ControlSettings.INDEX_ESCAPE:
             return SettingsManager.EVENTS_ESCAPE
+        elif self.list_index == ControlSettings.INDEX_ATTACK:
+            return SettingsManager.EVENTS_ATTACK
         elif self.list_index == ControlSettings.INDEX_ACTION:
             return SettingsManager.EVENTS_ACTION
         elif self.list_index == ControlSettings.INDEX_RETURN:
@@ -87,5 +91,6 @@ class SetJoystickKeyState(GameState):
         return pair
 
     def handle_raw_event(self, event):
-        if event.type in SetJoystickKeyState.ALLOWED_TYPES:
+        if event.type in SetJoystickKeyState.ALLOWED_TYPES and \
+                EventManager.is_keydown(event):
             self.set_event(event)

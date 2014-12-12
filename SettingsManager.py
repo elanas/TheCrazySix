@@ -23,6 +23,7 @@ class SettingsManager(object):
     DOWN_LABEL = 'down' + EVENT_LABEL_POSTFIX
     LEFT_LABEL = 'left' + EVENT_LABEL_POSTFIX
     RIGHT_LABEL = 'right' + EVENT_LABEL_POSTFIX
+    ATTACK_LABEL = 'attack' + EVENT_LABEL_POSTFIX
     ACTION_LABEL = 'action' + EVENT_LABEL_POSTFIX
     ESCAPE_LABEL = 'escape' + EVENT_LABEL_POSTFIX
     RETURN_LABEL = 'return' + EVENT_LABEL_POSTFIX
@@ -31,6 +32,7 @@ class SettingsManager(object):
     EVENTS_DOWN = []
     EVENTS_LEFT = []
     EVENTS_RIGHT = []
+    EVENTS_ATTACK = []
     EVENTS_ACTION = []
     EVENTS_ESCAPE = []
     EVENTS_RETURN = []
@@ -39,6 +41,7 @@ class SettingsManager(object):
     DEFAULT_DOWN = [EventPair(type=pygame.KEYDOWN, value=pygame.K_DOWN)]
     DEFAULT_LEFT = [EventPair(type=pygame.KEYDOWN, value=pygame.K_LEFT)]
     DEFAULT_RIGHT = [EventPair(type=pygame.KEYDOWN, value=pygame.K_RIGHT)]
+    DEFAULT_ATTACK = [EventPair(type=pygame.KEYDOWN, value=pygame.K_a)]
     DEFAULT_ACTION = [EventPair(type=pygame.KEYDOWN, value=pygame.K_SPACE)]
     DEFAULT_ESCAPE = [EventPair(type=pygame.KEYDOWN, value=pygame.K_ESCAPE)]
     DEFAULT_RETURN = [EventPair(type=pygame.KEYDOWN, value=pygame.K_RETURN)]
@@ -79,6 +82,7 @@ class SettingsManager(object):
         SettingsManager.EVENTS_DOWN = SettingsManager.DEFAULT_DOWN
         SettingsManager.EVENTS_LEFT = SettingsManager.DEFAULT_LEFT
         SettingsManager.EVENTS_RIGHT = SettingsManager.DEFAULT_RIGHT
+        SettingsManager.EVENTS_ATTACK = SettingsManager.DEFAULT_ATTACK
         SettingsManager.EVENTS_ACTION = SettingsManager.DEFAULT_ACTION
         SettingsManager.EVENTS_ESCAPE = SettingsManager.DEFAULT_ESCAPE
         SettingsManager.EVENTS_RETURN = SettingsManager.DEFAULT_RETURN
@@ -154,6 +158,8 @@ class SettingsManager(object):
             SettingsManager.EVENTS_LEFT = value
         elif SettingsManager.RIGHT_LABEL == label:
             SettingsManager.EVENTS_RIGHT = value
+        elif SettingsManager.ATTACK_LABEL == label:
+            SettingsManager.EVENTS_ATTACK = value
         elif SettingsManager.ACTION_LABEL == label:
             SettingsManager.EVENTS_ACTION = value
         elif SettingsManager.ESCAPE_LABEL == label:
@@ -218,6 +224,10 @@ class SettingsManager(object):
                 SettingsManager.save_setting(file_handle,
                                              SettingsManager.RIGHT_LABEL,
                                              SettingsManager.EVENTS_RIGHT,
+                                             is_event_list=True)
+                SettingsManager.save_setting(file_handle,
+                                             SettingsManager.ATTACK_LABEL,
+                                             SettingsManager.EVENTS_ATTACK,
                                              is_event_list=True)
                 SettingsManager.save_setting(file_handle,
                                              SettingsManager.ACTION_LABEL,

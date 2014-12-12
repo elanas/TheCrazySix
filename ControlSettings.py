@@ -17,7 +17,8 @@ class SurfRectPair(object):
 class ControlSettings(GameState):
     TITLE_IMAGE_PATH = 'control_settings.png'
     TITLE_MARGIN_TOP = 60
-    TITLE_MARGIN_BOTTOM = 100
+    TITLE_TEXT_MARGIN = 40
+    TITLE_ARROW_MARGIN = 100
     SURF_INDEX_NORMAL = 0
     SURF_INDEX_HIT = 1
     SURF_INDEX_SELECTED = 2
@@ -28,11 +29,12 @@ class ControlSettings(GameState):
     INDEX_DOWN = 2
     INDEX_LEFT = 1
     INDEX_RIGHT = 3
-    INDEX_ACTION = 4
-    INDEX_ESCAPE = 5
-    INDEX_RETURN = 6
-    INDEX_RESET = 7
-    NUM_OPTIONS = 8
+    INDEX_ATTACK = 4
+    INDEX_ACTION = 5
+    INDEX_ESCAPE = 6
+    INDEX_RETURN = 7
+    INDEX_RESET = 8
+    NUM_OPTIONS = 9
 
     def __init__(self):
         self.loader = AssetLoader('images')
@@ -43,11 +45,18 @@ class ControlSettings(GameState):
         self.title_rect = self.title_surf.get_rect()
         self.title_rect.centerx = Globals.WIDTH / 2
         self.title_rect.top = ControlSettings.TITLE_MARGIN_TOP
-        self.arrows_top = self.title_rect.bottom + ControlSettings.TITLE_MARGIN_BOTTOM
+        self.arrows_top = self.title_rect.bottom + \
+            ControlSettings.TITLE_ARROW_MARGIN
         self.arrows_x_center = int(Globals.WIDTH / 4)
-        self.surf_rect_pairs = [SurfRectPair() for i in range(0, ControlSettings.NUM_OPTIONS)]
-        self.surf_index = [ControlSettings.SURF_INDEX_NORMAL for i in range(0, ControlSettings.NUM_OPTIONS)]
-        self.last_surf_index = [ControlSettings.SURF_INDEX_NORMAL for i in range(0, ControlSettings.NUM_OPTIONS)]
+        self.text_top = self.title_rect.bottom + \
+            ControlSettings.TITLE_TEXT_MARGIN
+        self.surf_rect_pairs = [SurfRectPair()
+                                for i in range(0, ControlSettings.NUM_OPTIONS)]
+        self.surf_index = [ControlSettings.SURF_INDEX_NORMAL for i in range(
+            0, ControlSettings.NUM_OPTIONS)]
+        self.last_surf_index = [
+            ControlSettings.SURF_INDEX_NORMAL for i in
+            range(0, ControlSettings.NUM_OPTIONS)]
         self.ignore_index = [0 for i in range(0, ControlSettings.NUM_OPTIONS)]
         self.load_control_images()
         self.selection = 0
@@ -55,11 +64,15 @@ class ControlSettings(GameState):
 
     def set_selection(self, index):
         if self.selection != -1:
-            if self.surf_index[self.selection] == ControlSettings.SURF_INDEX_HIT:
-                self.last_surf_index[self.selection] = ControlSettings.SURF_INDEX_NORMAL
+            if self.surf_index[self.selection] == \
+                    ControlSettings.SURF_INDEX_HIT:
+                self.last_surf_index[
+                    self.selection] = ControlSettings.SURF_INDEX_NORMAL
             else:
-                self.last_surf_index[self.selection] = ControlSettings.SURF_INDEX_NORMAL
-                self.surf_index[self.selection] = ControlSettings.SURF_INDEX_NORMAL
+                self.last_surf_index[
+                    self.selection] = ControlSettings.SURF_INDEX_NORMAL
+                self.surf_index[
+                    self.selection] = ControlSettings.SURF_INDEX_NORMAL
         self.selection = index
         if self.surf_index[index] == ControlSettings.SURF_INDEX_HIT:
             self.last_surf_index[index] = ControlSettings.SURF_INDEX_SELECTED
@@ -85,11 +98,13 @@ class ControlSettings(GameState):
             list_index=self.selection, return_state=self)
 
     def load_image_group(self, file_path):
-        return self.control_loader.load_spritesheet_alpha(file_path, num_rows=3, num_cols=1)
+        return self.control_loader.load_spritesheet_alpha(
+            file_path, num_rows=3, num_cols=1)
 
     def set_surf_arr(self, index, file_path):
         self.surf_rect_pairs[index].surf_arr = self.load_image_group(file_path)
-        self.surf_rect_pairs[index].rect = self.surf_rect_pairs[index].surf_arr[0].get_rect()
+        self.surf_rect_pairs[index].rect = self.surf_rect_pairs[
+            index].surf_arr[0].get_rect()
 
     def get_surf(self, index):
         return self.surf_rect_pairs[index].surf_arr[self.surf_index[index]]
@@ -99,27 +114,36 @@ class ControlSettings(GameState):
 
     def load_control_images(self):
         self.load_arrows()
+        self.set_surf_arr(ControlSettings.INDEX_ATTACK, 'attack_key.png')
         self.set_surf_arr(ControlSettings.INDEX_ACTION, 'action_key.png')
         self.set_surf_arr(ControlSettings.INDEX_ESCAPE, 'escape_key.png')
         self.set_surf_arr(ControlSettings.INDEX_RETURN, 'return_key.png')
         self.set_surf_arr(ControlSettings.INDEX_RESET, 'reset_controls.png')
 
         centerx = int((3 * Globals.WIDTH) / 4)
-        escape_key_rect = self.get_rect(ControlSettings.INDEX_ESCAPE)
-        escape_key_rect.centerx = centerx
-        escape_key_rect.centery = self.get_rect(ControlSettings.INDEX_UP).bottom + int(ControlSettings.ARROW_PADDING / 2)
+        attack_key_rect = self.get_rect(ControlSettings.INDEX_ATTACK)
+        attack_key_rect.centerx = centerx
+        attack_key_rect.top = self.text_top
 
         action_key_rect = self.get_rect(ControlSettings.INDEX_ACTION)
         action_key_rect.centerx = centerx
-        action_key_rect.bottom = escape_key_rect.top - ControlSettings.KEY_PADDING
-        
+        action_key_rect.top = attack_key_rect.bottom + \
+            ControlSettings.KEY_PADDING
+
+        escape_key_rect = self.get_rect(ControlSettings.INDEX_ESCAPE)
+        escape_key_rect.centerx = centerx
+        escape_key_rect.top = action_key_rect.bottom + \
+            ControlSettings.KEY_PADDING    
+
         return_key_rect = self.get_rect(ControlSettings.INDEX_RETURN)
         return_key_rect.centerx = centerx
-        return_key_rect.top = escape_key_rect.bottom + ControlSettings.KEY_PADDING
+        return_key_rect.top = escape_key_rect.bottom + \
+            ControlSettings.KEY_PADDING
 
         reset_rect = self.get_rect(ControlSettings.INDEX_RESET)
         reset_rect.centerx = int(Globals.WIDTH / 2)
-        reset_rect.bottom = Globals.HEIGHT - ControlSettings.RESET_MARGIN_BOTTOM
+        reset_rect.bottom = Globals.HEIGHT - \
+            ControlSettings.RESET_MARGIN_BOTTOM
 
     def load_arrows(self):
         self.set_surf_arr(ControlSettings.INDEX_UP, 'arrow_up.png')
@@ -132,13 +156,16 @@ class ControlSettings(GameState):
         arrow_up_rect.top = self.arrows_top
         arrow_down_rect = self.get_rect(ControlSettings.INDEX_DOWN)
         arrow_down_rect.centerx = arrow_up_rect.centerx
-        arrow_down_rect.top = arrow_up_rect.bottom + ControlSettings.ARROW_PADDING
+        arrow_down_rect.top = arrow_up_rect.bottom + \
+            ControlSettings.ARROW_PADDING
         arrow_left_rect = self.get_rect(ControlSettings.INDEX_LEFT)
         arrow_left_rect.top = arrow_down_rect.top
-        arrow_left_rect.right = arrow_down_rect.left - ControlSettings.ARROW_PADDING
+        arrow_left_rect.right = arrow_down_rect.left - \
+            ControlSettings.ARROW_PADDING
         arrow_right_rect = self.get_rect(ControlSettings.INDEX_RIGHT)
         arrow_right_rect.top = arrow_down_rect.top
-        arrow_right_rect.left = arrow_down_rect.right + ControlSettings.ARROW_PADDING
+        arrow_right_rect.left = arrow_down_rect.right + \
+            ControlSettings.ARROW_PADDING
 
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))
@@ -149,19 +176,21 @@ class ControlSettings(GameState):
     def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:
             index = -1
-            if event.key == pygame.K_UP:
+            if event in SettingsManager.EVENTS_UP:
                 index = ControlSettings.INDEX_UP
-            elif event.key == pygame.K_DOWN:
+            elif event in SettingsManager.EVENTS_DOWN:
                 index = ControlSettings.INDEX_DOWN
-            elif event.key == pygame.K_LEFT:
+            elif event in SettingsManager.EVENTS_LEFT:
                 index = ControlSettings.INDEX_LEFT
-            elif event.key == pygame.K_RIGHT:
+            elif event in SettingsManager.EVENTS_RIGHT:
                 index = ControlSettings.INDEX_RIGHT
-            elif event.key == pygame.K_ESCAPE:
+            elif event in SettingsManager.EVENTS_ESCAPE:
                 index = ControlSettings.INDEX_ESCAPE
-            elif event.key == pygame.K_SPACE:
+            elif event in SettingsManager.EVENTS_ACTION:
                 index = ControlSettings.INDEX_ACTION
-            elif event.key == pygame.K_RETURN:
+            elif event in SettingsManager.EVENTS_ATTACK:
+                index = ControlSettings.INDEX_ATTACK
+            elif event in SettingsManager.EVENTS_RETURN:
                 index = ControlSettings.INDEX_RETURN
             if index != -1:
                 self.ignore_index[index] = 2
@@ -196,6 +225,12 @@ class ControlSettings(GameState):
     def handle_action_keyup(self):
         self.handle_action_key(False)
 
+    def handle_attack(self, keydown=True):
+        self.check_hit(ControlSettings.INDEX_ATTACK, keydown)
+
+    def handle_attack_keyup(self):
+        self.handle_attack(False)
+
     def handle_key_down(self, keydown):
         if keydown and self.ignore_index[ControlSettings.INDEX_DOWN] > 0:
             self.change_selection(1)
@@ -222,7 +257,9 @@ class ControlSettings(GameState):
     def handle_return(self, keydown=True):
         if keydown and self.ignore_index[ControlSettings.INDEX_RETURN] > 0:
             self.select()
-        self.check_hit(ControlSettings.INDEX_RETURN, keydown)
+            self.ignore_index[ControlSettings.INDEX_RETURN] = 0
+        else:
+            self.check_hit(ControlSettings.INDEX_RETURN, keydown)
 
     def handle_return_keyup(self):
         self.handle_return(False)

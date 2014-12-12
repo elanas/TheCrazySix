@@ -6,6 +6,12 @@ class EventHandler(object):
     def handle_raw_event(self, event):
         pass
 
+    def handle_attack(self):
+        pass
+
+    def handle_attack_keyup(self):
+        pass
+
     def handle_action_key(self):
         pass
 
