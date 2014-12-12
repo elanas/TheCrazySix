@@ -3,7 +3,6 @@ from Globals import Globals
 import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
-from EventManager import EventManager
 
 MIN_UPDATE_INTERVAL = .05
 
@@ -32,9 +31,19 @@ def initialize():
     Globals.WIDTH = 1200
     Globals.HEIGHT = 750
     Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
-    Globals.init_event_keys()
-    Globals.EVENT_MANAGER = EventManager()
     Globals.STATE = LevelEditor.LevelEditor(def_file, map_file)
+    load_settings()
+    init_events()
+
+
+def load_settings():
+    import SettingsManager
+    SettingsManager.SettingsManager.load()
+
+
+def init_events():
+    import EventManager
+    Globals.EVENT_MANAGER = EventManager.EventManager()
 
 
 def loop():
