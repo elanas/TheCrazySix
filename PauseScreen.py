@@ -1,5 +1,6 @@
 from GameState import GameState
 from Globals import Globals
+from SettingsManager import SettingsManager
 from asset_loader import AssetLoader
 import pygame
 import Menu
@@ -82,5 +83,5 @@ class PauseScreen(GameState):
 
     def handle_raw_event(self, event):
         if EventManager.is_keyboard_event(event.type) and \
-                not event in Globals.EVENTS_ESCAPE:
+                not event in SettingsManager.EVENTS_ESCAPE:
             self.handle_return()
