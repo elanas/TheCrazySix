@@ -2,7 +2,7 @@ from GameState import GameState
 from asset_loader import AssetLoader
 from Globals import Globals
 from os.path import join
-from collections import namedtuple
+from SetJoystickKeyState import SetJoystickKeyState
 import pygame
 
 
@@ -66,6 +66,13 @@ class ControlSettings(GameState):
 
     def change_selection(self, delta):
         self.set_selection((self.selection + delta) % ControlSettings.NUM_OPTIONS)
+
+    def select(self):
+        if self.selection == -1:
+            return
+        Globals.STATE = SetJoystickKeyState(
+            self.surf_rect_pairs[self.selection].surf_arr[0],
+            list_index=self.selection, return_state=self)
 
     def load_image_group(self, file_path):
         return self.control_loader.load_spritesheet_alpha(file_path, num_rows=3, num_cols=1)
@@ -196,6 +203,8 @@ class ControlSettings(GameState):
         pass
 
     def handle_return(self, keydown=True):
+        if keydown and self.ignore_index[ControlSettings.INDEX_RETURN] > 0:
+            self.select()
         self.check_hit(ControlSettings.INDEX_RETURN, keydown)
 
     def handle_return_keyup(self):
