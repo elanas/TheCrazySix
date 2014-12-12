@@ -10,6 +10,7 @@ STATUS_LEFT = 3
 
 
 class EventManager(object):
+    FLOAT_ERROR = .001
     HAT_BASE = (0, 0)
     JOYSTICK_EVENTS = set([
         pygame.JOYAXISMOTION, pygame.JOYBALLMOTION, pygame.JOYHATMOTION,
@@ -63,15 +64,15 @@ class EventManager(object):
             return False
         if event.type in EventManager.JOYSTICK_BUTTON_EVENTS:
             self.handle_joystick_button(event)
-        elif event.type in EventManager.JOYSTICK_HAT_EVENTS:
-            self.handle_joystick_hat(event)
+        elif event.type in EventManager.JOYSTICK_HAT_EVENTS or event.type in EventManager.JOYSTICK_AXIS_EVENTS:
+            self.handle_joystick_other(event)
         return True
 
     def handle_joystick_button(self, event):
         keydown = event.type == pygame.JOYBUTTONDOWN
         self.handle_directional_event(event, keydown)
 
-    def handle_joystick_hat(self, event):
+    def handle_joystick_other(self, event):
         directional = self.handle_directional_event(event, True)
         if directional != -1 or self.should_keyup_directionals(event):
             self._send_keyup_directionals(ignore_id=directional)
@@ -100,8 +101,13 @@ class EventManager(object):
             return -1
 
     def should_keyup_directionals(self, event):
-        if not event.type in EventManager.JOYSTICK_HAT_EVENTS:
-            return False
+        if event.type in EventManager.JOYSTICK_HAT_EVENTS:
+            return self.should_keyup_directionals_hat(event)
+        elif event.type in EventManager.JOYSTICK_AXIS_EVENTS:
+            return self.should_keyup_directionals_axis(event)
+        return False
+
+    def should_keyup_directionals_hat(self, event):
         if EventManager.hat_event_in(event, Globals.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
             return True
         elif EventManager.hat_event_in(event, Globals.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
@@ -109,6 +115,17 @@ class EventManager(object):
         elif EventManager.hat_event_in(event, Globals.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
             return True
         elif EventManager.hat_event_in(event, Globals.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
+            return True
+        return False
+
+    def should_keyup_directionals_axis(self, event):
+        if EventManager.axis_event_in(event, Globals.EVENTS_UP) and DIRECTIONAL_STATUS[STATUS_UP]:
+            return True
+        elif EventManager.axis_event_in(event, Globals.EVENTS_DOWN) and DIRECTIONAL_STATUS[STATUS_DOWN]:
+            return True
+        elif EventManager.axis_event_in(event, Globals.EVENTS_RIGHT) and DIRECTIONAL_STATUS[STATUS_RIGHT]:
+            return True
+        elif EventManager.axis_event_in(event, Globals.EVENTS_LEFT) and DIRECTIONAL_STATUS[STATUS_LEFT]:
             return True
         return False
 
@@ -120,10 +137,36 @@ class EventManager(object):
         return False
 
     @staticmethod
+    def axis_event_in(event, event_list, match_base=True):
+        for e in event_list:
+            if e.type in EventManager.JOYSTICK_AXIS_EVENTS and EventManager.axis_values_match(event.value, e.value, match_base=match_base):
+                return True
+        return False
+
+    @staticmethod
     def hat_values_match(value0, value1, match_base=False):
         if match_base and (value0 == EventManager.HAT_BASE or value1 == EventManager.HAT_BASE):
             return True
         return value0 == value1
+
+    @staticmethod
+    def axis_values_match(value0, value1, match_base=False):
+        near0 = EventManager.nearly_zero(value0)
+        near1 = EventManager.nearly_zero(value1)
+        if match_base and (near0 or near1):
+            return True
+        if not near0 and not near1:
+            return (value0 < 0 and value1 < 0) or (value0 > 0 and value1 > 0)
+        else:
+            return near0 and near1
+
+    @staticmethod
+    def nearly_zero(value):
+        return EventManager.nearly_equal(value, 0)
+
+    @staticmethod
+    def nearly_equal(value0, value1):
+        return abs(value0 - value1) < EventManager.FLOAT_ERROR
 
     @staticmethod
     def hat_used_directional():

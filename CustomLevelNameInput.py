@@ -57,7 +57,6 @@ class CustomLevelNameInput(GameState):
         self.show_extra = False
         self.extra_time = 0
         Globals.play_menu_sound()
-        self.loader = AssetLoader('images')
         self.background_img = self.loader.load_image('background.png')
         self.file_manager = FileManager(
             path=CustomLevelNameInput.CUSTOM_MAP_PATH,
