@@ -139,10 +139,6 @@ class SettingsManager(object):
             SettingsManager.VOLUME = value
         elif SettingsManager.UP_LABEL == label:
             SettingsManager.EVENTS_UP = value
-            str_rep = ""
-            for pair in value:
-                str_rep += str(pair.__dict__)
-            print str_rep
         elif SettingsManager.DOWN_LABEL == label:
             SettingsManager.EVENTS_DOWN = value
         elif SettingsManager.LEFT_LABEL == label:
