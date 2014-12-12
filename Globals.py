@@ -98,6 +98,7 @@ class Globals(object):
 
     @staticmethod
     def reset_game():
+        Globals.DISORIENTED = False
         Globals.CURRENT_LEVEL = -1
         Globals.HEALTH_BAR = None
         Globals.HUD_MANAGER = None
