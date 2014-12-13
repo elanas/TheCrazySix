@@ -17,7 +17,7 @@ class IntroScreen(Level):
         super(IntroScreen, self).__init__(IntroScreen.DEF_NAME,
                                           IntroScreen.MAP_NAME,
                                           music_path=IntroScreen.SOUND_NAME,
-                                          music_loops=1,
+                                          music_loops=0,
                                           has_timer=False)
         self.first_occur = True
 

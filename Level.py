@@ -137,7 +137,7 @@ class Level(GameState):
 
     def got_current_state(self):
         diff = self.camera.initView()
-        print diff
+        # print diff
         self.shift_non_player_objects(diff[0], diff[1])
         self.player.rect.center = Globals.SCREEN.get_rect().center
         if self.should_fade_in:
