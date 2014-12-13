@@ -20,6 +20,7 @@ from HighscoreManager import HighscoreManager
 from PauseScreen import PauseScreen
 from HUDManager import HUDManager
 from asset_loader import AssetLoader
+from LightSource import LightSource
 
 
 class Level(GameState):
@@ -65,6 +66,7 @@ class Level(GameState):
         self.enemySprites = pygame.sprite.Group()
         self.playerSprites = pygame.sprite.Group()
         self.turrets = list()
+        self.lights = list()
         self.init_player()
         self.init_enemies()
         self.timer = None
@@ -265,6 +267,16 @@ class Level(GameState):
                 elif TileType.TURRET_RIGHT in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, False)
+                elif TileType.LIGHT_ATTR in \
+                        tile_map[row_num][col_num].special_attr:
+                    self.add_light(row_num, col_num)
+                    tile_map[row_num][col_num] = base_tile
+                    self.camera.set_dirty()
+
+    def add_light(self, row_num, col_num):
+        y = self.tile_rect.height * (row_num - 1) - self.camera.viewpoint.top
+        x = self.tile_rect.width * (col_num - 1) - self.camera.viewpoint.left
+        self.lights.append(LightSource(x, y, self.tile_rect.width))
 
     def add_enemy(self, row_num, col_num, chase_enemy=False):
         y = self.tile_rect.height * row_num - self.camera.viewpoint.top
@@ -376,6 +388,7 @@ class Level(GameState):
 
     def render_pre_fade(self):
         self.camera.render(Globals.SCREEN)
+        self.render_lights()
         self.enemySprites.draw(Globals.SCREEN)
         for turret in self.turrets:
             turret.render(Globals.SCREEN)
@@ -385,6 +398,10 @@ class Level(GameState):
             self.timer.render(Globals.SCREEN)
         if self.showing_subtitle:
             Globals.SCREEN.blit(self.subtitle_surf, self.subtitle_rect)
+
+    def render_lights(self):
+        for light in self.lights:
+            light.render(Globals.SCREEN)
 
     def render_overlay(self):
         if Globals.DISORIENTED:
@@ -671,6 +688,8 @@ class Level(GameState):
                 enemy.rect.centerx -= diff
             for turret in self.turrets:
                 turret.move(-diff, 0)
+            for light in self.lights:
+                light.move(-diff, 0)
         if abs(dist_y) > Level.MAX_OFFSET_Y:
             diff = abs(dist_y) - Level.MAX_OFFSET_Y
             # player is below center
@@ -685,6 +704,8 @@ class Level(GameState):
                 enemy.rect.centery -= diff
             for turret in self.turrets:
                 turret.move(0, -diff)
+            for light in self.lights:
+                light.move(0, -diff)
 
     def init_subtitle(self, text):
         text_surf = Level.SUBTITLE_FONT.render(

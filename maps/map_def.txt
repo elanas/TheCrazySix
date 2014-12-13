@@ -1,4 +1,5 @@
 * floor-white-gray-black.png 0 base
+H light_source.png 0 light_replace
 ! box.png 1
 ~ bag.png 1
 & floor_grey_chair.png 0
@@ -46,4 +47,4 @@ x sliding_door_horiz_white.png 1 sliding_door action
 A sliding_door_horiz_locked.png 1 sliding_door action locked
 B sliding_door_vert_locked_left_white.png 1 sliding_door action locked
 C sliding_door_vert_locked_right_white.png 1 sliding_door action locked
-# last was "G"
+# last was "H"
