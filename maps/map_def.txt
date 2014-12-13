@@ -43,6 +43,6 @@ u floor_switch_on.png 1 switch_on action
 t sliding_door_vert.png 1 sliding_door action
 w sliding_door_horiz.png 1 sliding_door action
 A sliding_door_horiz_locked.png 1 sliding_door action locked
-B sliding_door_vert_locked_left.png 1 sliding_door action locked
+B sliding_door_vert_locked_left_white.png 1 sliding_door action locked
 C sliding_door_vert_locked_right.png 1 sliding_door action locked
 # last was "G"
