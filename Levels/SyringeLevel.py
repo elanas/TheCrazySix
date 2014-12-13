@@ -9,10 +9,12 @@ class SyringeLevel(Level):
     MAP_NAME = 'dodge.txt'
     SUBTITLE_TEXT = 'Watch out for syringes'
     SUBTITLE_LOOPS = 3
+    MUSIC_PATH = 'syringe_level_cc.ogg'
 
     def __init__(self):
         super(SyringeLevel, self).__init__(
-            SyringeLevel.DEF_NAME, SyringeLevel.MAP_NAME)
+            SyringeLevel.DEF_NAME, SyringeLevel.MAP_NAME,
+            music_path=SyringeLevel.MUSIC_PATH)
         self.show_subtitle(
             SyringeLevel.SUBTITLE_TEXT,
             SyringeLevel.SUBTITLE_LOOPS

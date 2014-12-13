@@ -19,6 +19,7 @@ import LoseGame
 from HighscoreManager import HighscoreManager
 from PauseScreen import PauseScreen
 from HUDManager import HUDManager
+from asset_loader import AssetLoader
 
 
 class Level(GameState):
@@ -45,9 +46,11 @@ class Level(GameState):
     POTION_PICKUP_DISORIENTED = 5
     POTION_PICKUP = 10
     PUNCHING_INFLATE = .2
+    MUSIC_END_ID = pygame.USEREVENT
+    SOUND_FADE_TIME = 500
 
-    def __init__(self, definition_path, map_path, has_timer=True,
-                 should_fade_in=True):
+    def __init__(self, definition_path, map_path, music_path=None, music_loops=-1,
+                 has_timer=True, should_fade_in=True):
         self.has_timer = has_timer
         self.keyCode = None
         self.definition_path = definition_path
@@ -83,6 +86,33 @@ class Level(GameState):
         self.respawn_coords = [-1, -1]
         self.timer = None
         self.find_respawn()
+        self.loader = AssetLoader('images', 'sounds')
+        self.channel = None
+        self.music_loops = music_loops
+        if music_path is not None:
+            self.music_handle = self.loader.load_sound(music_path)
+        else:
+            self.music_handle = None
+
+    def start_music(self):
+        if self.channel or self.music_handle is None:
+            return
+        self.channel = self.music_handle.play(
+            loops=self.music_loops, fade_ms=Level.SOUND_FADE_TIME)
+        self.channel.set_endevent(Level.MUSIC_END_ID)
+
+    def pause_music(self):
+        if self.channel:
+            self.channel.pause()
+
+    def resume_music(self):
+        if self.channel:
+            self.channel.unpause()
+
+    def stop_music(self):
+        if self.channel:
+            self.channel.fadeout(Level.SOUND_FADE_TIME)
+            self.channel = None
 
     def find_respawn(self):
         tile_map = self.tile_engine.tileMap
@@ -117,6 +147,7 @@ class Level(GameState):
         elif self.timer is not None:
             self.timer.unpause()
         Globals.stop_menu_sound()
+        self.start_music()
 
     def got_state_back(self):
         if self.has_respawn_coords():
@@ -128,6 +159,7 @@ class Level(GameState):
             self.player.rect.top = center[1]
             self.shift_non_player_objects(diff[0], diff[1])
             self.start_fade_in()
+            self.start_music()
         else:
             raise Exception(
                 "A respawn point must be defined to return to the level")
@@ -178,6 +210,7 @@ class Level(GameState):
                 Globals.HEALTH_BAR.changeHealth(Level.POTION_PICKUP)
 
     def handle_finish_fade_out(self):
+        self.stop_music()
         if not Globals.goto_next_level():
             self.handle_last_level()
 
@@ -589,6 +622,8 @@ class Level(GameState):
             self.camera.initView()
 
     def start_pause_fade(self):
+        if self.pausing:
+            return
         self.pausing = True
         if self.has_timer:
             self.timer.pause()
@@ -598,12 +633,14 @@ class Level(GameState):
         self.pausing = False
         if self.has_timer:
             self.timer.pause()
+        self.pause_music()
         self.goto_pause()
 
     def goto_pause(self):
         Globals.STATE = PauseScreen(self)
 
     def handle_unpause(self):
+        self.resume_music()
         if self.has_timer:
             self.timer.unpause()
 
