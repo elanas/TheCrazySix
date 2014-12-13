@@ -42,6 +42,8 @@ class Level(GameState):
     LOCKED_TILE_LOOPS = 1
     HEALTH_PICKUP = 5
     DAMAGE_TRAP = -1
+    POTION_PICKUP_DISORIENTED = 5
+    POTION_PICKUP = 10
 
     def __init__(self, definition_path, map_path, has_timer=True,
                  should_fade_in=True):
@@ -165,10 +167,14 @@ class Level(GameState):
         elif TileType.KEY_ATTR in pair.tile.special_attr:
             Globals.HUD_MANAGER.add_key()
         elif TileType.POTION_ATTR in pair.tile.special_attr:
-            Globals.DISORIENTED = False
-            self.show_subtitle(Level.POTION_CURED_SUBTITLE,
-                               Level.POTION_CURED_SUBTITLE_LOOPS)
-            self.player.stop_and_set_direction(self.player.direction)
+            if Globals.DISORIENTED:
+                Globals.DISORIENTED = False
+                self.show_subtitle(Level.POTION_CURED_SUBTITLE,
+                                   Level.POTION_CURED_SUBTITLE_LOOPS)
+                self.player.stop_and_set_direction(self.player.direction)
+                Globals.HEALTH_BAR.changeHealth(Level.POTION_PICKUP_DISORIENTED)
+            else:
+                Globals.HEALTH_BAR.changeHealth(Level.POTION_PICKUP)
 
     def handle_finish_fade_out(self):
         if not Globals.goto_next_level():
