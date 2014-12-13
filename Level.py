@@ -267,11 +267,14 @@ class Level(GameState):
                 elif TileType.TURRET_RIGHT in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, False)
-                elif TileType.LIGHT_ATTR in \
+                elif TileType.LIGHT_REPLACE_ATTR in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_light(row_num, col_num)
                     tile_map[row_num][col_num] = base_tile
                     self.camera.set_dirty()
+                elif TileType.LIGHT_ATTR in \
+                        tile_map[row_num][col_num].special_attr:
+                    self.add_light(row_num, col_num)
 
     def add_light(self, row_num, col_num):
         y = self.tile_rect.height * (row_num - 1) - self.camera.viewpoint.top

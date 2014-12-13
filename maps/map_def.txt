@@ -7,8 +7,8 @@ H light_source.png 0 light_replace
 \ stair_right_black.png 0 stair
 D stair_down_left_black2.png 0 stair_down
 E stair_down_right_black.png 0 stair_down
-$ coin.png 0 coin coin_replace
-G floor_potion.png 0 potion_replace
+$ coin.png 0 coin coin_replace light
+G floor_potion.png 0 potion_replace light
 7 mwall_joint.png 1
 [ mwall_down.png 1
 8 mwall_left.png 1
@@ -33,14 +33,14 @@ l turret_left_topright.png 1 turret t_left_0 turret_spawn_left
 j turret_left_topleft.png 1 turret t_left_1
 @ turret_left_bottomleft.png 1 turret t_left_3
 % turret_left_bottomright.png 1 turret t_left_2
-v floor_switch.png 1 switch action 
-u floor_switch_on.png 1 switch_on action
-` floor_health.png 0 health_replace
+v floor_switch.png 1 switch action light
+u floor_switch_on.png 1 switch_on action light
+` floor_health.png 0 health_replace light
 1 floor_trap.png 0 trap
 2 floor_gap.png 1 gap
 3 floor_gap_filled.png 0
 ' floor_ball.png 1 ball
-; floor_key.png 0 key_replace
+; floor_key.png 0 key_replace light
 t sliding_door_vert_white.png 1 sliding_door action
 w sliding_door_horiz_white.png 1 sliding_door action
 x sliding_door_horiz_white.png 1 sliding_door action

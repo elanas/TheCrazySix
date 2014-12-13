@@ -26,7 +26,8 @@ class TileType(object):
     REPLACE_POSTFIX = "_replace"
     BASE_POSTFIX = "_base"
     EMPTY_TILE = "a"
-    LIGHT_ATTR = "light_replace"
+    LIGHT_REPLACE_ATTR = "light_replace"
+    LIGHT_ATTR = "light"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr):
         self.symbol = symbol
