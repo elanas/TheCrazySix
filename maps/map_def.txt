@@ -3,9 +3,9 @@ H light_source.png 0 light_replace
 ! box.png 1
 ~ bag.png 1
 & floor_grey_chair.png 0
-/ stair_left_black.png 0 stair
+/ stair_right_black2.png 0 stair
 \ stair_right_black.png 0 stair
-D stair_down_left_black.png 0 stair_down
+D stair_down_left_black2.png 0 stair_down
 E stair_down_right_black.png 0 stair_down
 $ coin.png 0 coin coin_replace
 G floor_potion.png 0 potion_replace
