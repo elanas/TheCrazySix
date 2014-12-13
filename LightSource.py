@@ -1,4 +1,5 @@
 import pygame
+from asset_loader import AssetLoader
 
 
 class LightSource(object):
@@ -16,20 +17,20 @@ class LightSource(object):
                              y_center)
 
     def init_light_surf(self):
-        surf_size = LightSource.TILE_SIZE * 3
-        surf_size = LightSource.TILE_SIZE * 3
-        LightSource.RADIUS = surf_size / 2
-        LightSource.LIGHT_SURF = pygame.Surface((surf_size, surf_size),
-                                         pygame.SRCALPHA, 32).convert_alpha()
-        pygame.draw.circle(
-            LightSource.LIGHT_SURF, LightSource.COLOR,
-            (LightSource.RADIUS, LightSource.RADIUS),
-            LightSource.RADIUS)
+        LightSource.LIGHT_SURF = AssetLoader('images').load_image_alpha('light.png')
+        # surf_size = LightSource.TILE_SIZE * 3
+        # surf_size = LightSource.TILE_SIZE * 3
+        # LightSource.RADIUS = surf_size / 2
+        # LightSource.LIGHT_SURF = pygame.Surface((surf_size, surf_size),
+        #                                  pygame.SRCALPHA, 32).convert_alpha()
+        # pygame.draw.circle(
+        #     LightSource.LIGHT_SURF, LightSource.COLOR,
+        #     (LightSource.RADIUS, LightSource.RADIUS),
+        #     LightSource.RADIUS)
 
     def move(self, x_delta, y_delta):
         self.rect.x += x_delta
         self.rect.y += y_delta
 
     def render(self, surface):
-        surface.blit(LightSource.LIGHT_SURF, self.rect,
-                     special_flags=pygame.BLEND_ADD)
+        surface.blit(LightSource.LIGHT_SURF, self.rect)
