@@ -34,6 +34,8 @@ class Level(GameState):
     SUBTITLE_COLOR = pygame.color.Color("white")
     SUBTITLE_FONT = pygame.font.Font(None, 32)
     SUBTITLE_MARGIN = 20
+    POTION_CURED_SUBTITLE = 'You have been cured'
+    POTION_CURED_SUBTITLE_LOOPS = 5
     ACTION_TILE_HINT = 'Press the action key to use'
     ACTION_TILE_LOOPS = 1
     LOCKED_TILE_HINT = 'This is locked'
@@ -162,6 +164,11 @@ class Level(GameState):
             Globals.HEALTH_BAR.changeHealth(Level.HEALTH_PICKUP)
         elif TileType.KEY_ATTR in pair.tile.special_attr:
             Globals.HUD_MANAGER.add_key()
+        elif TileType.POTION_ATTR in pair.tile.special_attr:
+            Globals.DISORIENTED = False
+            self.show_subtitle(Level.POTION_CURED_SUBTITLE,
+                               Level.POTION_CURED_SUBTITLE_LOOPS)
+            self.player.stop_and_set_direction(self.player.direction)
 
     def handle_finish_fade_out(self):
         if not Globals.goto_next_level():
@@ -529,6 +536,9 @@ class Level(GameState):
             self.handle_keydown(key)
         else:
             self.handle_keyup(key)
+
+    def handle_attack(self):
+        self.player.handle_attack()
 
     def handle_raw_event(self, event):
         if event.type == pygame.KEYDOWN:

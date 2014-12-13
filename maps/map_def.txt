@@ -7,6 +7,7 @@
 D stair_down_left.png 0 stair_down
 E stair_down_right.png 0 stair_down
 $ coin.png 0 coin coin_replace
+G floor_potion.png 0 potion_replace
 7 mwall_joint.png 1
 [ mwall_down.png 1
 8 mwall_left.png 1
@@ -44,4 +45,4 @@ w sliding_door_horiz.png 1 sliding_door action
 A sliding_door_horiz_locked.png 1 sliding_door action locked
 B sliding_door_vert_locked_left.png 1 sliding_door action locked
 C sliding_door_vert_locked_right.png 1 sliding_door action locked
-# last was "F"
+# last was "G"

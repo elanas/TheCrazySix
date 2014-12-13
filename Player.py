@@ -22,11 +22,13 @@ class Player(Character):
     INDEX_RIGHT = 3
     still_images = [None, None, None, None]
     walking_images = [None, None, None, None]
+    punching_images = [None, None, None, None]
     hitSound = None
     loader = AssetLoader("images", "sounds")
     WALK_ANIM_TIME = .05
     ACCEL_ANIM_TIME = .2
     STILL_ANIM_TIME = .5
+    PUNCH_ANIM_TIME = .05
     BLINK_SPEED = .1
     TOTAL_BLINK_TIME = .5
     WALKING_PATH = os.path.join('images', 'main_character')
@@ -35,6 +37,10 @@ class Player(Character):
     WALKING_UP_PATH = 'walking_up'
     WALKING_LEFT_PATH = 'walking_left'
     WALKING_RIGHT_PATH = 'walking_right'
+    PUNCHING_DOWN_PATH = 'punching_down'
+    PUNCHING_UP_PATH = 'punching_up'
+    PUNCHING_LEFT_PATH = 'punching_left'
+    PUNCHING_RIGHT_PATH = 'punching_right'
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -55,6 +61,8 @@ class Player(Character):
         self.blinking_time = 0
         self.total_blinking_time = 0
         self.last_sound_time = 0.0
+        self.punching = False
+        self.pre_attack_rect = self.rect
 
     def stop_and_set_direction(self, direction):
         self.velocity = 0
@@ -62,13 +70,16 @@ class Player(Character):
         self.anim_time = Player.STILL_ANIM_TIME
         self.time_elapsed = Player.STILL_ANIM_TIME
         self.cycle = 0
+        self.is_moving = False
         self.image = Player.still_images[self.direction][self.cycle]
 
     def update(self, time, camera=None):
         self.updateVelocity(time)
         self.time_elapsed += time
         if self.time_elapsed >= self.anim_time:
-            if self.velocity == 0:
+            if self.punching:
+                self.update_punch()
+            elif self.velocity == 0:
                 self.cycle = (self.cycle + 1) % \
                              (len(Player.still_images[self.direction]))
                 self.image = Player.still_images[self.direction][self.cycle]
@@ -86,7 +97,53 @@ class Player(Character):
         if self.velocity > 0:
             self.move(time)
         self.update_blinking(time)
-        self.checkCollisions(camera)
+        if not self.punching:
+            self.checkCollisions(camera)
+
+    def update_punch(self):
+        self.cycle += 1
+        if self.cycle >= len(Player.punching_images[self.direction]):
+            self.end_punch()
+            return
+        self.image = Player.punching_images[self.direction][self.cycle]
+        old_rect = self.rect
+        self.rect = self.image.get_rect()
+        self.rect.center = old_rect.center
+        if self.direction == Player.INDEX_DOWN:
+            self.rect.top = old_rect.top
+        elif self.direction == Player.INDEX_UP:
+            self.rect.bottom = old_rect.bottom
+        elif self.direction == Player.INDEX_LEFT:
+            self.rect.right = old_rect.right
+        elif self.direction == Player.INDEX_RIGHT:
+            self.rect.left = old_rect.left
+
+    def handle_attack(self):
+        if self.punching:
+            return
+        self.anim_time = Player.PUNCH_ANIM_TIME
+        self.time_elapsed = self.anim_time
+        self.cycle = 0
+        self.is_moving = False
+        self.velocity = 0
+        self.image = Player.punching_images[self.direction][self.cycle]
+        self.pre_attack_rect = self.rect
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pre_attack_rect.center
+        self.punching = True
+
+    def end_punch(self):
+        self.cycle = 0
+        self.time_elapsed = 0
+        if self.velocity == 0:
+            self.anim_time = Player.STILL_ANIM_TIME
+            self.image = Player.still_images[self.direction][self.cycle]
+        else:
+            self.anim_time = Player.WALK_ANIM_TIME
+            self.image = Player.walking_images[self.direction][self.cycle]
+        self.rect = self.image.get_rect()
+        self.rect.center = self.pre_attack_rect.center
+        self.punching = False
 
     def update_blinking(self, time):
         if not self.blinking:
@@ -161,6 +218,31 @@ class Player(Character):
             prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_RIGHT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_RIGHT] = \
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+
+        if Player.punching_images[Player.INDEX_DOWN] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_DOWN_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_DOWN_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
+            Player.punching_images[Player.INDEX_DOWN] = \
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+        if Player.punching_images[Player.INDEX_UP] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_UP_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_UP_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
+            Player.punching_images[Player.INDEX_UP] = \
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+        if Player.punching_images[Player.INDEX_LEFT] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_LEFT_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_LEFT_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
+            Player.punching_images[Player.INDEX_LEFT] = \
+                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+        if Player.punching_images[Player.INDEX_RIGHT] is None:
+            path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_RIGHT_PATH)
+            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_RIGHT_PATH)
+            fM = FileManager(path, file_ext='.png', create_dir=False)
+            Player.punching_images[Player.INDEX_RIGHT] = \
                 Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
         if Player.hitSound is None:
             Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
