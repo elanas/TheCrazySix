@@ -41,6 +41,8 @@ class Player(Character):
     PUNCHING_UP_PATH = 'punching_up'
     PUNCHING_LEFT_PATH = 'punching_left'
     PUNCHING_RIGHT_PATH = 'punching_right'
+    PUNCH_INTERVAL = .5
+    PUNCH_RECT_PERCENT = .7
 
     def __init__(self, w, h, x, y):
         super(Player, self).__init__(w, h, x, y)
@@ -63,6 +65,7 @@ class Player(Character):
         self.last_sound_time = 0.0
         self.punching = False
         self.pre_attack_rect = self.rect
+        self.since_punch = 0
 
     def stop_and_set_direction(self, direction):
         self.velocity = 0
@@ -76,6 +79,7 @@ class Player(Character):
     def update(self, time, camera=None):
         self.updateVelocity(time)
         self.time_elapsed += time
+        self.since_punch += time
         if self.time_elapsed >= self.anim_time:
             if self.punching:
                 self.update_punch()
@@ -119,8 +123,9 @@ class Player(Character):
             self.rect.left = old_rect.left
 
     def handle_attack(self):
-        if self.punching:
+        if self.punching or self.since_punch < Player.PUNCH_INTERVAL:
             return
+        self.since_punch = 0
         self.anim_time = Player.PUNCH_ANIM_TIME
         self.time_elapsed = self.anim_time
         self.cycle = 0
@@ -321,3 +326,23 @@ class Player(Character):
     def show_damage(self):
         self.blinking = True
         self.play_sound()
+
+    def get_punching_rect(self):
+        r = None
+        if self.direction == Player.INDEX_DOWN:
+            r = self.rect.inflate(
+                -self.rect.width * Player.PUNCH_RECT_PERCENT, 0)
+            r.move_ip(0, int(self.rect.height / 2) + 10)
+        elif self.direction == Player.INDEX_UP:
+            r = self.rect.inflate(
+                -self.rect.width * Player.PUNCH_RECT_PERCENT, 0)
+            r.move_ip(0, -int(self.rect.height / 2) - 10)
+        elif self.direction == Player.INDEX_RIGHT:
+            r = self.rect.inflate(
+                0, -self.rect.height * Player.PUNCH_RECT_PERCENT)
+            r.move_ip(int(self.rect.width / 2) + 10, 0)
+        elif self.direction == Player.INDEX_LEFT:
+            r = self.rect.inflate(
+                0, -self.rect.height * Player.PUNCH_RECT_PERCENT)
+            r.move_ip(-int(self.rect.width / 2) - 10, 0)
+        return r

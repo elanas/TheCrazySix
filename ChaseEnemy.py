@@ -11,7 +11,7 @@ from Player import Player
 class ChaseEnemy(Enemy):
     CHASE_TILE_RADIUS = 8
     CHASE_RADIUS = None
-    COLLISION_OFFSET = -10
+    COLLISION_OFFSET = -20
     MIN_DIRECTION_CHANGE_TIME = .5
     CHASE_VELOCITY = Player.MOVE_VELOCITY * 2 / 3
 

@@ -44,6 +44,7 @@ class Level(GameState):
     DAMAGE_TRAP = -1
     POTION_PICKUP_DISORIENTED = 5
     POTION_PICKUP = 10
+    PUNCHING_INFLATE = .2
 
     def __init__(self, definition_path, map_path, has_timer=True,
                  should_fade_in=True):
@@ -253,6 +254,8 @@ class Level(GameState):
     def check_collisions(self):
         radius = max(self.player.rect.size) * 2
         self.check_turret_collisions()
+        self.check_punching_collisions()
+        self.enemySprites = pygame.sprite.Group([e for e in self.enemySprites if e.is_alive])
         self.check_enemy_collisions()
         special_tiles = self.camera.get_special_tiles(
             self.player.rect.center, radius)
@@ -298,10 +301,24 @@ class Level(GameState):
             self.handle_stair_down()
 
     def check_enemy_collisions(self):
-        enemy_rects = [enemy.rect for enemy in self.enemySprites]
-        collided_indices = self.player.rect.collidelistall(enemy_rects)
+        enemy_rects = [enemy.rect.inflate(-20, -20) for enemy in self.enemySprites]
+        player_rect = self.player.rect.copy()            
+        if self.player.punching:
+            # player_rect.inflate_ip(
+            #     -player_rect.width * Level.PUNCHING_INFLATE,
+            #     -player_rect.height * Level.PUNCHING_INFLATE)
+            pass
+        collided_indices = player_rect.collidelistall(enemy_rects)
         if len(collided_indices) > 0:
             self.handle_health_change(Enemy.HEALTH_EFFECT)
+
+    def check_punching_collisions(self):
+        if not self.player.punching:
+            return
+        punching_rect = self.player.get_punching_rect()
+        for enemy in self.enemySprites:
+            if punching_rect.colliderect(enemy.rect):
+                enemy.handle_hit()
 
     def check_turret_collisions(self):
         for turret in self.turrets:
@@ -320,6 +337,9 @@ class Level(GameState):
         if self.fade_out or self.fade_in:
             Globals.SCREEN.blit(self.black_surf, (0, 0))
         self.render_post_fade()
+        # r = self.player.get_punching_rect()
+        # if r is not None:
+        #     Globals.SCREEN.fill((255, 255, 255), r)
 
     def render_pre_fade(self):
         self.camera.render(Globals.SCREEN)

@@ -35,6 +35,7 @@ class Enemy(Character):
             self.rect.topleft = (x, y)
         self.moving = True
         self.velocity = Enemy.MOVE_VELOCITY
+        self.is_alive = True
 
     def setInitialPosition(self, camera):
         tile_rect = camera.tileEngine.get_tile_rect()
@@ -119,3 +120,6 @@ class Enemy(Character):
         if not self.direction == direction:
             self.direction = direction
             self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
+
+    def handle_hit(self):
+        self.is_alive = False
