@@ -9,7 +9,7 @@ class SyringeLevel(Level):
     MAP_NAME = 'dodge.txt'
     SUBTITLE_TEXT = 'Watch out for syringes'
     SUBTITLE_LOOPS = 3
-    MUSIC_PATH = 'syringe_level_cc.ogg'
+    MUSIC_PATH = 'syringe_level.ogg'
 
     def __init__(self):
         super(SyringeLevel, self).__init__(
