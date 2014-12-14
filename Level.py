@@ -42,7 +42,9 @@ class Level(GameState):
     ACTION_TILE_LOOPS = 1
     LOCKED_TILE_HINT = 'This is locked'
     LOCKED_TILE_LOOPS = 1
-    HEALTH_PICKUP = 5
+    GAUNTLET_TILE_HINT = 'Pick up to enable punching'
+    GAUNTLET_TILE_LOOPS = 1
+    HEALTH_PICKUP = 10
     DAMAGE_TRAP = -1
     POTION_PICKUP_DISORIENTED = 5
     POTION_PICKUP = 10
