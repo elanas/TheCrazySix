@@ -142,3 +142,9 @@ class Camera(object):
     def get_special_tiles(self, center, radius):
         nearby_tiles = self.get_nearby_tiles(center, radius)
         return [pair for pair in nearby_tiles if pair.tile.is_special]
+
+    def get_solid_and_stair_tiles(self, center, radius):
+        nearby_tiles = self.get_nearby_tiles(center, radius)
+        return [pair for pair in nearby_tiles if pair.tile.is_solid or
+                TileType.STAIR_UP_ATTR in pair.tile.special_attr or
+                TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
