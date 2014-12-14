@@ -24,7 +24,7 @@ class Camera(object):
     def initView(self):
         if self.start_pos[0] != -1 and self.start_pos[1] != -1:
             return self.set_viewpoint_with_coords(
-                self.start_pos[0], self.start_pos[1])
+                self.start_pos[0], self.start_pos[1], debug=True)
         tileRect = self.tileEngine.get_tile_rect()
         numRows = self.tileEngine.getNumRows()
         tile_map = self.tileEngine.tileMap

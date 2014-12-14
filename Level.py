@@ -139,7 +139,6 @@ class Level(GameState):
 
     def got_current_state(self):
         diff = self.camera.initView()
-        # print diff
         self.shift_non_player_objects(diff[0], diff[1])
         self.player.rect.center = Globals.SCREEN.get_rect().center
         if self.should_fade_in:
@@ -167,6 +166,8 @@ class Level(GameState):
                 "A respawn point must be defined to return to the level")
 
     def shift_non_player_objects(self, x_delta, y_delta):
+        if x_delta == 0 and y_delta == 0:
+            return
         for enemy in self.enemySprites:
                 enemy.rect.centerx += x_delta
                 enemy.rect.centery += y_delta
@@ -641,9 +642,9 @@ class Level(GameState):
 
     def handle_go_back(self):
         if Globals.goto_previous_level():
+            self.stop_music()
             self.timer.pause()
             self.player.stop_and_set_direction(Character.INDEX_UP)
-            self.camera.initView()
 
     def start_pause_fade(self):
         if self.pausing:
