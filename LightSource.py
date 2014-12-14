@@ -1,5 +1,6 @@
 import pygame
 from asset_loader import AssetLoader
+from Globals import Globals
 
 
 class LightSource(object):
@@ -34,3 +35,5 @@ class LightSource(object):
 
     def render(self, surface):
         surface.blit(LightSource.LIGHT_SURF, self.rect)
+        # if Globals.DISORIENTED:
+        #     surface.blit(LightSource.LIGHT_SURF, self.rect)

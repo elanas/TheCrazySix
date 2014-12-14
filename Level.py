@@ -236,6 +236,7 @@ class Level(GameState):
                     TileType.BASE_ATTR)
             self.camera.tileEngine.tileMap[row][col] = base
             self.camera.set_dirty()
+            self.lights = [l for l in self.lights if not l.rect.colliderect(self.player.rect)]
 
     def init_player(self):
         self.player = Player(
