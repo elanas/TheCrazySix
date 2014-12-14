@@ -33,8 +33,8 @@ l turret_left_topright.png 1 turret t_left_0 turret_spawn_left
 j turret_left_topleft.png 1 turret t_left_1
 @ turret_left_bottomleft.png 1 turret t_left_3
 % turret_left_bottomright.png 1 turret t_left_2
-v floor_switch.png 1 switch action light
-u floor_switch_on.png 1 switch_on action light
+v floor_switch.png 1 switch action
+u floor_switch_on.png 1 switch_on action
 ` floor_health.png 0 health_replace light
 1 floor_trap.png 0 trap
 2 floor_gap.png 1 gap
