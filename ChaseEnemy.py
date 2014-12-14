@@ -13,6 +13,7 @@ class ChaseEnemy(Enemy):
     CHASE_RADIUS = None
     COLLISION_OFFSET = -20
     MIN_DIRECTION_CHANGE_TIME = .5
+    MIN_DISTANCE_CHECK = .4
     CHASE_VELOCITY = Player.MOVE_VELOCITY * 2 / 3
 
     def __init__(self, camera, x=None, y=None):
@@ -22,11 +23,13 @@ class ChaseEnemy(Enemy):
             ChaseEnemy.CHASE_RADIUS = \
                 self.tile_size * ChaseEnemy.CHASE_TILE_RADIUS
         self.time_since_change = ChaseEnemy.MIN_DIRECTION_CHANGE_TIME
+        self.time_since_dist_check = 0
+        self.last_dist_check = False
 
     def update(self, time, camera, player):
         self.enemy_point = self.rect.center
         self.player_point = player.rect.center
-        if not self.player_in_radius(player):
+        if not self.player_in_radius(time):
             self.velocity = Enemy.MOVE_VELOCITY
             super(ChaseEnemy, self).update(time, camera, player)
         else:
@@ -58,9 +61,16 @@ class ChaseEnemy(Enemy):
             new_direct = Enemy.INDEX_UP if y_diff < 0 else Enemy.INDEX_DOWN
         self.setDirection(new_direct)
 
-    def player_in_radius(self, player):
-        return ChaseEnemy.distance(self.enemy_point, self.player_point) <= \
-            ChaseEnemy.CHASE_RADIUS
+    def player_in_radius(self, time):
+        self.time_since_dist_check += time
+        if self.last_dist_check or \
+                self.time_since_dist_check >= ChaseEnemy.MIN_DISTANCE_CHECK:
+            self.time_since_dist_check = 0
+        else:
+            return self.last_dist_check
+        self.last_dist_check = ChaseEnemy.distance(
+            self.enemy_point, self.player_point) <= ChaseEnemy.CHASE_RADIUS
+        return self.last_dist_check
 
     @staticmethod
     def distance(p0, p1):
