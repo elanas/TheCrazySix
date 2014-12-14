@@ -1,4 +1,5 @@
 import pygame
+from TileSystem.TileType import TileType
 
 
 class Character (pygame.sprite.Sprite):
@@ -23,10 +24,16 @@ class Character (pygame.sprite.Sprite):
         self.rect.x += xDelta
         self.rect.y += yDelta
 
-    def checkCollisions(self, camera):
+    def checkCollisions(self, camera, avoid_stairs=False):
         radius = max(self.rect.height, self.rect.width) * 2
         solid_tiles = camera.get_solid_tiles(self.rect.center, radius)
         solid_rects = [pair.rect for pair in solid_tiles]
+        if avoid_stairs:
+            special_tiles = camera.get_special_tiles(self.rect.center, radius)
+            stair_rects = [pair.rect for pair in special_tiles if
+                       TileType.STAIR_UP_ATTR in pair.tile.special_attr or
+                       TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
+            solid_rects.extend(stair_rects)
         for i in self.rect.collidelistall(solid_rects):
             curr_rect = solid_rects[i]
             if self.direction == Character.INDEX_UP:

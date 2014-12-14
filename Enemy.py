@@ -76,7 +76,7 @@ class Enemy(Character):
             self.time_elapsed_anim = 0
         self.moveRandom(time)
         if camera is not None:
-            self.checkCollisions(camera)
+            self.checkCollisions(camera, avoid_stairs=True)
         else:
             self.checkScreenCollisions()
 

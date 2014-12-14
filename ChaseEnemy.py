@@ -31,8 +31,8 @@ class ChaseEnemy(Enemy):
             super(ChaseEnemy, self).update(time, camera, player)
         else:
             self.velocity = ChaseEnemy.CHASE_VELOCITY
-            self.checkCollisions(camera)
             self.update_chase(time, player)
+            self.checkCollisions(camera, avoid_stairs=True)
             super(ChaseEnemy, self).update(time, camera, player,
                 change_direction=False)
 
