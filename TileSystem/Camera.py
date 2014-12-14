@@ -148,3 +148,11 @@ class Camera(object):
         return [pair for pair in nearby_tiles if pair.tile.is_solid or
                 TileType.STAIR_UP_ATTR in pair.tile.special_attr or
                 TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
+
+    def get_walkable_tiles(self, center, radius, avoid_stairs=True):
+        nearby_tiles = self.get_nearby_tiles(center, radius)
+        if not avoid_stairs:
+            return [pair for pair in nearby_tiles if not pair.tile.is_solid]            
+        return  [pair for pair in nearby_tiles if not pair.tile.is_solid and
+                 not TileType.STAIR_UP_ATTR in pair.tile.special_attr and
+                  not TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]

@@ -630,6 +630,9 @@ class Level(GameState):
                 Globals.HEALTH_BAR.changeHealth(delta)
             elif key == pygame.K_3:
                 Globals.HUD_MANAGER.add_key()
+            elif key == pygame.K_r:
+                self.player.rect.left = 0
+                self.player.rect.centery = Globals.HEIGHT / 2
 
     def handle_keydown(self, key):
         self.keyCode = key
