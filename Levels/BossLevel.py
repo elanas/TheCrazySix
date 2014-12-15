@@ -9,7 +9,7 @@ class BossLevel(Level):
     MAP_NAME = 'boss.txt'
     SUBTITLE_TEXT = 'Find the antidote'
     SUBTITLE_LOOPS = 3
-    MUSIC_PATH = 'boss_level.ogg'
+    MUSIC_PATH = 'syringe_level.ogg'
 
     def __init__(self):
         super(BossLevel, self).__init__(
