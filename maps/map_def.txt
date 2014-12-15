@@ -50,4 +50,5 @@ C sliding_door_vert_locked_right_white.png 1 sliding_door action locked
 J floor_gauntlet.png 1
 K red_ball.png 0 redball_replace
 L green_ball.png 0 redball_base
+M sliding_door_horiz_locked.png 1 sliding_door action locked special_sliding_door
 # last was "H"

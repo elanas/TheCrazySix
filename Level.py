@@ -337,7 +337,8 @@ class Level(GameState):
         if len(special_locked) == 0 and not Globals.HUD_MANAGER.has_key() \
                 and len(locked_tiles) > 0:
             self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
-        elif len(action_tiles) > 0:
+        elif len(action_tiles) > 0 and (len(special_locked) == 0 or \
+                not self.camera.contains_attribute(TileType.REDBALL_ATTR)):
             self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)
 
     def check_special_collisions(self, special_tiles):
@@ -519,13 +520,19 @@ class Level(GameState):
     def get_sliding_doors(self, row, col):
         init_num_keys = Globals.HUD_MANAGER.num_keys
         coords = list()
+        use_key = True
         if TileType.LOCKED_ATTR in \
                 self.camera.tileEngine.tileMap[row][col].special_attr:
-            if not Globals.HUD_MANAGER.has_key():
+            if TileType.SPECIAL_DOOR_ATTR in \
+                    self.camera.tileEngine.tileMap[row][col].special_attr:
+                if self.camera.contains_attribute(TileType.REDBALL_ATTR):
+                    return list()
+            elif not Globals.HUD_MANAGER.has_key():
                 return list()
             else:
                 init_num_keys = -1
-                Globals.HUD_MANAGER.use_key()
+                if use_key:
+                    Globals.HUD_MANAGER.use_key()
         coords.append([row, col])
         result = self.get_doors_delta(row, col, init_num_keys, row_delta=-1)
         if result == -1:
@@ -553,7 +560,11 @@ class Level(GameState):
         while self.camera.tileEngine.is_coord_valid(row, col) and \
                 TileType.SLIDING_DOOR_ATTR in tile_map[row][col].special_attr:
             if TileType.LOCKED_ATTR in tile_map[row][col].special_attr:
-                if not Globals.HUD_MANAGER.has_key():
+                if TileType.SPECIAL_DOOR_ATTR in \
+                        self.camera.tileEngine.tileMap[row][col].special_attr:
+                    if self.camera.contains_attribute(TileType.REDBALL_ATTR):
+                        return -1
+                elif not Globals.HUD_MANAGER.has_key():
                     return -1
                 elif Globals.HUD_MANAGER.num_keys >= init_num_keys:
                     Globals.HUD_MANAGER.use_key()
