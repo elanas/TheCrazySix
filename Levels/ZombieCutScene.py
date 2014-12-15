@@ -15,6 +15,7 @@ class ZombieCutScene(Level):
     INITIAL_TIMES = 3
     HIT_ALPHA = 70
     POST_HIT_ALPHA = 40
+    ZOMBIE_SOUND_PATH = "monster.ogg"
 
     def __init__(self):
         super(ZombieCutScene, self).__init__(
@@ -30,6 +31,7 @@ class ZombieCutScene(Level):
         )
         self.overlay_sub = False
         self.played_already = False
+        self.sound = self.loader.load_sound(ZombieCutScene.ZOMBIE_SOUND_PATH)
 
     def got_current_state(self):
         if not self.played_already:
@@ -86,6 +88,7 @@ class ZombieCutScene(Level):
         self.old_viewpoint = pygame.Rect.copy(self.camera.viewpoint)
         self.old_player_rect = pygame.Rect.copy(self.player.rect)
         self.old_enemy_rect = pygame.Rect.copy(self.enemy.rect)
+        self.sound.play()
 
     def stop_shaking(self):
         self.shaking = False
