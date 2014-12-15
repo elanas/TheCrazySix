@@ -15,9 +15,10 @@ class ChaseEnemy(Enemy):
     MIN_DIRECTION_CHANGE_TIME = .5
     MIN_DISTANCE_CHECK = .4
     CHASE_VELOCITY = Player.MOVE_VELOCITY * 2 / 3
+    KILL_BONUS = 10
 
     def __init__(self, camera, x=None, y=None):
-        super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y)
+        super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y, kill_bonus=ChaseEnemy.KILL_BONUS)
         self.tile_size = max(camera.tileEngine.get_tile_rect().size)
         if ChaseEnemy.CHASE_RADIUS is None:
             ChaseEnemy.CHASE_RADIUS = \

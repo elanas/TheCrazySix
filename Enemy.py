@@ -18,8 +18,9 @@ class Enemy(Character):
     images = [None, None, None, None]
     loader = AssetLoader("images")
     WALK_ANIM_TIME = .25
+    KILL_BONUS = 5
 
-    def __init__(self, w=0, h=0, camera=None, x=None, y=None):
+    def __init__(self, w=0, h=0, camera=None, x=None, y=None, kill_bonus=KILL_BONUS):
         super(Enemy, self).__init__(w, h, 0, 0)
         self.loadResources()
         self.direction = random.randint(0, 3)
@@ -36,6 +37,7 @@ class Enemy(Character):
         self.moving = True
         self.velocity = Enemy.MOVE_VELOCITY
         self.is_alive = True
+        self.kill_bonus = kill_bonus
 
     def setInitialPosition(self, camera):
         tile_rect = camera.tileEngine.get_tile_rect()
@@ -123,3 +125,4 @@ class Enemy(Character):
 
     def handle_hit(self):
         self.is_alive = False
+        Globals.PLAYER_SCORE += self.kill_bonus
