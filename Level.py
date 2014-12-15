@@ -443,6 +443,7 @@ class Level(GameState):
         self.update_subtitle(time)
 
     def handle_lose_game(self):
+        self.stop_music()
         Globals.STATE = LoseGame.LoseGame()
 
     def update_subtitle(self, time):
