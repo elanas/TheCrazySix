@@ -51,6 +51,7 @@ class Level(GameState):
     PUNCHING_INFLATE = .2
     MUSIC_END_ID = pygame.USEREVENT
     SOUND_FADE_TIME = 500
+    SWITCH_SOUND_PATH = 'switch.ogg'
 
     def __init__(self, definition_path, map_path, music_path=None, music_loops=-1,
                  has_timer=True, should_fade_in=True):
@@ -91,6 +92,7 @@ class Level(GameState):
         self.timer = None
         self.find_respawn()
         self.loader = AssetLoader('images', 'sounds')
+        self.switch_sound = self.loader.load_sound(Level.SWITCH_SOUND_PATH)
         self.channel = None
         self.music_loops = music_loops
         if music_path is not None:
@@ -594,10 +596,12 @@ class Level(GameState):
                 self.handle_lever_off()
 
     def handle_lever_on(self):
+        self.switch_sound.play()
         for turret in self.turrets:
             turret.turn_off()
 
     def handle_lever_off(self):
+        self.switch_sound.play()
         for turret in self.turrets:
             turret.turn_on()
 
