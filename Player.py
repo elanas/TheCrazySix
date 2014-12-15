@@ -105,7 +105,7 @@ class Player(Character):
             self.move(time)
         self.update_blinking(time)
         if not self.punching:
-            self.checkCollisions(camera, self.last_d)
+            self.checkCollisions(camera, avoid_stairs=False, direct=self.last_d)
         self.last_d = self.direction
 
     def update_punch(self):
