@@ -16,6 +16,7 @@ class Player(Character):
     SECONDS_TO_FULL_SPEED = .5
     ACCELERATION = MOVE_VELOCITY / SECONDS_TO_FULL_SPEED
     SOUND_PATH = "collision_sound.ogg"
+    ATTACK_SOUND_PATH = "attack.ogg"
     INDEX_DOWN = 0
     INDEX_LEFT = 1
     INDEX_UP = 2
@@ -24,6 +25,7 @@ class Player(Character):
     walking_images = [None, None, None, None]
     punching_images = [None, None, None, None]
     hitSound = None
+    attackSound = None
     loader = AssetLoader("images", "sounds")
     WALK_ANIM_TIME = .05
     ACCEL_ANIM_TIME = .2
@@ -125,6 +127,7 @@ class Player(Character):
     def handle_attack(self):
         if self.punching or self.since_punch < Player.PUNCH_INTERVAL:
             return
+        Player.attackSound.play()
         self.since_punch = 0
         self.anim_time = Player.PUNCH_ANIM_TIME
         self.time_elapsed = self.anim_time
@@ -251,6 +254,8 @@ class Player(Character):
                 Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
         if Player.hitSound is None:
             Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
+        if Player.attackSound is None:
+            Player.attackSound = Player.loader.load_sound(Player.ATTACK_SOUND_PATH)
 
     def keyPressed(self, keyCode):
         if keyCode == pygame.K_UP:
