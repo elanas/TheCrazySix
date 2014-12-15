@@ -38,6 +38,7 @@ class Enemy(Character):
         self.velocity = Enemy.MOVE_VELOCITY
         self.is_alive = True
         self.kill_bonus = kill_bonus
+        self.last_d = self.direction
 
     def setInitialPosition(self, camera):
         tile_rect = camera.tileEngine.get_tile_rect()
@@ -65,6 +66,7 @@ class Enemy(Character):
         self.time_elapsed_direction += time
         if change_direction and \
                 self.time_elapsed_direction >= self.time_to_change_direction:
+            self.last_d = self.direction
             self.direction = random.randint(0, 3)
             self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
             self.cycle = -1
@@ -78,7 +80,8 @@ class Enemy(Character):
             self.time_elapsed_anim = 0
         self.moveRandom(time)
         if camera is not None:
-            self.checkCollisions(camera, avoid_stairs=True)
+            self.checkCollisions(camera, avoid_stairs=True, direct=self.last_d)
+            self.last_d = self.direction
         else:
             self.checkScreenCollisions()
 
@@ -120,6 +123,7 @@ class Enemy(Character):
 
     def setDirection(self, direction):
         if not self.direction == direction:
+            self.last_d = self.direction
             self.direction = direction
             self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
 

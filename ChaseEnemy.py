@@ -26,6 +26,7 @@ class ChaseEnemy(Enemy):
         self.time_since_change = ChaseEnemy.MIN_DIRECTION_CHANGE_TIME
         self.time_since_dist_check = 0
         self.last_dist_check = False
+        self.last_d = self.direction
 
     def update(self, time, camera, player):
         self.enemy_point = self.rect.center
@@ -36,7 +37,8 @@ class ChaseEnemy(Enemy):
         else:
             self.velocity = ChaseEnemy.CHASE_VELOCITY
             self.update_chase(time, player)
-            self.checkCollisions(camera, avoid_stairs=True)
+            self.checkCollisions(camera, avoid_stairs=True, direct=self.last_d)
+            self.last_d = self.direction
             super(ChaseEnemy, self).update(time, camera, player,
                 change_direction=False)
 

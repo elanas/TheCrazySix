@@ -68,6 +68,7 @@ class Player(Character):
         self.punching = False
         self.pre_attack_rect = self.rect
         self.since_punch = 0
+        self.last_d = self.direction
 
     def stop_and_set_direction(self, direction):
         self.velocity = 0
@@ -104,7 +105,8 @@ class Player(Character):
             self.move(time)
         self.update_blinking(time)
         if not self.punching:
-            self.checkCollisions(camera)
+            self.checkCollisions(camera, self.last_d)
+        self.last_d = self.direction
 
     def update_punch(self):
         self.cycle += 1
@@ -259,24 +261,28 @@ class Player(Character):
 
     def keyPressed(self, keyCode):
         if keyCode == pygame.K_UP:
+            self.last_d = self.direction
             self.direction = Player.INDEX_UP
             if not self.is_moving:
                 self.anim_time = Player.ACCEL_ANIM_TIME
                 self.time_elapsed = Player.ACCEL_ANIM_TIME
             self.is_moving = True
         elif keyCode == pygame.K_DOWN:
+            self.last_d = self.direction
             self.direction = Player.INDEX_DOWN
             if not self.is_moving:
                 self.anim_time = Player.ACCEL_ANIM_TIME
                 self.time_elapsed = Player.ACCEL_ANIM_TIME
             self.is_moving = True
         elif keyCode == pygame.K_LEFT:
+            self.last_d = self.direction
             self.direction = Player.INDEX_LEFT
             if not self.is_moving:
                 self.anim_time = Player.ACCEL_ANIM_TIME
                 self.time_elapsed = Player.ACCEL_ANIM_TIME
             self.is_moving = True
         elif keyCode == pygame.K_RIGHT:
+            self.last_d = self.direction
             self.direction = Player.INDEX_RIGHT
             if not self.is_moving:
                 self.anim_time = Player.ACCEL_ANIM_TIME

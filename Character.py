@@ -27,7 +27,9 @@ class Character (pygame.sprite.Sprite):
         self.rect.x += xDelta
         self.rect.y += yDelta
 
-    def checkCollisions(self, camera, avoid_stairs=False):
+    def checkCollisions(self, camera, avoid_stairs=False, direct=None):
+        if direct is None:
+            direct = self.direction
         radius = max(self.rect.height, self.rect.width) * 2
         if not avoid_stairs:
             solid_tiles = camera.get_solid_tiles(self.rect.center, radius)
