@@ -34,7 +34,7 @@ class Highscore(GameState):
 
         highscore_rect = pygame.Rect(0, 0, Globals.WIDTH/2, Globals.HEIGHT/2 + 100)
         highscore_rect.centerx = Globals.WIDTH/2
-        highscore_rect.centery = Globals.HEIGHT/2 + 100
+        highscore_rect.centery = Globals.HEIGHT/2 + 50
         highscore_surf = pygame.Surface(highscore_rect.size).convert()
         highscore_surf.fill(Highscore.HIGHSCORE_BACKGROUND)
         highscore_surf.set_alpha(Highscore.HIGHSCORE_ALPHA)
