@@ -16,7 +16,8 @@ sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
 
 class LevelEditor(GameState):
-    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR, TileType.TURRET_ATTR]
+    HIDDEN_ATTR = [TileType.LEVER_RIGHT_ATTR, TileType.TURRET_ATTR,
+                   TileType.GREENBALL_ATTR]
     IN_GAME_HIDDEN_EXTRA = [TileType.STAIR_DOWN_ATTR, TileType.RESPAWN_ATTR]
     RIGHT_PADDING_FACTOR = 4
     PADDING = 20

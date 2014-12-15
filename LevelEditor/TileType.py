@@ -26,6 +26,8 @@ class TileType(object):
     REPLACE_POSTFIX = "_replace"
     BASE_POSTFIX = "_base"
     EMPTY_SYMBOL = " "
+    REDBALL_ATTR = "redball_replace"
+    GREENBALL_ATTR = "redball_base"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr,
                  line_num=-1):

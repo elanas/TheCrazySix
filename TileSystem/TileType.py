@@ -28,6 +28,8 @@ class TileType(object):
     EMPTY_TILE = "a"
     LIGHT_REPLACE_ATTR = "light_replace"
     LIGHT_ATTR = "light"
+    REDBALL_ATTR = "redball_replace"
+    GREENBALL_ATTR = "redball_base"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr):
         self.symbol = symbol
