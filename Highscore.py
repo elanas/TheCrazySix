@@ -27,7 +27,7 @@ class Highscore(GameState):
         VERT_SPACING = 90
         TOP_SPACE = 100
 
-        COLOR = (240, 250, 190)
+        COLOR = (255, 255, 255)
 
         highscoreEntry = self.highscoreManager.get_list()
 
