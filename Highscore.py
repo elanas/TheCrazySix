@@ -32,7 +32,7 @@ class Highscore(GameState):
 
         COLOR = (255, 255, 255)
 
-        highscore_rect = pygame.Rect(0, 0, Globals.WIDTH/2, Globals.HEIGHT/2 + 200)
+        highscore_rect = pygame.Rect(0, 0, Globals.WIDTH/2, Globals.HEIGHT/2 + 100)
         highscore_rect.centerx = Globals.WIDTH/2
         highscore_rect.centery = Globals.HEIGHT/2
         highscore_surf = pygame.Surface(highscore_rect.size).convert()
