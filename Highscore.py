@@ -36,7 +36,7 @@ class Highscore(GameState):
         highscore_surf = pygame.Surface(highscore_rect.size).convert()
         highscore_surf.fill(Highscore.HIGHSCORE_BACKGROUND)
         highscore_surf.set_alpha(Highscore.HIGHSCORE_ALPHA)
-        Globals.SCREEN.blit(highscore_surf, hightscore_rect)
+        Globals.SCREEN.blit(highscore_surf, highscore_rect)
 
 
         highscoreEntry = self.highscoreManager.get_list()
