@@ -36,7 +36,7 @@ class Highscore(GameState):
         op1 = font.render("{} - {}".format(
             highscoreEntry[0].name,
             highscoreEntry[0].score
-        ), True, COLOR,HIGHSCORE_BACKGROUND)
+        ), True, COLOR, (0,0,0))
         title_rect = op1.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery += TOP_SPACE + VERT_SPACING
