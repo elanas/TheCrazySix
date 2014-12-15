@@ -1,6 +1,7 @@
 from EventManager import EventManager
 from GameState import GameState
 from Globals import Globals
+from SettingsManager import SettingsManager
 import sys
 import pygame
 
@@ -22,6 +23,12 @@ class TestInput(GameState):
         else:
             return
         print result
+
+    def handle_attack(self):
+        print 'ATTACK'
+
+    def handle_attack_keyup(self):
+        print 'ATTACK RELEASE'
 
     def handle_action_key(self):
         print 'ACTION'
@@ -64,7 +71,7 @@ class TestInput(GameState):
 
 
 if __name__ == '__main__':
-    Globals.init_event_keys()
+    SettingsManager.load()
     Globals.EVENT_MANAGER = EventManager()
     Globals.STATE = TestInput()
     pygame.init()

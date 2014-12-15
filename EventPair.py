@@ -1,5 +1,5 @@
 import pygame
-from EventManager import EventManager
+import EventManager
 
 
 class EventPair(object):
@@ -11,47 +11,47 @@ class EventPair(object):
         self.axis = axis
 
     def match(self, event):
-        if EventManager.is_keyboard_event(self.type):
-            if not EventManager.is_keyboard_event(event.type):
+        if EventManager.EventManager.is_keyboard_event(self.type):
+            if not EventManager.EventManager.is_keyboard_event(event.type):
                 return False
             return self.value == event.key
-        elif EventManager.is_joystick_event(self.type):
+        elif EventManager.EventManager.is_joystick_event(self.type):
             return self.match_joystick_event(event)
         return False
 
     def match_joystick_event(self, event):
         if not self.match_joystick_types(event):
             return False
-        if self.type in EventManager.JOYSTICK_BUTTON_EVENTS:
+        if self.type in EventManager.EventManager.JOYSTICK_BUTTON_EVENTS:
             
             return self.value == event.button
-        elif self.type in EventManager.JOYSTICK_HAT_EVENTS:
-            return self.hat == event.hat and EventManager.hat_values_match(self.value, event.value)
-        elif self.type in EventManager.JOYSTICK_AXIS_EVENTS:
-            return self.axis == event.axis and EventManager.axis_values_match(self.value, event.value)
+        elif self.type in EventManager.EventManager.JOYSTICK_HAT_EVENTS:
+            return self.hat == event.hat and EventManager.EventManager.hat_values_match(self.value, event.value)
+        elif self.type in EventManager.EventManager.JOYSTICK_AXIS_EVENTS:
+            return self.axis == event.axis and EventManager.EventManager.axis_values_match(self.value, event.value)
         else:
             # need to handle this
             return False
 
     def match_joystick_types(self, event):
         return \
-            (self.type in EventManager.JOYSTICK_BUTTON_EVENTS and event.type in EventManager.JOYSTICK_BUTTON_EVENTS) or \
-            (self.type in EventManager.JOYSTICK_AXIS_EVENTS and event.type in EventManager.JOYSTICK_AXIS_EVENTS) or \
-            (self.type in EventManager.JOYSTICK_HAT_EVENTS and event.type in EventManager.JOYSTICK_HAT_EVENTS)
+            (self.type in EventManager.EventManager.JOYSTICK_BUTTON_EVENTS and event.type in EventManager.EventManager.JOYSTICK_BUTTON_EVENTS) or \
+            (self.type in EventManager.EventManager.JOYSTICK_AXIS_EVENTS and event.type in EventManager.EventManager.JOYSTICK_AXIS_EVENTS) or \
+            (self.type in EventManager.EventManager.JOYSTICK_HAT_EVENTS and event.type in EventManager.EventManager.JOYSTICK_HAT_EVENTS)
 
     def is_hat(self):
-        return self.type in EventManager.JOYSTICK_HAT_EVENTS
+        return self.type in EventManager.EventManager.JOYSTICK_HAT_EVENTS
 
     def __eq__(self, other):
         if type(other) is type(self):
-            if EventManager.is_keyboard_event(self.type) and EventManager.is_keyboard_event(other.type):
+            if EventManager.EventManager.is_keyboard_event(self.type) and EventManager.EventManager.is_keyboard_event(other.type):
                 return self.value == other.value
-            elif self.type in EventManager.JOYSTICK_BUTTON_EVENTS and other.type in EventManager.JOYSTICK_BUTTON_EVENTS:
+            elif self.type in EventManager.EventManager.JOYSTICK_BUTTON_EVENTS and other.type in EventManager.EventManager.JOYSTICK_BUTTON_EVENTS:
                 return self.value == other.value
-            elif self.type in EventManager.JOYSTICK_HAT_EVENTS and other.type in EventManager.JOYSTICK_HAT_EVENTS:
+            elif self.type in EventManager.EventManager.JOYSTICK_HAT_EVENTS and other.type in EventManager.EventManager.JOYSTICK_HAT_EVENTS:
                 return self.value == other.value
-            elif self.type in EventManager.JOYSTICK_AXIS_EVENTS and other.type in EventManager.JOYSTICK_AXIS_EVENTS:
-                return self.axis == other.axis and EventManager.axis_values_match(self.value, other.value)
+            elif self.type in EventManager.EventManager.JOYSTICK_AXIS_EVENTS and other.type in EventManager.EventManager.JOYSTICK_AXIS_EVENTS:
+                return self.axis == other.axis and EventManager.EventManager.axis_values_match(self.value, other.value)
             # need to handle more things
             return False
         else:
