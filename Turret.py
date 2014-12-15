@@ -10,6 +10,7 @@ class Turret(object):
     MAX_WAIT = 3
     PROB_NORMAL = .85
     PROB_DEATH = .15
+    SOUND_PATH = "collision_sound.ogg"
 
     def __init__(self, x, y, left):
         self.x = x

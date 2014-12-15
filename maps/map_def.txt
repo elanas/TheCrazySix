@@ -53,6 +53,6 @@ M sliding_door_horiz_locked_special.png 1 sliding_door action locked special_sli
 N sliding_door_vert_locked_left_special.png 1 sliding_door action locked special_sliding_door
 O sliding_door_horiz_special.png 1 sliding_door action
 q table_top_antidote.png 0 antidote_replace light
-S floor_key2.png 0 key_replace light
+S floor_key_2.png 0 key_replace light
 
 # last was "J"
