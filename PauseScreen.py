@@ -6,7 +6,6 @@ import pygame
 import Menu
 from EventManager import EventManager
 
-PAUSE_IMAGE = pygame.image.load("images/game-paused.png")
 
 class PauseScreen(GameState):
     UNPAUSE_KEYS = [pygame.K_p, pygame.K_RETURN]
@@ -23,11 +22,12 @@ class PauseScreen(GameState):
             Menu.Menu()
         self.loader = AssetLoader('images')
         self.background_img = self.loader.load_image('background.png')
+        self.pause_image = self.loader.load_image_alpha('game-paused.png')
         Globals.play_menu_sound()
-        self.title_surf = PauseScreen.TITLE_FONT.render(
-            PauseScreen.TITLE_TEXT, True, PauseScreen.TITLE_COLOR)
-        self.title_rect = self.title_surf.get_rect()
-        self.title_rect.center = Globals.SCREEN.get_rect().center
+        # self.title_surf = PauseScreen.TITLE_FONT.render(
+        #     PauseScreen.TITLE_TEXT, True, PauseScreen.TITLE_COLOR)
+        # self.title_rect = self.title_surf.get_rect()
+        # self.title_rect.center = Globals.SCREEN.get_rect().center
         self.black_surf = pygame.Surface(
             (Globals.WIDTH, Globals.HEIGHT)).convert()
         self.black_surf.fill((0, 0, 0))
@@ -39,7 +39,7 @@ class PauseScreen(GameState):
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))
         # Globals.SCREEN.blit(self.title_surf, self.title_rect)
-        Globals.SCREEN.blit(PAUSE_IMAGE, [175, Globals.HEIGHT/3])
+        Globals.SCREEN.blit(self.pause_image, [175, Globals.HEIGHT/3])
 
         if self.fade_out or self.fade_in:
             Globals.SCREEN.blit(self.black_surf, (0, 0))
