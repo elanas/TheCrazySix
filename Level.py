@@ -328,7 +328,14 @@ class Level(GameState):
                         temp_rect.colliderect(pair.rect)]
         locked_tiles = [pair for pair in action_tiles if
                         TileType.LOCKED_ATTR in pair.tile.special_attr]
-        if not Globals.HUD_MANAGER.has_key() and len(locked_tiles) > 0:
+        special_locked = [pair for pair in locked_tiles if
+                          TileType.SPECIAL_DOOR_ATTR in pair.tile.special_attr]
+
+        if len(special_locked) > 0 and \
+                self.camera.contains_attribute(TileType.REDBALL_ATTR):
+            self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
+        if len(special_locked) == 0 and not Globals.HUD_MANAGER.has_key() \
+                and len(locked_tiles) > 0:
             self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
         elif len(action_tiles) > 0:
             self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)

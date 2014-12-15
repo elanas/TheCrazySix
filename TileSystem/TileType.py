@@ -14,6 +14,7 @@ class TileType(object):
     LEVER_LEFT_ATTR = "switch"
     LEVER_RIGHT_ATTR = "switch_on"
     SLIDING_DOOR_ATTR = "sliding_door"
+    SPECIAL_DOOR_ATTR = "special_sliding_door"
     HEALTH_ATTR = "health_replace"
     POTION_ATTR = "potion_replace"
     TRAP_ATTR = "trap"
