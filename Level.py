@@ -184,7 +184,9 @@ class Level(GameState):
             Globals.PLAYER_SCORE += Globals.HEALTH_BAR.health
             if self.has_timer:
                 time = self.timer.total_time / 1000
+                print time
                 diff = max(300 - time, 0)
+                print diff
                 Globals.PLAYER_SCORE += diff
         self.going_back = False
         self.pausing = False
