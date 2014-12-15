@@ -6,6 +6,7 @@ import pygame
 import Menu
 from EventManager import EventManager
 
+PAUSE_IMAGE = pygame.image.load("images/game-paused.png")
 
 class PauseScreen(GameState):
     UNPAUSE_KEYS = [pygame.K_p, pygame.K_RETURN]
@@ -37,7 +38,9 @@ class PauseScreen(GameState):
 
     def render(self):
         Globals.SCREEN.blit(self.background_img, (0, 0))
-        Globals.SCREEN.blit(self.title_surf, self.title_rect)
+        # Globals.SCREEN.blit(self.title_surf, self.title_rect)
+        Globals.SCREEN.blit(PAUSE_IMAGE, [175, Globals.HEIGHT/3])
+
         if self.fade_out or self.fade_in:
             Globals.SCREEN.blit(self.black_surf, (0, 0))
 
