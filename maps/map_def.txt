@@ -22,7 +22,7 @@ _ player_respawn.png 0 player_respawn
 F chase_enemy_spawn.png 0 chase_enemy_spawn
 z floor_bed_bottom.png 1
 c floor_bed_top.png 1
-b table_top.png 1
+b table_top.png 1 antidote_base 
 n table_top_potion.png 1
 m table_bottom.png 1
 k turret_right_topleft.png 1 turret t_right_0
