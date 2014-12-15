@@ -10,6 +10,8 @@ TITLE_IMG = pygame.image.load("images/highscore.png")
 
 
 class Highscore(GameState):
+    HIGHSCORE_BACKGROUND = pygame.color.Color("black")
+    HIGHSCORE_PADDING = 5
 
     def __init__(self):
         GameState.__init__(self)
@@ -34,7 +36,7 @@ class Highscore(GameState):
         op1 = font.render("{} - {}".format(
             highscoreEntry[0].name,
             highscoreEntry[0].score
-        ), True, COLOR)
+        ), True, COLOR,HIGHSCORE_BACKGROUND)
         title_rect = op1.get_rect()
         title_rect.centerx = Globals.SCREEN.get_rect().centerx
         title_rect.centery += TOP_SPACE + VERT_SPACING
