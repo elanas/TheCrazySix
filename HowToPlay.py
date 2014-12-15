@@ -78,7 +78,7 @@ class HowToPlay(GameState):
         Globals.SCREEN.blit(TITLE_IMG, [0, 0])
         Globals.SCREEN.blit(KEYBOARD_IMG, [0, 300])
         Globals.SCREEN.blit(SPACEBAR_IMG, [400, 307])
-        Globals.SCREEN.blit(ATTACK_IMG, [400, 507])
+        Globals.SCREEN.blit(ATTACK_IMG, [400, 457])
         Globals.SCREEN.blit(STAIR_IMG, [645, 250])
         # Globals.SCREEN.blit(SPACEBAR_IMG, [645, 250])
 
