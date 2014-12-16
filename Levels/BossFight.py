@@ -16,7 +16,7 @@ class BossLevel(Level):
         super(BossLevel, self).__init__(
             BossLevel.DEF_NAME, 
             BossLevel.MAP_NAME,
-            init_music_path=BossFight.VOICE_OVER
+            init_music_path=BossFight.VOICE_OVER,
             music_path=BossLevel.MUSIC_PATH, id=id)
         self.show_subtitle(
             BossFight.SUBTITLE_TEXT,

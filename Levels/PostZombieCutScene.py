@@ -14,7 +14,7 @@ class PostZombieCutScene(Level):
         super(PostZombieCutScene, self).__init__(
             ZombieCutScene.DEF_NAME,
             ZombieCutScene.MAP_NAME,
-            init_music_path=PostZombieCutScene.VOICE_OVER
+            init_music_path=PostZombieCutScene.VOICE_OVER,
             music_path=PostZombieCutScene.MUSIC_PATH,
             should_fade_in=False, id=id
         )
