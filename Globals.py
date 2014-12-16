@@ -50,7 +50,6 @@ class Globals(object):
         from Levels import BossLevel
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (
-            # BossLevel.BossLevel(mid=5),
             IntroScreen.IntroScreen(mid=0),
             SyringeLevel.SyringeLevel(mid=1),
             ZombieLevel.ZombieLevel(mid=2),
