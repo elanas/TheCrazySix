@@ -14,6 +14,7 @@ class SettingsState(GameState):
     MIN_BRIGHTNESS = 30
     TITLE_IMAGE_PATH = 'settings.png'
     CONTROL_IMAGE_PATH = 'control_settings_small.png'
+    # VOLUME_IMAGE_PATH = 'volume.png'
     TITLE_MARGIN_TOP = 60
     TITLE_MARGIN_BOTTOM = 50
     LABEL_SLIDER_MARGIN = 5
@@ -26,6 +27,7 @@ class SettingsState(GameState):
     def __init__(self):
         self.loader = AssetLoader('images')
         self.background_img = self.loader.load_image('background.png')
+        self.volume_img = self.loader.load_image('volume.png')
         Globals.play_menu_sound()
         self.title_surf = self.loader.load_image_alpha(
             SettingsState.TITLE_IMAGE_PATH)
@@ -83,6 +85,7 @@ class SettingsState(GameState):
         Globals.SCREEN.blit(self.background_img, (0, 0))
         Globals.SCREEN.blit(self.title_surf, self.title_rect)
         Globals.SCREEN.blit(self.volume_label_surf, self.volume_label_rect)
+
         Globals.SCREEN.blit(self.brightness_label_surf,
                             self.brightness_label_rect)
         Globals.SCREEN.blit(self.control_surfs[self.control_index],
