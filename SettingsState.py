@@ -23,7 +23,7 @@ class SettingsState(GameState):
     LABEL_COLOR = pygame.color.Color('white')
     VOLUME_LABEL = ''
     VOLUME_IMG = pygame.image.load('images/volume.png')
-    BRIGHTNESS_LABEL_PATH = 'brightness.png'
+    BRIGHTNESS_LABEl = 'brightness.png'
 
     def __init__(self):
         self.loader = AssetLoader('images')
