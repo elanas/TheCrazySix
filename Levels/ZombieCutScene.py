@@ -33,7 +33,7 @@ class ZombieCutScene(Level):
         self.overlay_sub = False
         self.played_already = False
         self.sound = self.loader.load_sound(ZombieCutScene.ZOMBIE_SOUND_PATH)
-        self.sound = self.loader.load_sound(ZombieCutScene.ZOMBIE_ZOMBIE_VO)
+        self.sound = self.loader.load_sound(ZombieCutScene.ZOMBIE_VO)
 
     def got_current_state(self):
         if not self.played_already:
