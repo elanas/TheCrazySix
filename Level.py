@@ -50,13 +50,14 @@ class Level(GameState):
     POTION_PICKUP_DISORIENTED = 5
     POTION_PICKUP = 10
     PUNCHING_INFLATE = .2
-    MUSIC_END_ID = pygame.USEREVENT
+    MUSIC_END_ID_BASE = pygame.USEREVENT
     SOUND_FADE_TIME = 500
     SWITCH_SOUND_PATH = 'switch.ogg'
     IGNORE_TIME = .5
 
-    def __init__(self, definition_path, map_path, music_path=None, music_loops=-1,
-                 has_timer=True, should_fade_in=True):
+    def __init__(self, definition_path, map_path, init_music_path=None,
+                music_path=None, music_loops=-1, has_timer=True,
+                should_fade_in=True, id=0):
         self.has_timer = has_timer
         self.keyCode = None
         self.definition_path = definition_path
@@ -92,36 +93,61 @@ class Level(GameState):
         self.score_counted = False
         self.respawn_coords = [-1, -1]
         self.timer = None
+        self.first_occur = True
         self.find_respawn()
         self.loader = AssetLoader('images', 'sounds')
         self.switch_sound = self.loader.load_sound(Level.SWITCH_SOUND_PATH)
         self.channel = None
         self.music_loops = music_loops
+        self.music_handle = None
         if music_path is not None:
-            self.music_handle = self.loader.load_sound(music_path)
+            self.background_music_handle = self.loader.load_sound(music_path)
+            self.music_handle = self.background_music_handle
         else:
-            self.music_handle = None
+            self.background_music_handle = None
+        if init_music_path is not None:
+            self.init_music_handle = self.loader.load_sound(init_music_path)
+            self.music_handle = self.init_music_handle
+        else:
+            self.init_music_handle = None
         self.time_init = 0
+        self.start_on_stop = True
+        self.switched_sound = False
+        self.music_end_id = Level.MUSIC_END_ID_BASE + id
 
     def start_music(self):
         if self.channel or self.music_handle is None:
             return
+        if not self.switched_sound:
+            l = 0
+        else:
+            l = self.music_loops
         self.channel = self.music_handle.play(
-            loops=self.music_loops, fade_ms=Level.SOUND_FADE_TIME)
-        self.channel.set_endevent(Level.MUSIC_END_ID)
+            loops=l, fade_ms=Level.SOUND_FADE_TIME)
+        self.channel.set_endevent(self.music_end_id)
+        self.start_on_stop = True
+        # if self.channel:
+        #     return
+        # self.channel = self.background_music_handle.play(
+        #     loops=self.music_loops, fade_ms=Level.SOUND_FADE_TIME)
+        # self.channel.set_endevent(Level.MUSIC_END_ID)
 
     def pause_music(self):
         if self.channel:
             self.channel.pause()
+            self.start_on_stop = True
 
     def resume_music(self):
         if self.channel:
             self.channel.unpause()
+            self.start_on_stop = True
 
     def stop_music(self):
         if self.channel:
             self.channel.fadeout(Level.SOUND_FADE_TIME)
             self.channel = None
+            self.start_on_stop = False
+            self.music_handle = self.background_music_handle
 
     def find_respawn(self):
         tile_map = self.tile_engine.tileMap
@@ -156,6 +182,7 @@ class Level(GameState):
             self.timer.unpause()
         Globals.stop_menu_sound()
         self.start_music()
+        self.first_occur = False
 
     def got_state_back(self):
         if self.has_respawn_coords():
@@ -669,6 +696,13 @@ class Level(GameState):
                 Globals.HEALTH_BAR.changeHealth(delta)
             elif key == pygame.K_3:
                 Globals.HUD_MANAGER.add_key()
+        elif event.type == self.music_end_id and not self.switched_sound:
+            self.switched_sound = True
+            self.stop_subtitle()
+            self.music_handle = self.background_music_handle
+            if self.start_on_stop:
+                self.stop_music()
+                self.start_music()
 
     def handle_keydown(self, key):
         self.keyCode = key

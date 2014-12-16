@@ -9,11 +9,11 @@ class PostZombieCutScene(Level):
     SUBTITLE_LOOPS = 5
     MUSIC_PATH = 'maze.ogg'
 
-    def __init__(self):
+    def __init__(self, id=0):
         super(PostZombieCutScene, self).__init__(
             ZombieCutScene.DEF_NAME,
             ZombieCutScene.MAP_NAME, music_path=PostZombieCutScene.MUSIC_PATH,
-            should_fade_in=False
+            should_fade_in=False, id=id
         )
         self.show_subtitle(PostZombieCutScene.SUBTITLE_TEXT,
                            PostZombieCutScene.SUBTITLE_LOOPS)

@@ -17,10 +17,10 @@ class ZombieCutScene(Level):
     POST_HIT_ALPHA = 40
     ZOMBIE_SOUND_PATH = "monster.ogg"
 
-    def __init__(self):
+    def __init__(self, id=0):
         super(ZombieCutScene, self).__init__(
             ZombieCutScene.DEF_NAME, ZombieCutScene.MAP_NAME,
-            has_timer=False)
+            has_timer=False, id=id)
         self.init_enemy()
         self.overlay_surf = None
         self.shaking = False

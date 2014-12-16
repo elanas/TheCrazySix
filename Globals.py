@@ -50,12 +50,12 @@ class Globals(object):
         from Levels import BossLevel
         Globals.CURRENT_LEVEL = -1
         Globals.LEVELS = (
-            IntroScreen.IntroScreen(),
-            SyringeLevel.SyringeLevel(),
-            ZombieLevel.ZombieLevel(),
-            ZombieCutScene.ZombieCutScene(),
-            PostZombieCutScene.PostZombieCutScene(),
-            BossLevel.BossLevel()
+            IntroScreen.IntroScreen(id=0),
+            SyringeLevel.SyringeLevel(id=1),
+            ZombieLevel.ZombieLevel(id=2),
+            ZombieCutScene.ZombieCutScene(id=3),
+            PostZombieCutScene.PostZombieCutScene(id=4),
+            BossLevel.BossLevel(id=5)
         )
 
     @staticmethod

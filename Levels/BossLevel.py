@@ -11,10 +11,10 @@ class BossLevel(Level):
     SUBTITLE_LOOPS = 3
     MUSIC_PATH = 'syringe_level.ogg'
 
-    def __init__(self):
+    def __init__(self, id=0):
         super(BossLevel, self).__init__(
             BossLevel.DEF_NAME, BossLevel.MAP_NAME,
-            music_path=BossLevel.MUSIC_PATH)
+            music_path=BossLevel.MUSIC_PATH, id=id)
         self.show_subtitle(
             BossLevel.SUBTITLE_TEXT,
             BossLevel.SUBTITLE_LOOPS
