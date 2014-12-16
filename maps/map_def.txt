@@ -44,7 +44,6 @@ u floor_switch_on.png 1 switch_on action
 ; floor_key.png 0 key_replace light
 t sliding_door_vert_white.png 1 sliding_door action
 w sliding_door_horiz_white.png 1 sliding_door action
-x sliding_door_horiz_white.png 1 sliding_door action
 A sliding_door_horiz_locked.png 1 sliding_door action locked
 B sliding_door_vert_locked_left_white.png 1 sliding_door action locked
 C sliding_door_vert_locked_right_white.png 1 sliding_door action locked
@@ -52,7 +51,9 @@ K red_ball.png 0 redball_replace
 L green_ball.png 0 redball_base
 M sliding_door_horiz_locked_special.png 1 sliding_door action locked special_sliding_door
 N sliding_door_vert_locked_left_special.png 1 sliding_door action locked special_sliding_door
+R sliding_door_vert_locked_right_special.png 1 sliding_door action locked special_sliding_door
 O sliding_door_horiz_special.png 1 sliding_door action
+x sliding_door_vert_special.png 1 sliding_door action
 q table_top_antidote.png 0 antidote_replace light
 S floor_key_2.png 0 key_replace light
 
