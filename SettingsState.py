@@ -43,7 +43,7 @@ class SettingsState(GameState):
     def init_labels(self):
         self.volume_label_surf = SettingsState.LABEL_FONT.render(
             SettingsState.VOLUME_LABEL, True, SettingsState.LABEL_COLOR)
-        self.volume_label_surf.fill(SettingsState.VOLUME_IMG)
+        self.volume_label_surf.blit(SettingsState.VOLUME_IMG, self.volume_label_surf.get_rect())
         self.volume_label_rect = self.volume_label_surf.get_rect()
         self.volume_label_rect.centerx = Globals.WIDTH / 2
         self.volume_label_rect.top = self.title_rect.bottom + \
