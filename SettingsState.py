@@ -22,8 +22,6 @@ class SettingsState(GameState):
     SLIDER_MARGIN = 50
     LABEL_FONT = pygame.font.Font(None, 60)
     LABEL_COLOR = pygame.color.Color('white')
-    VOLUME_LABEL = 'Volume'
-    BRIGHTNESS_LABEL = 'Brightness'
 
     def __init__(self):
         self.loader = AssetLoader('images')
@@ -47,8 +45,8 @@ class SettingsState(GameState):
         self.volume_label_rect.top = self.title_rect.bottom + \
             SettingsState.TITLE_MARGIN_BOTTOM
 
-        self.brightness_label_surf = SettingsState.LABEL_FONT.render(
-            SettingsState.BRIGHTNESS_LABEL, True, SettingsState.LABEL_COLOR)
+        self.brightness_label_surf = self.loader.load_image_alpha(
+            SettingsState.BRIGHTNESS_IMAGE_PATH)
         self.brightness_label_rect = self.brightness_label_surf.get_rect()
         self.brightness_label_rect.centerx = Globals.WIDTH / 2
         self.brightness_label_rect.top = self.volume_label_rect.bottom + \
