@@ -133,7 +133,7 @@ class ControlSettings(GameState):
         escape_key_rect = self.get_rect(ControlSettings.INDEX_ESCAPE)
         escape_key_rect.centerx = centerx
         escape_key_rect.top = action_key_rect.bottom + \
-            ControlSettings.KEY_PADDING    
+            ControlSettings.KEY_PADDING
 
         return_key_rect = self.get_rect(ControlSettings.INDEX_RETURN)
         return_key_rect.centerx = centerx

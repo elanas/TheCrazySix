@@ -22,16 +22,14 @@ class IntroScreen(Level):
             music_loops=0,
             has_timer=False,
             mid=mid)
-        
-        
+
         # self.second_sound = self.loader.load_sound(IntroScreen.SECOND_SOUND_NAME)
         self.show_subtitle(IntroScreen.SUBTITLE_TEXT)
-        
 
     # def got_current_state(self):
     #     super(IntroScreen, self).got_current_state()
     #     if self.first_occur:
-            
+
     #     else:
     #         self.stop_subtitle()
 

@@ -118,7 +118,7 @@ class SettingsState(GameState):
         elif self.selected == 1:
             self.brightness_slider.change_value(
                 SettingsState.SLIDER_DELTA * factor)
-            Globals.set_brightness(SettingsState.MIN_BRIGHTNESS + \
+            Globals.set_brightness(SettingsState.MIN_BRIGHTNESS +
                                    self.brightness_slider.value)
 
     def handle_escape(self):

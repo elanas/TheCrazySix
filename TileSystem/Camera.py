@@ -43,7 +43,8 @@ class Camera(object):
                     self.start_pos[0] = row_num
                     self.start_pos[1] = col_num
         if self.start_pos[0] != -1:
-            self.set_viewpoint_with_coords(self.start_pos[0], self.start_pos[1])
+            self.set_viewpoint_with_coords(
+                self.start_pos[0], self.start_pos[1])
             tile_map[self.start_pos[0]][self.start_pos[1]] = \
                 self.tileEngine.get_tile_from_attr(TileType.BASE_ATTR)
         else:
@@ -152,10 +153,10 @@ class Camera(object):
     def get_walkable_tiles(self, center, radius, avoid_stairs=True):
         nearby_tiles = self.get_nearby_tiles(center, radius)
         if not avoid_stairs:
-            return [pair for pair in nearby_tiles if not pair.tile.is_solid]            
-        return  [pair for pair in nearby_tiles if not pair.tile.is_solid and
-                 not TileType.STAIR_UP_ATTR in pair.tile.special_attr and
-                  not TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
+            return [pair for pair in nearby_tiles if not pair.tile.is_solid]
+        return [pair for pair in nearby_tiles if not pair.tile.is_solid and
+                not TileType.STAIR_UP_ATTR in pair.tile.special_attr and
+                not TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
 
     def contains_attribute(self, attribute):
         tile_map = self.tileEngine.tileMap

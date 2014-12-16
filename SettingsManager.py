@@ -45,7 +45,8 @@ class SettingsManager(object):
     DEFAULT_ACTION = [EventPair(type=pygame.KEYDOWN, value=pygame.K_SPACE)]
     DEFAULT_ESCAPE = [EventPair(type=pygame.KEYDOWN, value=pygame.K_ESCAPE)]
     DEFAULT_RETURN = [EventPair(type=pygame.KEYDOWN, value=pygame.K_RETURN)]
-    DEFAULT_BACKSPACE = [EventPair(type=pygame.KEYDOWN, value=pygame.K_BACKSPACE)]
+    DEFAULT_BACKSPACE = [
+        EventPair(type=pygame.KEYDOWN, value=pygame.K_BACKSPACE)]
 
     @staticmethod
     def load(file_path=DEFAULT_PATH):
@@ -69,7 +70,7 @@ class SettingsManager(object):
                         # try:
                         value = SettingsManager.convert_events(value)
                         # except Exception as e:
-                        #     # raise Exception('The settings file is malformed.')
+                        # raise Exception('The settings file is malformed.')
                         #     raise e
                     SettingsManager.set_label_value(label, value)
         except IOError:

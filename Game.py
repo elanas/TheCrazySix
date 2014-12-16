@@ -26,7 +26,8 @@ class Game(EventHandler):
         pygame.init()
         Globals.WIDTH = 1000
         Globals.HEIGHT = 600
-        Globals.SCREEN = pygame.display.set_mode((Globals.WIDTH, Globals.HEIGHT))
+        Globals.SCREEN = pygame.display.set_mode(
+            (Globals.WIDTH, Globals.HEIGHT))
         SettingsManager.load()
         Globals.set_brightness(SettingsManager.BRIGHTNESS, save=False)
         Globals.set_volume(SettingsManager.VOLUME, save=False)

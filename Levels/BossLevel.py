@@ -22,7 +22,7 @@ class BossLevel(Level):
     def __init__(self, mid=0):
         BossLevel.NEW_END_ID = mid + 1
         super(BossLevel, self).__init__(
-            BossLevel.DEF_NAME, 
+            BossLevel.DEF_NAME,
             BossLevel.MAP_NAME,
             init_music_path=BossLevel.VOICE_OVER,
             music_path=BossLevel.MUSIC_PATH, mid=mid)

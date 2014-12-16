@@ -58,8 +58,8 @@ class Level(GameState):
     IGNORE_TIME = .5
 
     def __init__(self, definition_path, map_path, init_music_path=None,
-                music_path=None, music_loops=-1, has_timer=True,
-                should_fade_in=True, mid=0):
+                 music_path=None, music_loops=-1, has_timer=True,
+                 should_fade_in=True, mid=0):
         self.has_timer = has_timer
         self.keyCode = None
         self.definition_path = definition_path
@@ -81,7 +81,7 @@ class Level(GameState):
         if Globals.HEALTH_BAR is None:
             Globals.HEALTH_BAR = HealthBar()
         if Globals.HUD_MANAGER is None:
-            Globals.HUD_MANAGER = HUDManager() 
+            Globals.HUD_MANAGER = HUDManager()
         self.black_surf = pygame.Surface(
             (Globals.WIDTH, Globals.HEIGHT)).convert()
         self.black_surf.fill((0, 0, 0))
@@ -208,8 +208,8 @@ class Level(GameState):
         if x_delta == 0 and y_delta == 0:
             return
         for enemy in self.enemySprites:
-                enemy.rect.centerx += x_delta
-                enemy.rect.centery += y_delta
+            enemy.rect.centerx += x_delta
+            enemy.rect.centery += y_delta
         for turret in self.turrets:
             turret.move(x_delta, y_delta)
 
@@ -247,7 +247,8 @@ class Level(GameState):
                 self.show_subtitle(Level.POTION_CURED_SUBTITLE,
                                    Level.POTION_CURED_SUBTITLE_LOOPS)
                 self.player.stop_and_set_direction(self.player.direction)
-                Globals.HEALTH_BAR.changeHealth(Level.POTION_PICKUP_DISORIENTED)
+                Globals.HEALTH_BAR.changeHealth(
+                    Level.POTION_PICKUP_DISORIENTED)
             else:
                 Globals.HEALTH_BAR.changeHealth(Level.POTION_PICKUP)
 
@@ -276,7 +277,8 @@ class Level(GameState):
                     TileType.BASE_ATTR)
             self.camera.tileEngine.tileMap[row][col] = base
             self.camera.set_dirty()
-            self.lights = [l for l in self.lights if not l.rect.colliderect(self.player.rect)]
+            self.lights = [
+                l for l in self.lights if not l.rect.colliderect(self.player.rect)]
 
     def init_player(self):
         self.player = Player(
@@ -338,7 +340,6 @@ class Level(GameState):
             enemy = Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y)
         self.enemySprites.add(enemy)
 
-
     def add_turret(self, row_num, col_num, left):
         row_num += 1
         if not left:
@@ -351,7 +352,8 @@ class Level(GameState):
         radius = max(self.player.rect.size) * 2
         self.check_turret_collisions()
         self.check_punching_collisions()
-        self.enemySprites = pygame.sprite.Group([e for e in self.enemySprites if e.is_alive])
+        self.enemySprites = pygame.sprite.Group(
+            [e for e in self.enemySprites if e.is_alive])
         self.check_enemy_collisions()
         special_tiles = self.camera.get_special_tiles(
             self.player.rect.center, radius)
@@ -387,8 +389,8 @@ class Level(GameState):
         elif len(special_locked) == 0 and len(locked_tiles) > 0 and \
                 not Globals.HUD_MANAGER.has_key():
             self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
-        elif len(action_tiles) > 0 and (len(special_locked) == 0 or \
-                not contains_red):
+        elif len(action_tiles) > 0 and (len(special_locked) == 0 or
+                                        not contains_red):
             self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)
 
     def check_special_collisions(self, special_tiles):
@@ -404,15 +406,16 @@ class Level(GameState):
         num_up_stairs = len(temp_rect.collidelistall(stair_up_rects))
         if num_up_stairs > 0:
             self.handle_stair_up()
-        stair_down_rects = [pair.rect for pair in special_tiles if 
+        stair_down_rects = [pair.rect for pair in special_tiles if
                             TileType.STAIR_DOWN_ATTR in pair.tile.special_attr]
         num_down_stairs = len(temp_rect.collidelistall(stair_down_rects))
         if num_down_stairs > 0:
             self.handle_stair_down()
 
     def check_enemy_collisions(self):
-        enemy_rects = [enemy.rect.inflate(-20, -20) for enemy in self.enemySprites]
-        player_rect = self.player.rect.copy()            
+        enemy_rects = [enemy.rect.inflate(-20, -20)
+                       for enemy in self.enemySprites]
+        player_rect = self.player.rect.copy()
         if self.player.punching:
             # player_rect.inflate_ip(
             #     -player_rect.width * Level.PUNCHING_INFLATE,
@@ -471,7 +474,7 @@ class Level(GameState):
     def render_overlay(self):
         if Globals.DISORIENTED:
             Globals.SCREEN.blit(Globals.get_disoriented_surf(), (0, 0),
-                special_flags=pygame.BLEND_SUB)
+                                special_flags=pygame.BLEND_SUB)
 
     def render_post_fade(self):
         Globals.HEALTH_BAR.render(Globals.SCREEN)
@@ -590,7 +593,7 @@ class Level(GameState):
                     row, col = pos
                     tile_map = self.camera.tileEngine.tileMap
                     if TileType.SPECIAL_DOOR_ATTR in \
-                                tile_map[row][col].special_attr:
+                            tile_map[row][col].special_attr:
                         was_special_door = True
                     tile_map[row][col] = base
                 self.camera.set_dirty()

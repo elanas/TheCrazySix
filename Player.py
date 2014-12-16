@@ -105,7 +105,8 @@ class Player(Character):
             self.move(time)
         self.update_blinking(time)
         if not self.punching:
-            self.checkCollisions(camera, avoid_stairs=False, direct=self.last_d)
+            self.checkCollisions(
+                camera, avoid_stairs=False, direct=self.last_d)
         self.last_d = self.direction
 
     def update_punch(self):
@@ -207,57 +208,75 @@ class Player(Character):
 
         if Player.walking_images[Player.INDEX_DOWN] is None:
             path = os.path.join(Player.WALKING_PATH, Player.WALKING_DOWN_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_DOWN_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.WALKING_DOWN_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_DOWN] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.walking_images[Player.INDEX_UP] is None:
             path = os.path.join(Player.WALKING_PATH, Player.WALKING_UP_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_UP_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.WALKING_UP_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_UP] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.walking_images[Player.INDEX_LEFT] is None:
             path = os.path.join(Player.WALKING_PATH, Player.WALKING_LEFT_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_LEFT_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.WALKING_LEFT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_LEFT] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.walking_images[Player.INDEX_RIGHT] is None:
             path = os.path.join(Player.WALKING_PATH, Player.WALKING_RIGHT_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.WALKING_RIGHT_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.WALKING_RIGHT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.walking_images[Player.INDEX_RIGHT] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
 
         if Player.punching_images[Player.INDEX_DOWN] is None:
             path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_DOWN_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_DOWN_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.PUNCHING_DOWN_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.punching_images[Player.INDEX_DOWN] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.punching_images[Player.INDEX_UP] is None:
             path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_UP_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_UP_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.PUNCHING_UP_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.punching_images[Player.INDEX_UP] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.punching_images[Player.INDEX_LEFT] is None:
             path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_LEFT_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_LEFT_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.PUNCHING_LEFT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.punching_images[Player.INDEX_LEFT] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.punching_images[Player.INDEX_RIGHT] is None:
-            path = os.path.join(Player.WALKING_PATH, Player.PUNCHING_RIGHT_PATH)
-            prefix_path = os.path.join(Player.PREFIX_PATH, Player.PUNCHING_RIGHT_PATH)
+            path = os.path.join(
+                Player.WALKING_PATH, Player.PUNCHING_RIGHT_PATH)
+            prefix_path = os.path.join(
+                Player.PREFIX_PATH, Player.PUNCHING_RIGHT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             Player.punching_images[Player.INDEX_RIGHT] = \
-                Player.loader.load_images(fM.get_files(prefix_path=prefix_path))
+                Player.loader.load_images(
+                    fM.get_files(prefix_path=prefix_path))
         if Player.hitSound is None:
             Player.hitSound = Player.loader.load_sound(Player.SOUND_PATH)
         if Player.attackSound is None:
-            Player.attackSound = Player.loader.load_sound(Player.ATTACK_SOUND_PATH)
+            Player.attackSound = Player.loader.load_sound(
+                Player.ATTACK_SOUND_PATH)
 
     def keyPressed(self, keyCode):
         if keyCode == pygame.K_UP:

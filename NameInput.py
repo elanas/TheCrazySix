@@ -166,7 +166,7 @@ class NameInput(GameState):
             if self.is_valid(event.key):
                 self.handle_entry(self.parse_key(event.key))
             elif event.key in NameInput.ARROW_KEYS:
-                self.error_message = NameInput.ERROR_ARROW_KEY            
+                self.error_message = NameInput.ERROR_ARROW_KEY
 
     def parse_key(self, event_key):
         if self.is_num(event_key):

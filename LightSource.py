@@ -18,7 +18,8 @@ class LightSource(object):
                              y_center)
 
     def init_light_surf(self):
-        LightSource.LIGHT_SURF = AssetLoader('images').load_image_alpha('light.png')
+        LightSource.LIGHT_SURF = AssetLoader(
+            'images').load_image_alpha('light.png')
         # surf_size = LightSource.TILE_SIZE * 3
         # surf_size = LightSource.TILE_SIZE * 3
         # LightSource.RADIUS = surf_size / 2

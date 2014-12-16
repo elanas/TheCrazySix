@@ -14,7 +14,7 @@ class SyringeLevel(Level):
 
     def __init__(self, mid=0):
         super(SyringeLevel, self).__init__(
-            SyringeLevel.DEF_NAME, 
+            SyringeLevel.DEF_NAME,
             SyringeLevel.MAP_NAME,
             init_music_path=SyringeLevel.VOICE_OVER,
             music_path=SyringeLevel.MUSIC_PATH, mid=mid)

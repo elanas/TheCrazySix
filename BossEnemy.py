@@ -38,26 +38,34 @@ class BossEnemy(ChaseEnemy):
     def loadResources(self):
         loader = AssetLoader('images')
         if BossEnemy.walking_images[Enemy.INDEX_DOWN] is None:
-            path = os.path.join(BossEnemy.WALKING_PATH, BossEnemy.WALKING_DOWN_PATH)
-            prefix_path = os.path.join(BossEnemy.PREFIX_PATH, BossEnemy.WALKING_DOWN_PATH)
+            path = os.path.join(
+                BossEnemy.WALKING_PATH, BossEnemy.WALKING_DOWN_PATH)
+            prefix_path = os.path.join(
+                BossEnemy.PREFIX_PATH, BossEnemy.WALKING_DOWN_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             BossEnemy.walking_images[Enemy.INDEX_DOWN] = \
                 loader.load_images(fM.get_files(prefix_path=prefix_path))
         if BossEnemy.walking_images[Enemy.INDEX_UP] is None:
-            path = os.path.join(BossEnemy.WALKING_PATH, BossEnemy.WALKING_UP_PATH)
-            prefix_path = os.path.join(BossEnemy.PREFIX_PATH, BossEnemy.WALKING_UP_PATH)
+            path = os.path.join(
+                BossEnemy.WALKING_PATH, BossEnemy.WALKING_UP_PATH)
+            prefix_path = os.path.join(
+                BossEnemy.PREFIX_PATH, BossEnemy.WALKING_UP_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             BossEnemy.walking_images[Enemy.INDEX_UP] = \
                 loader.load_images(fM.get_files(prefix_path=prefix_path))
         if BossEnemy.walking_images[Enemy.INDEX_LEFT] is None:
-            path = os.path.join(BossEnemy.WALKING_PATH, BossEnemy.WALKING_LEFT_PATH)
-            prefix_path = os.path.join(BossEnemy.PREFIX_PATH, BossEnemy.WALKING_LEFT_PATH)
+            path = os.path.join(
+                BossEnemy.WALKING_PATH, BossEnemy.WALKING_LEFT_PATH)
+            prefix_path = os.path.join(
+                BossEnemy.PREFIX_PATH, BossEnemy.WALKING_LEFT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             BossEnemy.walking_images[Enemy.INDEX_LEFT] = \
                 loader.load_images(fM.get_files(prefix_path=prefix_path))
         if BossEnemy.walking_images[Enemy.INDEX_RIGHT] is None:
-            path = os.path.join(BossEnemy.WALKING_PATH, BossEnemy.WALKING_RIGHT_PATH)
-            prefix_path = os.path.join(BossEnemy.PREFIX_PATH, BossEnemy.WALKING_RIGHT_PATH)
+            path = os.path.join(
+                BossEnemy.WALKING_PATH, BossEnemy.WALKING_RIGHT_PATH)
+            prefix_path = os.path.join(
+                BossEnemy.PREFIX_PATH, BossEnemy.WALKING_RIGHT_PATH)
             fM = FileManager(path, file_ext='.png', create_dir=False)
             BossEnemy.walking_images[Enemy.INDEX_RIGHT] = \
                 loader.load_images(fM.get_files(prefix_path=prefix_path))
@@ -96,4 +104,5 @@ class BossEnemy(ChaseEnemy):
             self.rect.left = r.right + BossEnemy.JUMP_DIST
         elif player.direction == Player.INDEX_LEFT:
             self.rect.right = r.left - BossEnemy.JUMP_DIST
-        self.checkCollisions(camera, avoid_stairs=True, direct=player.direction)
+        self.checkCollisions(
+            camera, avoid_stairs=True, direct=player.direction)

@@ -20,7 +20,8 @@ class ChaseEnemy(Enemy):
                  min_dist_check=MIN_DISTANCE_CHECK,
                  chase_tile_radius=CHASE_TILE_RADIUS,
                  kill_bonus=KILL_BONUS):
-        super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y, kill_bonus=kill_bonus)
+        super(ChaseEnemy, self).__init__(
+            camera=camera, x=x, y=y, kill_bonus=kill_bonus)
         self.tile_size = max(camera.tileEngine.get_tile_rect().size)
         self.chase_radius = self.tile_size * chase_tile_radius
         self.min_dist_check = min_dist_check
@@ -43,7 +44,7 @@ class ChaseEnemy(Enemy):
             self.checkCollisions(camera, avoid_stairs=True, direct=self.last_d)
             self.last_d = self.direction
             super(ChaseEnemy, self).update(time, camera, player,
-                change_direction=False)
+                                           change_direction=False)
             return True
 
     def update_chase(self, time, player):
@@ -87,4 +88,4 @@ class ChaseEnemy(Enemy):
     def angle_to(p0, p1):
         dx = p1[0] - p0[0]
         dy = p1[1] - p0[1]
-        return math.atan2(dy, dx) 
+        return math.atan2(dy, dx)

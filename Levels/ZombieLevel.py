@@ -12,7 +12,7 @@ class ZombieLevel(Level):
 
     def __init__(self, mid=0):
         super(ZombieLevel, self).__init__(
-            ZombieLevel.DEF_NAME, 
+            ZombieLevel.DEF_NAME,
             ZombieLevel.MAP_NAME,
             init_music_path=ZombieLevel.VOICE_OVER,
             music_path=ZombieLevel.MUSIC_PATH, mid=mid)

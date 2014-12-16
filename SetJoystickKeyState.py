@@ -8,7 +8,8 @@ import pygame
 
 
 class SetJoystickKeyState(GameState):
-    ALLOWED_TYPES = set([pygame.JOYBUTTONDOWN, pygame.JOYAXISMOTION, pygame.JOYHATMOTION])
+    ALLOWED_TYPES = set(
+        [pygame.JOYBUTTONDOWN, pygame.JOYAXISMOTION, pygame.JOYHATMOTION])
     TITLE_IMAGE_PATH = 'set_key.png'
     TITLE_MARGIN_TOP = 60
 
@@ -39,15 +40,24 @@ class SetJoystickKeyState(GameState):
 
     def set_event(self, event):
         pair = self.convert_event(event)
-        SettingsManager.EVENTS_UP = [a for a in SettingsManager.EVENTS_UP if a != event]
-        SettingsManager.EVENTS_DOWN = [a for a in SettingsManager.EVENTS_DOWN if a != event]
-        SettingsManager.EVENTS_LEFT = [a for a in SettingsManager.EVENTS_LEFT if a != event]
-        SettingsManager.EVENTS_RIGHT = [a for a in SettingsManager.EVENTS_RIGHT if a != event]
-        SettingsManager.EVENTS_ATTACK = [a for a in SettingsManager.EVENTS_ATTACK if a != event]
-        SettingsManager.EVENTS_ACTION = [a for a in SettingsManager.EVENTS_ACTION if a != event]
-        SettingsManager.EVENTS_ESCAPE = [a for a in SettingsManager.EVENTS_ESCAPE if a != event]
-        SettingsManager.EVENTS_RETURN = [a for a in SettingsManager.EVENTS_RETURN if a != event]
-        SettingsManager.EVENTS_BACKSPACE = [a for a in SettingsManager.EVENTS_BACKSPACE if a != event]
+        SettingsManager.EVENTS_UP = [
+            a for a in SettingsManager.EVENTS_UP if a != event]
+        SettingsManager.EVENTS_DOWN = [
+            a for a in SettingsManager.EVENTS_DOWN if a != event]
+        SettingsManager.EVENTS_LEFT = [
+            a for a in SettingsManager.EVENTS_LEFT if a != event]
+        SettingsManager.EVENTS_RIGHT = [
+            a for a in SettingsManager.EVENTS_RIGHT if a != event]
+        SettingsManager.EVENTS_ATTACK = [
+            a for a in SettingsManager.EVENTS_ATTACK if a != event]
+        SettingsManager.EVENTS_ACTION = [
+            a for a in SettingsManager.EVENTS_ACTION if a != event]
+        SettingsManager.EVENTS_ESCAPE = [
+            a for a in SettingsManager.EVENTS_ESCAPE if a != event]
+        SettingsManager.EVENTS_RETURN = [
+            a for a in SettingsManager.EVENTS_RETURN if a != event]
+        SettingsManager.EVENTS_BACKSPACE = [
+            a for a in SettingsManager.EVENTS_BACKSPACE if a != event]
         self.get_event_list().append(pair)
         SettingsManager.save()
         self.handle_escape()

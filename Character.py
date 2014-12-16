@@ -34,7 +34,8 @@ class Character (pygame.sprite.Sprite):
         if not avoid_stairs:
             solid_tiles = camera.get_solid_tiles(self.rect.center, radius)
         else:
-            solid_tiles = camera.get_solid_and_stair_tiles(self.rect.center, radius)
+            solid_tiles = camera.get_solid_and_stair_tiles(
+                self.rect.center, radius)
         if not avoid_stairs:
             walkable_tiles = camera.get_walkable_tiles(self.rect.center, radius,
                                                        avoid_stairs=avoid_stairs)
