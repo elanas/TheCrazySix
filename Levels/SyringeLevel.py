@@ -15,8 +15,7 @@ class SyringeLevel(Level):
     def __init__(self):
         super(SyringeLevel, self).__init__(SyringeLevel.DEF_NAME, 
                                            SyringeLevel.MAP_NAME,
-                                           music_path=SyringeLevel.VOICE_OVER,
-                                           music_loops=0)
+                                           music_path=SyringeLevel.VOICE_OVER)
         self.first_occur = True
         self.switched_sound = False
         self.second_sound = self.loader.load_sound(SyringeLevel.MUSIC_PATH)
@@ -26,7 +25,7 @@ class SyringeLevel(Level):
             SyringeLevel.SUBTITLE_TEXT,
             SyringeLevel.SUBTITLE_LOOPS
         )
-        
+
     def start_music(self):
         if self.channel or self.music_handle is None:
             return
