@@ -54,6 +54,5 @@ N sliding_door_vert_locked_left_special.png 1 sliding_door action locked special
 R sliding_door_vert_locked_right_special.png 1 sliding_door action locked special_sliding_door
 O sliding_door_horiz_special.png 1 sliding_door action
 x sliding_door_vert_special.png 1 sliding_door action
-q table_top_antidote.png 0 antidote light action
-
+q table_top_antidote.png 0 antidote_replace light action
 # last was "J"
