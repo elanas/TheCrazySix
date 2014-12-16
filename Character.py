@@ -15,9 +15,9 @@ class Character (pygame.sprite.Sprite):
         self.h = h
         self.x = x
         self.y = y
-        self.good_pos = None
-        self.good_direction = None
-        self.good_cam = None
+        # self.good_pos = None
+        # self.good_direction = None
+        # self.good_cam = None
 
     def update(self):
         pass

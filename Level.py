@@ -39,6 +39,8 @@ class Level(GameState):
     SUBTITLE_MARGIN = 20
     POTION_CURED_SUBTITLE = 'You have been cured'
     POTION_CURED_SUBTITLE_LOOPS = 5
+    ANTIDOTE_HINT = 'Press the action key to use'
+    ANTIDOTE_TILE_LOOPS = 1
     ACTION_TILE_HINT = 'Press the action key to use'
     ACTION_TILE_LOOPS = 1
     LOCKED_TILE_HINT = 'This is locked'
@@ -57,7 +59,7 @@ class Level(GameState):
 
     def __init__(self, definition_path, map_path, init_music_path=None,
                 music_path=None, music_loops=-1, has_timer=True,
-                should_fade_in=True, id=0):
+                should_fade_in=True, mid=0):
         self.has_timer = has_timer
         self.keyCode = None
         self.definition_path = definition_path
@@ -113,9 +115,12 @@ class Level(GameState):
         self.time_init = 0
         self.start_on_stop = True
         self.switched_sound = False
-        self.music_end_id = Level.MUSIC_END_ID_BASE + id
+        self.music_end_id = Level.MUSIC_END_ID_BASE + mid
+        self.can_open_doors = True
 
-    def start_music(self):
+    def start_music(self, end_id=None):
+        if end_id is None:
+            end_id = self.music_end_id
         if self.channel or self.music_handle is None:
             return
         if not self.switched_sound:
@@ -124,7 +129,7 @@ class Level(GameState):
             l = self.music_loops
         self.channel = self.music_handle.play(
             loops=l, fade_ms=Level.SOUND_FADE_TIME)
-        self.channel.set_endevent(self.music_end_id)
+        self.channel.set_endevent(end_id)
         self.start_on_stop = True
         # if self.channel:
         #     return
@@ -369,15 +374,21 @@ class Level(GameState):
                         TileType.LOCKED_ATTR in pair.tile.special_attr]
         special_locked = [pair for pair in locked_tiles if
                           TileType.SPECIAL_DOOR_ATTR in pair.tile.special_attr]
-
-        if len(special_locked) > 0 and \
-                self.camera.contains_attribute(TileType.REDBALL_ATTR):
+        antidote_tiles = [pair for pair in action_tiles if
+                          TileType.ANTIDOTE_ATTR in pair.tile.special_attr]
+        if len(antidote_tiles) > 0:
+            self.show_subtitle(Level.ANTIDOTE_HINT, Level.ANTIDOTE_TILE_LOOPS)
+            return
+        contains_red = self.camera.contains_attribute(TileType.REDBALL_ATTR)
+        if len(action_tiles) > 0 and not self.can_open_doors:
             self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
-        if len(special_locked) == 0 and not Globals.HUD_MANAGER.has_key() \
-                and len(locked_tiles) > 0:
+        elif len(special_locked) > 0 and contains_red:
+            self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
+        elif len(special_locked) == 0 and len(locked_tiles) > 0 and \
+                not Globals.HUD_MANAGER.has_key():
             self.show_subtitle(Level.LOCKED_TILE_HINT, Level.LOCKED_TILE_LOOPS)
         elif len(action_tiles) > 0 and (len(special_locked) == 0 or \
-                not self.camera.contains_attribute(TileType.REDBALL_ATTR)):
+                not contains_red):
             self.show_subtitle(Level.ACTION_TILE_HINT, Level.ACTION_TILE_LOOPS)
 
     def check_special_collisions(self, special_tiles):
@@ -544,10 +555,30 @@ class Level(GameState):
                          temp_rect.colliderect(pair.rect)]
         self.handle_sliding_doors(special_tiles)
         self.handle_action_switch(special_tiles)
+        self.handle_antidote_check(special_tiles)
+
+    def handle_antidote_check(self, special_tiles):
+        for pair in special_tiles:
+            if TileType.ANTIDOTE_ATTR in pair.tile.special_attr:
+                row, col = self.camera.tileEngine.get_tile_pos(
+                    pair.coords[0],
+                    pair.coords[1]
+                )
+                base = self.camera.tileEngine.get_tile_from_attr(
+                    TileType.ANTIDOTE_REPLACE)
+                self.camera.tileEngine.tileMap[row][col] = base
+                self.camera.set_dirty()
+                self.handle_antidote()
+
+    def handle_antidote(self):
+        pass
 
     def handle_sliding_doors(self, special_tiles):
+        if not self.can_open_doors:
+            return
         base = self.camera.tileEngine.get_tile_from_attr(
             TileType.BASE_ATTR)
+        was_special_door = False
         for pair in special_tiles:
             if TileType.SLIDING_DOOR_ATTR in pair.tile.special_attr:
                 row, col = self.camera.tileEngine.get_tile_pos(
@@ -557,8 +588,17 @@ class Level(GameState):
                 doors = self.get_sliding_doors(row, col)
                 for pos in doors:
                     row, col = pos
-                    self.camera.tileEngine.tileMap[row][col] = base
+                    tile_map = self.camera.tileEngine.tileMap
+                    if TileType.SPECIAL_DOOR_ATTR in \
+                                tile_map[row][col].special_attr:
+                        was_special_door = True
+                    tile_map[row][col] = base
                 self.camera.set_dirty()
+        if was_special_door:
+            self.handle_special_door()
+
+    def handle_special_door(self):
+        pass
 
     def get_sliding_doors(self, row, col):
         init_num_keys = Globals.HUD_MANAGER.num_keys
@@ -601,6 +641,7 @@ class Level(GameState):
         row += row_delta
         col += col_delta
         while self.camera.tileEngine.is_coord_valid(row, col) and \
+                tile_map[row][col] is not None and \
                 TileType.SLIDING_DOOR_ATTR in tile_map[row][col].special_attr:
             if TileType.LOCKED_ATTR in tile_map[row][col].special_attr:
                 if TileType.SPECIAL_DOOR_ATTR in \
@@ -696,6 +737,10 @@ class Level(GameState):
                 Globals.HEALTH_BAR.changeHealth(delta)
             elif key == pygame.K_3:
                 Globals.HUD_MANAGER.add_key()
+            elif key == pygame.K_4:
+                Globals.DISORIENTED = False
+            elif key == pygame.K_5:
+                self.replace_reds()
         elif event.type == self.music_end_id and not self.switched_sound:
             self.switched_sound = True
             self.stop_subtitle()
@@ -703,6 +748,18 @@ class Level(GameState):
             if self.start_on_stop:
                 self.stop_music()
                 self.start_music()
+
+    def replace_reds(self):
+        tile_map = self.camera.tileEngine.tileMap
+        green_tile = self.camera.tileEngine.get_tile_from_attr(
+            TileType.GREENBALL_ATTR)
+        for row in range(0, len(tile_map)):
+            for col in range(0, len(tile_map[row])):
+                tile = tile_map[row][col]
+                if tile is not None and \
+                        TileType.REDBALL_ATTR in tile.special_attr:
+                    tile_map[row][col] = green_tile
+        self.camera.set_dirty()
 
     def handle_keydown(self, key):
         self.keyCode = key

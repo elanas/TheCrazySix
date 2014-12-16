@@ -10,12 +10,12 @@ class ZombieLevel(Level):
     VOICE_OVER = "transition2.ogg"
     MUSIC_PATH = 'zombie_level.ogg'
 
-    def __init__(self, id=0):
+    def __init__(self, mid=0):
         super(ZombieLevel, self).__init__(
             ZombieLevel.DEF_NAME, 
             ZombieLevel.MAP_NAME,
             init_music_path=ZombieLevel.VOICE_OVER,
-            music_path=ZombieLevel.MUSIC_PATH, id=id)
+            music_path=ZombieLevel.MUSIC_PATH, mid=mid)
 
         self.show_subtitle(
             ZombieLevel.SUBTITLE_TEXT,

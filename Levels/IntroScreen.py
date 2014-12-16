@@ -13,7 +13,7 @@ class IntroScreen(Level):
     BACKGROUND_SOUND_PATH = "intro_level.ogg"
     SUBTITLE_TEXT = "Climb the stairs to skip"
 
-    def __init__(self, id=0):
+    def __init__(self, mid=0):
         super(IntroScreen, self).__init__(
             IntroScreen.DEF_NAME,
             IntroScreen.MAP_NAME,
@@ -21,7 +21,7 @@ class IntroScreen(Level):
             music_path=IntroScreen.BACKGROUND_SOUND_PATH,
             music_loops=0,
             has_timer=False,
-            id=id)
+            mid=mid)
         
         
         # self.second_sound = self.loader.load_sound(IntroScreen.SECOND_SOUND_NAME)
