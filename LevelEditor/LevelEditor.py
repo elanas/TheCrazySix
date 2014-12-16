@@ -609,7 +609,7 @@ class LevelEditor(GameState):
             self.set_message("you cannot define multiple player spawn points",
                              color=LevelEditor.ERROR_MESSAGE_COLOR)
             return False
-        if num_stairs_up == 0:
+        if num_stairs_up == 0 and self.in_game:
             self.set_message("you must define at least on stair going \"up\"",
                              color=LevelEditor.ERROR_MESSAGE_COLOR)
             return False
