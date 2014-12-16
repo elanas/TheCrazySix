@@ -51,7 +51,7 @@ class Title(GameState):
             self.time_delta = 0
             self.size += self.delta
             self.font = pygame.font.Font(None, self.size)
-            self.title_surf = self.font.render(GAME_TITLE, True, TITLE_COLOR)
+            self.title_surf = TITLE_IMG
             self.title_rect = self.title_surf.get_rect()
             self.title_rect.centerx = Globals.SCREEN.get_rect().centerx
             self.title_rect.centery = Globals.SCREEN.get_rect().centery
