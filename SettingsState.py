@@ -14,7 +14,8 @@ class SettingsState(GameState):
     MIN_BRIGHTNESS = 30
     TITLE_IMAGE_PATH = 'settings.png'
     CONTROL_IMAGE_PATH = 'control_settings_small.png'
-    # VOLUME_IMAGE_PATH = 'volume.png'
+    VOLUME_IMAGE_PATH = 'volume.png'
+    BRIGHTNESS_IMAGE_PATH = 'brightness.png'
     TITLE_MARGIN_TOP = 60
     TITLE_MARGIN_BOTTOM = 50
     LABEL_SLIDER_MARGIN = 5
@@ -27,7 +28,6 @@ class SettingsState(GameState):
     def __init__(self):
         self.loader = AssetLoader('images')
         self.background_img = self.loader.load_image('background.png')
-        self.volume_img = self.loader.load_image('volume.png')
         Globals.play_menu_sound()
         self.title_surf = self.loader.load_image_alpha(
             SettingsState.TITLE_IMAGE_PATH)
@@ -40,8 +40,8 @@ class SettingsState(GameState):
         self.selected = 0
 
     def init_labels(self):
-        self.volume_label_surf = SettingsState.LABEL_FONT.render(
-            SettingsState.VOLUME_LABEL, True, SettingsState.LABEL_COLOR)
+        self.volume_label_surf = self.loader.load_image_alpha(
+            SettingsState.VOLUME_IMAGE_PATH)
         self.volume_label_rect = self.volume_label_surf.get_rect()
         self.volume_label_rect.centerx = Globals.WIDTH / 2
         self.volume_label_rect.top = self.title_rect.bottom + \
