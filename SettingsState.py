@@ -19,7 +19,7 @@ class SettingsState(GameState):
     TITLE_MARGIN_TOP = 60
     TITLE_MARGIN_BOTTOM = 50
     LABEL_SLIDER_MARGIN = 5
-    SLIDER_MARGIN = 50
+    SLIDER_MARGIN = 10
     LABEL_FONT = pygame.font.Font(None, 60)
     LABEL_COLOR = pygame.color.Color('white')
 
