@@ -14,14 +14,14 @@ class SettingsState(GameState):
     MIN_BRIGHTNESS = 30
     TITLE_IMAGE_PATH = 'settings.png'
     CONTROL_IMAGE_PATH = 'control_settings_small.png'
+    VOLUME_IMAGE_PATH = 'volume.png'
+    BRIGHTNESS_IMAGE_PATH = 'brightness.png'
     TITLE_MARGIN_TOP = 60
     TITLE_MARGIN_BOTTOM = 50
     LABEL_SLIDER_MARGIN = 5
-    SLIDER_MARGIN = 50
+    SLIDER_MARGIN = 10
     LABEL_FONT = pygame.font.Font(None, 60)
     LABEL_COLOR = pygame.color.Color('white')
-    VOLUME_LABEL = 'Volume'
-    BRIGHTNESS_LABEL = 'Brightness'
 
     def __init__(self):
         self.loader = AssetLoader('images')
@@ -38,15 +38,15 @@ class SettingsState(GameState):
         self.selected = 0
 
     def init_labels(self):
-        self.volume_label_surf = SettingsState.LABEL_FONT.render(
-            SettingsState.VOLUME_LABEL, True, SettingsState.LABEL_COLOR)
+        self.volume_label_surf = self.loader.load_image_alpha(
+            SettingsState.VOLUME_IMAGE_PATH)
         self.volume_label_rect = self.volume_label_surf.get_rect()
         self.volume_label_rect.centerx = Globals.WIDTH / 2
         self.volume_label_rect.top = self.title_rect.bottom + \
             SettingsState.TITLE_MARGIN_BOTTOM
 
-        self.brightness_label_surf = SettingsState.LABEL_FONT.render(
-            SettingsState.BRIGHTNESS_LABEL, True, SettingsState.LABEL_COLOR)
+        self.brightness_label_surf = self.loader.load_image_alpha(
+            SettingsState.BRIGHTNESS_IMAGE_PATH)
         self.brightness_label_rect = self.brightness_label_surf.get_rect()
         self.brightness_label_rect.centerx = Globals.WIDTH / 2
         self.brightness_label_rect.top = self.volume_label_rect.bottom + \
@@ -83,6 +83,7 @@ class SettingsState(GameState):
         Globals.SCREEN.blit(self.background_img, (0, 0))
         Globals.SCREEN.blit(self.title_surf, self.title_rect)
         Globals.SCREEN.blit(self.volume_label_surf, self.volume_label_rect)
+
         Globals.SCREEN.blit(self.brightness_label_surf,
                             self.brightness_label_rect)
         Globals.SCREEN.blit(self.control_surfs[self.control_index],
