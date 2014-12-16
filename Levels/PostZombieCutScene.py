@@ -7,7 +7,7 @@ from Globals import Globals
 class PostZombieCutScene(Level):
     SUBTITLE_TEXT = 'You are disoriented'
     SUBTITLE_LOOPS = 5
-    MUSIC_PATH = 'syringe_level.ogg'
+    MUSIC_PATH = 'maze.ogg'
 
     def __init__(self):
         super(PostZombieCutScene, self).__init__(
