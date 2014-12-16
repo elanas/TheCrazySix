@@ -5,9 +5,20 @@ from Level import Level
 class ZombieLevel(Level):
     DEF_NAME = 'map_def.txt'
     MAP_NAME = 'zombie_level.txt'
+    SUBTITLE_TEXT = 'Use the attack key to defeat the other participants'
+    SUBTITLE_LOOPS = 3
+    INIT_SOUND_PATH = "transition2.ogg"
     MUSIC_PATH = 'zombie_level.ogg'
 
     def __init__(self, id=0):
         super(ZombieLevel, self).__init__(
-            ZombieLevel.DEF_NAME, ZombieLevel.MAP_NAME,
-            music_path=ZombieLevel.MUSIC_PATH, id=id)
+            ZombieLevel.DEF_NAME, 
+            ZombieLevel.MAP_NAME,
+            init_music_path=ZombieLevel.VOICE_OVER,
+            music_path=ZombieLevel.MUSIC_PATH 
+            id=id)
+
+        self.show_subtitle(
+            ZombieLevel.SUBTITLE_TEXT,
+            ZombieLevel.SUBTITLE_LOOPS
+        )
