@@ -22,7 +22,7 @@ class SettingsState(GameState):
     LABEL_FONT = pygame.font.Font(None, 60)
     LABEL_COLOR = pygame.color.Color('white')
     VOLUME_LABEL = ''
-    VOLUME_IMG = 'volume.png'
+    VOLUME_IMG = pygame.image.load('images/volume.png')
     BRIGHTNESS_LABEL_PATH = 'brightness.png'
 
     def __init__(self):
