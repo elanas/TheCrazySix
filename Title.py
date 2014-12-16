@@ -8,6 +8,7 @@ GAME_TITLE = "~Field Day~"
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 100
 BACKGROUND_IMG = pygame.image.load("images/background.png")
+TITLE_IMG = pygame.image.load("images/fieldday.png")
 
 
 class Title(GameState):
@@ -25,7 +26,7 @@ class Title(GameState):
         self.delta = 1
         self.time_delta = 0
         self.font = pygame.font.Font(None, self.size)
-        self.title_surf = self.font.render(GAME_TITLE, True, TITLE_COLOR)
+        self.title_surf = TITLE_IMG
         self.title_rect = self.title_surf.get_rect()
         self.title_rect.centerx = Globals.SCREEN.get_rect().centerx
         self.title_rect.centery = Globals.SCREEN.get_rect().centery
