@@ -26,6 +26,7 @@ class SyringeLevel(Level):
             SyringeLevel.SUBTITLE_TEXT,
             SyringeLevel.SUBTITLE_LOOPS
         )
+        
     def start_music(self):
         if self.channel or self.music_handle is None:
             return

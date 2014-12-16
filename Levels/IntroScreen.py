@@ -1,5 +1,4 @@
 from Level import Level
-from SyringeLevel import SyringeLevel
 from asset_loader import AssetLoader
 from Globals import Globals
 import Menu
