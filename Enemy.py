@@ -24,7 +24,7 @@ class Enemy(Character):
         super(Enemy, self).__init__(w, h, 0, 0)
         self.loadResources()
         self.direction = random.randint(0, 3)
-        self.image = Enemy.images[self.direction][0]
+        self.image = self.get_images()[0]
         self.rect = self.image.get_rect()
         self.cycle = -1
         self.time_to_change_direction = (random.random() * 1.5) + .5
@@ -72,8 +72,8 @@ class Enemy(Character):
             self.cycle = -1
             self.time_elapsed_direction = 0
         if self.time_elapsed_anim >= Enemy.WALK_ANIM_TIME:
-            self.cycle = (self.cycle + 1) % (len(Enemy.images[self.direction]))
-            self.image = Enemy.images[self.direction][self.cycle]
+            self.cycle = (self.cycle + 1) % (len(self.get_images()))
+            self.image = self.get_images()[self.cycle]
             old_rect = self.rect
             self.rect = self.image.get_rect()
             self.rect.center = old_rect.center
@@ -84,6 +84,9 @@ class Enemy(Character):
             self.last_d = self.direction
         else:
             self.checkScreenCollisions()
+
+    def get_images(self):
+        return Enemy.images[self.direction]
 
     def loadResources(self):
         if Enemy.images[Enemy.INDEX_UP] is None:
@@ -127,6 +130,6 @@ class Enemy(Character):
             self.direction = direction
             self.time_elapsed_anim = Enemy.WALK_ANIM_TIME
 
-    def handle_hit(self):
+    def handle_hit(self, camera, player):
         self.is_alive = False
         Globals.PLAYER_SCORE += self.kill_bonus

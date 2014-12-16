@@ -10,30 +10,33 @@ from Player import Player
 
 class ChaseEnemy(Enemy):
     CHASE_TILE_RADIUS = 8
-    CHASE_RADIUS = None
     COLLISION_OFFSET = -20
     MIN_DIRECTION_CHANGE_TIME = .5
     MIN_DISTANCE_CHECK = .4
     CHASE_VELOCITY = Player.MOVE_VELOCITY * 2 / 3
     KILL_BONUS = 10
 
-    def __init__(self, camera, x=None, y=None):
-        super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y, kill_bonus=ChaseEnemy.KILL_BONUS)
+    def __init__(self, camera, x=None, y=None,
+                 min_dist_check=MIN_DISTANCE_CHECK,
+                 chase_tile_radius=CHASE_TILE_RADIUS,
+                 kill_bonus=KILL_BONUS):
+        super(ChaseEnemy, self).__init__(camera=camera, x=x, y=y, kill_bonus=kill_bonus)
         self.tile_size = max(camera.tileEngine.get_tile_rect().size)
-        if ChaseEnemy.CHASE_RADIUS is None:
-            ChaseEnemy.CHASE_RADIUS = \
-                self.tile_size * ChaseEnemy.CHASE_TILE_RADIUS
-        self.time_since_change = ChaseEnemy.MIN_DIRECTION_CHANGE_TIME
+        self.chase_radius = self.tile_size * chase_tile_radius
+        self.min_dist_check = min_dist_check
         self.time_since_dist_check = 0
+        self.time_since_change = ChaseEnemy.MIN_DIRECTION_CHANGE_TIME
         self.last_dist_check = False
         self.last_d = self.direction
 
-    def update(self, time, camera, player):
+    def update(self, time, camera, player, act_normal=True):
         self.enemy_point = self.rect.center
         self.player_point = player.rect.center
         if not self.player_in_radius(time):
-            self.velocity = Enemy.MOVE_VELOCITY
-            super(ChaseEnemy, self).update(time, camera, player)
+            if act_normal:
+                self.velocity = Enemy.MOVE_VELOCITY
+                super(ChaseEnemy, self).update(time, camera, player)
+            return False
         else:
             self.velocity = ChaseEnemy.CHASE_VELOCITY
             self.update_chase(time, player)
@@ -41,6 +44,7 @@ class ChaseEnemy(Enemy):
             self.last_d = self.direction
             super(ChaseEnemy, self).update(time, camera, player,
                 change_direction=False)
+            return True
 
     def update_chase(self, time, player):
         temp_rect = self.rect.inflate(
@@ -67,12 +71,12 @@ class ChaseEnemy(Enemy):
     def player_in_radius(self, time):
         self.time_since_dist_check += time
         if self.last_dist_check or \
-                self.time_since_dist_check >= ChaseEnemy.MIN_DISTANCE_CHECK:
+                self.time_since_dist_check >= self.min_dist_check:
             self.time_since_dist_check = 0
         else:
             return self.last_dist_check
         self.last_dist_check = ChaseEnemy.distance(
-            self.enemy_point, self.player_point) <= ChaseEnemy.CHASE_RADIUS
+            self.enemy_point, self.player_point) <= self.chase_radius
         return self.last_dist_check
 
     @staticmethod

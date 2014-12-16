@@ -42,16 +42,17 @@ class Character (pygame.sprite.Sprite):
             walkable_list = self.rect.collidelistall(walkable_rects)
         solid_rects = [pair.rect for pair in solid_tiles]
         collide_list = self.rect.collidelistall(solid_rects)
+        collided = False
         for i in collide_list:
             collided = True
             curr_rect = solid_rects[i]
-            if self.direction == Character.INDEX_UP:
+            if direct == Character.INDEX_UP:
                 self.rect.top = curr_rect.bottom
-            elif self.direction == Character.INDEX_DOWN:
+            elif direct == Character.INDEX_DOWN:
                 self.rect.bottom = curr_rect.top
-            elif self.direction == Character.INDEX_LEFT:
+            elif direct == Character.INDEX_LEFT:
                 self.rect.left = curr_rect.right
-            elif self.direction == Character.INDEX_RIGHT:
+            elif direct == Character.INDEX_RIGHT:
                 self.rect.right = curr_rect.left
         if not avoid_stairs:
             if len(walkable_list) == 0:
@@ -65,6 +66,7 @@ class Character (pygame.sprite.Sprite):
                     self.good_pos = self.rect.center
                     self.good_cam = camera.viewpoint.topleft
                     self.good_direction = self.direction
+        return collided
 
     def checkScreenCollisions(self):
         if self.rect.left < 0:

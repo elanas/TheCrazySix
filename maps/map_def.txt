@@ -20,6 +20,7 @@ G floor_potion.png 0 potion_replace light
 _ player_respawn.png 0 player_respawn
 > enemy_spawn.png 0 enemy_spawn
 F chase_enemy_spawn.png 0 chase_enemy_spawn
+J scientist_spawn.png 0 scientist_spawn
 z floor_bed_bottom.png 1
 c floor_bed_top.png 1
 b table_top.png 1 antidote_base 

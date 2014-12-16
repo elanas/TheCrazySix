@@ -21,6 +21,7 @@ from PauseScreen import PauseScreen
 from HUDManager import HUDManager
 from asset_loader import AssetLoader
 from LightSource import LightSource
+from BossEnemy import BossEnemy
 
 
 class Level(GameState):
@@ -269,6 +270,11 @@ class Level(GameState):
                     self.add_enemy(row_num, col_num, chase_enemy=True)
                     tile_map[row_num][col_num] = base_tile
                     self.camera.set_dirty()
+                elif TileType.BOSS_SPAWN in \
+                        tile_map[row_num][col_num].special_attr:
+                    self.add_enemy(row_num, col_num, boss=True)
+                    tile_map[row_num][col_num] = base_tile
+                    self.camera.set_dirty()
                 elif TileType.TURRET_LEFT in \
                         tile_map[row_num][col_num].special_attr:
                     self.add_turret(row_num, col_num, True)
@@ -289,13 +295,15 @@ class Level(GameState):
         x = self.tile_rect.width * (col_num - 1) - self.camera.viewpoint.left
         self.lights.append(LightSource(x, y, self.tile_rect.width))
 
-    def add_enemy(self, row_num, col_num, chase_enemy=False):
+    def add_enemy(self, row_num, col_num, chase_enemy=False, boss=False):
         y = self.tile_rect.height * row_num - self.camera.viewpoint.top
         x = self.tile_rect.width * col_num - self.camera.viewpoint.left
-        if not chase_enemy:
-            enemy = Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y)
-        else:
+        if boss:
+            enemy = BossEnemy(camera=self.camera, x=x, y=y)
+        elif chase_enemy:
             enemy = ChaseEnemy(camera=self.camera, x=x, y=y)
+        else:
+            enemy = Enemy(Globals.WIDTH, Globals.HEIGHT, x=x, y=y)
         self.enemySprites.add(enemy)
 
 
@@ -382,7 +390,7 @@ class Level(GameState):
         punching_rect = self.player.get_punching_rect()
         for enemy in self.enemySprites:
             if punching_rect.colliderect(enemy.rect):
-                enemy.handle_hit()
+                enemy.handle_hit(self.camera, self.player)
 
     def check_turret_collisions(self):
         for turret in self.turrets:

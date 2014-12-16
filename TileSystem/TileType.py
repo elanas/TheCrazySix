@@ -31,6 +31,7 @@ class TileType(object):
     LIGHT_ATTR = "light"
     REDBALL_ATTR = "redball_replace"
     GREENBALL_ATTR = "redball_base"
+    BOSS_SPAWN = "scientist_spawn"
 
     def __init__(self, loader, symbol, img_path, is_solid, special_attr):
         self.symbol = symbol
