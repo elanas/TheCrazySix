@@ -16,6 +16,7 @@ class ZombieCutScene(Level):
     HIT_ALPHA = 70
     POST_HIT_ALPHA = 40
     ZOMBIE_SOUND_PATH = "monster.ogg"
+    ZOMBIE_VO = "intro_sound.ogg"
 
     def __init__(self):
         super(ZombieCutScene, self).__init__(
@@ -32,6 +33,7 @@ class ZombieCutScene(Level):
         self.overlay_sub = False
         self.played_already = False
         self.sound = self.loader.load_sound(ZombieCutScene.ZOMBIE_SOUND_PATH)
+        self.sound = self.loader.load_sound(ZombieCutScene.ZOMBIE_ZOMBIE_VO)
 
     def got_current_state(self):
         if not self.played_already:
