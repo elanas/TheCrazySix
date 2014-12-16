@@ -30,6 +30,7 @@ class Globals(object):
     DISORIENTED_SURF = None
     DISORIENTED_COLOR_SUB = (0, 70, 70)
     EVENT_MANAGER = None
+    NUM_BOSSES = -1
 
     @staticmethod
     def get_disoriented_surf():

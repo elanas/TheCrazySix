@@ -160,7 +160,9 @@ class Camera(object):
     def contains_attribute(self, attribute):
         tile_map = self.tileEngine.tileMap
         for row_num in range(0, len(tile_map)):
-            for col_num in range(0, len(tile_map[row_num])):        
+            for col_num in range(0, len(tile_map[row_num])):
+                if tile_map[row_num][col_num] is None:
+                    continue
                 if attribute in tile_map[row_num][col_num].special_attr:
                     return True
         return False

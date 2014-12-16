@@ -30,6 +30,10 @@ class BossEnemy(ChaseEnemy):
             kill_bonus=BossEnemy.KILL_BONUS)
         self.first_find = False
         self.health = BossEnemy.INIT_HEALTH
+        if Globals.NUM_BOSSES == -1:
+            Globals.NUM_BOSSES = 1
+        else:
+            Globals.NUM_BOSSES += 1
 
     def loadResources(self):
         loader = AssetLoader('images')
@@ -77,6 +81,7 @@ class BossEnemy(ChaseEnemy):
         if self.health == 0:
             self.is_alive = False
             Globals.PLAYER_SCORE += self.kill_bonus
+            Globals.NUM_BOSSES -= 1
         self.jump_back(camera, player)
 
     def jump_back(self, camera, player):
