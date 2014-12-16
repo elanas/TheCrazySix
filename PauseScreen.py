@@ -60,6 +60,8 @@ class PauseScreen(GameState):
             self.black_surf.set_alpha(new_alpha)
 
     def start_fade_out(self):
+        if self.fade_out:
+            return
         self.black_surf.set_alpha(PauseScreen.MIN_ALPHA)
         self.fade_out = True
 
