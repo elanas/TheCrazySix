@@ -13,7 +13,6 @@ class BossEnemy(ChaseEnemy):
     MIN_DISTANCE_CHECK = .4
     HIT_BONUS = 10
     KILL_BONUS = 100
-    FINAL_TILE_RADIUS = 15
     WALKING_PATH = os.path.join('images', 'scientist')
     PREFIX_PATH = os.path.join('scientist')
     WALKING_DOWN_PATH = 'walking_down'
@@ -27,8 +26,9 @@ class BossEnemy(ChaseEnemy):
     def __init__(self, camera, x=None, y=None):
         super(BossEnemy, self).__init__(
             camera, x=x, y=y, min_dist_check=0,
+            chase_tile_radius=13,
             kill_bonus=BossEnemy.KILL_BONUS)
-        self.first_find = False
+        self.has_found_player = False
         self.health = BossEnemy.INIT_HEALTH
         if Globals.NUM_BOSSES == -1:
             Globals.NUM_BOSSES = 1
@@ -69,10 +69,11 @@ class BossEnemy(ChaseEnemy):
         result = super(BossEnemy, self).update(time, camera, player, False)
 
     def player_in_radius(self, time):
+        if self.has_found_player:
+            return True
         result = super(BossEnemy, self).player_in_radius(time)
-        if result and self.first_find:
-            self.first_find = False
-            self.chase_radius = self.tile_size * BossEnemy.FINAL_TILE_RADIUS
+        if result:
+            self.has_found_player = True
         return result
 
     def handle_hit(self, camera, player):
