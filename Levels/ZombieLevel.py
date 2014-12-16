@@ -7,7 +7,7 @@ class ZombieLevel(Level):
     MAP_NAME = 'zombie_level.txt'
     SUBTITLE_TEXT = 'Use the attack key to defeat the other participants'
     SUBTITLE_LOOPS = 3
-    INIT_SOUND_PATH = "transition2.ogg"
+    VOICE_OVER = "transition2.ogg"
     MUSIC_PATH = 'zombie_level.ogg'
 
     def __init__(self, id=0):
