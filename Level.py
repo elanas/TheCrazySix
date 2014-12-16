@@ -53,6 +53,7 @@ class Level(GameState):
     MUSIC_END_ID = pygame.USEREVENT
     SOUND_FADE_TIME = 500
     SWITCH_SOUND_PATH = 'switch.ogg'
+    IGNORE_TIME = .5
 
     def __init__(self, definition_path, map_path, music_path=None, music_loops=-1,
                  has_timer=True, should_fade_in=True):
@@ -100,6 +101,7 @@ class Level(GameState):
             self.music_handle = self.loader.load_sound(music_path)
         else:
             self.music_handle = None
+        self.time_init = 0
 
     def start_music(self):
         if self.channel or self.music_handle is None:
@@ -440,6 +442,9 @@ class Level(GameState):
         Globals.HUD_MANAGER.render(Globals.SCREEN)
 
     def update(self, time):
+        if self.time_init < Level.IGNORE_TIME:
+            self.time_init += time
+            return
         if Globals.HEALTH_BAR.is_dead():
             self.handle_lose_game()
         if self.fade_out or self.fade_in:
