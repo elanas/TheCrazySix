@@ -127,3 +127,6 @@ class ZombieCutScene(Level):
 
     def handle_done(self):
         self.handle_finish_fade_out()
+
+    def handle_attack(self):
+        pass
