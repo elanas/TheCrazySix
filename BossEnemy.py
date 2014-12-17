@@ -26,7 +26,7 @@ class BossEnemy(ChaseEnemy):
     def __init__(self, camera, x=None, y=None):
         super(BossEnemy, self).__init__(
             camera, x=x, y=y, min_dist_check=0,
-            chase_tile_radius=13,
+            chase_tile_radius=10,
             kill_bonus=BossEnemy.KILL_BONUS)
         self.has_found_player = False
         self.health = BossEnemy.INIT_HEALTH
@@ -85,7 +85,7 @@ class BossEnemy(ChaseEnemy):
         return result
 
     def handle_hit(self, camera, player):
-        self.health -= 33
+        self.health -= 40
         Globals.PLAYER_SCORE += BossEnemy.HIT_BONUS
         if self.health == 0:
             self.is_alive = False
