@@ -18,9 +18,9 @@ class Enemy(Character):
     images = [None, None, None, None]
     loader = AssetLoader("images")
     WALK_ANIM_TIME = .25
-    KILL_BONUS = 5
+    K_BS = 5
 
-    def __init__(self, w=0, h=0, camera=None, x=None, y=None, kill_bonus=KILL_BONUS):
+    def __init__(self, w=0, h=0, camera=None, x=None, y=None, kill_bonus=K_BS):
         super(Enemy, self).__init__(w, h, 0, 0)
         self.loadResources()
         self.direction = random.randint(0, 3)
