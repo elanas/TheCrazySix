@@ -88,7 +88,7 @@ class PauseScreen(GameState):
 
     def handle_raw_event(self, event):
         if EventManager.is_keyboard_event(event.type) and \
-                not event in SettingsManager.EVENTS_ESCAPE and \
-                not event in SettingsManager.EVENTS_RETURN and \
-                not event in SettingsManager.EVENTS_ACTION:
+                event not in SettingsManager.EVENTS_ESCAPE and \
+                event not in SettingsManager.EVENTS_RETURN and \
+                event not in SettingsManager.EVENTS_ACTION:
             self.handle_return()
