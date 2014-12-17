@@ -8,7 +8,7 @@ GAME_TITLE = "~Field Day~"
 TITLE_COLOR = pygame.color.Color("white")
 TITLE_PADDING = 100
 BACKGROUND_IMG = pygame.image.load("images/background.png")
-IMG = pygame.image.load("images/settings.png")
+TITLE_IMG = pygame.image.load("images/fieldday.png")
 
 
 class Title(GameState):
@@ -27,7 +27,7 @@ class Title(GameState):
         self.time_delta = 0
         # self.font = pygame.font.Font(None, self.size)
         # self.base_surf = self.font.render(GAME_TITLE, True, TITLE_COLOR)
-        self.base_surf = IMG
+        self.base_surf = TITLE_IMG
         self.base_size = self.base_surf.get_rect().size
         # Title.INIT_SIZE = self.base_size[1]
         self.widthrat = self.base_size[0] / self.base_size[1]
