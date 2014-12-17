@@ -24,6 +24,9 @@ Cheats:
 
 Press: '1' - skip current level
 Press: '2' - restores health
+Press: '3' - gives a key
+Press: '4' - un-disorients the player after/in maze level
+Press: '5' - replace all reds --> greens on final level
 
 pep8 notes:
 
