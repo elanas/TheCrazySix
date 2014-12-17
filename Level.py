@@ -278,8 +278,7 @@ class Level(GameState):
             self.camera.tileEngine.tileMap[row][col] = base
             self.camera.set_dirty()
             self.lights = [
-                l for l in self.lights
-                    if not l.rect.colliderect(self.player.rect)]
+                l for l in self.lights if not l.rect.colliderect(self.player.rect)]
 
     def init_player(self):
         self.player = Player(
@@ -639,26 +638,26 @@ class Level(GameState):
         coords.extend(result)
         return coords
 
-    def get_doors_delta(self, r, c, init_num_keys, row_delta=0, col_delta=0):
+    def get_doors_delta(self, row, col, init_num_keys, row_delta=0, col_delta=0):
         coords = list()
         tile_map = self.camera.tileEngine.tileMap
-        r += row_delta
-        c += col_delta
-        while self.camera.tileEngine.is_coord_valid(r, c) and \
-                tile_map[r][c] is not None and \
-                TileType.SLIDING_DOOR_ATTR in tile_map[r][c].special_attr:
-            if TileType.LOCKED_ATTR in tile_map[r][c].special_attr:
+        row += row_delta
+        col += col_delta
+        while self.camera.tileEngine.is_coord_valid(row, col) and \
+                tile_map[row][col] is not None and \
+                TileType.SLIDING_DOOR_ATTR in tile_map[row][col].special_attr:
+            if TileType.LOCKED_ATTR in tile_map[row][col].special_attr:
                 if TileType.SPECIAL_DOOR_ATTR in \
-                        self.camera.tileEngine.tileMap[r][c].special_attr:
+                        self.camera.tileEngine.tileMap[row][col].special_attr:
                     if self.camera.contains_attribute(TileType.REDBALL_ATTR):
                         return -1
                 elif not Globals.HUD_MANAGER.has_key():
                     return -1
                 elif Globals.HUD_MANAGER.num_keys >= init_num_keys:
                     Globals.HUD_MANAGER.use_key()
-            coords.append([r, c])
-            r += row_delta
-            c += col_delta
+            coords.append([row, col])
+            row += row_delta
+            col += col_delta
         return coords
 
     def handle_action_switch(self, special_tiles):

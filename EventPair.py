@@ -26,13 +26,9 @@ class EventPair(object):
 
             return self.value == event.button
         elif self.type in EM.EventManager.JOYSTICK_HAT_EVENTS:
-            return self.hat == \
-                event.hat and \
-                EM.EventManager.hat_values_match(self.value, event.value)
+            return self.hat == event.hat and EM.EventManager.hat_values_match(self.value, event.value)
         elif self.type in EM.EventManager.JOYSTICK_AXIS_EVENTS:
-            return self.axis == \
-                event.axis and \
-                EM.EventManager.axis_values_match(self.value, event.value)
+            return self.axis == event.axis and EM.EventManager.axis_values_match(self.value, event.value)
         else:
             # need to handle this
             return False
@@ -51,19 +47,14 @@ class EventPair(object):
 
     def __eq__(self, other):
         if type(other) is type(self):
-            if EM.EventManager.is_keyboard_event(self.type) and \
-                    EM.EventManager.is_keyboard_event(other.type):
+            if EM.EventManager.is_keyboard_event(self.type) and EM.EventManager.is_keyboard_event(other.type):
                 return self.value == other.value
-            elif self.type in EM.EventManager.JOYSTICK_BUTTON_EVENTS and \
-                    other.type in EM.EventManager.JOYSTICK_BUTTON_EVENTS:
+            elif self.type in EM.EventManager.JOYSTICK_BUTTON_EVENTS and other.type in EM.EventManager.JOYSTICK_BUTTON_EVENTS:
                 return self.value == other.value
-            elif self.type in EM.EventManager.JOYSTICK_HAT_EVENTS and \
-                    other.type in EM.EventManager.JOYSTICK_HAT_EVENTS:
+            elif self.type in EM.EventManager.JOYSTICK_HAT_EVENTS and other.type in EM.EventManager.JOYSTICK_HAT_EVENTS:
                 return self.value == other.value
-            elif self.type in EM.EventManager.JOYSTICK_AXIS_EVENTS and \
-                    other.type in EM.EventManager.JOYSTICK_AXIS_EVENTS:
-                return self.axis == other.axis and \
-                    EM.EventManager.axis_values_match(self.value, other.value)
+            elif self.type in EM.EventManager.JOYSTICK_AXIS_EVENTS and other.type in EM.EventManager.JOYSTICK_AXIS_EVENTS:
+                return self.axis == other.axis and EM.EventManager.axis_values_match(self.value, other.value)
             # need to handle more things
             return False
         else:
