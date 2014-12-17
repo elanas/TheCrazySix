@@ -1,0 +1,3 @@
+The following files are in reverse order:
+    main_walking_left.png
+    main_walking_up.png

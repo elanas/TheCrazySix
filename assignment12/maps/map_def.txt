@@ -1,0 +1,58 @@
+* floor-white-gray-black.png 0 base
+H light_source.png 0 light_replace
+! box.png 1
+~ bag.png 1
+& floor_grey_chair.png 0
+/ stair_right_black2.png 0 stair
+\ stair_right_black.png 0 stair
+D stair_down_left_black2.png 0 stair_down
+E stair_down_right_black.png 0 stair_down
+$ coin.png 0 coin coin_replace light
+G floor_potion.png 0 potion_replace light
+7 mwall_joint.png 1
+[ mwall_down.png 1
+8 mwall_left.png 1
+9 mwall_right.png 1
+] mwall_top.png 1
+4 mwall_turn.png 1
+6 mwall_up.png 1
+< player_spawn.png 0 player_spawn
+_ player_respawn.png 0 player_respawn
+> enemy_spawn.png 0 enemy_spawn
+F chase_enemy_spawn.png 0 chase_enemy_spawn
+J scientist_spawn.png 0 scientist_spawn
+z floor_bed_bottom.png 1
+c floor_bed_top.png 1
+b table_top.png 1 antidote_base 
+n table_top_potion.png 1
+m table_bottom.png 1
+k turret_right_topleft.png 1 turret t_right_0
+) turret_right_topright.png 1 turret t_right_1 turret_spawn_right
+( turret_right_bottomright.png 1 turret t_right_3
+^ turret_right_bottomleft.png 1 turret t_right_2
+l turret_left_topright.png 1 turret t_left_0 turret_spawn_left
+j turret_left_topleft.png 1 turret t_left_1
+@ turret_left_bottomleft.png 1 turret t_left_3
+% turret_left_bottomright.png 1 turret t_left_2
+v floor_switch.png 1 switch action
+u floor_switch_on.png 1 switch_on action
+` floor_health.png 0 health_replace light
+1 floor_trap.png 0 trap
+2 floor_gap.png 1 gap
+3 floor_gap_filled.png 0
+' floor_ball.png 1 ball
+; floor_key.png 0 key_replace light
+t sliding_door_vert_white.png 1 sliding_door action
+w sliding_door_horiz_white.png 1 sliding_door action
+A sliding_door_horiz_locked.png 1 sliding_door action locked
+B sliding_door_vert_locked_left_white.png 1 sliding_door action locked
+C sliding_door_vert_locked_right_white.png 1 sliding_door action locked
+K red_ball.png 0 redball_replace
+L green_ball.png 0 redball_base
+M sliding_door_horiz_locked_special.png 1 sliding_door action locked special_sliding_door
+N sliding_door_vert_locked_left_special.png 1 sliding_door action locked special_sliding_door
+R sliding_door_vert_locked_right_special.png 1 sliding_door action locked special_sliding_door
+O sliding_door_horiz_special.png 1 sliding_door action
+x sliding_door_vert_special.png 1 sliding_door action
+q table_top_antidote.png 1 antidote light action
+# last was "J"

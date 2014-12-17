@@ -1,0 +1,37 @@
+Sarika Halarnakar
+Michael Stewart
+Elana Stroud
+Hansong Lee
+Steven Kim
+
+Assignment 12:
+
+This is our final product for our game, "Field Day". We added some more 
+customization to the final level including a BossEnemy and other 
+enemies that actively follow the main player. In addition we 
+added an attack move to the main player in 
+order to fight back against enemies.
+
+We also added some more tiles with other functionality
+and cleaned up the code. In addition, we fully implemented the custom
+level editor into the game.
+
+We also added game controller support to a Wii-remote and fixed
+all glitches from previous assignments.
+
+
+Cheats:
+
+Press: '1' - skip current level
+Press: '2' - restores health
+
+pep8 notes:
+
+Some classes make use of a 'has_key()' method that pep8 does not
+like. This is because the has_key method in HUDManager triggers
+some depracation note that we have chosen to disregard.
+
+The Enemy and Level class trigger a under-indented error that
+cannot be reasonable solved. The alternative makes the code less 
+readable than with the pep8. We have chosen to keep
+the code the way it is.
