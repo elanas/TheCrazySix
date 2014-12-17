@@ -3,7 +3,6 @@ from Globals import Globals
 from SettingsManager import SettingsManager
 from asset_loader import AssetLoader
 import pygame
-import Menu
 from EventManager import EventManager
 
 
@@ -92,3 +91,4 @@ class PauseScreen(GameState):
                 event not in SettingsManager.EVENTS_RETURN and \
                 event not in SettingsManager.EVENTS_ACTION:
             self.handle_return()
+import Menu
