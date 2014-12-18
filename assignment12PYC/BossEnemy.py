@@ -85,9 +85,9 @@ class BossEnemy(ChaseEnemy):
         return result
 
     def handle_hit(self, camera, player):
-        self.health -= 40
+        self.health -= 1
         Globals.PLAYER_SCORE += BossEnemy.HIT_BONUS
-        if self.health == 0:
+        if self.health <= 0:
             self.is_alive = False
             Globals.PLAYER_SCORE += self.kill_bonus
             Globals.NUM_BOSSES -= 1
